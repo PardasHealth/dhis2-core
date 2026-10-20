@@ -621,6 +621,36 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
   }
 
   @Test
+  void testAuditUidAndCodeFiltersTreatSqlInjectionStringsAsData() {
+    String uid = CodeGenerator.generateUid();
+    String code = CodeGenerator.generateUid();
+    auditRepository.save(
+        Audit.builder()
+            .auditType(AuditType.CREATE)
+            .auditScope(AuditScope.AGGREGATE)
+            .createdAt(LocalDateTime.of(2026, 10, 20, 13, 14))
+            .createdBy("test-user")
+            .klass(DataElement.class.getName())
+            .uid(uid)
+            .code(code)
+            .data("{}")
+            .build());
+
+    String attack = "' OR 1=1 --";
+    assertEquals(
+        0,
+        auditRepository.count(
+            AuditQuery.builder().uid(Sets.newHashSet(attack)).build()));
+    assertTrue(
+        auditRepository.query(
+            AuditQuery.builder().code(Sets.newHashSet(attack)).build()).isEmpty());
+    assertEquals(
+        1,
+        auditRepository.count(
+            AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+  }
+
+  @Test
   void testAuditBulkDeleteRejectsUnboundedQueriesAndPreservesRows() {
     String uid = CodeGenerator.generateUid();
     Audit audit =
