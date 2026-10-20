@@ -42,3 +42,16 @@ The correct profile in `dhis-2/pom.xml` is `integration-test` (not `integration`
 - Bulk deletion by UID/code and range is not subject to a maximum deletion count.
 - Throwing on malformed historic payloads may affect existing consumers; review failure handling and alerting.
 - No CI status or test result is available at the time this document was added.
+
+
+## Executed CI evidence — 2026-10-20
+
+- **Workflow:** [Common Criteria audit regression, run #5](https://github.com/PardasHealth/dhis2-core/actions/runs/39441126775)
+- **Commit tested:** `03a43bb51ec62718c00933441c772918e9223b2c`
+- **Result:** success, including Maven unit-test, PostgreSQL integration-test, and required Surefire-report validation steps.
+- `JdbcAuditRepositoryCompressionTest`: 4 tests, 0 failures, 0 errors, 0 skipped.
+- `AuditRepositoryTest`: 28 tests, 0 failures, 0 errors, 2 skipped.
+- **Combined:** 30 executed and passed, 2 skipped, 0 failures/errors.
+- **Skipped cases:** `testAuditInsert200k` and `testAuditInsertBatch200k`; both carry `@Disabled` and exercise 200,000-row insertion performance rather than the focused audit-security regressions.
+
+This evidence supports the tested implementation paths only. It is not a Common Criteria certification, and does not independently establish authorization controls, retention-policy compliance, or broader security assurance requirements.
