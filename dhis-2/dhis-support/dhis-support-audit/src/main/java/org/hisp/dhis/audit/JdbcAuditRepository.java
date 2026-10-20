@@ -29,28 +29,24 @@
  */
 package org.hisp.dhis.audit;
 
-import static org.hisp.dhis.system.util.SqlUtils.escape;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hisp.dhis.commons.util.SqlHelper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +56,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JdbcAuditRepository implements AuditRepository {
   private final JdbcTemplate jdbcTemplate;
+  private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
   private final SimpleJdbcInsert auditInsert;
 
@@ -67,6 +64,7 @@ public class JdbcAuditRepository implements AuditRepository {
 
   public JdbcAuditRepository(JdbcTemplate jdbcTemplate, ObjectMapper jsonMapper) {
     this.jdbcTemplate = jdbcTemplate;
+    this.namedJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
     this.jsonMapper = jsonMapper;
 
     this.auditInsert =
@@ -95,104 +93,81 @@ public class JdbcAuditRepository implements AuditRepository {
 
   @Override
   public void delete(AuditQuery query) {
-    jdbcTemplate.update("DELETE FROM audit" + buildQuery(query));
+    if (query == null || query.getRange() == null
+        || query.getRange().getFrom() == null || query.getRange().getTo() == null
+        || !query.getRange().getFrom().isBefore(query.getRange().getTo())
+        || (query.getUid().isEmpty() && query.getCode().isEmpty())) {
+      throw new IllegalArgumentException(
+          "Audit deletion requires a bounded time range and a UID or code filter");
+    }
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    namedJdbcTemplate.update("DELETE FROM audit" + buildQuery(query, params), params);
   }
 
   @Override
   public int count(AuditQuery query) {
-    return jdbcTemplate.queryForObject(
-        "SELECT COUNT(*) FROM audit" + buildQuery(query), Integer.class);
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    return namedJdbcTemplate.queryForObject(
+        "SELECT COUNT(*) FROM audit" + buildQuery(query, params), params, Integer.class);
   }
 
   @Override
   public List<Audit> query(AuditQuery query) {
-    return jdbcTemplate.query("SELECT * FROM audit" + buildQuery(query), auditRowMapper);
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    return namedJdbcTemplate.query(
+        "SELECT * FROM audit" + buildQuery(query, params), params, auditRowMapper);
   }
 
-  private String buildQuery(AuditQuery query) {
-    StringBuilder sql = new StringBuilder();
-    SqlHelper sqlHelper = new SqlHelper(true);
-
+  private String buildQuery(AuditQuery query, MapSqlParameterSource params) {
+    if (query == null) {
+      throw new IllegalArgumentException("Audit query cannot be null");
+    }
+    List<String> conditions = new ArrayList<>();
     if (!query.getAuditType().isEmpty()) {
-      sql.append(sqlHelper.whereAnd())
-          .append("auditType in (")
-          .append(buildQuotedSet(query.getAuditType()))
-          .append(")");
+      conditions.add("auditType IN (:auditTypes)");
+      params.addValue("auditTypes", query.getAuditType().stream().map(Enum::name).toList());
     }
-
     if (!query.getAuditScope().isEmpty()) {
-      sql.append(sqlHelper.whereAnd())
-          .append("auditScope in (")
-          .append(buildQuotedSet(query.getAuditScope()))
-          .append(")");
+      conditions.add("auditScope IN (:auditScopes)");
+      params.addValue("auditScopes", query.getAuditScope().stream().map(Enum::name).toList());
     }
-
     if (!query.getKlass().isEmpty()) {
-      sql.append(sqlHelper.whereAnd())
-          .append("klass in (")
-          .append(buildQuotedSet(query.getKlass()))
-          .append(")");
+      conditions.add("klass IN (:klasses)");
+      params.addValue("klasses", query.getKlass());
     }
-
-    if (!query.getUid().isEmpty() || !query.getCode().isEmpty()) {
-      sql.append(sqlHelper.whereAnd()).append("(");
-      SqlHelper innerSql = new SqlHelper(true);
-
-      if (!query.getUid().isEmpty()) {
-        sql.append(innerSql.or())
-            .append("uid in (")
-            .append(buildQuotedSet(query.getUid()))
-            .append(")");
-      }
-
-      if (!query.getCode().isEmpty()) {
-        sql.append(innerSql.or())
-            .append("code in (")
-            .append(buildQuotedSet(query.getCode()))
-            .append(")");
-      }
-
-      sql.append(")");
+    List<String> identityConditions = new ArrayList<>();
+    if (!query.getUid().isEmpty()) {
+      identityConditions.add("uid IN (:uids)");
+      params.addValue("uids", query.getUid());
     }
-
-    if (!query.getAuditAttributes().isEmpty()) {
-      query
-          .getAuditAttributes()
-          .forEach(
-              (attribute, value) -> {
-                sql.append(sqlHelper.whereAnd())
-                    .append("attributes->>")
-                    .append("'" + attribute + "'")
-                    .append(" = ")
-                    .append("'" + value + "'");
-              });
+    if (!query.getCode().isEmpty()) {
+      identityConditions.add("code IN (:codes)");
+      params.addValue("codes", query.getCode());
     }
-
+    if (!identityConditions.isEmpty()) {
+      conditions.add("(" + String.join(" OR ", identityConditions) + ")");
+    }
+    int index = 0;
+    for (var entry : query.getAuditAttributes().entrySet()) {
+      String keyParam = "attrKey" + index;
+      String valueParam = "attrValue" + index;
+      conditions.add("attributes->>:" + keyParam + " = :" + valueParam);
+      params.addValue(keyParam, entry.getKey());
+      params.addValue(valueParam, String.valueOf(entry.getValue()));
+      index++;
+    }
     if (query.getRange() != null) {
       AuditQuery.Range range = query.getRange();
-
-      sql.append(sqlHelper.whereAnd())
-          .append("createdAt >= ")
-          .append("'")
-          .append(range.getFrom())
-          .append("'");
-
+      if (range.getFrom() != null) {
+        conditions.add("createdAt >= :fromDate");
+        params.addValue("fromDate", range.getFrom());
+      }
       if (range.getTo() != null) {
-        sql.append(sqlHelper.whereAnd())
-            .append("createdAt < ")
-            .append("'")
-            .append(range.getTo())
-            .append("'");
+        conditions.add("createdAt < :toDate");
+        params.addValue("toDate", range.getTo());
       }
     }
-
-    return sql.toString();
-  }
-
-  private String buildQuotedSet(Set<?> items) {
-    return items.stream()
-        .map(s -> "'" + escape(s.toString()) + "'")
-        .collect(Collectors.joining(", "));
+    return conditions.isEmpty() ? "" : " WHERE " + String.join(" AND ", conditions);
   }
 
   private MapSqlParameterSource buildParameterSource(Audit audit) {
@@ -217,14 +192,14 @@ public class JdbcAuditRepository implements AuditRepository {
 
   private RowMapper<Audit> auditRowMapper =
       (rs, rowNum) -> {
-        Date createdAt = rs.getDate("createdAt");
+        Timestamp createdAt = rs.getTimestamp("createdAt");
 
         Audit.AuditBuilder auditBuilder =
             Audit.builder()
                 .id(rs.getLong("auditId"))
                 .auditType(AuditType.valueOf(rs.getString("auditType")))
                 .auditScope(AuditScope.valueOf(rs.getString("auditScope")))
-                .createdAt(new Timestamp(createdAt.getTime()).toLocalDateTime())
+                .createdAt(createdAt == null ? null : createdAt.toLocalDateTime())
                 .createdBy(rs.getString("createdBy"))
                 .klass(rs.getString("klass"))
                 .uid(rs.getString("uid"))
