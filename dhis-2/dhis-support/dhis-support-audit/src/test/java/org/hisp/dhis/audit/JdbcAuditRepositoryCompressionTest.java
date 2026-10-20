@@ -16,6 +16,20 @@ class JdbcAuditRepositoryCompressionTest {
   }
 
   @Test
+  void emptyAndNullCompressedAuditDataUseLegacyEmptyObject() throws Exception {
+    assertEquals("{}", invoke("decompress", byte[].class, new byte[0]));
+    assertEquals("{}", invoke("decompress", byte[].class, null));
+    assertEquals(0, ((byte[]) invoke("compress", String.class, "")).length);
+  }
+
+  @Test
+  void unicodeAuditDataRoundTrips() throws Exception {
+    String payload = "{\\"message\\":\\"سلام 🌍\\"}";
+    byte[] compressed = (byte[]) invoke("compress", String.class, payload);
+    assertEquals(payload, invoke("decompress", byte[].class, compressed));
+  }
+
+  @Test
   void corruptCompressedAuditDataThrowsInsteadOfReturningNull() throws Exception {
     InvocationTargetException error =
         assertThrows(
