@@ -49,6 +49,7 @@ import org.hisp.dhis.util.Timer;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -58,6 +59,8 @@ import org.springframework.transaction.annotation.Transactional;
 class AuditRepositoryTest extends PostgresIntegrationTestBase {
 
   @Autowired private AuditRepository auditRepository;
+
+  @Autowired private JdbcTemplate jdbcTemplate;
 
   @Test
   void testSaveAudit() {
@@ -542,6 +545,30 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
     assertEquals("a.b.c", persistedAudit.getAttributes().get("path"));
   }
 
+
+  @Test
+  void testCorruptCompressedAuditPayloadFailsExplicitly() {
+    String uid = CodeGenerator.generateUid();
+    long auditId =
+        auditRepository.save(
+            Audit.builder()
+                .auditType(AuditType.CREATE)
+                .auditScope(AuditScope.AGGREGATE)
+                .createdAt(LocalDateTime.of(2026, 10, 20, 13, 14))
+                .createdBy("test-user")
+                .klass(DataElement.class.getName())
+                .uid(uid)
+                .code(CodeGenerator.generateUid())
+                .data("valid compressed audit payload")
+                .build());
+    jdbcTemplate.update(
+        "UPDATE audit SET data = ? WHERE auditid = ?",
+        new byte[] {0x01, 0x02, 0x03},
+        auditId);
+    assertThrows(
+        IllegalStateException.class,
+        () -> auditRepository.query(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+  }
 
   @Test
   void testAuditTimestampPreservesMicroseconds() {
