@@ -30,7 +30,7 @@ The correct profile in `dhis-2/pom.xml` is `integration-test` (not `integration`
 
 1. Record the exact commit SHA and Java/Maven versions.
 2. Save the full Maven output and Surefire/Failsafe XML reports.
-3. Verify the named audit tests were executed and count passed/failed/skipped.
+3. Verify the named audit tests were executed and count passed/failed/skipped. The CI workflow now rejects absent, fully skipped, or failed test-class reports.
 4. Confirm the test database is isolated from production.
 5. Review SQL parameterization with PostgreSQL (including malicious JSON attribute keys and values).
 6. Confirm deleting a bounded UID does not remove unrelated rows.
