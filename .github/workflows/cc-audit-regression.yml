@@ -1,0 +1,83 @@
+name: Common Criteria audit regression
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'dhis-2/dhis-support/dhis-support-audit/**'
+      - 'dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/**'
+      - '.github/workflows/cc-audit-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit-postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: dhis-2/pom.xml
+      - name: Verify Docker for Testcontainers
+        run: docker info
+      - name: Execute audit compression unit tests
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-support/dhis-support-audit -am -Punit-test \
+            -Dtest=JdbcAuditRepositoryCompressionTest \
+            -Dsurefire.failIfNoSpecifiedTests=false \
+            test
+      - name: Execute PostgreSQL audit regression tests
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-test-integration -am -Pintegration-test \
+            -Dtest=AuditRepositoryTest \
+            -Dsurefire.failIfNoSpecifiedTests=false \
+            test
+      - name: Verify both test classes actually executed
+        if: success()
+        working-directory: dhis-2
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          expected = {
+              "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+              "org.hisp.dhis.audit.AuditRepositoryTest",
+          }
+          seen = {}
+          for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
+              root = ET.parse(report).getroot()
+              name = root.attrib.get("name", "")
+              if name not in expected:
+                  continue
+              tests = int(root.attrib.get("tests", 0))
+              failures = int(root.attrib.get("failures", 0))
+              errors = int(root.attrib.get("errors", 0))
+              skipped = int(root.attrib.get("skipped", 0))
+              if tests <= skipped or failures or errors:
+                  raise SystemExit(
+                      f"Invalid test result for {name}: "
+                      f"tests={tests}, skipped={skipped}, failures={failures}, errors={errors}"
+                  )
+              seen[name] = (tests, skipped)
+          missing = expected - seen.keys()
+          if missing:
+              raise SystemExit(f"Required test reports missing: {sorted(missing)}")
+          print(f"Verified audit test reports: {seen}")
+          PY
+      - name: Publish test XML reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cc-audit-surefire-reports
+          path: |
+            dhis-2/**/target/surefire-reports/*.xml
+            dhis-2/**/target/surefire-reports/*.txt
+          if-no-files-found: warn

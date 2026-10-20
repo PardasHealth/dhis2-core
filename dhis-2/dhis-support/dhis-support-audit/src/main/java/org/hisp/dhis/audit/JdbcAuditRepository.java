@@ -223,19 +223,14 @@ public class JdbcAuditRepository implements AuditRepository {
       return new byte[] {};
     }
 
-    byte[] result = data.getBytes(StandardCharsets.UTF_8);
-
-    try (ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length())) {
-      GZIPOutputStream gzip = new GZIPOutputStream(bos);
+    try (ByteArrayOutputStream output = new ByteArrayOutputStream(data.length());
+        GZIPOutputStream gzip = new GZIPOutputStream(output)) {
       gzip.write(data.getBytes(StandardCharsets.UTF_8));
-      gzip.close();
-
-      result = bos.toByteArray();
+      gzip.finish();
+      return output.toByteArray();
     } catch (IOException e) {
       throw new IllegalStateException("Unable to compress audit data", e);
     }
-
-    return result;
   }
 
   private static String decompress(byte[] data) {
@@ -243,18 +238,11 @@ public class JdbcAuditRepository implements AuditRepository {
       return "{}";
     }
 
-    String result = null;
-
-    try (ByteArrayInputStream bin = new ByteArrayInputStream(data)) {
-      GZIPInputStream gzip = new GZIPInputStream(bin);
-      byte[] bytes = IOUtils.toByteArray(gzip);
-      gzip.close();
-
-      result = new String(bytes, StandardCharsets.UTF_8);
+    try (ByteArrayInputStream input = new ByteArrayInputStream(data);
+        GZIPInputStream gzip = new GZIPInputStream(input)) {
+      return new String(IOUtils.toByteArray(gzip), StandardCharsets.UTF_8);
     } catch (IOException e) {
       throw new IllegalStateException("Unable to decompress audit data", e);
     }
-
-    return result;
   }
 }
