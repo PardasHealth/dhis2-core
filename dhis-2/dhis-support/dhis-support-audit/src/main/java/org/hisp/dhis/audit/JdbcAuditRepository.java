@@ -245,5 +245,4 @@ public class JdbcAuditRepository implements AuditRepository {
       throw new IllegalStateException("Unable to decompress audit data", e);
     }
   }
-
 }
