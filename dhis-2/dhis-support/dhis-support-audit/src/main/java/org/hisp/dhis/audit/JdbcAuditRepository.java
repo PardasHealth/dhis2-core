@@ -38,7 +38,6 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.io.IOUtils;
@@ -93,8 +92,10 @@ public class JdbcAuditRepository implements AuditRepository {
 
   @Override
   public void delete(AuditQuery query) {
-    if (query == null || query.getRange() == null
-        || query.getRange().getFrom() == null || query.getRange().getTo() == null
+    if (query == null
+        || query.getRange() == null
+        || query.getRange().getFrom() == null
+        || query.getRange().getTo() == null
         || !query.getRange().getFrom().isBefore(query.getRange().getTo())
         || (query.getUid().isEmpty() && query.getCode().isEmpty())) {
       throw new IllegalArgumentException(
