@@ -18,13 +18,13 @@ From the `dhis-2` directory:
 ```bash
 mvn -version
 docker info
-mvn -pl dhis-test-integration -am -Pintegration \
+mvn -pl dhis-test-integration -am -Pintegration-test \
   -Dtest=AuditRepositoryTest \
   -Dsurefire.failIfNoSpecifiedTests=false \
   test
 ```
 
-If the project's test runner is configured differently, inspect the effective Maven profiles and the integration-test documentation before changing the command. **Do not treat a successful Maven invocation as evidence unless the test report shows that AuditRepositoryTest actually ran.**
+The correct profile in `dhis-2/pom.xml` is `integration-test` (not `integration`). Inspect the effective Maven configuration if the command fails. **Do not treat a successful Maven invocation as evidence unless the test report shows that AuditRepositoryTest actually ran.**
 
 ## Evidence to collect
 
