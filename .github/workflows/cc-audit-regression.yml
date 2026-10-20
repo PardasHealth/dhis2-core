@@ -25,6 +25,13 @@ jobs:
           cache-dependency-path: dhis-2/pom.xml
       - name: Verify Docker for Testcontainers
         run: docker info
+      - name: Execute audit compression unit tests
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-support/dhis-support-audit -am -Punit-test \
+            -Dtest=JdbcAuditRepositoryCompressionTest \
+            -Dsurefire.failIfNoSpecifiedTests=false \
+            test
       - name: Execute PostgreSQL audit regression tests
         working-directory: dhis-2
         run: |
