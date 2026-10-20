@@ -39,6 +39,39 @@ jobs:
             -Dtest=AuditRepositoryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
+      - name: Verify both test classes actually executed
+        if: success()
+        working-directory: dhis-2
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          expected = {
+              "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+              "org.hisp.dhis.audit.AuditRepositoryTest",
+          }
+          seen = {}
+          for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
+              root = ET.parse(report).getroot()
+              name = root.attrib.get("name", "")
+              if name not in expected:
+                  continue
+              tests = int(root.attrib.get("tests", 0))
+              failures = int(root.attrib.get("failures", 0))
+              errors = int(root.attrib.get("errors", 0))
+              skipped = int(root.attrib.get("skipped", 0))
+              if tests <= skipped or failures or errors:
+                  raise SystemExit(
+                      f"Invalid test result for {name}: "
+                      f"tests={tests}, skipped={skipped}, failures={failures}, errors={errors}"
+                  )
+              seen[name] = (tests, skipped)
+          missing = expected - seen.keys()
+          if missing:
+              raise SystemExit(f"Required test reports missing: {sorted(missing)}")
+          print(f"Verified audit test reports: {seen}")
+          PY
       - name: Publish test XML reports
         if: always()
         uses: actions/upload-artifact@v4
