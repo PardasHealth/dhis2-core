@@ -151,7 +151,7 @@ public class JdbcAuditRepository implements AuditRepository {
     for (var entry : query.getAuditAttributes().entrySet()) {
       String keyParam = "attrKey" + index;
       String valueParam = "attrValue" + index;
-      conditions.add("attributes->>:" + keyParam + " = :" + valueParam);
+      conditions.add("attributes ->> CAST(:" + keyParam + " AS text) = :" + valueParam);
       params.addValue(keyParam, entry.getKey());
       params.addValue(valueParam, String.valueOf(entry.getValue()));
       index++;
