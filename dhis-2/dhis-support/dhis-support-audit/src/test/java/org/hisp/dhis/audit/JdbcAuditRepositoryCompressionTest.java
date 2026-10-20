@@ -24,7 +24,7 @@ class JdbcAuditRepositoryCompressionTest {
 
   @Test
   void unicodeAuditDataRoundTrips() throws Exception {
-    String payload = "{\\"message\\":\\"سلام 🌍\\"}";
+    String payload = "{\"message\":\"سلام 🌍\"}";
     byte[] compressed = (byte[]) invoke("compress", String.class, payload);
     assertEquals(payload, invoke("decompress", byte[].class, compressed));
   }
