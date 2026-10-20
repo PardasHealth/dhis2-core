@@ -184,7 +184,8 @@ public class JdbcAuditRepository implements AuditRepository {
 
     try {
       parameters.addValue("attributes", jsonMapper.writeValueAsString(audit.getAttributes()));
-    } catch (JsonProcessingException ignored) {
+    } catch (JsonProcessingException e) {
+      throw new IllegalStateException("Unable to serialize audit attributes", e);
     }
 
     return parameters;
@@ -210,7 +211,8 @@ public class JdbcAuditRepository implements AuditRepository {
           AuditAttributes attributes =
               jsonMapper.readValue(rs.getString("attributes"), AuditAttributes.class);
           auditBuilder.attributes(attributes);
-        } catch (JsonProcessingException ignored) {
+        } catch (JsonProcessingException e) {
+          throw new IllegalStateException("Unable to deserialize audit attributes", e);
         }
 
         return auditBuilder.build();
@@ -229,7 +231,8 @@ public class JdbcAuditRepository implements AuditRepository {
       gzip.close();
 
       result = bos.toByteArray();
-    } catch (IOException ignored) {
+    } catch (IOException e) {
+      throw new IllegalStateException("Unable to compress audit data", e);
     }
 
     return result;
@@ -248,7 +251,8 @@ public class JdbcAuditRepository implements AuditRepository {
       gzip.close();
 
       result = new String(bytes, StandardCharsets.UTF_8);
-    } catch (IOException ignored) {
+    } catch (IOException e) {
+      throw new IllegalStateException("Unable to decompress audit data", e);
     }
 
     return result;
