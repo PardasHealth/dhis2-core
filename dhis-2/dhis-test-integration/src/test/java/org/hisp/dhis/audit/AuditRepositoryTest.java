@@ -32,6 +32,7 @@ package org.hisp.dhis.audit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.collect.Sets;
@@ -539,6 +540,114 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
     assertEquals("This is a message", persistedAudit.getData());
     assertNotNull(persistedAudit.getAttributes());
     assertEquals("a.b.c", persistedAudit.getAttributes().get("path"));
+  }
+
+
+  @Test
+  void testAuditTimestampPreservesMicroseconds() {
+    LocalDateTime timestamp = LocalDateTime.of(2026, 10, 20, 13, 14, 15, 123456000);
+    String uid = CodeGenerator.generateUid();
+    Audit audit =
+        Audit.builder()
+            .auditType(AuditType.CREATE)
+            .auditScope(AuditScope.AGGREGATE)
+            .createdAt(timestamp)
+            .createdBy("test-user")
+            .klass(DataElement.class.getName())
+            .uid(uid)
+            .code(CodeGenerator.generateUid())
+            .data("{}")
+            .build();
+    auditRepository.save(audit);
+    List<Audit> found = auditRepository.query(AuditQuery.builder().uid(Sets.newHashSet(uid)).build());
+    assertEquals(1, found.size());
+    assertEquals(timestamp, found.get(0).getCreatedAt());
+  }
+
+  @Test
+  void testAuditAttributeQueryTreatsSqlMetacharactersAsData() {
+    String uid = CodeGenerator.generateUid();
+    AuditAttributes attributes = new AuditAttributes();
+    attributes.put("key' OR 1=1 --", "value' OR 1=1 --");
+    Audit audit =
+        Audit.builder()
+            .auditType(AuditType.CREATE)
+            .auditScope(AuditScope.AGGREGATE)
+            .createdAt(LocalDateTime.of(2026, 10, 20, 13, 14))
+            .createdBy("test-user")
+            .klass(DataElement.class.getName())
+            .uid(uid)
+            .code(CodeGenerator.generateUid())
+            .attributes(attributes)
+            .data("{}")
+            .build();
+    auditRepository.save(audit);
+    List<Audit> found =
+        auditRepository.query(
+            AuditQuery.builder().uid(Sets.newHashSet(uid)).auditAttributes(attributes).build());
+    assertEquals(1, found.size());
+    assertEquals(uid, found.get(0).getUid());
+    AuditAttributes mismatch = new AuditAttributes();
+    mismatch.put("key' OR 1=1 --", "different' OR 1=1 --");
+    assertTrue(
+        auditRepository.query(AuditQuery.builder().auditAttributes(mismatch).build()).isEmpty());
+  }
+
+  @Test
+  void testAuditBulkDeleteRejectsUnboundedQueriesAndPreservesRows() {
+    String uid = CodeGenerator.generateUid();
+    Audit audit =
+        Audit.builder()
+            .auditType(AuditType.CREATE)
+            .auditScope(AuditScope.AGGREGATE)
+            .createdAt(LocalDateTime.of(2026, 10, 20, 13, 14))
+            .createdBy("test-user")
+            .klass(DataElement.class.getName())
+            .uid(uid)
+            .code(CodeGenerator.generateUid())
+            .data("{}")
+            .build();
+    auditRepository.save(audit);
+    assertThrows(IllegalArgumentException.class, () -> auditRepository.delete(AuditQuery.builder().build()));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> auditRepository.delete(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            auditRepository.delete(
+                AuditQuery.builder()
+                    .auditType(Sets.newHashSet(AuditType.CREATE))
+                    .range(AuditQuery.range(LocalDateTime.of(2026, 1, 1), LocalDateTime.of(2027, 1, 1)))
+                    .build()));
+    assertEquals(
+        1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+  }
+
+  @Test
+  void testAuditBulkDeleteWithBoundedUidDoesNotDeleteOtherRows() {
+    String targetUid = CodeGenerator.generateUid();
+    String otherUid = CodeGenerator.generateUid();
+    for (String uid : List.of(targetUid, otherUid)) {
+      auditRepository.save(
+          Audit.builder()
+              .auditType(AuditType.CREATE)
+              .auditScope(AuditScope.AGGREGATE)
+              .createdAt(LocalDateTime.of(2026, 10, 20, 13, 14))
+              .createdBy("test-user")
+              .klass(DataElement.class.getName())
+              .uid(uid)
+              .code(CodeGenerator.generateUid())
+              .data("{}")
+              .build());
+    }
+    auditRepository.delete(
+        AuditQuery.builder()
+            .uid(Sets.newHashSet(targetUid))
+            .range(AuditQuery.range(LocalDateTime.of(2026, 10, 20), LocalDateTime.of(2026, 10, 21)))
+            .build());
+    assertEquals(0, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(targetUid)).build()));
+    assertEquals(1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(otherUid)).build()));
   }
 
   @Test
