@@ -34,13 +34,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.DataAccessResourceFailureException;
 
 class DefaultAuditServiceFailureTest {
   @Test
   void auditWriteFailurePropagatesToCaller() {
-    DataAccessResourceFailureException databaseFailure =
-        new DataAccessResourceFailureException("simulated audit database outage");
+    IllegalStateException databaseFailure =
+        new IllegalStateException("simulated audit database outage");
     AuditRepository failingRepository =
         (AuditRepository)
             Proxy.newProxyInstance(
@@ -54,8 +53,8 @@ class DefaultAuditServiceFailureTest {
                 });
 
     DefaultAuditService service = new DefaultAuditService(failingRepository);
-    DataAccessResourceFailureException thrown =
-        assertThrows(DataAccessResourceFailureException.class, () -> service.addAudit(null));
+    IllegalStateException thrown =
+        assertThrows(IllegalStateException.class, () -> service.addAudit(null));
     assertSame(databaseFailure, thrown);
   }
 }
