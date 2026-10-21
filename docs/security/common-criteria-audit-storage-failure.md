@@ -13,7 +13,7 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 
 ## Important limitations
 
-- `ArtemisConfig.jmsTopicTemplate` explicitly sets `DeliveryMode.NON_PERSISTENT`; audit topics are therefore **not established as durable**.
+- Previously, `ArtemisConfig.jmsTopicTemplate` set `DeliveryMode.NON_PERSISTENT`. This PR changes it to `DeliveryMode.PERSISTENT`, but that alone does **not** establish durable topic subscriptions or broker restart recovery.
 - `ArtemisConfig.jmsListenerContainerFactory` does not explicitly configure a transacted listener session, client acknowledgment, durable subscription, or recovery policy. Propagating an exception alone **does not prove broker redelivery**.
 - Embedded Artemis config defines DLQ and ExpiryQueue, but this does not prove that audit messages will be routed to either.
 - The producer can optionally use an in-memory queue (`AUDIT_USE_IN_MEMORY_QUEUE_ENABLED`); its crash-loss behavior remains to be tested.
