@@ -75,5 +75,24 @@ class AbstractAuditConsumerFailureTest {
     assertSame(databaseFailure, thrown.getCause());
   }
 
+  @Test
+  void malformedAuditPayloadIsNotSilentlyAcknowledged() {
+    TextMessage message =
+        (TextMessage)
+            Proxy.newProxyInstance(
+                TextMessage.class.getClassLoader(),
+                new Class<?>[] {TextMessage.class},
+                (proxy, method, args) -> {
+                  if (method.getName().equals("getText")) {
+                    return "{invalid-json";
+                  }
+                  throw new UnsupportedOperationException(method.getName());
+                });
+    TestConsumer consumer = new TestConsumer();
+    consumer.objectMapper = new ObjectMapper();
+
+    assertThrows(IllegalArgumentException.class, () -> consumer._consume(message));
+  }
+
   private static final class TestConsumer extends AbstractAuditConsumer {}
 }
