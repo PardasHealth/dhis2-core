@@ -61,7 +61,7 @@ class AbstractAuditConsumerFailureTest {
                 new Class<?>[] {TextMessage.class},
                 (proxy, method, args) -> {
                   if (method.getName().equals("getText")) {
-                    return "{\\"auditType\\":\\"CREATE\\"}";
+                    return "{\"auditType\":\"CREATE\"}";
                   }
                   throw new UnsupportedOperationException(method.getName());
                 });
