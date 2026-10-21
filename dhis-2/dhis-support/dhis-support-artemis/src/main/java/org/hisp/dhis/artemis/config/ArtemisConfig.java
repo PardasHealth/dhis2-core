@@ -188,6 +188,30 @@ public class ArtemisConfig {
       config.setPagingDirectory(dataDir + "/artemis/paging");
     }
 
+    configureAuditRedelivery(config);
+
+    config.addAddressConfiguration(
+        new CoreAddressConfiguration()
+            .setName("DLQ")
+            .addRoutingType(RoutingType.ANYCAST)
+            .addQueueConfiguration(
+                new CoreQueueConfiguration().setName("DLQ").setRoutingType(RoutingType.ANYCAST)));
+
+    config.addAddressConfiguration(
+        new CoreAddressConfiguration()
+            .setName("ExpiryQueue")
+            .addRoutingType(RoutingType.ANYCAST)
+            .addQueueConfiguration(
+                new CoreQueueConfiguration()
+                    .setName("ExpiryQueue")
+                    .setRoutingType(RoutingType.ANYCAST)));
+
+    server.setConfiguration(config);
+
+    return server;
+  }
+
+  static void configureAuditRedelivery(org.apache.activemq.artemis.core.config.Configuration config) {
     config.addAddressesSetting(
         "#",
         new AddressSettings()
@@ -212,25 +236,6 @@ public class ArtemisConfig {
               .setRedeliveryDelay(1000L));
     }
 
-    config.addAddressConfiguration(
-        new CoreAddressConfiguration()
-            .setName("DLQ")
-            .addRoutingType(RoutingType.ANYCAST)
-            .addQueueConfiguration(
-                new CoreQueueConfiguration().setName("DLQ").setRoutingType(RoutingType.ANYCAST)));
-
-    config.addAddressConfiguration(
-        new CoreAddressConfiguration()
-            .setName("ExpiryQueue")
-            .addRoutingType(RoutingType.ANYCAST)
-            .addQueueConfiguration(
-                new CoreQueueConfiguration()
-                    .setName("ExpiryQueue")
-                    .setRoutingType(RoutingType.ANYCAST)));
-
-    server.setConfiguration(config);
-
-    return server;
   }
 
   @Bean
