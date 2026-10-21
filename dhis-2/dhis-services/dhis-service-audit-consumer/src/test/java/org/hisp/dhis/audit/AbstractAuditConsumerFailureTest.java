@@ -75,10 +75,5 @@ class AbstractAuditConsumerFailureTest {
     assertSame(databaseFailure, thrown.getCause());
   }
 
-  private static final class TestConsumer extends AbstractAuditConsumer {
-    @Override
-    public void consume(TextMessage message) {
-      _consume(message);
-    }
-  }
+  private static final class TestConsumer extends AbstractAuditConsumer {}
 }
