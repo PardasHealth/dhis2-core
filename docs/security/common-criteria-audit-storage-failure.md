@@ -9,7 +9,7 @@ Status: **partial source-level evidence only**. No claim of Common Criteria conf
 3. When `AUDIT_DATABASE` is enabled, `_consume` invokes `AuditService.addAudit`.
 4. `DefaultAuditService.addAudit` delegates to `JdbcAuditRepository.save`, which calls `SimpleJdbcInsert.executeAndReturnKey`.
 
-Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions and logged them without rethrowing. This can make a listener invocation appear successful even though the audit row was not saved. The PR rethrows unexpected processing failures after logging. A separate `IOException` catch for message deserialization remains log-only; malformed payload disposition requires a defined dead-letter policy.
+Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions and logged them without rethrowing. This can make a listener invocation appear successful even though the audit row was not saved. The PR rethrows unexpected processing failures after logging. Malformed payload deserialization failures are now rethrown as `IllegalArgumentException`; poison-message disposition still requires a defined dead-letter policy and bounded redelivery.
 
 ## Important limitations
 
@@ -31,5 +31,5 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 ## Evidence in this PR
 
 - `DefaultAuditServiceFailureTest` verifies that service-layer write failures propagate.
-- `AbstractAuditConsumerFailureTest` verifies that a persistence exception escapes the consumer method.
+- `AbstractAuditConsumerFailureTest` verifies that persistence exceptions and malformed payload errors escape the consumer method.
 - Both are unit-level checks. They **do not** exercise a real Artemis broker or PostgreSQL outage.
