@@ -139,7 +139,6 @@ public class ArtemisConfig {
     // generating an independent copy of each audit event per node.
     factory.setSubscriptionDurable(true);
     factory.setSubscriptionShared(true);
-    factory.setClientId("dhis2-audit-consumer");
     // 1 forces the listener to use only one consumer, to avoid duplicated
     // messages
     factory.setConcurrency("1");
