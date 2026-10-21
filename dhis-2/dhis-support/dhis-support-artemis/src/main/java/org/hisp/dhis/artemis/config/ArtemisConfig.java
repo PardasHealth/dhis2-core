@@ -211,7 +211,8 @@ public class ArtemisConfig {
     return server;
   }
 
-  static void configureAuditRedelivery(org.apache.activemq.artemis.core.config.Configuration config) {
+  static void configureAuditRedelivery(
+      org.apache.activemq.artemis.core.config.Configuration config) {
     config.addAddressesSetting(
         "#",
         new AddressSettings()
@@ -235,7 +236,6 @@ public class ArtemisConfig {
               .setMaxDeliveryAttempts(5)
               .setRedeliveryDelay(1000L));
     }
-
   }
 
   @Bean
