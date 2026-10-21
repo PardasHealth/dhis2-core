@@ -192,7 +192,11 @@ public class ArtemisConfig {
         "#",
         new AddressSettings()
             .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
-            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue")));
+            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue"))
+            // Bound poison-message redelivery; after five unsuccessful deliveries,
+            // Artemis routes the message to the configured dead-letter address.
+            .setMaxDeliveryAttempts(5)
+            .setRedeliveryDelay(1000L));
 
     config.addAddressConfiguration(
         new CoreAddressConfiguration()
