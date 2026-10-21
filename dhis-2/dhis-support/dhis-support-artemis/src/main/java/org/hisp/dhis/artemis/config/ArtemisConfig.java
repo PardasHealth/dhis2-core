@@ -131,6 +131,9 @@ public class ArtemisConfig {
     // set to true, since we only use topics and we want to resolve names to
     // topic destination
     factory.setPubSubDomain(true);
+    // Commit the JMS receive only after the audit listener completes successfully.
+    // A listener exception rolls the session back instead of acknowledging the message.
+    factory.setSessionTransacted(true);
     // 1 forces the listener to use only one consumer, to avoid duplicated
     // messages
     factory.setConcurrency("1");
