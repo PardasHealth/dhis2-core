@@ -101,7 +101,8 @@ public class ArtemisConfig {
   public JmsTemplate jmsTopicTemplate(
       ConnectionFactory connectionFactory, NameDestinationResolver nameDestinationResolver) {
     JmsTemplate template = new JmsTemplate(connectionFactory);
-    template.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+    // Audit messages must survive broker restart when broker persistence is enabled.
+    template.setDeliveryMode(DeliveryMode.PERSISTENT);
     template.setDestinationResolver(nameDestinationResolver);
     // set to true, since we only use topics and we want to resolve names to
     // topic destination
@@ -130,6 +131,14 @@ public class ArtemisConfig {
     // set to true, since we only use topics and we want to resolve names to
     // topic destination
     factory.setPubSubDomain(true);
+    // Commit the JMS receive only after the audit listener completes successfully.
+    // A listener exception rolls the session back instead of acknowledging the message.
+    factory.setSessionTransacted(true);
+    // Each audit topic listener uses its own stable subscription name.
+    // Shared durable subscriptions allow multiple application nodes to consume without
+    // generating an independent copy of each audit event per node.
+    factory.setSubscriptionDurable(true);
+    factory.setSubscriptionShared(true);
     // 1 forces the listener to use only one consumer, to avoid duplicated
     // messages
     factory.setConcurrency("1");

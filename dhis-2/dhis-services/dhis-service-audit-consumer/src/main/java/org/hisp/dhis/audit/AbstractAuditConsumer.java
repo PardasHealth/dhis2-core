@@ -69,8 +69,10 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
       log.error(
           "An error occurred de-serializing the message payload. The message can not be de-serialized to an Audit object.",
           e);
+      throw new IllegalArgumentException("Invalid audit message payload", e);
     } catch (Exception e) {
       log.error("An error occurred persisting an audit message", e);
+      throw new IllegalStateException("Audit message processing failed", e);
     }
   }
 }
