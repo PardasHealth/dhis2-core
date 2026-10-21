@@ -14,7 +14,7 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 ## Important limitations
 
 - Previously, `ArtemisConfig.jmsTopicTemplate` set `DeliveryMode.NON_PERSISTENT`. This PR changes it to `DeliveryMode.PERSISTENT`, but that alone does **not** establish durable topic subscriptions or broker restart recovery.
-- This PR configures `ArtemisConfig.jmsListenerContainerFactory` with `setSessionTransacted(true)`, allowing the JMS receive to roll back on listener failure. However, it still does **not** configure a durable topic subscription or verify broker redelivery/recovery. Transactional acknowledgment alone cannot protect messages when no durable subscription exists.
+- This PR configures `ArtemisConfig.jmsListenerContainerFactory` with `setSessionTransacted(true)`, allowing the JMS receive to roll back on listener failure. The listener factory now also requests shared durable subscriptions via `setSubscriptionDurable(true)` and `setSubscriptionShared(true)`. These settings require broker-backed verification of subscription naming, cluster behavior and redelivery. Transactional acknowledgment alone cannot establish recovery.
 - Embedded Artemis config defines DLQ and ExpiryQueue, but this does not prove that audit messages will be routed to either.
 - The producer can optionally use an in-memory queue (`AUDIT_USE_IN_MEMORY_QUEUE_ENABLED`); its crash-loss behavior remains to be tested.
 - No verified storage capacity threshold, alert delivery, retry bound, poison-message isolation, or post-restart replay evidence exists.
@@ -23,7 +23,7 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 
 1. Define the Security Target's permitted behavior on full storage and database outage (block operations, preserve pending audit messages, or explicitly accept loss).
 2. Test database outage and storage exhaustion with event IDs and compare published, consumed, persisted and dead-letter counts.
-3. Establish broker-side durable topic subscriptions or durable queues and bounded redelivery with DLQ. Persistent delivery and transacted listener sessions are configured in this PR, but need broker-backed failure, recovery and restart tests.
+3. Verify that the configured shared durable topic subscriptions are created correctly for all four audit destinations, including multiple application nodes, and establish bounded redelivery with DLQ. Persistent delivery and transacted listener sessions are configured in this PR, but need broker-backed failure, recovery and restart tests.
 4. Test invalid payloads separately from transient database failures; ensure malformed messages cannot create infinite retries or disappear without evidence.
 5. Verify alert thresholds, alert delivery and operator runbooks; document capacity limits and retention.
 6. Check the audit feature flags for configurations where database persistence is disabled.
