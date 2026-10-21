@@ -71,6 +71,7 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
           e);
     } catch (Exception e) {
       log.error("An error occurred persisting an audit message", e);
+      throw new IllegalStateException("Audit message processing failed", e);
     }
   }
 }
