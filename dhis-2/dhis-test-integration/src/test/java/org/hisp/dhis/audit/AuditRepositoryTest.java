@@ -659,7 +659,8 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
             .data("{}")
             .build();
     auditRepository.save(audit);
-    assertThrows(IllegalArgumentException.class, () -> auditRepository.delete(AuditQuery.builder().build()));
+    assertThrows(
+        IllegalArgumentException.class, () -> auditRepository.delete(AuditQuery.builder().build()));
     assertThrows(
         IllegalArgumentException.class,
         () -> auditRepository.delete(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
@@ -669,21 +670,22 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
             auditRepository.delete(
                 AuditQuery.builder()
                     .auditType(Sets.newHashSet(AuditType.CREATE))
-                    .range(AuditQuery.range(LocalDateTime.of(2026, 1, 1, 0, 0), LocalDateTime.of(2027, 1, 1, 0, 0)))
+                    .range(
+                        AuditQuery.range(
+                            LocalDateTime.of(2026, 1, 1, 0, 0), LocalDateTime.of(2027, 1, 1, 0, 0)))
                     .build()));
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> auditRepository.delete((AuditQuery) null));
+    assertThrows(IllegalArgumentException.class, () -> auditRepository.delete((AuditQuery) null));
     assertThrows(
         IllegalArgumentException.class,
         () ->
             auditRepository.delete(
                 AuditQuery.builder()
                     .uid(Sets.newHashSet(uid))
-                    .range(AuditQuery.range(LocalDateTime.of(2027, 1, 1, 0, 0), LocalDateTime.of(2026, 1, 1, 0, 0)))
+                    .range(
+                        AuditQuery.range(
+                            LocalDateTime.of(2027, 1, 1, 0, 0), LocalDateTime.of(2026, 1, 1, 0, 0)))
                     .build()));
-    assertEquals(
-        1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+    assertEquals(1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
   }
 
   @Test
@@ -706,7 +708,9 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
     auditRepository.delete(
         AuditQuery.builder()
             .uid(Sets.newHashSet(targetUid))
-            .range(AuditQuery.range(LocalDateTime.of(2026, 10, 20, 0, 0), LocalDateTime.of(2026, 10, 21, 0, 0)))
+            .range(
+                AuditQuery.range(
+                    LocalDateTime.of(2026, 10, 20, 0, 0), LocalDateTime.of(2026, 10, 21, 0, 0)))
             .build());
     assertEquals(0, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(targetUid)).build()));
     assertEquals(1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(otherUid)).build()));
