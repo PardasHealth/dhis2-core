@@ -4,7 +4,7 @@
 
 The embedded broker configures a dead-letter address (`DLQ`), expiry address
 (`ExpiryQueue`), five maximum delivery attempts, and a one-second redelivery delay.
-These settings apply to the embedded broker's `#` address match.
+The retry limit and delay are applied only to the four named audit topics; the `#` fallback retains the existing DLQ and expiry address settings for other destinations.
 
 A listener exception should roll back a transacted JMS receive. After repeated
 unsuccessful deliveries, the broker is configured to route the message to the
@@ -32,9 +32,8 @@ including `dead-letter-address`, `max-delivery-attempts`, and
 
 ## Risk notes
 
-The `#` setting also applies to non-audit destinations on the embedded
-broker. A narrower audit-specific address policy should be used if other
-message types require different retry semantics. Broker persistence must
+The audit-specific address matches avoid changing retry limits for tracker job
+queues and other non-audit destinations. Broker persistence must
 be enabled and backed by durable storage for crash recovery. A dead-letter
 queue without monitoring and recovery procedures is not sufficient for
 Common Criteria compliance.
