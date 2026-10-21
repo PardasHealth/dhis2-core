@@ -59,6 +59,8 @@ class ArtemisAuditRedeliveryTest {
     AddressSettings fallback = configuration.getAddressesSettings().get("#");
     assertEquals("DLQ", fallback.getDeadLetterAddress().toString());
     assertEquals("ExpiryQueue", fallback.getExpiryAddress().toString());
-    assertEquals(false, configuration.getAddressesSettings().containsKey(Topics.TRACKER_IMPORT_JOB_TOPIC_NAME));
+    assertEquals(
+        false,
+        configuration.getAddressesSettings().containsKey(Topics.TRACKER_IMPORT_JOB_TOPIC_NAME));
   }
 }
