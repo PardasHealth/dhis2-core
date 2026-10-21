@@ -73,7 +73,8 @@ class ArtemisAuditBrokerIntegrationTest {
       Topic auditTopic;
       try (Session session = connection.createSession(true, Session.SESSION_TRANSACTED)) {
         auditTopic = session.createTopic(Topics.API_TOPIC_NAME);
-        try (MessageConsumer consumer = session.createSharedDurableConsumer(auditTopic, "cc-audit");
+        try (MessageConsumer consumer =
+                session.createSharedDurableConsumer(auditTopic, "cc-audit");
             MessageProducer producer = session.createProducer(auditTopic)) {
           producer.send(session.createTextMessage("audit-persistence-failure"));
           session.commit();
