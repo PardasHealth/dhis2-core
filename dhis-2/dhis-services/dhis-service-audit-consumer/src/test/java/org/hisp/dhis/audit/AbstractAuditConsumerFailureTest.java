@@ -36,13 +36,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.TextMessage;
 import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.DataAccessResourceFailureException;
 
 class AbstractAuditConsumerFailureTest {
   @Test
   void databaseFailureEscapesConsumerMethod() {
-    DataAccessResourceFailureException databaseFailure =
-        new DataAccessResourceFailureException("simulated audit storage outage");
+    IllegalStateException databaseFailure =
+        new IllegalStateException("simulated audit storage outage");
     AuditService failingService =
         (AuditService)
             Proxy.newProxyInstance(
