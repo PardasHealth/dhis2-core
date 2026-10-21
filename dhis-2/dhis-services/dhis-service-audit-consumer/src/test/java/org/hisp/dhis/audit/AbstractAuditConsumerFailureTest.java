@@ -40,7 +40,7 @@ import org.springframework.dao.DataAccessResourceFailureException;
 
 class AbstractAuditConsumerFailureTest {
   @Test
-  void databaseFailureEscapesListenerForBrokerRecovery() {
+  void databaseFailureEscapesConsumerMethod() {
     DataAccessResourceFailureException databaseFailure =
         new DataAccessResourceFailureException("simulated audit storage outage");
     AuditService failingService =
