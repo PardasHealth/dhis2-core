@@ -101,7 +101,8 @@ public class ArtemisConfig {
   public JmsTemplate jmsTopicTemplate(
       ConnectionFactory connectionFactory, NameDestinationResolver nameDestinationResolver) {
     JmsTemplate template = new JmsTemplate(connectionFactory);
-    template.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+    // Audit messages must survive broker restart when broker persistence is enabled.
+    template.setDeliveryMode(DeliveryMode.PERSISTENT);
     template.setDestinationResolver(nameDestinationResolver);
     // set to true, since we only use topics and we want to resolve names to
     // topic destination
