@@ -37,7 +37,10 @@ permissions:
 
 jobs:
   sonarqube:
-    if: github.actor != 'dependabot[bot]'
+    # The upstream DHIS2 SonarCloud credential is unavailable in this fork.
+    # Skip analysis when the repository has no configured credential rather than
+    # failing unrelated pull-request checks; configure the repository secret to enable it.
+    if: github.actor != 'dependabot[bot]' && vars.SONARCLOUD_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
