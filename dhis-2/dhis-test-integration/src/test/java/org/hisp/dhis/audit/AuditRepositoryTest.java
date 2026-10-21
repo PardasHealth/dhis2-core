@@ -545,7 +545,6 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
     assertEquals("a.b.c", persistedAudit.getAttributes().get("path"));
   }
 
-
   @Test
   void testCorruptCompressedAuditPayloadFailsExplicitly() {
     String uid = CodeGenerator.generateUid();
@@ -562,9 +561,7 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
                 .data("valid compressed audit payload")
                 .build());
     jdbcTemplate.update(
-        "UPDATE audit SET data = ? WHERE auditid = ?",
-        new byte[] {0x01, 0x02, 0x03},
-        auditId);
+        "UPDATE audit SET data = ? WHERE auditid = ?", new byte[] {0x01, 0x02, 0x03}, auditId);
     assertThrows(
         IllegalStateException.class,
         () -> auditRepository.query(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
@@ -586,7 +583,8 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
             .data("{}")
             .build();
     auditRepository.save(audit);
-    List<Audit> found = auditRepository.query(AuditQuery.builder().uid(Sets.newHashSet(uid)).build());
+    List<Audit> found =
+        auditRepository.query(AuditQuery.builder().uid(Sets.newHashSet(uid)).build());
     assertEquals(1, found.size());
     assertEquals(timestamp, found.get(0).getCreatedAt());
   }
@@ -638,16 +636,12 @@ class AuditRepositoryTest extends PostgresIntegrationTestBase {
 
     String attack = "' OR 1=1 --";
     assertEquals(
-        0,
-        auditRepository.count(
-            AuditQuery.builder().uid(Sets.newHashSet(attack)).build()));
+        0, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(attack)).build()));
     assertTrue(
-        auditRepository.query(
-            AuditQuery.builder().code(Sets.newHashSet(attack)).build()).isEmpty());
-    assertEquals(
-        1,
-        auditRepository.count(
-            AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
+        auditRepository
+            .query(AuditQuery.builder().code(Sets.newHashSet(attack)).build())
+            .isEmpty());
+    assertEquals(1, auditRepository.count(AuditQuery.builder().uid(Sets.newHashSet(uid)).build()));
   }
 
   @Test
