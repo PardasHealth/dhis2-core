@@ -192,11 +192,25 @@ public class ArtemisConfig {
         "#",
         new AddressSettings()
             .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
-            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue"))
-            // Bound poison-message redelivery; after five unsuccessful deliveries,
-            // Artemis routes the message to the configured dead-letter address.
-            .setMaxDeliveryAttempts(5)
-            .setRedeliveryDelay(1000L));
+            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue")));
+
+    // Keep retry limits specific to audit topics: tracker job queues have
+    // different failure and recovery requirements.
+    for (String auditTopic :
+        new String[] {
+          Topics.METADATA_TOPIC_NAME,
+          Topics.AGGREGATE_TOPIC_NAME,
+          Topics.TRACKER_TOPIC_NAME,
+          Topics.API_TOPIC_NAME
+        }) {
+      config.addAddressesSetting(
+          auditTopic,
+          new AddressSettings()
+              .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
+              .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue"))
+              .setMaxDeliveryAttempts(5)
+              .setRedeliveryDelay(1000L));
+    }
 
     config.addAddressConfiguration(
         new CoreAddressConfiguration()
