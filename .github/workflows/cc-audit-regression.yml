@@ -48,7 +48,7 @@ jobs:
             -Dtest=AuditRepositoryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
-      - name: Verify both test classes actually executed
+      - name: Verify all four audit test classes actually executed
         if: success()
         working-directory: dhis-2
         run: |
