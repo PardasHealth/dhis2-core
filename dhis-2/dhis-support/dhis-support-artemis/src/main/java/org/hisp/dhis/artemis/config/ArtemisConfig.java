@@ -134,6 +134,12 @@ public class ArtemisConfig {
     // Commit the JMS receive only after the audit listener completes successfully.
     // A listener exception rolls the session back instead of acknowledging the message.
     factory.setSessionTransacted(true);
+    // Each audit topic listener uses its own stable subscription name.
+    // Shared durable subscriptions allow multiple application nodes to consume without
+    // generating an independent copy of each audit event per node.
+    factory.setSubscriptionDurable(true);
+    factory.setSubscriptionShared(true);
+    factory.setClientId("dhis2-audit-consumer");
     // 1 forces the listener to use only one consumer, to avoid duplicated
     // messages
     factory.setConcurrency("1");
