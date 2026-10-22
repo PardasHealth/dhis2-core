@@ -188,11 +188,7 @@ public class ArtemisConfig {
       config.setPagingDirectory(dataDir + "/artemis/paging");
     }
 
-    config.addAddressesSetting(
-        "#",
-        new AddressSettings()
-            .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
-            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue")));
+    configureAuditRedelivery(config);
 
     config.addAddressConfiguration(
         new CoreAddressConfiguration()
@@ -213,6 +209,33 @@ public class ArtemisConfig {
     server.setConfiguration(config);
 
     return server;
+  }
+
+  static void configureAuditRedelivery(
+      org.apache.activemq.artemis.core.config.Configuration config) {
+    config.addAddressesSetting(
+        "#",
+        new AddressSettings()
+            .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
+            .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue")));
+
+    // Keep retry limits specific to audit topics: tracker job queues have
+    // different failure and recovery requirements.
+    for (String auditTopic :
+        new String[] {
+          Topics.METADATA_TOPIC_NAME,
+          Topics.AGGREGATE_TOPIC_NAME,
+          Topics.TRACKER_TOPIC_NAME,
+          Topics.API_TOPIC_NAME
+        }) {
+      config.addAddressesSetting(
+          auditTopic,
+          new AddressSettings()
+              .setDeadLetterAddress(SimpleString.toSimpleString("DLQ"))
+              .setExpiryAddress(SimpleString.toSimpleString("ExpiryQueue"))
+              .setMaxDeliveryAttempts(5)
+              .setRedeliveryDelay(1000L));
+    }
   }
 
   @Bean
