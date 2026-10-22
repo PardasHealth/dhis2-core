@@ -40,6 +40,7 @@ import jakarta.jms.MessageProducer;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
+import java.nio.file.Path;
 import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.core.config.CoreAddressConfiguration;
 import org.apache.activemq.artemis.core.config.CoreQueueConfiguration;
@@ -48,6 +49,7 @@ import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
 import org.hisp.dhis.artemis.Topics;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class ArtemisAuditBrokerIntegrationTest {
   @Test
@@ -94,6 +96,61 @@ class ArtemisAuditBrokerIntegrationTest {
         Message deadLetter = deadLetters.receive(5000);
         assertNotNull(deadLetter, "Failed audit message must reach the dead-letter queue");
         assertEquals("audit-persistence-failure", ((TextMessage) deadLetter).getText());
+      }
+    } finally {
+      broker.stop();
+    }
+  }
+
+  @Test
+  void durableAuditMessageSurvivesBrokerRestart(@TempDir Path storage) throws Exception {
+    ConfigurationImpl config = new ConfigurationImpl();
+    config.setSecurityEnabled(false);
+    config.setPersistenceEnabled(true);
+    config.setJournalDirectory(storage.resolve("journal").toString());
+    config.setBindingsDirectory(storage.resolve("bindings").toString());
+    config.setPagingDirectory(storage.resolve("paging").toString());
+    config.setLargeMessagesDirectory(storage.resolve("large-messages").toString());
+    config.addAcceptorConfiguration("in-vm", "vm://0");
+    ArtemisConfig.configureAuditRedelivery(config);
+
+    EmbeddedActiveMQ broker = new EmbeddedActiveMQ();
+    broker.setConfiguration(config);
+    broker.start();
+    try {
+      try (ActiveMQJMSConnectionFactory factory = new ActiveMQJMSConnectionFactory("vm://0");
+          Connection connection = factory.createConnection()) {
+        connection.start();
+        try (Session session = connection.createSession(true, Session.SESSION_TRANSACTED)) {
+          Topic topic = session.createTopic(Topics.API_TOPIC_NAME);
+          try (MessageConsumer subscription =
+                  session.createSharedDurableConsumer(topic, "cc-restart");
+              MessageProducer producer = session.createProducer(topic)) {
+            producer.setDeliveryMode(jakarta.jms.DeliveryMode.PERSISTENT);
+            producer.send(session.createTextMessage("persistent-audit-event"));
+            session.commit();
+          }
+        }
+      }
+      broker.stop();
+
+      EmbeddedActiveMQ restarted = new EmbeddedActiveMQ();
+      restarted.setConfiguration(config);
+      restarted.start();
+      try (ActiveMQJMSConnectionFactory factory = new ActiveMQJMSConnectionFactory("vm://0");
+          Connection connection = factory.createConnection()) {
+        connection.start();
+        try (Session session = connection.createSession(true, Session.SESSION_TRANSACTED);
+            MessageConsumer subscription =
+                session.createSharedDurableConsumer(
+                    session.createTopic(Topics.API_TOPIC_NAME), "cc-restart")) {
+          Message restored = subscription.receive(5000);
+          assertNotNull(restored, "Persistent audit event must survive a broker restart");
+          assertEquals("persistent-audit-event", ((TextMessage) restored).getText());
+          session.commit();
+        }
+      } finally {
+        restarted.stop();
       }
     } finally {
       broker.stop();
