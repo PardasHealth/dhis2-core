@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - 'dhis-2/dhis-support/dhis-support-audit/**'
+      - 'dhis-2/dhis-support/dhis-support-artemis/**'
+      - 'dhis-2/dhis-services/dhis-service-audit-consumer/**'
       - 'dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/**'
       - '.github/workflows/cc-audit-regression.yml'
 
@@ -32,6 +34,13 @@ jobs:
             -Dtest=JdbcAuditRepositoryCompressionTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
+      - name: Execute audit write-failure propagation tests
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-services/dhis-service-audit-consumer -am -Punit-test \
+            -Dtest=DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
+            -Dsurefire.failIfNoSpecifiedTests=false \
+            test
       - name: Execute PostgreSQL audit regression tests
         working-directory: dhis-2
         run: |
@@ -39,7 +48,7 @@ jobs:
             -Dtest=AuditRepositoryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
-      - name: Verify both test classes actually executed
+      - name: Verify all four audit test classes actually executed
         if: success()
         working-directory: dhis-2
         run: |
@@ -50,6 +59,8 @@ jobs:
           expected = {
               "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
               "org.hisp.dhis.audit.AuditRepositoryTest",
+              "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+              "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
           }
           seen = {}
           for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
