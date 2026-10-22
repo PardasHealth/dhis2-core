@@ -33,9 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.nio.file.Path;
-import org.junit.jupiter.api.io.TempDir;
-
 import jakarta.jms.Connection;
 import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
@@ -43,6 +40,7 @@ import jakarta.jms.MessageProducer;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
 import jakarta.jms.Topic;
+import java.nio.file.Path;
 import java.nio.file.Path;
 import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.core.config.CoreAddressConfiguration;
@@ -52,6 +50,7 @@ import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
 import org.hisp.dhis.artemis.Topics;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.io.TempDir;
 
 class ArtemisAuditBrokerIntegrationTest {
@@ -104,6 +103,7 @@ class ArtemisAuditBrokerIntegrationTest {
       broker.stop();
     }
   }
+
   @Test
   void durableAuditMessageSurvivesBrokerRestart(@TempDir Path storage) throws Exception {
     ConfigurationImpl config = new ConfigurationImpl();
@@ -158,5 +158,4 @@ class ArtemisAuditBrokerIntegrationTest {
       broker.stop();
     }
   }
-
 }
