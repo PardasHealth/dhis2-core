@@ -41,6 +41,13 @@ jobs:
             -Dtest=DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
+      - name: Execute embedded Artemis audit broker tests
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-support/dhis-support-artemis -am -Punit-test \
+            -Dtest=ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest \
+            -Dsurefire.failIfNoSpecifiedTests=false \
+            test
       - name: Execute PostgreSQL audit regression tests
         working-directory: dhis-2
         run: |
@@ -48,7 +55,7 @@ jobs:
             -Dtest=AuditRepositoryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
-      - name: Verify all four audit test classes actually executed
+      - name: Verify all six audit test classes actually executed
         if: success()
         working-directory: dhis-2
         run: |
@@ -61,6 +68,8 @@ jobs:
               "org.hisp.dhis.audit.AuditRepositoryTest",
               "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
               "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+              "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
+              "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
           }
           seen = {}
           for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
