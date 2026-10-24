@@ -156,4 +156,57 @@ class ArtemisAuditBrokerIntegrationTest {
       broker.stop();
     }
   }
+
+  @Test
+  void deadLetteredAuditEventCanBeRecoveredAfterFailureIsResolved() throws Exception {
+    ConfigurationImpl config = new ConfigurationImpl();
+    config.setSecurityEnabled(false);
+    config.setPersistenceEnabled(false);
+    config.addAcceptorConfiguration("in-vm", "vm://0");
+    ArtemisConfig.configureAuditRedelivery(config);
+    config.addAddressConfiguration(
+        new CoreAddressConfiguration()
+            .setName("DLQ")
+            .addRoutingType(RoutingType.ANYCAST)
+            .addQueueConfiguration(
+                new CoreQueueConfiguration().setName("DLQ").setRoutingType(RoutingType.ANYCAST)));
+
+    EmbeddedActiveMQ broker = new EmbeddedActiveMQ();
+    broker.setConfiguration(config);
+    broker.start();
+    try (ActiveMQJMSConnectionFactory factory = new ActiveMQJMSConnectionFactory("vm://0");
+        Connection connection = factory.createConnection()) {
+      connection.start();
+      try (Session session = connection.createSession(true, Session.SESSION_TRANSACTED)) {
+        Topic topic = session.createTopic(Topics.API_TOPIC_NAME);
+        try (MessageConsumer subscription =
+                session.createSharedDurableConsumer(topic, "cc-recovery");
+            MessageProducer producer = session.createProducer(topic)) {
+          producer.send(session.createTextMessage("recoverable-audit-event"));
+          session.commit();
+          for (int attempt = 0; attempt < 5; attempt++) {
+            assertNotNull(subscription.receive(5000));
+            session.rollback();
+          }
+
+          try (MessageConsumer deadLetters = session.createConsumer(session.createQueue("DLQ"))) {
+            Message deadLetter = deadLetters.receive(5000);
+            assertNotNull(deadLetter, "Failed audit event must be available for controlled replay");
+            assertEquals("recoverable-audit-event", ((TextMessage) deadLetter).getText());
+            producer.send(session.createTextMessage(((TextMessage) deadLetter).getText()));
+            session.commit();
+          }
+
+          Message recovered = subscription.receive(5000);
+          assertNotNull(recovered, "Replayed audit event must reach the recovered subscription");
+          assertEquals("recoverable-audit-event", ((TextMessage) recovered).getText());
+          session.commit();
+          assertNull(subscription.receive(1000), "Replay must not leave a second queued delivery");
+        }
+      }
+    } finally {
+      broker.stop();
+    }
+  }
+
 }
