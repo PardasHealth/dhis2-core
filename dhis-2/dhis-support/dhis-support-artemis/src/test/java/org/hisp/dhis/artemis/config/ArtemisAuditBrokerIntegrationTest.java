@@ -208,5 +208,4 @@ class ArtemisAuditBrokerIntegrationTest {
       broker.stop();
     }
   }
-
 }
