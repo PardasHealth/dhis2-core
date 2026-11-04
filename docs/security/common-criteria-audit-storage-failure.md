@@ -1,6 +1,6 @@
-# Common Criteria audit storage failure investigation (FAU_STG.3 / FAU_STG.4)
+# Common Criteria audit storage failure investigation (FAU_STG.3 / FAU_STG.4 / FAU_STG.5)
 
-Status: **partial source-level evidence only**. No claim of Common Criteria conformance or end-to-end delivery guarantee.
+Status: **partial source and integrated-test evidence**. The [current integrated checks](common-criteria/audit-delivery-failure-evidence.md) extend the original source investigation below. No claim of Common Criteria conformance or end-to-end delivery guarantee.
 
 ## Confirmed source path
 
@@ -19,7 +19,7 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 - The producer can optionally use an in-memory queue (`AUDIT_USE_IN_MEMORY_QUEUE_ENABLED`); its crash-loss behavior remains to be tested.
 - No verified storage capacity threshold, alert delivery, retry bound, poison-message isolation, or post-restart replay evidence exists.
 
-## Required follow-up before asserting FAU_STG.3 / FAU_STG.4
+## Required follow-up before asserting FAU_STG.3 / FAU_STG.4 / FAU_STG.5
 
 1. Define the Security Target's permitted behavior on full storage and database outage (block operations, preserve pending audit messages, or explicitly accept loss).
 2. Test database outage and storage exhaustion with event IDs and compare published, consumed, persisted and dead-letter counts.
@@ -33,3 +33,11 @@ Before this PR, `AbstractAuditConsumer` caught **all** persistence exceptions an
 - `DefaultAuditServiceFailureTest` verifies that service-layer write failures propagate.
 - `AbstractAuditConsumerFailureTest` verifies that persistence exceptions and malformed payload errors escape the consumer method.
 - Both are unit-level checks. They **do not** exercise a real Artemis broker or PostgreSQL outage.
+
+## 2026 reference and current review
+
+For ISO/IEC 15408-2:2026, availability is FAU_STG.3, possible-loss action is
+FAU_STG.4, and full-storage behavior is FAU_STG.5. See the
+[consolidated traceability matrix](common-criteria-traceability.md) and
+[current verification record](common-criteria-verification.md). Earlier statements
+about absent evidence describe the original investigation, not a new test result.

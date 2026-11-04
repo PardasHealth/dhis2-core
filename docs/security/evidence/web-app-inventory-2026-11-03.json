@@ -1,0 +1,302 @@
+[
+  {
+    "name": "aggregate-data-entry-app",
+    "version": "102.1.6",
+    "url": "https://github.com/d2-ci/aggregate-data-entry-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/aggregate-data-entry-app/commit/9200937eae050290187f4e578da8e80b65bcb233",
+    "etag": "949912304c44fca6e7fd0086313de492c99a06ae739c3ec0fe8dc4ea59ddcf56",
+    "effectiveRef": "master",
+    "sha256": "65e4cbd3b69ab6f08ccb6260a27964e18edcc89a379351f5f3c99ad3b7baf073"
+  },
+  {
+    "name": "approval-app",
+    "version": "100.2.1",
+    "url": "https://github.com/d2-ci/approval-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/approval-app/commit/a3b4a68d0b9a9a3e7ea10eab69e8f98893a5046d",
+    "etag": "6c9fb097336bc94ea595542136f367201f6f8e21244b9640c41e037d76a91604",
+    "effectiveRef": "master",
+    "sha256": "fefa0b4a60010e6a13339a016c1960155afa591330467bea40243a37ce6b6224"
+  },
+  {
+    "name": "app-management-app",
+    "version": "100.5.2",
+    "url": "https://github.com/d2-ci/app-management-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/app-management-app/commit/cbfbbc395d518cd48fa51237a826e05b87cce7d8",
+    "etag": "bc3c1e8177d7b4b113cf2fb28c9587405065ca2d614bba38c40ef0b4b51008ad",
+    "effectiveRef": "master",
+    "sha256": "b9b280e1281f4ff7be42cb5569d54476ec9cb269614eebe17fefc1f0f8fc4157"
+  },
+  {
+    "name": "cache-cleaner-app",
+    "version": "100.2.2",
+    "url": "https://github.com/d2-ci/cache-cleaner-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/cache-cleaner-app/commit/7950abfd9bbfc64cc794daf833a205af03a4432e",
+    "etag": "0c82cb98c03de3aae6717eabe3c5c1be84b796b66648b5429bb0958f8836a9a4",
+    "effectiveRef": "master",
+    "sha256": "107ada09a4679b4a3f2dbd63ffe76dbc99e7297b3bc354e92e4f6ddb30b1149c"
+  },
+  {
+    "name": "capture-app",
+    "version": "107.9.1",
+    "url": "https://github.com/d2-ci/capture-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/capture-app/commit/ffdd30de2cde1b13f102210ff12a908921173f3a",
+    "etag": "6aa34aa691f7f4f2cd27263ddb6ad9ce38c9f97ce2d859e3d016e74e1d32065c",
+    "effectiveRef": "master",
+    "sha256": "dd6f3a8b32db1b710ba1983058a1dd0590697d311ee4e64b69bae18d32b2be98"
+  },
+  {
+    "name": "dashboard-app",
+    "version": "101.7.2",
+    "url": "https://github.com/d2-ci/dashboard-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/dashboard-app/commit/9027021fe7642a461267b8c70abca0286331c5a5",
+    "etag": "caa2075dc910cca6d7cf8cefeed339001b4507f745948b549a185b109e46e013",
+    "effectiveRef": "master",
+    "sha256": "1beea945ec174f8e1749af7a03f2818e28f70a0918c74b0bdd3fac1be36c3cf1"
+  },
+  {
+    "name": "data-administration-app",
+    "version": "100.2.1",
+    "url": "https://github.com/d2-ci/data-administration-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/data-administration-app/commit/618e5cfb149e4efb5a1f8ef75018b2aa7e42738e",
+    "etag": "97053a9ca2574293e4d095742d0e15d2db3cb905d4877dc9063f1d3839003087",
+    "effectiveRef": "master",
+    "sha256": "1e2d920876e2b7c00951745c81bb75c95e2d03eb38b160690d7eb32ce700cf6d"
+  },
+  {
+    "name": "data-visualizer-app",
+    "version": "101.6.5",
+    "url": "https://github.com/d2-ci/data-visualizer-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/data-visualizer-app/commit/87320ffdab01bed7eeed1906cb6387aabf789ca7",
+    "etag": "d350a817db082971682e6be4896a89dd5298565e2817dec0ec360eff0b4314da",
+    "effectiveRef": "master",
+    "sha256": "fdfd24c4c65851c83f51479081088d3b0dc0e5a755adbf1c0871f8e308249882"
+  },
+  {
+    "name": "data-quality-app",
+    "version": "100.0.1",
+    "url": "https://github.com/d2-ci/data-quality-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/data-quality-app/commit/54a3bf8ed25e051fbea00ceef715df81812b3e62",
+    "etag": "891b407a53c250ed0521477ce253cb926a66bb1d1ee6f4f97f380156b2cff301",
+    "effectiveRef": "master",
+    "sha256": "2763e2b33eefa6bcfbe73a86e1ad683df2fc40d7e41403b21de68275b2be9273"
+  },
+  {
+    "name": "datastore-app",
+    "version": "100.5.2",
+    "url": "https://github.com/d2-ci/datastore-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/datastore-app/commit/e0c7d8161bd6bf127007f9a00aa0f7e690315e9f",
+    "etag": "0120b4684e9d4448a241704b1cdb9a109cfa677e14561c679ed959b42a19586c",
+    "effectiveRef": "master",
+    "sha256": "306e9177e64872973ba2fe8e40abe08afe596e966ef3ea0b2e9f0719ac6211ee"
+  },
+  {
+    "name": "event-reports-app",
+    "version": "33.3.4",
+    "url": "https://github.com/d2-ci/event-reports-app#2.43.1",
+    "branch": "2.43.1",
+    "commitUrl": "https://github.com/dhis2/event-reports-app/commit/eca2de608974dd3b05f334e075cd593ed494a8c3",
+    "etag": "8f98ac0cb13081fae75ef22a24ac908668fdaee49ec9417d47e2b53e81c792f9",
+    "effectiveRef": "2.43.1",
+    "sha256": "0f3314e7f62b586ff23f44e568023bfd4df1b2194f63c3cad543367644123070"
+  },
+  {
+    "name": "event-charts-app",
+    "version": "33.2.4",
+    "url": "https://github.com/d2-ci/event-charts-app#2.43.1",
+    "branch": "2.43.1",
+    "commitUrl": "https://github.com/dhis2/event-charts-app/commit/2191e58eea4f9d28c95938cc7e3bac9da90664e4",
+    "etag": "58358eba78eea73d793cc391c943cc2ac7b3b717de2d4cec1e9df6e6cab07aad",
+    "effectiveRef": "2.43.1",
+    "sha256": "e5e9c492e927127159e55f97930b75e657d7d1266ed30f75418a4ad68767f1e1"
+  },
+  {
+    "name": "import-export-app",
+    "version": "101.6.1",
+    "url": "https://github.com/d2-ci/import-export-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/import-export-app/commit/fadd9d26de5c59e09e3bc76ee5db140d19d98e73",
+    "etag": "7984a4e627ade12a21b1d127f90745eeb75c93673b993a607be9df24c72d4bd1",
+    "effectiveRef": "master",
+    "sha256": "24e6a3297834bdea14dbaf89701f2f7736023ff38c4ee258ebd6b9ed48356180"
+  },
+  {
+    "name": "interpretation-app",
+    "version": "1.1.0",
+    "url": "https://github.com/d2-ci/interpretation-app#v1.2.0",
+    "branch": "v1.2.0",
+    "commitUrl": "https://github.com/dhis2/interpretation-app/commit/42cc2a4dd4e09c57e74928c42ecf9d43d390f28e",
+    "etag": "63bb776f9f787110d7f985dca2f78e22eca3fd152581002eb9e635bf93a16ac5",
+    "effectiveRef": "v1.2.0",
+    "sha256": "f54ecc40934e6dafade9fbae4ed5f370c7ab48fdadd79f9e949ddc5f22d0b698"
+  },
+  {
+    "name": "maintenance-app",
+    "version": "32.35.8",
+    "url": "https://github.com/d2-ci/maintenance-app#2.43.1",
+    "branch": "2.43.1",
+    "commitUrl": "https://github.com/dhis2/maintenance-app/commit/1f0a3c7b02d35bf157aaab7d6de3d9329c67ad54",
+    "etag": "f600e970cf95fd2b956026d522b649c797c62c900d4627c3476872d5d2397931",
+    "effectiveRef": "2.43.1",
+    "sha256": "185e6363e7fc5f9288303f54b587195cc60e08fcfc2eeb4dcebbdd9cb3643bba"
+  },
+  {
+    "name": "maps-app",
+    "version": "101.17.7",
+    "url": "https://github.com/d2-ci/maps-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/maps-app/commit/f8a0e0b156c29dfb005339cc8774f462a34b6b3c",
+    "etag": "61d496af1cc9e78d503cb771a8f85b82a34eca456bfb1efd0c158b138b868c8f",
+    "effectiveRef": "master",
+    "sha256": "c481d64d7872dea6bd21cb2fea3ad29f0ee1addcef9053f40b6db66d1a98c9f6"
+  },
+  {
+    "name": "menu-management-app",
+    "version": "100.2.1",
+    "url": "https://github.com/d2-ci/menu-management-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/menu-management-app/commit/8fce9732d49abd28fae34271d80e0c5ff9acfcc2",
+    "etag": "d1a80e3977a7416271ed3867d884db2f80866874e30150dd3f57ac7dc6599ad6",
+    "effectiveRef": "master",
+    "sha256": "0635e7c7fdcb2d22019024f770c09ca30597843fed261dc30832fde36fcaaef8"
+  },
+  {
+    "name": "messaging-app",
+    "version": "100.0.47",
+    "url": "https://github.com/d2-ci/messaging-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/messaging-app/commit/4f3defe93a185ca3d3574769e437df08e8d60d18",
+    "etag": "72f492f18adc246b8c0d09b4d98b05b263f8ce420fd6f4518cef81b06e80a0b8",
+    "effectiveRef": "master",
+    "sha256": "b4966db67afef55dfe6c2ab5ba343e63d7f9859f5fa155241d8e2110af2f48a1"
+  },
+  {
+    "name": "reports-app",
+    "version": "100.2.4",
+    "url": "https://github.com/d2-ci/reports-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/reports-app/commit/8de6281604f32a1002b9dbb0463a95a3724fdcc1",
+    "etag": "7f7b1dd8c81451c9f7cffe6dfd0c79e51277649a05a017db82b8ab0a9fe43bfd",
+    "effectiveRef": "master",
+    "sha256": "517f760274a7fa8a3df05a73ee31d8de53bb7ae40145a20ec9511cd2eb5e8238"
+  },
+  {
+    "name": "scheduler-app",
+    "version": "101.6.27",
+    "url": "https://github.com/d2-ci/scheduler-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/scheduler-app/commit/a95e5d9e2ac5b38e636e5e70419365d12d992af6",
+    "etag": "5415bb064f1ae5b6670c60a8b7d717b9bb6d9b13081cff37117c3e7f162b34dc",
+    "effectiveRef": "master",
+    "sha256": "e955f3f80f4fea849c77a8f546e90c4f6b94158154ed041cb81a03e60ce0defc"
+  },
+  {
+    "name": "sms-configuration-app",
+    "version": "100.0.60",
+    "url": "https://github.com/d2-ci/sms-configuration-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/sms-configuration-app/commit/ced3b542180bcf88b517eef0be1e94446736f2eb",
+    "etag": "93c9cba8e86b5c8c7a53f8a24c427d82ee7c4e715eb2af6420f8e3e426b6e8d4",
+    "effectiveRef": "master",
+    "sha256": "fd5b48ea1b0d6350d5546db317c2cc21c0d96b40c96f0c1c3c69b97cd007754b"
+  },
+  {
+    "name": "settings-app",
+    "version": "100.15.5",
+    "url": "https://github.com/d2-ci/settings-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/settings-app/commit/413654993aaa005f44635b88d5ba078508341000",
+    "etag": "4692ea0f54ff18ded4ba5cae36aadc22b6671e46b1e7f48ae2c19f4b21811ab0",
+    "effectiveRef": "master",
+    "sha256": "a96c39f11054e551a0c13add650a569b3fc07f774b3fac353ce50ef49ac02c21"
+  },
+  {
+    "name": "translations-app",
+    "version": "100.0.13",
+    "url": "https://github.com/d2-ci/translations-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/translations-app/commit/0161b6493409df09d6bfdc76ca6e15e56e9f654b",
+    "etag": "65a41389752e7455d347589ca7d6699ed502f64acc3b68e1a61583fbd849c3c9",
+    "effectiveRef": "master",
+    "sha256": "169e6da25763337cc092d436011e56aa098bbacc84c1213555958125bfd5eb57"
+  },
+  {
+    "name": "usage-analytics-app",
+    "version": "101.1.2",
+    "url": "https://github.com/d2-ci/usage-analytics-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/usage-analytics-app/commit/1c8d66ee37157a28b1033ddd5de6f1c675b547e4",
+    "etag": "282b14a5e7b39ae47477c766a80e18f7d7c17d722fc0294be180c6dbf9d7b9b2",
+    "effectiveRef": "master",
+    "sha256": "7720b5b7820d22a3345f22e8a042a060f296ab0609dd3db7b49e9866938ea13d"
+  },
+  {
+    "name": "user-app",
+    "version": "100.11.2",
+    "url": "https://github.com/d2-ci/user-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/user-app/commit/65f57164ff077c7b9a8014c31309b16c46b29981",
+    "etag": "6046377ca4e3a8f0fb30018155fe9198fca21859d01a632faf50cd774124b2f0",
+    "effectiveRef": "master",
+    "sha256": "83889f39fb05bbe803e38f0fc15920e1d754e99ec2d261ea77d55aaf99dca9a7"
+  },
+  {
+    "name": "user-profile-app",
+    "version": "100.8.2",
+    "url": "https://github.com/d2-ci/user-profile-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/user-profile-app/commit/0fed8103e7f6658cab8224c2925cd963bae19388",
+    "etag": "ce0f0a6079d6a5bec672a08343280dcac5af366ca799642e4d29e4d8490fb183",
+    "effectiveRef": "master",
+    "sha256": "23c3df9472677c8a0c995049f5f079606eead7b777c245e5c5c6c5a570d3af82"
+  },
+  {
+    "name": "login-app",
+    "version": "100.6.0",
+    "url": "https://github.com/d2-ci/login-app#main",
+    "branch": "main",
+    "commitUrl": "https://github.com/dhis2/login-app/commit/60fff88a539c2102018237eef10752f851d1049b",
+    "etag": "5f2af0adce08a722cae40cade5606c808f7efdc77adf7571f2503ddf48db7cbd",
+    "effectiveRef": "main",
+    "sha256": "7f74c6598a5065b5cdf48622ed42c6af861f14e6f8cb69066289b6bbcf337b25"
+  },
+  {
+    "name": "global-shell-app",
+    "version": "1.13.4",
+    "url": "https://github.com/d2-ci/global-shell-app#main",
+    "branch": "main",
+    "commitUrl": "https://github.com/dhis2/global-shell-app/commit/a1573470e7d534744247b80ee0438ddf13965eac",
+    "etag": "8f24618ace16b284ccbd090d8877a670b2adf9d92ed5f9c4dee2e4e35a6c36ca",
+    "effectiveRef": "main",
+    "sha256": "c7a0023f7ea3831bab55901f4da7651d2c7a7fc269631ad7238ea81ef650e0bc"
+  },
+  {
+    "name": "line-listing-app",
+    "version": "102.4.1",
+    "url": "https://github.com/d2-ci/line-listing-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/line-listing-app/commit/ed6597238af41126ed95483949556b1717c2a91a",
+    "etag": "4caf432bdfd8927db49027db966989248e899e18482a4ae847c337a947f481cd",
+    "effectiveRef": "master",
+    "sha256": "d0d4b6704c98d5e3b59e6ab6caa7f704eed2c985478ae773f2c0aed73191d166"
+  },
+  {
+    "name": "metadata-management-app",
+    "version": "0.184.1",
+    "url": "https://github.com/d2-ci/metadata-management-app",
+    "branch": null,
+    "commitUrl": "https://github.com/dhis2/metadata-management-app/commit/e8222b440838321b5a270937961e73f0532d1423",
+    "etag": "4bfbe8e4d699c69b3b2368e288566ce6cfd7c07cc42e20cb5640bce787b149ca",
+    "effectiveRef": "master",
+    "sha256": "b5b0ceedeabb7bd1c68730442bc605b0691dd278ca15ca5c025e5257e173f97a"
+  }
+]

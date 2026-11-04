@@ -1,10 +1,10 @@
 # Common Criteria audit-storage failure verification plan
 
-Status: Proposed verification work; no compliance claim until implementation and CI evidence are reviewed.
+Status: Partially executed verification work; remaining capacity/operational checks are proposed. No compliance claim until selected requirements and evaluation evidence are reviewed.
 
 ## Scope
 
-ISO/IEC 15408-2:2026 FAU_STG.2 (availability of stored audit records), FAU_STG.3 (action in case of possible audit data loss), and FAU_STG.4 (prevention of audit data loss). Confirm the selected Security Target's exact assignments and selections before assigning pass/fail.
+ISO/IEC 15408-2:2026 FAU_STG.2 (protected audit data storage), FAU_STG.3 (guarantees of audit data availability), FAU_STG.4 (action in case of possible audit data loss), and FAU_STG.5 (prevention of audit data loss). Confirm the selected Security Target's exact assignments and selections before assigning pass/fail.
 
 ## Test matrix
 
@@ -31,6 +31,33 @@ ISO/IEC 15408-2:2026 FAU_STG.2 (availability of stored audit records), FAU_STG.3
 
 1. Implement deterministic fault injection and recovery integration tests.
 2. Verify they execute in CI (not skipped), with XML test reports.
-3. Review the Security Target selections for FAU_STG.2/3/4.
+3. Review the Security Target selections for FAU_STG.2/3/4/5.
 4. Update the Common Criteria assessment sheet and dashboard with links to source and CI evidence.
 5. Only promote a requirement to verified after evidence review.
+
+Current source traces and executed evidence are maintained in the
+[consolidated traceability matrix](../common-criteria-traceability.md) and
+[verification record](../common-criteria-verification.md).
+
+## Added deterministic database rejection case
+
+`AuditRepositoryFailureRecoveryTest.testRejectedWritePreservesEarlierRecordsAndRecovers` installs
+a transaction-scoped PostgreSQL CHECK constraint to reject a known test UID. It
+asserts that the repository raises a database exception, restores the test
+transaction with a savepoint, checks that the earlier record remains, removes
+the constraint and verifies that writes recover. Test transaction rollback
+cleans up the schema/data. This exercises real database rejection and recovery;
+it does not simulate a lost connection, fill a volume, establish preservation of
+committed records across restart, or prove a capacity alarm/business-operation
+policy. See the current verification record for the execution result.
+
+## Integrated delivery and PostgreSQL failure checks
+
+[Audit delivery/storage failure evidence](audit-delivery-failure-evidence.md)
+records four additional executed cases using the real consumer, transacted
+listener factory and database. They cover transient/sustained INSERT denial,
+DLQ replay, actual backend-connection termination, denied reads and append-only
+writer privileges. This closes the earlier separation between broker-only and
+repository-only checks for those controlled scenarios. Disk exhaustion, capacity
+alarms, external broker/multi-node behavior and the selected business-operation
+failure policy remain unverified.

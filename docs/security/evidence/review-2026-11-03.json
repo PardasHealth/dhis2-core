@@ -1,0 +1,806 @@
+{
+  "date": "2026-11-03",
+  "status": "partial engineering evidence; not Common Criteria certification",
+  "baselineCommit": "07d4f3f7ea239cb6338aa3e1d83c562b74763194",
+  "testedRevision": "baseline plus working-tree changes identified by source SHA-256",
+  "sourceSha256": {
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "e9f524ab12e0490b50ebae0e5d9bb72f04f0d1b8fda1028ee03150555ecbe944",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "d90500f1465291a4212f68cbbf24f7feb652fce350c73c858cd21bff0e533e63",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryTest.java": "0c13f9c85e041233361227a833478b0c60a998b99f8fb9e68114a0001ca141d4",
+    ".github/workflows/cc-audit-regression.yml": "db2553a2397e14bde8ff89e336b7468ad7d0cd25cac2ed6bf14b7f819058d99f",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryFailureRecoveryTest.java": "bda85c8e5c780361f6cac370021091db315880f9ece659d2b22ddb2f837c5b11",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750"
+  },
+  "toolchain": {
+    "testJdk": "Temurin 17.0.17+10",
+    "runtimeJdk": "Debian OpenJDK 21.0.12.1",
+    "maven": "3.9.11"
+  },
+  "dependencyCaveat": "sms-compression 0.3.2 built locally from unmodified GitHub tag using its declared dependencies; not asserted binary-identical to JitPack",
+  "testTotals": {
+    "tests": 214,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3,
+    "passed": 211
+  },
+  "testSuites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditRepositoryTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "skippedCases": [
+        {
+          "name": "testAuditInsertBatch200k",
+          "reason": "void org.hisp.dhis.audit.AuditRepositoryTest.testAuditInsertBatch200k() is @Disabled"
+        },
+        {
+          "name": "testAuditInsert200k",
+          "reason": "void org.hisp.dhis.audit.AuditRepositoryTest.testAuditInsert200k() is @Disabled"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.security.PasswordManagerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.security.acl.AclServiceTest",
+      "tests": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "skippedCases": [
+        {
+          "name": "testAccessObjectWithoutOwner",
+          "reason": "TODO(DHIS2-17768 platform) how to save with null owner if the store sets the owner it its null"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.user.PasswordValidationRuleTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.user.PasswordValidationServiceTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.user.UserRoleSessionInvalidationListenerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.user.UserSessionInvalidationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserRoleSessionInvalidationControllerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.SessionControllerTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.filter.CspFilterTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.filter.LoginConfigCorsFilterTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.LoginConfigCorsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skippedCases": []
+    }
+  ],
+  "productionBuild": {
+    "status": "success",
+    "profiles": [
+      "embedded",
+      "unit-test"
+    ],
+    "artifact": "dhis-2/dhis-web-server/target/dhis.war",
+    "sha256": "6d60890d2f852738be23530526a8ed232aef0b52ac7eb30dee77b20d0090666f"
+  },
+  "browserChecks": {
+    "runner": "Playwright with system Chromium",
+    "profile": "isolated PostgreSQL; local HTTP; default CSRF off; persistent embedded Artemis; metadata auditing; volatile buffer off",
+    "initialEmptyDatabasePageErrorApps": [
+      "Messaging",
+      "Interpretation app",
+      "DHIS2 event reports app",
+      "DHIS2 event visualizer app"
+    ],
+    "entryPageResults": [
+      {
+        "app": "Datastore",
+        "version": "100.5.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Cache Cleaner",
+        "version": "100.2.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Reports",
+        "version": "100.2.4",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Line Listing",
+        "version": "102.4.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "App Management",
+        "version": "100.5.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Metadata Management",
+        "version": "0.184.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Translations",
+        "version": "100.0.13",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Usage Analytics",
+        "version": "101.1.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Data Administration",
+        "version": "100.2.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Dashboard",
+        "version": "101.7.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "System Settings",
+        "version": "100.15.5",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Maps",
+        "version": "101.17.7",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "User Profile",
+        "version": "100.8.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Menu Management",
+        "version": "100.2.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "SMS Configuration",
+        "version": "100.0.60",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Capture",
+        "version": "107.9.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Messaging",
+        "version": "100.0.47",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Import/Export",
+        "version": "101.6.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Interpretation app",
+        "version": "1.1.0",
+        "status": 200,
+        "pageErrors": [
+          "importScripts is not defined"
+        ]
+      },
+      {
+        "app": "DHIS2 event reports app",
+        "version": "33.3.4",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Global Shell",
+        "version": "1.13.4",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Login app",
+        "version": "100.6.0",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Scheduler",
+        "version": "101.6.27",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "DHIS2 event visualizer app",
+        "version": "33.2.4",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Data Approval",
+        "version": "100.2.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Data Entry",
+        "version": "102.1.6",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Data Quality",
+        "version": "100.0.1",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Data Visualizer",
+        "version": "101.6.5",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Users",
+        "version": "100.11.2",
+        "status": 200,
+        "pageErrors": []
+      },
+      {
+        "app": "Maintenance app",
+        "version": "32.35.8",
+        "status": 200,
+        "pageErrors": []
+      }
+    ],
+    "limits": "Entry-page smoke only, not full app workflow acceptance. Optional missing custom-logo/datastore probes returned 404. App Hub 503 and version-check network failure reflect unavailable external services.",
+    "fixture": "Test root organisation unit assigned to administrator; feedback-recipient user group configured. No clinical data.",
+    "pagesWithoutJavascriptErrors": 29,
+    "remainingPageErrorApps": [
+      "Interpretation app"
+    ]
+  },
+  "runtimeApiChecks": [
+    {
+      "label": "create datastore entry",
+      "status": 201
+    },
+    {
+      "label": "read datastore entry",
+      "status": 200
+    },
+    {
+      "label": "update datastore entry",
+      "status": 200
+    },
+    {
+      "label": "read updated datastore entry",
+      "status": 200
+    },
+    {
+      "label": "delete datastore entry",
+      "status": 200
+    },
+    {
+      "label": "deleted datastore entry unavailable",
+      "status": 404
+    },
+    {
+      "label": "create API token",
+      "status": 201
+    },
+    {
+      "label": "real PAT authentication",
+      "status": 200
+    },
+    {
+      "label": "delete API token",
+      "status": 200
+    },
+    {
+      "label": "previously used PAT rejected after deletion",
+      "status": 401
+    },
+    {
+      "label": "read current user",
+      "status": 200
+    },
+    {
+      "label": "assign test organisation unit to isolated admin",
+      "status": 200
+    }
+  ],
+  "baselineBrowserComparison": {
+    "method": "original versions of both modified production classes compiled from baseline Git source and placed first on the runtime classpath; same built dependencies, app bundles and test database; before configuring feedback-recipient fixture",
+    "results": [
+      {
+        "url": "/dhis-web-messaging/index.html",
+        "status": 200,
+        "title": "Messaging | DHIS2",
+        "errors": [
+          {
+            "message": "Cannot read properties of undefined (reading 'id')",
+            "stack": "TypeError: Cannot read properties of undefined (reading 'id')\n    at qI (http://127.0.0.1:18080/dhis-web-messaging/assets/AppWrapper-rL2gHOGM.js:14:20790)"
+          }
+        ]
+      },
+      {
+        "url": "/dhis-web-interpretation/index.html",
+        "status": 200,
+        "title": "Interpretations | DHIS2",
+        "errors": [
+          {
+            "message": "importScripts is not defined",
+            "stack": "ReferenceError: importScripts is not defined\n    at n.f.i (http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:1451)\n    at http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:806\n    at Array.reduce (<anonymous>)\n    at n.e (http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:784)\n    at n.x (http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:1686)\n    at http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:1702\n    at http://127.0.0.1:18080/dhis-web-interpretation/268.bundle.js?v=0e345a78b0833a7b:1:1707"
+          }
+        ]
+      }
+    ]
+  },
+  "preIsolationLayout": {
+    "sourceSha256": {
+      "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d",
+      "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92",
+      "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "e9f524ab12e0490b50ebae0e5d9bb72f04f0d1b8fda1028ee03150555ecbe944",
+      "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "d90500f1465291a4212f68cbbf24f7feb652fce350c73c858cd21bff0e533e63",
+      "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "c86b89406c178e84844ecacd990082cd4327743bc4263bdc5d5065927b5f3add",
+      "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryTest.java": "8f00c19f2a6eba7acc6d9d84f6ea94b2750cc5f9a192d5c1c501d40d83f6ae3f",
+      ".github/workflows/cc-audit-regression.yml": "f261af2e27aee94125211325dcc94eeecbba9266dd0979942e2e2c6f2d7bea3e"
+    },
+    "testSuites": [
+      {
+        "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.audit.AuditRepositoryTest",
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "skippedCases": [
+          {
+            "name": "testAuditInsertBatch200k",
+            "reason": "void org.hisp.dhis.audit.AuditRepositoryTest.testAuditInsertBatch200k() is @Disabled"
+          },
+          {
+            "name": "testAuditInsert200k",
+            "reason": "void org.hisp.dhis.audit.AuditRepositoryTest.testAuditInsert200k() is @Disabled"
+          }
+        ]
+      },
+      {
+        "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.security.PasswordManagerTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.security.acl.AclServiceTest",
+        "tests": 61,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "skippedCases": [
+          {
+            "name": "testAccessObjectWithoutOwner",
+            "reason": "TODO(DHIS2-17768 platform) how to save with null owner if the store sets the owner it its null"
+          }
+        ]
+      },
+      {
+        "class": "org.hisp.dhis.user.PasswordValidationRuleTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.user.PasswordValidationServiceTest",
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.user.UserRoleSessionInvalidationListenerTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.user.UserSessionInvalidationTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.controller.UserRoleSessionInvalidationControllerTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.controller.security.SessionControllerTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.filter.CspFilterTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.filter.LoginConfigCorsFilterTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.security.LoginConfigCorsTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      },
+      {
+        "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skippedCases": []
+      }
+    ],
+    "note": "Original executed layout before moving the three added integration cases into separate fork regression classes."
+  },
+  "upstreamCompatibility": {
+    "productionSourceChangedByCleanup": false,
+    "restoredToPreReview": [
+      "README.md",
+      "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java",
+      "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryTest.java"
+    ],
+    "separateRegressionClasses": [
+      "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest"
+    ],
+    "followupVerification": {
+      "webCasesPassed": 13,
+      "postgresCasesPassed": 27,
+      "postgresExistingSkips": 2,
+      "formatting": "passed"
+    },
+    "guide": "docs/fork/upstream-maintenance.md",
+    "branchAndRemotesChanged": false,
+    "note": "Production WAR and browser evidence precede test/documentation isolation; production sources are byte-identical to those used for that successful build."
+  },
+  "auditDeliveryFailureExtension": {
+    "source": "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java",
+    "reportClass": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+    "casesPassed": 4,
+    "caseNames": [
+      "transientInsertFailureRollsBackReceiveAndPersistsAfterRecovery",
+      "sustainedInsertFailureReachesDeadLetterQueueAndCanBeReplayed",
+      "terminatedDatabaseConnectionFailsReadsAndWritesAndFreshConnectionRecovers",
+      "appendOnlyDatabaseRoleCannotModifyOrDeleteAndDeniedReadsAreVisible"
+    ],
+    "databaseImage": "imresamu/postgis:16-3.5-alpine",
+    "localDatabaseImageDigest": "imresamu/postgis@sha256:367f65cee655c1cc7ac2ed17b0c77ca516ab8634c53698eda4a799f23a575e89",
+    "databaseStorage": "512 MiB tmpfs for isolated fault fixture; no power-loss or persistent-media claim",
+    "brokerStorage": "non-persistent isolated in-VM broker; production redelivery/listener factory",
+    "combinedRun": {
+      "tests": 33,
+      "passed": 31,
+      "skipped": 2,
+      "failures": 0,
+      "errors": 0
+    },
+    "setupIncident": "Initial combined invocation failed to initialize its second database due to shared Docker disk exhaustion. No new audit cases ran in that invocation. Redundant generated build intermediates were removed and the fixture was moved to bounded tmpfs; the combined rerun passed. This incident is not an audit disk-full behavior test.",
+    "productionSourceChanged": false,
+    "dependenciesChanged": false,
+    "appBundleSelectionChanged": false,
+    "limits": [
+      "No disk-capacity threshold/alert or selected business-operation failure policy",
+      "No production role/retention authorization proof",
+      "No global exactly-once/XA guarantee",
+      "No full network-partition, server/power-loss or external/multi-node broker claim"
+    ]
+  }
+}

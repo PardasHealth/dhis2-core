@@ -1,6 +1,6 @@
 # Common Criteria audit hardening — verification
 
-This document describes how to verify the draft audit-security changes in PR #1. **No successful build or test execution has yet been observed.**
+This document preserves the verification plan and historical CI evidence for the audit-security changes in PR #1. The original plan preceded test execution; results below are dated historical evidence. See the [current traceability matrix](common-criteria-traceability.md) and [current verification record](common-criteria-verification.md) for the broader review.
 
 ## Scope
 
@@ -41,7 +41,7 @@ The correct profile in `dhis-2/pom.xml` is `integration-test` (not `integration`
 - Authorization for audit-retention deletion is **not implemented** by the query guard.
 - Bulk deletion by UID/code and range is not subject to a maximum deletion count.
 - Throwing on malformed historic payloads may affect existing consumers; review failure handling and alerting.
-- No CI status or test result is available at the time this document was added.
+- CI results recorded below apply to their dated commit; rerun against subsequent changes.
 
 
 ## Executed CI evidence — 2026-10-20

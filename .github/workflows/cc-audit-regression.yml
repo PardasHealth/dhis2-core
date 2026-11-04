@@ -1,4 +1,4 @@
-name: Common Criteria audit regression
+name: Common Criteria security regression
 
 on:
   workflow_dispatch:
@@ -8,6 +8,17 @@ on:
       - 'dhis-2/dhis-support/dhis-support-artemis/**'
       - 'dhis-2/dhis-services/dhis-service-audit-consumer/**'
       - 'dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/**'
+      - 'dhis-2/pom.xml'
+      - 'dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/**'
+      - 'dhis-2/dhis-api/src/main/java/org/hisp/dhis/user/**'
+      - 'dhis-2/dhis-api/src/main/java/org/hisp/dhis/audit/**'
+      - 'dhis-2/dhis-services/dhis-service-acl/**'
+      - 'dhis-2/dhis-support/dhis-support-external/**'
+      - 'dhis-2/dhis-support/dhis-support-test/**'
+      - 'dhis-2/dhis-web-api/**'
+      - 'dhis-2/dhis-test-web-api/**'
+      - 'dhis-2/dhis-services/dhis-service-core/**'
+      - 'docs/security/**'
       - '.github/workflows/cc-audit-regression.yml'
 
 permissions:
@@ -45,17 +56,17 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-support/dhis-support-artemis -am -Punit-test \
-            -Dtest=ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest \
+            -Dtest=ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest,AuditSchedulerTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Execute PostgreSQL audit regression tests
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-integration -am -Pintegration-test \
-            -Dtest=AuditRepositoryTest \
+            -Dtest=AuditRepositoryTest,AuditRepositoryFailureRecoveryTest,AuditStorageDeliveryRecoveryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
-      - name: Verify all six audit test classes actually executed
+      - name: Verify all nine audit test classes actually executed
         if: success()
         working-directory: dhis-2
         run: |
@@ -66,10 +77,13 @@ jobs:
           expected = {
               "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
               "org.hisp.dhis.audit.AuditRepositoryTest",
+              "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest",
+              "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
               "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
               "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
               "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
               "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
+              "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
           }
           seen = {}
           for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
@@ -97,6 +111,75 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cc-audit-surefire-reports
+          path: |
+            dhis-2/**/target/surefire-reports/*.xml
+            dhis-2/**/target/surefire-reports/*.txt
+          if-no-files-found: warn
+
+  authentication-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: dhis-2/pom.xml
+      - name: Verify token state, request isolation and browser protection units
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-web-api -am -Punit-test \
+            -Dtest=ApiTokenAuthManagerTest,ApiTokenResolverTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Verify authentication and session web regressions with H2
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
+            -Dtest=ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
+            -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Verify required authentication and web reports actually executed
+        working-directory: dhis-2
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          expected = {
+              "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+              "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+              "org.hisp.dhis.webapi.filter.CspFilterTest",
+              "org.hisp.dhis.webapi.filter.LoginConfigCorsFilterTest",
+              "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+              "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+              "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+              "org.hisp.dhis.webapi.security.LoginConfigCorsTest",
+              "org.hisp.dhis.webapi.controller.security.SessionControllerTest",
+              "org.hisp.dhis.webapi.controller.UserRoleSessionInvalidationControllerTest",
+          }
+          seen = set()
+          for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
+              root = ET.parse(report).getroot()
+              name = root.attrib.get("name", "")
+              if name not in expected:
+                  continue
+              tests = int(root.attrib.get("tests", 0))
+              skipped = int(root.attrib.get("skipped", 0))
+              failures = int(root.attrib.get("failures", 0))
+              errors = int(root.attrib.get("errors", 0))
+              if tests <= skipped or failures or errors:
+                  raise SystemExit(f"Invalid test result for {name}: {root.attrib}")
+              seen.add(name)
+          if missing := expected - seen:
+              raise SystemExit(f"Required test reports missing: {sorted(missing)}")
+          print(f"Verified {len(seen)} authentication/web test classes")
+          PY
+      - name: Publish authentication and web XML reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cc-authentication-web-surefire-reports
           path: |
             dhis-2/**/target/surefire-reports/*.xml
             dhis-2/**/target/surefire-reports/*.txt

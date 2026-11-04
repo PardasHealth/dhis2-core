@@ -1,0 +1,411 @@
+{
+  "date": "2026-11-04",
+  "baselineCommit": "07d4f3f7ea239cb6338aa3e1d83c562b74763194",
+  "status": "Web-application scope and component gap triage; incomplete conformance evidence; not certification",
+  "scopeDirection": "Review DHIS2 as a web application; document reasons for excluded activities/features.",
+  "componentInventory": {
+    "part2": 155,
+    "part3": 106,
+    "idsClausesAndTitlesComparedToSuppliedPDFHeadings": 261,
+    "allHaveScopeReasonAndGapAction": true,
+    "scopeDispositionCounts": {
+      "Related to web application; component/level selection requires ST completion": 180,
+      "Optional verifiable-evidence feature not selected": 6,
+      "Related; application and platform evidence required": 9,
+      "Random-bit service feature not selected": 1,
+      "Related when distributed application parts are enabled": 10,
+      "Specialized lifecycle feature not selected": 2,
+      "Specialized privacy guarantee not selected": 10,
+      "Excluded from application TOE; platform responsibility": 4,
+      "Specialized resource guarantee not selected": 3,
+      "Optional UI-lock feature not selected": 2,
+      "Excluded from current web-application evaluation approach": 34
+    },
+    "codeCandidateRows": 45,
+    "fullElementEvaluationComplete": false
+  },
+  "standardsSha256": {
+    "ISO_IEC_15408-2_2026(en).pdf": "a3df6638c66bddfe7a14a305f483bd9326c87623f923f445b38935d974f54837",
+    "ISO_IEC_15408-1_2026(en).pdf": "319d90d2f2be00e9f14f0db074fecec7494007fa86b6a0886113277c3567e88c",
+    "ISO_IEC_15408-3_2026(en).pdf": "3ac720cedc2b887522e235db0200225180c6e034f2c15bd3602d93b1c37a2a84"
+  },
+  "assessmentFile": "docs/security/evidence/component-gap-assessment-2026-11-04.json",
+  "toolchain": {
+    "jdk": "Temurin 17.0.17+10, downloaded archive SHA-256 checked against release checksum",
+    "maven": "3.9.11",
+    "execution": "offline Maven with existing workspace dependency cache; unit-test and integration-h2-test profiles"
+  },
+  "newTestTotals": {
+    "tests": 52,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 51
+  },
+  "newTestSuites": [
+    {
+      "class": "org.hisp.dhis.sqlview.SqlViewUtilsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "report": "dhis-2/dhis-services/dhis-service-administration/target/surefire-reports/TEST-org.hisp.dhis.sqlview.SqlViewUtilsTest.xml",
+      "reportSha256": "daa63a0e9d156f2c23dd0b248b8e40bda67bcec6ce77dee05cb985dd9979a420",
+      "cases": [
+        {
+          "name": "testSubsituteSqlMalicious",
+          "status": "passed"
+        },
+        {
+          "name": "testSubsituteSqlVariable",
+          "status": "passed"
+        },
+        {
+          "name": "testRemoveQuerySeparator",
+          "status": "passed"
+        },
+        {
+          "name": "testGetVariables",
+          "status": "passed"
+        },
+        {
+          "name": "testSubsituteSql",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.SqlViewControllerTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8,
+      "report": "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.SqlViewControllerTest.xml",
+      "reportSha256": "12a6f4c28f10c1bad6aa27896a23755a99efecbcf778422a32e007e19c8fad75",
+      "cases": [
+        {
+          "name": "testExecuteView_ValidationError",
+          "status": "passed"
+        },
+        {
+          "name": "testCreateWithDefaultValues",
+          "status": "passed"
+        },
+        {
+          "name": "testRefreshMaterializedView",
+          "status": "passed"
+        },
+        {
+          "name": "testCorrectServiceMethodCalledWhenSqlViewWritesDisabled",
+          "status": "passed"
+        },
+        {
+          "name": "testRefreshMaterializedView_NoSuchView",
+          "status": "passed"
+        },
+        {
+          "name": "testCorrectServiceMethodCalledWhenSqlViewWritesEnabled",
+          "status": "passed"
+        },
+        {
+          "name": "testUpdate_MaterializedViewWithUpdate",
+          "status": "passed"
+        },
+        {
+          "name": "testExecuteView_NoSuchView",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.FileResourceControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9,
+      "report": "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.FileResourceControllerTest.xml",
+      "reportSha256": "a9108541af4ee381647833aa863c56a86c426f10ba468de97458d0e2877261a7",
+      "cases": [
+        {
+          "name": "testSaveBadAvatarContentType",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveOrgUnitImage",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveOrgUnitImageWithUid",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveBadAvatarImageData",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveTooBigFileSize",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveBadAvatarFileExtension",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveGoodAvatar",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveOrgUnitImageWithUid_Update",
+          "status": "passed"
+        },
+        {
+          "name": "testSaveBadAvatarFileSize",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.AppControllerTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 23,
+      "report": "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.AppControllerTest.xml",
+      "reportSha256": "f2fedb0aa6fa53200560af36200a7e1f189998446010d57b04514e2c67d1808d",
+      "cases": [
+        {
+          "name": "redirectLocationTest",
+          "status": "skipped",
+          "reason": "Deprecated, will be reintroduced if bundled app overrides are again served at root paths"
+        },
+        {
+          "name": "testInstalledAppReturnsTranslatedShortcuts",
+          "status": "passed"
+        },
+        {
+          "name": "testResourceAccessSemicolonBypassRejected",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledEvilZipSlipApp",
+          "status": "passed"
+        },
+        {
+          "name": "testInstallZipSlipApp",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledAppReturnsShortcuts",
+          "status": "passed"
+        },
+        {
+          "name": "testGetAppMenuWhenInstalledAppWithoutIconInManifest",
+          "status": "passed"
+        },
+        {
+          "name": "testLegitimateNestedResourcePath",
+          "status": "passed"
+        },
+        {
+          "name": "testGetApps",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledEvilFlatZipBombApp",
+          "status": "passed"
+        },
+        {
+          "name": "testResourceAccessParentTraversalRejected",
+          "status": "passed"
+        },
+        {
+          "name": "testReloadAppsNoAuth",
+          "status": "passed"
+        },
+        {
+          "name": "testInstallReturnsAppInfo",
+          "status": "passed"
+        },
+        {
+          "name": "testInstallMultipleSameKey",
+          "status": "passed"
+        },
+        {
+          "name": "testReloadAppsWithAuth",
+          "status": "passed"
+        },
+        {
+          "name": "testResourceAccessDoubleDotInPathRejected",
+          "status": "passed"
+        },
+        {
+          "name": "testResourceAccessPathTraversalRejected",
+          "status": "passed"
+        },
+        {
+          "name": "testGetApps_KeyNotFound",
+          "status": "passed"
+        },
+        {
+          "name": "testGetInstalledAppIndexHtml",
+          "status": "passed"
+        },
+        {
+          "name": "testInstallZipBombWithTooManyEntriesApp",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledEvilNestedZipBombApp",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledAppReturnsTranslatedShortcuts_WithFallbackToRootLanguage",
+          "status": "passed"
+        },
+        {
+          "name": "testInstalledAppReturnsTranslatedShortcuts_WithLanguageFallback",
+          "status": "passed"
+        },
+        {
+          "name": "testResourceAccessEncodedPathTraversalRejected",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "class": "org.hisp.dhis.webapi.utils.FileResourceUtilsTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6,
+      "report": "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.utils.FileResourceUtilsTest.xml",
+      "reportSha256": "f06938231bf1b7a7ecfd981c8b4180f9bf4d8a80b12bc87c45376b7d238edc64",
+      "cases": [
+        {
+          "name": "shouldFailWhenCustomIconIsTooLarge",
+          "status": "passed"
+        },
+        {
+          "name": "shouldFailWhenCustomIconHasInvalidFormat",
+          "status": "passed"
+        },
+        {
+          "name": "shouldResizeImageTo48x48WhenCustomIconIsValid",
+          "status": "passed"
+        },
+        {
+          "name": "avatarImageResizingKeepsContentType",
+          "status": "passed"
+        },
+        {
+          "name": "orgUnitImageResizingKeepsContentType",
+          "status": "passed"
+        },
+        {
+          "name": "shouldWorkWhenCustomIconIsValid",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "testSourceSha256": {
+    "dhis-2/dhis-services/dhis-service-administration/src/test/java/org/hisp/dhis/sqlview/SqlViewUtilsTest.java": "eb01b32c75b192b723a1b5d371e41f024f78524efecebc1825c0fa7d3aa329f8",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/SqlViewControllerTest.java": "a7822b434e57472b105851dfe9d97d31a42daade89953bad960e1922f3f7d9eb",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/FileResourceControllerTest.java": "4542a46072bf6490f9bd6e8909099dbf9d5e00e098a1c4dd925aa8855ac4dba3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/AppControllerTest.java": "76613657f57030536e7327f02afa92849719a80f820a5dc5d9b9bf5812affa94",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/utils/FileResourceUtilsTest.java": "193fddc2658a01afa7774897035eebcbfdf5124e911e6e2c8c1216169568c3e8"
+  },
+  "sourceReferenceSha256": {
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/CodeGenerator.java": "b9dc6b5100bac99ec056e9e3ab1ee46acb615a989905f8f1073bb79ff5602aeb",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/fileresource/FileResourceRetentionStrategy.java": "3c973e8300db86d2f604903cf85f076c6b025ccc1cac94c292be6318099b0392",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/RequiresAuthority.java": "97af04f9de32052bbe9bc6fe45537e6bf59327d283d86af254821998728760ed",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java": "7f364ad3785a2b68b3f8e5488ef3759f1bb59cc4444641d5e3f2d9bf0c72285c",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/user/UserDetailsImpl.java": "58d5a08c19dc1f2b6f9b40d39f10c34193dbc1dbfc7d52fa3abd93048a374ef3",
+    "dhis-2/dhis-services/dhis-service-acl/src/main/java/org/hisp/dhis/security/acl/AccessStringHelper.java": "a23d2161b8583f1da33efda75739708cf52e735add09af3ac207ba9d00ad7774",
+    "dhis-2/dhis-services/dhis-service-acl/src/main/java/org/hisp/dhis/security/acl/DefaultAclService.java": "0c95f73763993f90dc67c423549fccddf0df8dd9965d4f1053eb5eb31c75b6f1",
+    "dhis-2/dhis-services/dhis-service-administration/src/main/java/org/hisp/dhis/sqlview/DefaultSqlViewService.java": "8ac688a86def9f456b1ba6ef89cfda28b4ef472e29834bd97bc9f3c5d1706c1d",
+    "dhis-2/dhis-services/dhis-service-administration/src/main/java/org/hisp/dhis/sqlview/SqlViewUtils.java": "2cb9db12f9c6e1bb8e226ca80b24d4382edd22277f5ffcca707faf756ebc4fc5",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java": "17c3a7cffaa108b939094a81fcfdb1eddc4a9cd4adb96b77f1e33ff7aebe0f15",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/appmanager/BlobStoreAppStorageService.java": "bdcf5978e663c399584bf443ce464041aa57435ad18d5fb65419486398e27898",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/common/hibernate/HibernateIdentifiableObjectStore.java": "e68a454f819b8960ffcea7d8bd0dd8ab0264a4dcc49e447761fdba48fdab171b",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "2fc99f4be60a683ea419b80a811cf9105552712a94d3b8a8f171920de4f89b66",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/jwt/Dhis2JwtAuthenticationManagerResolver.java": "183f830e732e48dc744a23f72364bc475183e59e33a210dc02a9c722321c0bbd",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/KeyStoreUtil.java": "7a5f0f95af3af19c75640b54ec1a9dbcc309fb6d3fc3df713b7afca63629b335",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "df9fbac69ecd0d2be68b660b4b74ca4d47550a38b18be03fc1f0494fbfb1400c",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java": "41e9d0380833f82d9f0c683f13da9fe48cc57677af7705a9e780d8f3c69ff75c",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "5fdc0180558363c131a25510768ba6074a6c357b3c0debbcc8bc5d166c713223",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/sharing/DefaultSharingService.java": "0a88cf0d0791ca438a0e395239af168cba5a9e2ec37efff2b6ffa9e7f9a07ef9",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/sqlview/hibernate/HibernateSqlViewStore.java": "e7514b3989bdfe25cb244f79fb3e3f2d01ea49e84b72f036ac207a96193fec2e",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultPasswordValidationService.java": "0e7d9d2e837e7e014312eb25ef1bc6ea3e5b1b84001528be2c9908c5e833b295",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "02559682d88dd6c5c2afeeecd3401696a70cd18629a74776a68d8ea7ab40d4e0",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/PasswordLengthValidationRule.java": "af743c48fb69ec4bb1be309149e264474bd94d719fe846ea4705f066bcc2cfd4",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/UserRoleSessionInvalidationListener.java": "658f84ef2ed37015f40220f7aae5cb3f5996bb1657c9beae9a051ad1dc3da408",
+    "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/datavalueset/DefaultDataExportService.java": "135eb396f4dba12f5e4b7d78dbe4e5bd9c6a0232c8ddbd313661a10c913895dd",
+    "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/metadata/DefaultMetadataExportService.java": "f73fde04f951f488dea246ef911517a3cd6be2cfb65453b2758334077f822ce9",
+    "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/metadata/DefaultMetadataImportService.java": "62d7897ce550c7c4a40b7398c89f325b5154b7ae0d0ad002c5dd1f4e5e902b17",
+    "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/metadata/objectbundle/validation/SecurityCheck.java": "bb65129259334b0401bdc63d024e237906a5efaa5b90169656f9648a4faaf3d5",
+    "dhis-2/dhis-services/dhis-service-reporting/src/main/java/org/hisp/dhis/dashboard/impl/DefaultCascadeSharingService.java": "7545d14a1033c25e1490ab0f549e1f54e575bc6628c12f0f688b6204dcf6195e",
+    "dhis-2/dhis-services/dhis-service-schema/src/main/java/org/hisp/dhis/schema/descriptors/DashboardSchemaDescriptor.java": "97a9649eb9dba36b5dc84318b7dd8c65a8416200e594e9f4a62178d4fefc285e",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditManager.java": "3f8c0c225971d39cffe0daa36ac20206cff11ccc3974ff94ee056ecec1bba67b",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/configuration/AuditMatrixConfigurer.java": "df7515fda1589c6995d7de66348cc16e6ccce9239b66fec67e1d6a17b6b191e6",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java": "a24efb5c1fa75219aadaf535d66f0cebce4e96a70a1dbe0dd2e31ed90e3ddd0f",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/DefaultAuditService.java": "62bb62b4545a28ce2fb57e01079448289c4dc58f59cfbfa4ef686975acb4cfb9",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java": "70bbd9573e5f3dbf722c459d648e971b5cd53e8fe8de54a0a245c987fc93de24",
+    "dhis-2/dhis-support/dhis-support-cache-invalidation/src/main/java/org/hisp/dhis/cacheinvalidation/redis/CacheInvalidationListener.java": "1def2f4773cf67cba59150912f479c79c4516b225b3824dff9c1acd771f61bff",
+    "dhis-2/dhis-support/dhis-support-hibernate/src/main/java/org/hisp/dhis/config/HibernateEncryptionConfig.java": "5c514852e82a5afbd5bd68261c5ac262fdc58ed273864a4a0a4a4e2a6af783f8",
+    "dhis-2/dhis-support/dhis-support-system/src/main/java/org/hisp/dhis/system/deletion/DefaultDeletionManager.java": "159d5c466bcc245fa61d17c2f5d1054a1e070f5a89104313e3a2051f43396be2",
+    "dhis-2/dhis-support/dhis-support-system/src/main/java/org/hisp/dhis/system/startup/DefaultStartupRoutineExecutor.java": "efad98e53b194f5c7bbc12bf54f8ccb27beb22671ff6f0d6f578b41a61254907",
+    "dhis-2/dhis-tracker/src/main/java/org/hisp/dhis/tracker/imports/preheat/mappers/SharingMapper.java": "449d463e679a0d07ec050174d3ffc225b65905272ed391f299d27e38cc92e9e3",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/AppController.java": "acc417df3b48986f366326f5fbba2b04c777dded764578bd8d71ded8607d39bc",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/AuditController.java": "5e35ce532b455048e311d591f0111f17e47e76314431966edfa6952dfc3c6fa3",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/ConfigurationController.java": "6e069305af75ec3ef637ec78299b1d86b40e75432922973126221e23341926a3",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/FileResourceController.java": "afb9f9d884e91e6fe66b5d6297bb39808d35491c3ee61cb14df6e877be939783",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/SystemSettingsController.java": "dc9f2fead78a2a4ceacc3b3fe592c1c57e0bc6813d5e7872c36dee6a2ae394eb",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/AuthenticationController.java": "5995f53a99f10c14149a9b749ac3938eae7dd14ba42118336354400b51e16e3a",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/LoginConfigController.java": "e94e8b30bed3ef0a73ee8c91fadf5c73063434ba675c48f7a551278cc34950f1",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/PublicKeysController.java": "3d3d4aeb0504b838eabfef2ad1bed9f75a0f6a4ac1c5af8112dd90d6edf5f39f",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/SessionController.java": "ff4fca7ebccf4120ddcec0cc8bb6a3d05710e7808f7747e9272417d34e705ef6",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java": "7753a22d3fae31b86c6637e09eddb8adf7d6d2d907fd17de1a8d578ae92f0fca",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/user/UserController.java": "7960b62434d9922e21559e94ae14650c09beeace41256f068276aa75d62353f8",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/filter/DhisCorsProcessor.java": "d358fa3c4bd83a91a9843173f19cd4fe1f63434f9ca8659dc8b9f6f38e5357b8",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthorizationServerConfig.java": "176e835151cb26c214db537f665007862669f2a00e1cf3fc9fdc1aac865f24e4",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java": "8f7f5d63dce2f6bdc10a559e2966cd2bb1580a1437163e10aeacdb23b268318a",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/PasswordEncoderConfig.java": "ab681506a5f5f3760af19edc5d57987571c19e12443de043d8c85fc9809594b1",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/session/NonRedisSessionConfig.java": "f3f41e05cbe6f5333eeb8214dbb07e6309f8f80bb24066f6422c41952681fd9d",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/session/RedisSpringSessionConfig.java": "022fd4aca69afd22ba57765762dd359969709cdd7457f8bb92b799a73bd03c8f",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/utils/FileResourceUtils.java": "41d528a4d0fdc4eeaa50e494883abb3ca8b123ef44b5baa306b3fdeb4ac7c038",
+    "dhis-2/dhis-web-server/src/main/java/org/hisp/dhis/web/tomcat/Main.java": "7da159502cd604f97ba168909c07850b3d946a49b81cff793059a3a4609edfcb"
+  },
+  "priorEvidence": "docs/security/evidence/review-2026-11-03.json",
+  "priorSourceHashesMatch": true,
+  "priorProductionWarHashMatches": true,
+  "cumulativeEvidenceInventory": {
+    "tests": 266,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "passed": 262,
+    "classes": 31,
+    "note": "Union of recorded suites across 2026-11-03 and 2026-11-04; not a single full-suite invocation."
+  },
+  "setupIncident": "Initial controller invocation failed during ApplicationContext setup because the sandbox denied local socket creation required by the embedded broker port finder. No controller test-body behavior was established in that invocation. Rerun with tool-granted network permission passed with one existing skip. No application source or test was changed to bypass setup.",
+  "productionCodeChangedDuringFollowup": false,
+  "dependencyOrBundleSelectionChanged": false,
+  "branchesOrRemotesChanged": false,
+  "githubPushed": false,
+  "limits": [
+    "No complete selected ST or assurance package",
+    "No all-endpoint or full independent penetration/dependency assessment",
+    "Encryption migration and 2FA single-use/factor-toggle behavior remain open",
+    "No production TLS/CSRF configuration validation",
+    "Existing Interpretations app bundle error remains unresolved",
+    "Known skipped controller assertion not counted as passing"
+  ]
+}
