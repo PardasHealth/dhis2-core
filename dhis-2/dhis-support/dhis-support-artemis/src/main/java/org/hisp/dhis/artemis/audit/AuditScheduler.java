@@ -29,8 +29,6 @@
  */
 package org.hisp.dhis.artemis.audit;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.DelayQueue;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +37,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Buffers Audit messages prior to sending them to the Audit queue. This scheduler is disabled by
- * default (config key: audit.inmemory-queue.enabled) and should be used only in very high-traffic
+ * default (config key: audit.in_memory-queue.enabled) and should be used only in very high-traffic
  * environments. Note that upon a JVM crash, the Audit messages in this queue will be lost.
  *
  * <p>The buffer is based on a {@link DelayQueue} where messages are buffered for 5 seconds, before
@@ -47,6 +45,10 @@ import org.springframework.stereotype.Component;
  *
  * <p>To avoid excessive memory pressure, max 200 messages can stay in the queue: in-excess messages
  * are processed immediately.
+ *
+ * <p>Failed publications remain queued for the next scheduled attempt. An uncertain broker
+ * acknowledgment can cause a retry to duplicate an event; this buffer does not guarantee exactly
+ * once delivery or survival of a JVM crash.
  *
  * @author Luciano Fiandesio
  */
@@ -84,11 +86,17 @@ public class AuditScheduler {
   }
 
   @Scheduled(fixedDelay = 5_000)
-  public void process() {
-    final Collection<QueuedAudit> expired = new ArrayList<>();
-
-    delayed.drainTo(expired);
-
-    expired.stream().map(QueuedAudit::getAuditItem).forEach(auditProducerSupplier::publish);
+  public synchronized void process() {
+    QueuedAudit expired;
+    while ((expired = delayed.poll()) != null) {
+      try {
+        auditProducerSupplier.publish(expired.getAuditItem());
+      } catch (RuntimeException ex) {
+        // Retain the failed event for the next scheduled attempt. Events not yet
+        // published remain in the queue rather than being lost with a drained batch.
+        delayed.offer(expired);
+        throw ex;
+      }
+    }
   }
 }
