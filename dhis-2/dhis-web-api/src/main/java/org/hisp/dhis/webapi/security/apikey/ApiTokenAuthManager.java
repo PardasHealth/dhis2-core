@@ -29,19 +29,14 @@
  */
 package org.hisp.dhis.webapi.security.apikey;
 
-import java.util.Optional;
-import org.hisp.dhis.cache.Cache;
-import org.hisp.dhis.cache.CacheProvider;
 import org.hisp.dhis.security.apikey.ApiToken;
 import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
-import org.hisp.dhis.security.apikey.ApiTokenDeletedEvent;
 import org.hisp.dhis.security.apikey.ApiTokenService;
 import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserDetails;
 import org.hisp.dhis.user.UserService;
 import org.hisp.dhis.util.ObjectUtils;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -57,47 +52,29 @@ public class ApiTokenAuthManager implements AuthenticationManager {
   private final ApiTokenService apiTokenService;
   private final UserService userService;
 
-  private final Cache<ApiTokenAuthenticationToken> apiTokenCache;
-
-  public ApiTokenAuthManager(
-      ApiTokenService apiTokenService, CacheProvider cacheProvider, @Lazy UserService userService) {
+  public ApiTokenAuthManager(ApiTokenService apiTokenService, @Lazy UserService userService) {
     this.userService = userService;
     this.apiTokenService = apiTokenService;
-    this.apiTokenCache = cacheProvider.createApiKeyCache();
-  }
-
-  @EventListener
-  public void handleApiTokenDeleted(ApiTokenDeletedEvent event) {
-    apiTokenCache.invalidate(event.getTokenHash());
   }
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     final String tokenKey = ((ApiTokenAuthenticationToken) authentication).getTokenKey();
 
-    final Optional<ApiTokenAuthenticationToken> cachedToken = apiTokenCache.getIfPresent(tokenKey);
-
-    if (cachedToken.isPresent()) {
-      validateTokenExpiry(cachedToken.get().getToken().getExpire());
-      return cachedToken.get();
-    } else {
-      ApiToken apiToken = apiTokenService.getByKey(tokenKey);
-      if (apiToken == null) {
-        throw new ApiTokenAuthenticationException(
-            ApiTokenErrors.invalidToken("The API token does not exists"));
-      }
-
-      validateTokenExpiry(apiToken.getExpire());
-
-      UserDetails currentUserDetails = validateAndCreateUserDetails(apiToken.getCreatedBy());
-
-      ApiTokenAuthenticationToken authenticationToken =
-          new ApiTokenAuthenticationToken(apiToken, currentUserDetails);
-
-      apiTokenCache.put(tokenKey, authenticationToken);
-
-      return authenticationToken;
+    // Account status, permissions and token constraints can change between requests,
+    // including on another node. Do not reuse a process-local authentication snapshot.
+    ApiToken apiToken = apiTokenService.getByKey(tokenKey);
+    if (apiToken == null) {
+      throw new ApiTokenAuthenticationException(
+          ApiTokenErrors.invalidToken("The API token does not exists"));
     }
+
+    validateTokenExpiry(apiToken.getExpire());
+    UserDetails currentUserDetails = validateAndCreateUserDetails(apiToken.getCreatedBy());
+
+    // The filter attaches request details and authentication state to this object.
+    // Each request must have its own instance.
+    return new ApiTokenAuthenticationToken(apiToken, currentUserDetails);
   }
 
   private UserDetails validateAndCreateUserDetails(User createdBy) {
@@ -132,6 +109,10 @@ public class ApiTokenAuthManager implements AuthenticationManager {
   }
 
   private static void validateTokenExpiry(Long expiry) {
+    if (expiry == null) {
+      throw new ApiTokenAuthenticationException(
+          ApiTokenErrors.invalidToken("The API token does not have an expiry."));
+    }
     if (expiry <= System.currentTimeMillis()) {
       throw new ApiTokenExpiredException("Failed to authenticate API token, token has expired.");
     }
