@@ -11,7 +11,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 | Review question | Document |
 | --- | --- |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
-| Which code covers a key such as `FMT_MSA.3`? | [Component-to-code index](../common-criteria-component-code-index.md), [CSV](../common-criteria-component-code-index.csv), [detailed FMT_MSA.3 element trace](component-traces/FMT_MSA.3.md) |
+| Which code covers a key such as `FMT_MSA.3`? | [Component-to-code index](../common-criteria-component-code-index.md), [CSV](../common-criteria-component-code-index.csv), [199 individual component pages and exclusions](component-traces/README.md), [detailed FMT_MSA.3 element trace](component-traces/FMT_MSA.3.md) |
 | What is the disposition of every standard component? | [261-component gap assessment](../common-criteria-gap-assessment.md), [machine-readable dispositions](../evidence/component-gap-assessment-2026-11-04.json) |
 | What was fixed, and which gaps are open? | [Review and prioritized register](../common-criteria-review.md) |
 | What should be done, and how will closure be tested? | [G-01–G-15 and W-01–W-10 solutions and acceptance](web-gap-solutions.md) |
@@ -50,10 +50,18 @@ replay behavior and complete vulnerability/independent evidence remain open.
 Execution records preserve conditions at capture time, including publication
 status; Git history and branch state determine subsequent publication.
 
+The component-traces folder now inventories the normative element IDs for all
+199 retained components. Six additional partial element mappings cover PAT
+expiry, revocation, subject binding and logout. Unmapped elements are explicitly
+open. This expansion does not change the implementation coverage conclusions.
+
 ## Maintaining this package
 
 Edit component dispositions in the JSON source, then regenerate the index, CSV
-and gap report from the repository root:
+and gap report and individual trace pages from the repository root. Element IDs
+and partial mappings are maintained in
+`../evidence/component-trace-elements-2026-11-07.json`; the FMT_MSA.3 page remains
+manually maintained. Run:
 
 ```bash
 python docs/security/tools/render_common_criteria_review.py

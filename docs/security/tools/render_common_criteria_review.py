@@ -13,6 +13,11 @@ import re
 from collections import Counter
 from pathlib import Path
 
+import sys
+
+sys.dont_write_bytecode = True
+from render_component_traces import render_traces
+
 
 SECURITY = Path(__file__).resolve().parents[1]
 ROOT = SECURITY.parents[1]
@@ -132,7 +137,8 @@ def render(data):
         ev += row["evidence"]
         disposition = row["coverage_status"] + ". " + row["applicability"] + f"; [scope/gap/action](common-criteria-gap-assessment.md#{anchor(key)})."
         index.append("| " + " | ".join(cell(x) for x in (
-            f"**{key}** / {row['clause']}", row["component"], code,
+            (f"[**{key}**](common-criteria/component-traces/{key}.md) / {row['clause']}"
+             if row["applicability"].startswith("Related") else f"**{key}** / {row['clause']}"), row["component"], code,
             links(row["related_sources"]) or "See artifact/evaluation scope.", ev, disposition,
         )) + " |\n")
         report.append("| " + " | ".join(cell(x) for x in (
@@ -151,6 +157,7 @@ def render(data):
     for row in rows:
         writer.writerow({k: "; ".join(v) if isinstance(v, list) else v for k, v in row.items()})
     return {
+        **render_traces(rows),
         SECURITY / "common-criteria-component-code-index.md": "".join(index),
         SECURITY / "common-criteria-component-code-index.csv": stream.getvalue(),
         SECURITY / "common-criteria-gap-assessment.md": "".join(report),

@@ -1,0 +1,1786 @@
+{
+  "source": "Supplied ISO/IEC 15408-2:2026 and ISO/IEC 15408-3:2026; normative element identifiers only. No licensed requirement text reproduced.",
+  "date": "2026-11-07",
+  "elements": {
+    "FAU_ARP.1": [
+      "FAU_ARP.1.1"
+    ],
+    "FAU_GEN.1": [
+      "FAU_GEN.1.1",
+      "FAU_GEN.1.2"
+    ],
+    "FAU_GEN.2": [
+      "FAU_GEN.2.1"
+    ],
+    "FAU_SAA.1": [
+      "FAU_SAA.1.1",
+      "FAU_SAA.1.2"
+    ],
+    "FAU_SAA.2": [
+      "FAU_SAA.2.1",
+      "FAU_SAA.2.2",
+      "FAU_SAA.2.3"
+    ],
+    "FAU_SAA.3": [
+      "FAU_SAA.3.1",
+      "FAU_SAA.3.2",
+      "FAU_SAA.3.3"
+    ],
+    "FAU_SAA.4": [
+      "FAU_SAA.4.1",
+      "FAU_SAA.4.2",
+      "FAU_SAA.4.3"
+    ],
+    "FAU_SAR.1": [
+      "FAU_SAR.1.1",
+      "FAU_SAR.1.2"
+    ],
+    "FAU_SAR.2": [
+      "FAU_SAR.2.1"
+    ],
+    "FAU_SAR.3": [
+      "FAU_SAR.3.1"
+    ],
+    "FAU_SEL.1": [
+      "FAU_SEL.1.1"
+    ],
+    "FAU_STG.1": [
+      "FAU_STG.1.1"
+    ],
+    "FAU_STG.2": [
+      "FAU_STG.2.1",
+      "FAU_STG.2.2"
+    ],
+    "FAU_STG.3": [
+      "FAU_STG.3.1",
+      "FAU_STG.3.2",
+      "FAU_STG.3.3"
+    ],
+    "FAU_STG.4": [
+      "FAU_STG.4.1"
+    ],
+    "FAU_STG.5": [
+      "FAU_STG.5.1"
+    ],
+    "FCO_NRO.1": [
+      "FCO_NRO.1.1",
+      "FCO_NRO.1.2",
+      "FCO_NRO.1.3"
+    ],
+    "FCO_NRO.2": [
+      "FCO_NRO.2.1",
+      "FCO_NRO.2.2",
+      "FCO_NRO.2.3"
+    ],
+    "FCO_NRR.1": [
+      "FCO_NRR.1.1",
+      "FCO_NRR.1.2",
+      "FCO_NRR.1.3"
+    ],
+    "FCO_NRR.2": [
+      "FCO_NRR.2.1",
+      "FCO_NRR.2.2",
+      "FCO_NRR.2.3"
+    ],
+    "FCS_CKM.1": [
+      "FCS_CKM.1.1"
+    ],
+    "FCS_CKM.2": [
+      "FCS_CKM.2.1"
+    ],
+    "FCS_CKM.3": [
+      "FCS_CKM.3.1"
+    ],
+    "FCS_CKM.5": [
+      "FCS_CKM.5.1"
+    ],
+    "FCS_CKM.6": [
+      "FCS_CKM.6.1",
+      "FCS_CKM.6.2"
+    ],
+    "FCS_COP.1": [
+      "FCS_COP.1.1"
+    ],
+    "FCS_RBG.1": [
+      "FCS_RBG.1.1",
+      "FCS_RBG.1.2",
+      "FCS_RBG.1.3"
+    ],
+    "FCS_RBG.2": [
+      "FCS_RBG.2.1"
+    ],
+    "FCS_RBG.3": [
+      "FCS_RBG.3.1"
+    ],
+    "FCS_RBG.4": [
+      "FCS_RBG.4.1"
+    ],
+    "FCS_RBG.5": [
+      "FCS_RBG.5.1"
+    ],
+    "FCS_RBG.6": [
+      "FCS_RBG.6.1"
+    ],
+    "FCS_RNG.1": [
+      "FCS_RNG.1.1",
+      "FCS_RNG.1.2"
+    ],
+    "FDP_ACC.1": [
+      "FDP_ACC.1.1"
+    ],
+    "FDP_ACC.2": [
+      "FDP_ACC.2.1",
+      "FDP_ACC.2.2"
+    ],
+    "FDP_ACF.1": [
+      "FDP_ACF.1.1",
+      "FDP_ACF.1.2",
+      "FDP_ACF.1.3",
+      "FDP_ACF.1.4"
+    ],
+    "FDP_DAU.1": [
+      "FDP_DAU.1.1",
+      "FDP_DAU.1.2"
+    ],
+    "FDP_DAU.2": [
+      "FDP_DAU.2.1",
+      "FDP_DAU.2.2"
+    ],
+    "FDP_ETC.1": [
+      "FDP_ETC.1.1",
+      "FDP_ETC.1.2"
+    ],
+    "FDP_ETC.2": [
+      "FDP_ETC.2.1",
+      "FDP_ETC.2.2",
+      "FDP_ETC.2.3",
+      "FDP_ETC.2.4",
+      "FDP_ETC.2.5"
+    ],
+    "FDP_IFC.1": [
+      "FDP_IFC.1.1"
+    ],
+    "FDP_IFC.2": [
+      "FDP_IFC.2.1",
+      "FDP_IFC.2.2"
+    ],
+    "FDP_IFF.1": [
+      "FDP_IFF.1.1",
+      "FDP_IFF.1.2",
+      "FDP_IFF.1.3",
+      "FDP_IFF.1.4",
+      "FDP_IFF.1.5"
+    ],
+    "FDP_IFF.2": [
+      "FDP_IFF.2.1",
+      "FDP_IFF.2.2",
+      "FDP_IFF.2.3",
+      "FDP_IFF.2.4",
+      "FDP_IFF.2.5",
+      "FDP_IFF.2.6"
+    ],
+    "FDP_IFF.3": [
+      "FDP_IFF.3.1"
+    ],
+    "FDP_IFF.4": [
+      "FDP_IFF.4.1",
+      "FDP_IFF.4.2"
+    ],
+    "FDP_IFF.5": [
+      "FDP_IFF.5.1"
+    ],
+    "FDP_IFF.6": [
+      "FDP_IFF.6.1"
+    ],
+    "FDP_IRC.1": [
+      "FDP_IRC.1.1",
+      "FDP_IRC.1.2"
+    ],
+    "FDP_ITC.1": [
+      "FDP_ITC.1.1",
+      "FDP_ITC.1.2",
+      "FDP_ITC.1.3"
+    ],
+    "FDP_ITC.2": [
+      "FDP_ITC.2.1",
+      "FDP_ITC.2.2",
+      "FDP_ITC.2.3",
+      "FDP_ITC.2.4",
+      "FDP_ITC.2.5"
+    ],
+    "FDP_ITT.1": [
+      "FDP_ITT.1.1"
+    ],
+    "FDP_ITT.2": [
+      "FDP_ITT.2.1",
+      "FDP_ITT.2.2"
+    ],
+    "FDP_ITT.3": [
+      "FDP_ITT.3.1",
+      "FDP_ITT.3.2"
+    ],
+    "FDP_ITT.4": [
+      "FDP_ITT.4.1",
+      "FDP_ITT.4.2"
+    ],
+    "FDP_RIP.1": [
+      "FDP_RIP.1.1"
+    ],
+    "FDP_RIP.2": [
+      "FDP_RIP.2.1"
+    ],
+    "FDP_ROL.1": [
+      "FDP_ROL.1.1",
+      "FDP_ROL.1.2"
+    ],
+    "FDP_ROL.2": [
+      "FDP_ROL.2.1",
+      "FDP_ROL.2.2"
+    ],
+    "FDP_SDC.1": [
+      "FDP_SDC.1.1"
+    ],
+    "FDP_SDC.2": [
+      "FDP_SDC.2.1",
+      "FDP_SDC.2.2"
+    ],
+    "FDP_SDI.1": [
+      "FDP_SDI.1.1"
+    ],
+    "FDP_SDI.2": [
+      "FDP_SDI.2.1",
+      "FDP_SDI.2.2"
+    ],
+    "FDP_UCT.1": [
+      "FDP_UCT.1.1"
+    ],
+    "FDP_UIT.1": [
+      "FDP_UIT.1.1",
+      "FDP_UIT.1.2"
+    ],
+    "FDP_UIT.2": [
+      "FDP_UIT.2.1"
+    ],
+    "FDP_UIT.3": [
+      "FDP_UIT.3.1"
+    ],
+    "FIA_AFL.1": [
+      "FIA_AFL.1.1",
+      "FIA_AFL.1.2"
+    ],
+    "FIA_API.1": [
+      "FIA_API.1.1"
+    ],
+    "FIA_ATD.1": [
+      "FIA_ATD.1.1"
+    ],
+    "FIA_SOS.1": [
+      "FIA_SOS.1.1"
+    ],
+    "FIA_SOS.2": [
+      "FIA_SOS.2.1",
+      "FIA_SOS.2.2"
+    ],
+    "FIA_UAU.1": [
+      "FIA_UAU.1.1",
+      "FIA_UAU.1.2"
+    ],
+    "FIA_UAU.2": [
+      "FIA_UAU.2.1"
+    ],
+    "FIA_UAU.3": [
+      "FIA_UAU.3.1",
+      "FIA_UAU.3.2"
+    ],
+    "FIA_UAU.4": [
+      "FIA_UAU.4.1"
+    ],
+    "FIA_UAU.5": [
+      "FIA_UAU.5.1",
+      "FIA_UAU.5.2"
+    ],
+    "FIA_UAU.6": [
+      "FIA_UAU.6.1"
+    ],
+    "FIA_UAU.7": [
+      "FIA_UAU.7.1"
+    ],
+    "FIA_UID.1": [
+      "FIA_UID.1.1",
+      "FIA_UID.1.2"
+    ],
+    "FIA_UID.2": [
+      "FIA_UID.2.1"
+    ],
+    "FIA_USB.1": [
+      "FIA_USB.1.1",
+      "FIA_USB.1.2",
+      "FIA_USB.1.3"
+    ],
+    "FMT_LIM.1": [
+      "FMT_LIM.1.1"
+    ],
+    "FMT_LIM.2": [
+      "FMT_LIM.2.1"
+    ],
+    "FMT_MOF.1": [
+      "FMT_MOF.1.1"
+    ],
+    "FMT_MSA.1": [
+      "FMT_MSA.1.1"
+    ],
+    "FMT_MSA.2": [
+      "FMT_MSA.2.1"
+    ],
+    "FMT_MSA.3": [
+      "FMT_MSA.3.1",
+      "FMT_MSA.3.2"
+    ],
+    "FMT_MSA.4": [
+      "FMT_MSA.4.1"
+    ],
+    "FMT_MTD.1": [
+      "FMT_MTD.1.1"
+    ],
+    "FMT_MTD.2": [
+      "FMT_MTD.2.1",
+      "FMT_MTD.2.2"
+    ],
+    "FMT_MTD.3": [
+      "FMT_MTD.3.1"
+    ],
+    "FMT_REV.1": [
+      "FMT_REV.1.1",
+      "FMT_REV.1.2"
+    ],
+    "FMT_SAE.1": [
+      "FMT_SAE.1.1",
+      "FMT_SAE.1.2"
+    ],
+    "FMT_SMF.1": [
+      "FMT_SMF.1.1"
+    ],
+    "FMT_SMR.1": [
+      "FMT_SMR.1.1",
+      "FMT_SMR.1.2"
+    ],
+    "FMT_SMR.2": [
+      "FMT_SMR.2.1",
+      "FMT_SMR.2.2",
+      "FMT_SMR.2.3"
+    ],
+    "FMT_SMR.3": [
+      "FMT_SMR.3.1"
+    ],
+    "FPR_ANO.1": [
+      "FPR_ANO.1.1"
+    ],
+    "FPR_ANO.2": [
+      "FPR_ANO.2.1",
+      "FPR_ANO.2.2"
+    ],
+    "FPR_PSE.1": [
+      "FPR_PSE.1.1",
+      "FPR_PSE.1.2",
+      "FPR_PSE.1.3"
+    ],
+    "FPR_PSE.2": [
+      "FPR_PSE.2.1",
+      "FPR_PSE.2.2",
+      "FPR_PSE.2.3",
+      "FPR_PSE.2.4"
+    ],
+    "FPR_PSE.3": [
+      "FPR_PSE.3.1",
+      "FPR_PSE.3.2",
+      "FPR_PSE.3.3",
+      "FPR_PSE.3.4"
+    ],
+    "FPR_UNL.1": [
+      "FPR_UNL.1.1"
+    ],
+    "FPR_UNO.1": [
+      "FPR_UNO.1.1"
+    ],
+    "FPR_UNO.2": [
+      "FPR_UNO.2.1",
+      "FPR_UNO.2.2"
+    ],
+    "FPR_UNO.3": [
+      "FPR_UNO.3.1"
+    ],
+    "FPR_UNO.4": [
+      "FPR_UNO.4.1"
+    ],
+    "FPT_EMS.1": [
+      "FPT_EMS.1.1"
+    ],
+    "FPT_FLS.1": [
+      "FPT_FLS.1.1"
+    ],
+    "FPT_INI.1": [
+      "FPT_INI.1.1",
+      "FPT_INI.1.2",
+      "FPT_INI.1.3",
+      "FPT_INI.1.4"
+    ],
+    "FPT_ITA.1": [
+      "FPT_ITA.1.1"
+    ],
+    "FPT_ITC.1": [
+      "FPT_ITC.1.1"
+    ],
+    "FPT_ITI.1": [
+      "FPT_ITI.1.1",
+      "FPT_ITI.1.2"
+    ],
+    "FPT_ITI.2": [
+      "FPT_ITI.2.1",
+      "FPT_ITI.2.2",
+      "FPT_ITI.2.3"
+    ],
+    "FPT_ITT.1": [
+      "FPT_ITT.1.1"
+    ],
+    "FPT_ITT.2": [
+      "FPT_ITT.2.1",
+      "FPT_ITT.2.2"
+    ],
+    "FPT_ITT.3": [
+      "FPT_ITT.3.1",
+      "FPT_ITT.3.2"
+    ],
+    "FPT_PHP.1": [
+      "FPT_PHP.1.1",
+      "FPT_PHP.1.2"
+    ],
+    "FPT_PHP.2": [
+      "FPT_PHP.2.1",
+      "FPT_PHP.2.2",
+      "FPT_PHP.2.3"
+    ],
+    "FPT_PHP.3": [
+      "FPT_PHP.3.1"
+    ],
+    "FPT_RCV.1": [
+      "FPT_RCV.1.1"
+    ],
+    "FPT_RCV.2": [
+      "FPT_RCV.2.1",
+      "FPT_RCV.2.2"
+    ],
+    "FPT_RCV.3": [
+      "FPT_RCV.3.1",
+      "FPT_RCV.3.2",
+      "FPT_RCV.3.3",
+      "FPT_RCV.3.4"
+    ],
+    "FPT_RCV.4": [
+      "FPT_RCV.4.1"
+    ],
+    "FPT_RPL.1": [
+      "FPT_RPL.1.1",
+      "FPT_RPL.1.2"
+    ],
+    "FPT_SSP.1": [
+      "FPT_SSP.1.1"
+    ],
+    "FPT_SSP.2": [
+      "FPT_SSP.2.1",
+      "FPT_SSP.2.2"
+    ],
+    "FPT_STM.1": [
+      "FPT_STM.1.1"
+    ],
+    "FPT_STM.2": [
+      "FPT_STM.2.1"
+    ],
+    "FPT_TDC.1": [
+      "FPT_TDC.1.1",
+      "FPT_TDC.1.2"
+    ],
+    "FPT_TEE.1": [
+      "FPT_TEE.1.1",
+      "FPT_TEE.1.2"
+    ],
+    "FPT_TRC.1": [
+      "FPT_TRC.1.1",
+      "FPT_TRC.1.2"
+    ],
+    "FPT_TST.1": [
+      "FPT_TST.1.1",
+      "FPT_TST.1.2",
+      "FPT_TST.1.3"
+    ],
+    "FRU_FLT.1": [
+      "FRU_FLT.1.1"
+    ],
+    "FRU_FLT.2": [
+      "FRU_FLT.2.1"
+    ],
+    "FRU_PRS.1": [
+      "FRU_PRS.1.1",
+      "FRU_PRS.1.2"
+    ],
+    "FRU_PRS.2": [
+      "FRU_PRS.2.1",
+      "FRU_PRS.2.2"
+    ],
+    "FRU_RSA.1": [
+      "FRU_RSA.1.1"
+    ],
+    "FRU_RSA.2": [
+      "FRU_RSA.2.1",
+      "FRU_RSA.2.2"
+    ],
+    "FTA_LSA.1": [
+      "FTA_LSA.1.1"
+    ],
+    "FTA_MCS.1": [
+      "FTA_MCS.1.1",
+      "FTA_MCS.1.2"
+    ],
+    "FTA_MCS.2": [
+      "FTA_MCS.2.1",
+      "FTA_MCS.2.2"
+    ],
+    "FTA_SSL.1": [
+      "FTA_SSL.1.1",
+      "FTA_SSL.1.2"
+    ],
+    "FTA_SSL.2": [
+      "FTA_SSL.2.1",
+      "FTA_SSL.2.2"
+    ],
+    "FTA_SSL.3": [
+      "FTA_SSL.3.1"
+    ],
+    "FTA_SSL.4": [
+      "FTA_SSL.4.1"
+    ],
+    "FTA_TAB.1": [
+      "FTA_TAB.1.1"
+    ],
+    "FTA_TAH.1": [
+      "FTA_TAH.1.1",
+      "FTA_TAH.1.2",
+      "FTA_TAH.1.3"
+    ],
+    "FTA_TSE.1": [
+      "FTA_TSE.1.1"
+    ],
+    "FTP_ITC.1": [
+      "FTP_ITC.1.1",
+      "FTP_ITC.1.2",
+      "FTP_ITC.1.3"
+    ],
+    "FTP_PRO.1": [
+      "FTP_PRO.1.1",
+      "FTP_PRO.1.2",
+      "FTP_PRO.1.3",
+      "FTP_PRO.1.4",
+      "FTP_PRO.1.5",
+      "FTP_PRO.1.6"
+    ],
+    "FTP_PRO.2": [
+      "FTP_PRO.2.1",
+      "FTP_PRO.2.2",
+      "FTP_PRO.2.3"
+    ],
+    "FTP_PRO.3": [
+      "FTP_PRO.3.1",
+      "FTP_PRO.3.2"
+    ],
+    "FTP_TRP.1": [
+      "FTP_TRP.1.1",
+      "FTP_TRP.1.2",
+      "FTP_TRP.1.3"
+    ],
+    "APE_INT.1": [
+      "APE_INT.1.1C",
+      "APE_INT.1.1D",
+      "APE_INT.1.1E",
+      "APE_INT.1.2C",
+      "APE_INT.1.3C",
+      "APE_INT.1.4C",
+      "APE_INT.1.5C"
+    ],
+    "APE_CCL.1": [
+      "APE_CCL.1.1C",
+      "APE_CCL.1.1D",
+      "APE_CCL.1.1E",
+      "APE_CCL.1.2C",
+      "APE_CCL.1.2D",
+      "APE_CCL.1.3C",
+      "APE_CCL.1.3D",
+      "APE_CCL.1.4C",
+      "APE_CCL.1.5C",
+      "APE_CCL.1.6C",
+      "APE_CCL.1.7C",
+      "APE_CCL.1.8C",
+      "APE_CCL.1.9C",
+      "APE_CCL.1.10C",
+      "APE_CCL.1.11C",
+      "APE_CCL.1.12C",
+      "APE_CCL.1.13C",
+      "APE_CCL.1.14C",
+      "APE_CCL.1.15C",
+      "APE_CCL.1.16C"
+    ],
+    "APE_SPD.1": [
+      "APE_SPD.1.1D",
+      "APE_SPD.1.1C",
+      "APE_SPD.1.1E",
+      "APE_SPD.1.2C",
+      "APE_SPD.1.3C",
+      "APE_SPD.1.4C"
+    ],
+    "APE_OBJ.1": [
+      "APE_OBJ.1.1C",
+      "APE_OBJ.1.1D",
+      "APE_OBJ.1.1E",
+      "APE_OBJ.1.2D",
+      "APE_OBJ.1.2C",
+      "APE_OBJ.1.3C"
+    ],
+    "APE_OBJ.2": [
+      "APE_OBJ.2.1D",
+      "APE_OBJ.2.1C",
+      "APE_OBJ.2.1E",
+      "APE_OBJ.2.2D",
+      "APE_OBJ.2.2C",
+      "APE_OBJ.2.3C",
+      "APE_OBJ.2.4C",
+      "APE_OBJ.2.5C",
+      "APE_OBJ.2.6C"
+    ],
+    "APE_ECD.1": [
+      "APE_ECD.1.1E",
+      "APE_ECD.1.1D",
+      "APE_ECD.1.1C",
+      "APE_ECD.1.2C",
+      "APE_ECD.1.2E",
+      "APE_ECD.1.2D",
+      "APE_ECD.1.3C",
+      "APE_ECD.1.4C",
+      "APE_ECD.1.5C"
+    ],
+    "APE_REQ.1": [
+      "APE_REQ.1.1C",
+      "APE_REQ.1.1D",
+      "APE_REQ.1.1E",
+      "APE_REQ.1.2C",
+      "APE_REQ.1.2D",
+      "APE_REQ.1.3C",
+      "APE_REQ.1.4C",
+      "APE_REQ.1.5C",
+      "APE_REQ.1.6C",
+      "APE_REQ.1.7C",
+      "APE_REQ.1.8C",
+      "APE_REQ.1.9C",
+      "APE_REQ.1.10C"
+    ],
+    "APE_REQ.2": [
+      "APE_REQ.2.1D",
+      "APE_REQ.2.1C",
+      "APE_REQ.2.1E",
+      "APE_REQ.2.2D",
+      "APE_REQ.2.2C",
+      "APE_REQ.2.3C",
+      "APE_REQ.2.4C",
+      "APE_REQ.2.5C",
+      "APE_REQ.2.6C",
+      "APE_REQ.2.7C",
+      "APE_REQ.2.8C",
+      "APE_REQ.2.9C"
+    ],
+    "ACE_INT.1": [
+      "ACE_INT.1.1C",
+      "ACE_INT.1.1D",
+      "ACE_INT.1.1E",
+      "ACE_INT.1.2C",
+      "ACE_INT.1.3C",
+      "ACE_INT.1.4C",
+      "ACE_INT.1.5C",
+      "ACE_INT.1.6C",
+      "ACE_INT.1.7C",
+      "ACE_INT.1.8C",
+      "ACE_INT.1.9C"
+    ],
+    "ACE_CCL.1": [
+      "ACE_CCL.1.1E",
+      "ACE_CCL.1.1C",
+      "ACE_CCL.1.1D",
+      "ACE_CCL.1.2C",
+      "ACE_CCL.1.2D",
+      "ACE_CCL.1.3C",
+      "ACE_CCL.1.4C",
+      "ACE_CCL.1.5C",
+      "ACE_CCL.1.6C",
+      "ACE_CCL.1.7C",
+      "ACE_CCL.1.8C",
+      "ACE_CCL.1.9C",
+      "ACE_CCL.1.10C",
+      "ACE_CCL.1.11C"
+    ],
+    "ACE_SPD.1": [
+      "ACE_SPD.1.1D",
+      "ACE_SPD.1.1E",
+      "ACE_SPD.1.1C",
+      "ACE_SPD.1.2C",
+      "ACE_SPD.1.3C",
+      "ACE_SPD.1.4C"
+    ],
+    "ACE_OBJ.1": [
+      "ACE_OBJ.1.1E",
+      "ACE_OBJ.1.1C",
+      "ACE_OBJ.1.1D",
+      "ACE_OBJ.1.2D",
+      "ACE_OBJ.1.2C",
+      "ACE_OBJ.1.3C"
+    ],
+    "ACE_OBJ.2": [
+      "ACE_OBJ.2.1D",
+      "ACE_OBJ.2.1C",
+      "ACE_OBJ.2.1E",
+      "ACE_OBJ.2.2C",
+      "ACE_OBJ.2.2D",
+      "ACE_OBJ.2.3C",
+      "ACE_OBJ.2.4C",
+      "ACE_OBJ.2.5C",
+      "ACE_OBJ.2.6C"
+    ],
+    "ACE_ECD.1": [
+      "ACE_ECD.1.1D",
+      "ACE_ECD.1.1C",
+      "ACE_ECD.1.1E",
+      "ACE_ECD.1.2C",
+      "ACE_ECD.1.2E",
+      "ACE_ECD.1.2D",
+      "ACE_ECD.1.3C",
+      "ACE_ECD.1.4C",
+      "ACE_ECD.1.5C"
+    ],
+    "ACE_REQ.1": [
+      "ACE_REQ.1.1D",
+      "ACE_REQ.1.1E",
+      "ACE_REQ.1.1C",
+      "ACE_REQ.1.2D",
+      "ACE_REQ.1.2C",
+      "ACE_REQ.1.3C",
+      "ACE_REQ.1.4C",
+      "ACE_REQ.1.5C",
+      "ACE_REQ.1.6C",
+      "ACE_REQ.1.7C",
+      "ACE_REQ.1.8C",
+      "ACE_REQ.1.9C",
+      "ACE_REQ.1.10C"
+    ],
+    "ACE_REQ.2": [
+      "ACE_REQ.2.1C",
+      "ACE_REQ.2.1D",
+      "ACE_REQ.2.1E",
+      "ACE_REQ.2.2C",
+      "ACE_REQ.2.2D",
+      "ACE_REQ.2.3C",
+      "ACE_REQ.2.4C",
+      "ACE_REQ.2.5C",
+      "ACE_REQ.2.6C",
+      "ACE_REQ.2.7C",
+      "ACE_REQ.2.8C",
+      "ACE_REQ.2.9C"
+    ],
+    "ACE_MCO.1": [
+      "ACE_MCO.1.1E",
+      "ACE_MCO.1.1D",
+      "ACE_MCO.1.1C",
+      "ACE_MCO.1.2C",
+      "ACE_MCO.1.2D",
+      "ACE_MCO.1.3C",
+      "ACE_MCO.1.4C",
+      "ACE_MCO.1.5C",
+      "ACE_MCO.1.6C",
+      "ACE_MCO.1.7C"
+    ],
+    "ACE_CCO.1": [
+      "ACE_CCO.1.1E",
+      "ACE_CCO.1.1C",
+      "ACE_CCO.1.1D",
+      "ACE_CCO.1.2E",
+      "ACE_CCO.1.2D",
+      "ACE_CCO.1.2C",
+      "ACE_CCO.1.3D",
+      "ACE_CCO.1.3C",
+      "ACE_CCO.1.4D",
+      "ACE_CCO.1.4C",
+      "ACE_CCO.1.5C",
+      "ACE_CCO.1.5D",
+      "ACE_CCO.1.6D",
+      "ACE_CCO.1.6C",
+      "ACE_CCO.1.7C",
+      "ACE_CCO.1.7D",
+      "ACE_CCO.1.8C",
+      "ACE_CCO.1.8D",
+      "ACE_CCO.1.9C",
+      "ACE_CCO.1.10C",
+      "ACE_CCO.1.11C",
+      "ACE_CCO.1.12C",
+      "ACE_CCO.1.13C",
+      "ACE_CCO.1.14C",
+      "ACE_CCO.1.15C",
+      "ACE_CCO.1.16C",
+      "ACE_CCO.1.17C",
+      "ACE_CCO.1.18C",
+      "ACE_CCO.1.19C",
+      "ACE_CCO.1.20C",
+      "ACE_CCO.1.21C"
+    ],
+    "ASE_INT.1": [
+      "ASE_INT.1.1C",
+      "ASE_INT.1.1E",
+      "ASE_INT.1.1D",
+      "ASE_INT.1.2E",
+      "ASE_INT.1.2C",
+      "ASE_INT.1.3C",
+      "ASE_INT.1.4C",
+      "ASE_INT.1.5C",
+      "ASE_INT.1.6C",
+      "ASE_INT.1.7C",
+      "ASE_INT.1.8C",
+      "ASE_INT.1.9C"
+    ],
+    "ASE_CCL.1": [
+      "ASE_CCL.1.1C",
+      "ASE_CCL.1.1D",
+      "ASE_CCL.1.1E",
+      "ASE_CCL.1.2C",
+      "ASE_CCL.1.2D",
+      "ASE_CCL.1.3C",
+      "ASE_CCL.1.4C",
+      "ASE_CCL.1.5C",
+      "ASE_CCL.1.6C",
+      "ASE_CCL.1.7C",
+      "ASE_CCL.1.8C",
+      "ASE_CCL.1.9C",
+      "ASE_CCL.1.10C",
+      "ASE_CCL.1.11C",
+      "ASE_CCL.1.12C",
+      "ASE_CCL.1.13C"
+    ],
+    "ASE_SPD.1": [
+      "ASE_SPD.1.1D",
+      "ASE_SPD.1.1E",
+      "ASE_SPD.1.1C",
+      "ASE_SPD.1.2C",
+      "ASE_SPD.1.3C",
+      "ASE_SPD.1.4C"
+    ],
+    "ASE_OBJ.1": [
+      "ASE_OBJ.1.1C",
+      "ASE_OBJ.1.1D",
+      "ASE_OBJ.1.1E",
+      "ASE_OBJ.1.2C",
+      "ASE_OBJ.1.2D",
+      "ASE_OBJ.1.3C"
+    ],
+    "ASE_OBJ.2": [
+      "ASE_OBJ.2.1D",
+      "ASE_OBJ.2.1E",
+      "ASE_OBJ.2.1C",
+      "ASE_OBJ.2.2D",
+      "ASE_OBJ.2.2C",
+      "ASE_OBJ.2.3C",
+      "ASE_OBJ.2.4C",
+      "ASE_OBJ.2.5C",
+      "ASE_OBJ.2.6C"
+    ],
+    "ASE_ECD.1": [
+      "ASE_ECD.1.1C",
+      "ASE_ECD.1.1D",
+      "ASE_ECD.1.1E",
+      "ASE_ECD.1.2C",
+      "ASE_ECD.1.2E",
+      "ASE_ECD.1.2D",
+      "ASE_ECD.1.3C",
+      "ASE_ECD.1.4C",
+      "ASE_ECD.1.5C"
+    ],
+    "ASE_REQ.1": [
+      "ASE_REQ.1.1E",
+      "ASE_REQ.1.1D",
+      "ASE_REQ.1.1C",
+      "ASE_REQ.1.2C",
+      "ASE_REQ.1.2D",
+      "ASE_REQ.1.3C",
+      "ASE_REQ.1.4C",
+      "ASE_REQ.1.5C",
+      "ASE_REQ.1.6C",
+      "ASE_REQ.1.7C",
+      "ASE_REQ.1.8C",
+      "ASE_REQ.1.9C",
+      "ASE_REQ.1.10C",
+      "ASE_REQ.1.11C",
+      "ASE_REQ.1.12C"
+    ],
+    "ASE_REQ.2": [
+      "ASE_REQ.2.1C",
+      "ASE_REQ.2.1D",
+      "ASE_REQ.2.1E",
+      "ASE_REQ.2.2C",
+      "ASE_REQ.2.2D",
+      "ASE_REQ.2.3C",
+      "ASE_REQ.2.4C",
+      "ASE_REQ.2.5C",
+      "ASE_REQ.2.6C",
+      "ASE_REQ.2.7C",
+      "ASE_REQ.2.8C",
+      "ASE_REQ.2.9C",
+      "ASE_REQ.2.10C",
+      "ASE_REQ.2.11C"
+    ],
+    "ASE_TSS.1": [
+      "ASE_TSS.1.1D",
+      "ASE_TSS.1.1C",
+      "ASE_TSS.1.1E",
+      "ASE_TSS.1.2E"
+    ],
+    "ASE_TSS.2": [
+      "ASE_TSS.2.1D",
+      "ASE_TSS.2.1C",
+      "ASE_TSS.2.1E",
+      "ASE_TSS.2.2E",
+      "ASE_TSS.2.2C",
+      "ASE_TSS.2.3C"
+    ],
+    "ASE_COMP.1": [
+      "ASE_COMP.1.1E",
+      "ASE_COMP.1.1D",
+      "ASE_COMP.1.1C",
+      "ASE_COMP.1.2C"
+    ],
+    "ADV_ARC.1": [
+      "ADV_ARC.1.1D",
+      "ADV_ARC.1.1E",
+      "ADV_ARC.1.1C",
+      "ADV_ARC.1.2D",
+      "ADV_ARC.1.2C",
+      "ADV_ARC.1.3D",
+      "ADV_ARC.1.3C",
+      "ADV_ARC.1.4C",
+      "ADV_ARC.1.5C"
+    ],
+    "ADV_FSP.1": [
+      "ADV_FSP.1.1C",
+      "ADV_FSP.1.1E",
+      "ADV_FSP.1.1D",
+      "ADV_FSP.1.2E",
+      "ADV_FSP.1.2D",
+      "ADV_FSP.1.2C",
+      "ADV_FSP.1.3C",
+      "ADV_FSP.1.4C"
+    ],
+    "ADV_FSP.2": [
+      "ADV_FSP.2.1D",
+      "ADV_FSP.2.1C",
+      "ADV_FSP.2.1E",
+      "ADV_FSP.2.2D",
+      "ADV_FSP.2.2E",
+      "ADV_FSP.2.2C",
+      "ADV_FSP.2.3C",
+      "ADV_FSP.2.4C",
+      "ADV_FSP.2.5C",
+      "ADV_FSP.2.6C"
+    ],
+    "ADV_FSP.3": [
+      "ADV_FSP.3.1C",
+      "ADV_FSP.3.1E",
+      "ADV_FSP.3.1D",
+      "ADV_FSP.3.2C",
+      "ADV_FSP.3.2E",
+      "ADV_FSP.3.2D",
+      "ADV_FSP.3.3C",
+      "ADV_FSP.3.4C",
+      "ADV_FSP.3.5C",
+      "ADV_FSP.3.6C",
+      "ADV_FSP.3.7C"
+    ],
+    "ADV_FSP.4": [
+      "ADV_FSP.4.1D",
+      "ADV_FSP.4.1C",
+      "ADV_FSP.4.1E",
+      "ADV_FSP.4.2D",
+      "ADV_FSP.4.2E",
+      "ADV_FSP.4.2C",
+      "ADV_FSP.4.3C",
+      "ADV_FSP.4.4C",
+      "ADV_FSP.4.5C",
+      "ADV_FSP.4.6C"
+    ],
+    "ADV_FSP.5": [
+      "ADV_FSP.5.1C",
+      "ADV_FSP.5.1E",
+      "ADV_FSP.5.1D",
+      "ADV_FSP.5.2C",
+      "ADV_FSP.5.2D",
+      "ADV_FSP.5.2E",
+      "ADV_FSP.5.3C",
+      "ADV_FSP.5.4C",
+      "ADV_FSP.5.5C",
+      "ADV_FSP.5.6C",
+      "ADV_FSP.5.7C",
+      "ADV_FSP.5.8C",
+      "ADV_FSP.5.9C"
+    ],
+    "ADV_FSP.6": [
+      "ADV_FSP.6.1C",
+      "ADV_FSP.6.1E",
+      "ADV_FSP.6.1D",
+      "ADV_FSP.6.2C",
+      "ADV_FSP.6.2E",
+      "ADV_FSP.6.2D",
+      "ADV_FSP.6.3C",
+      "ADV_FSP.6.3D",
+      "ADV_FSP.6.4C",
+      "ADV_FSP.6.5C",
+      "ADV_FSP.6.6C",
+      "ADV_FSP.6.7C",
+      "ADV_FSP.6.8C",
+      "ADV_FSP.6.9C",
+      "ADV_FSP.6.10C"
+    ],
+    "ADV_IMP.1": [
+      "ADV_IMP.1.1D",
+      "ADV_IMP.1.1C",
+      "ADV_IMP.1.1E",
+      "ADV_IMP.1.2C",
+      "ADV_IMP.1.2D",
+      "ADV_IMP.1.3C"
+    ],
+    "ADV_IMP.2": [
+      "ADV_IMP.2.1D",
+      "ADV_IMP.2.1E",
+      "ADV_IMP.2.1C",
+      "ADV_IMP.2.2C",
+      "ADV_IMP.2.2D",
+      "ADV_IMP.2.3C"
+    ],
+    "ADV_INT.1": [
+      "ADV_INT.1.1E",
+      "ADV_INT.1.1D",
+      "ADV_INT.1.1C",
+      "ADV_INT.1.2C",
+      "ADV_INT.1.2E",
+      "ADV_INT.1.2D"
+    ],
+    "ADV_INT.2": [
+      "ADV_INT.2.1C",
+      "ADV_INT.2.1E",
+      "ADV_INT.2.1D",
+      "ADV_INT.2.2E",
+      "ADV_INT.2.2C",
+      "ADV_INT.2.2D"
+    ],
+    "ADV_INT.3": [
+      "ADV_INT.3.1C",
+      "ADV_INT.3.1D",
+      "ADV_INT.3.1E",
+      "ADV_INT.3.2D",
+      "ADV_INT.3.2C",
+      "ADV_INT.3.2E"
+    ],
+    "ADV_SPM.1": [
+      "ADV_SPM.1.1E",
+      "ADV_SPM.1.1C",
+      "ADV_SPM.1.1D",
+      "ADV_SPM.1.2C",
+      "ADV_SPM.1.2D",
+      "ADV_SPM.1.3C",
+      "ADV_SPM.1.3D",
+      "ADV_SPM.1.4C",
+      "ADV_SPM.1.4D",
+      "ADV_SPM.1.5C",
+      "ADV_SPM.1.5D",
+      "ADV_SPM.1.6C",
+      "ADV_SPM.1.6D",
+      "ADV_SPM.1.7D",
+      "ADV_SPM.1.7C",
+      "ADV_SPM.1.8C",
+      "ADV_SPM.1.9C"
+    ],
+    "ADV_TDS.1": [
+      "ADV_TDS.1.1E",
+      "ADV_TDS.1.1C",
+      "ADV_TDS.1.1D",
+      "ADV_TDS.1.2E",
+      "ADV_TDS.1.2C",
+      "ADV_TDS.1.2D",
+      "ADV_TDS.1.3C",
+      "ADV_TDS.1.4C",
+      "ADV_TDS.1.5C",
+      "ADV_TDS.1.6C"
+    ],
+    "ADV_TDS.2": [
+      "ADV_TDS.2.1C",
+      "ADV_TDS.2.1D",
+      "ADV_TDS.2.1E",
+      "ADV_TDS.2.2E",
+      "ADV_TDS.2.2D",
+      "ADV_TDS.2.2C",
+      "ADV_TDS.2.3C",
+      "ADV_TDS.2.4C",
+      "ADV_TDS.2.5C",
+      "ADV_TDS.2.6C",
+      "ADV_TDS.2.7C",
+      "ADV_TDS.2.8C"
+    ],
+    "ADV_TDS.3": [
+      "ADV_TDS.3.1D",
+      "ADV_TDS.3.1C",
+      "ADV_TDS.3.1E",
+      "ADV_TDS.3.2D",
+      "ADV_TDS.3.2C",
+      "ADV_TDS.3.2E",
+      "ADV_TDS.3.3C",
+      "ADV_TDS.3.4C",
+      "ADV_TDS.3.5C",
+      "ADV_TDS.3.6C",
+      "ADV_TDS.3.7C",
+      "ADV_TDS.3.8C",
+      "ADV_TDS.3.9C",
+      "ADV_TDS.3.10C"
+    ],
+    "ADV_TDS.4": [
+      "ADV_TDS.4.1D",
+      "ADV_TDS.4.1E",
+      "ADV_TDS.4.1C",
+      "ADV_TDS.4.2E",
+      "ADV_TDS.4.2C",
+      "ADV_TDS.4.2D",
+      "ADV_TDS.4.3C",
+      "ADV_TDS.4.4C",
+      "ADV_TDS.4.5C",
+      "ADV_TDS.4.6C",
+      "ADV_TDS.4.7C",
+      "ADV_TDS.4.8C",
+      "ADV_TDS.4.9C",
+      "ADV_TDS.4.10C"
+    ],
+    "ADV_TDS.5": [
+      "ADV_TDS.5.1D",
+      "ADV_TDS.5.1C",
+      "ADV_TDS.5.1E",
+      "ADV_TDS.5.2C",
+      "ADV_TDS.5.2D",
+      "ADV_TDS.5.2E",
+      "ADV_TDS.5.3C",
+      "ADV_TDS.5.4C",
+      "ADV_TDS.5.5C",
+      "ADV_TDS.5.6C",
+      "ADV_TDS.5.7C",
+      "ADV_TDS.5.8C"
+    ],
+    "ADV_TDS.6": [
+      "ADV_TDS.6.1E",
+      "ADV_TDS.6.1D",
+      "ADV_TDS.6.1C",
+      "ADV_TDS.6.2E",
+      "ADV_TDS.6.2D",
+      "ADV_TDS.6.2C",
+      "ADV_TDS.6.3C",
+      "ADV_TDS.6.3D",
+      "ADV_TDS.6.4C",
+      "ADV_TDS.6.4D",
+      "ADV_TDS.6.5C",
+      "ADV_TDS.6.6C",
+      "ADV_TDS.6.7C",
+      "ADV_TDS.6.8C",
+      "ADV_TDS.6.9C",
+      "ADV_TDS.6.10C"
+    ],
+    "ADV_COMP.1": [
+      "ADV_COMP.1.1C",
+      "ADV_COMP.1.1E",
+      "ADV_COMP.1.1D"
+    ],
+    "AGD_OPE.1": [
+      "AGD_OPE.1.1C",
+      "AGD_OPE.1.1D",
+      "AGD_OPE.1.1E",
+      "AGD_OPE.1.2C",
+      "AGD_OPE.1.3C",
+      "AGD_OPE.1.4C",
+      "AGD_OPE.1.5C",
+      "AGD_OPE.1.6C",
+      "AGD_OPE.1.7C"
+    ],
+    "AGD_PRE.1": [
+      "AGD_PRE.1.1D",
+      "AGD_PRE.1.1E",
+      "AGD_PRE.1.1C",
+      "AGD_PRE.1.2C",
+      "AGD_PRE.1.2E"
+    ],
+    "ALC_CMC.1": [
+      "ALC_CMC.1.1D",
+      "ALC_CMC.1.1C",
+      "ALC_CMC.1.1E"
+    ],
+    "ALC_CMC.2": [
+      "ALC_CMC.2.1C",
+      "ALC_CMC.2.1E",
+      "ALC_CMC.2.1D",
+      "ALC_CMC.2.2C",
+      "ALC_CMC.2.2D",
+      "ALC_CMC.2.3D",
+      "ALC_CMC.2.3C"
+    ],
+    "ALC_CMC.3": [
+      "ALC_CMC.3.1C",
+      "ALC_CMC.3.1D",
+      "ALC_CMC.3.1E",
+      "ALC_CMC.3.2D",
+      "ALC_CMC.3.2C",
+      "ALC_CMC.3.3D",
+      "ALC_CMC.3.3C",
+      "ALC_CMC.3.4C",
+      "ALC_CMC.3.5C",
+      "ALC_CMC.3.6C",
+      "ALC_CMC.3.7C",
+      "ALC_CMC.3.8C"
+    ],
+    "ALC_CMC.4": [
+      "ALC_CMC.4.1C",
+      "ALC_CMC.4.1D",
+      "ALC_CMC.4.1E",
+      "ALC_CMC.4.2D",
+      "ALC_CMC.4.2C",
+      "ALC_CMC.4.3D",
+      "ALC_CMC.4.3C",
+      "ALC_CMC.4.4C",
+      "ALC_CMC.4.5C",
+      "ALC_CMC.4.6C",
+      "ALC_CMC.4.7C",
+      "ALC_CMC.4.8C",
+      "ALC_CMC.4.9C",
+      "ALC_CMC.4.10C"
+    ],
+    "ALC_CMC.5": [
+      "ALC_CMC.5.1D",
+      "ALC_CMC.5.1C",
+      "ALC_CMC.5.1E",
+      "ALC_CMC.5.2C",
+      "ALC_CMC.5.2E",
+      "ALC_CMC.5.2D",
+      "ALC_CMC.5.3D",
+      "ALC_CMC.5.3C",
+      "ALC_CMC.5.4C",
+      "ALC_CMC.5.5C",
+      "ALC_CMC.5.6C",
+      "ALC_CMC.5.7C",
+      "ALC_CMC.5.8C",
+      "ALC_CMC.5.9C",
+      "ALC_CMC.5.10C",
+      "ALC_CMC.5.11C",
+      "ALC_CMC.5.12C",
+      "ALC_CMC.5.13C",
+      "ALC_CMC.5.14C",
+      "ALC_CMC.5.15C",
+      "ALC_CMC.5.16C"
+    ],
+    "ALC_CMS.1": [
+      "ALC_CMS.1.1D",
+      "ALC_CMS.1.1E",
+      "ALC_CMS.1.1C",
+      "ALC_CMS.1.2C"
+    ],
+    "ALC_CMS.2": [
+      "ALC_CMS.2.1E",
+      "ALC_CMS.2.1D",
+      "ALC_CMS.2.1C",
+      "ALC_CMS.2.2C",
+      "ALC_CMS.2.3C"
+    ],
+    "ALC_CMS.3": [
+      "ALC_CMS.3.1E",
+      "ALC_CMS.3.1C",
+      "ALC_CMS.3.1D",
+      "ALC_CMS.3.2C",
+      "ALC_CMS.3.3C"
+    ],
+    "ALC_CMS.4": [
+      "ALC_CMS.4.1E",
+      "ALC_CMS.4.1D",
+      "ALC_CMS.4.1C",
+      "ALC_CMS.4.2C",
+      "ALC_CMS.4.3C"
+    ],
+    "ALC_CMS.5": [
+      "ALC_CMS.5.1C",
+      "ALC_CMS.5.1E",
+      "ALC_CMS.5.1D",
+      "ALC_CMS.5.2C",
+      "ALC_CMS.5.3C"
+    ],
+    "ALC_DEL.1": [
+      "ALC_DEL.1.1C",
+      "ALC_DEL.1.1E",
+      "ALC_DEL.1.1D",
+      "ALC_DEL.1.2D"
+    ],
+    "ALC_DVS.1": [
+      "ALC_DVS.1.1C",
+      "ALC_DVS.1.1D",
+      "ALC_DVS.1.1E",
+      "ALC_DVS.1.2E"
+    ],
+    "ALC_DVS.2": [
+      "ALC_DVS.2.1D",
+      "ALC_DVS.2.1C",
+      "ALC_DVS.2.1E",
+      "ALC_DVS.2.2E",
+      "ALC_DVS.2.2C"
+    ],
+    "ALC_FLR.1": [
+      "ALC_FLR.1.1C",
+      "ALC_FLR.1.1D",
+      "ALC_FLR.1.1E",
+      "ALC_FLR.1.2C",
+      "ALC_FLR.1.3C",
+      "ALC_FLR.1.4C"
+    ],
+    "ALC_FLR.2": [
+      "ALC_FLR.2.1C",
+      "ALC_FLR.2.1E",
+      "ALC_FLR.2.1D",
+      "ALC_FLR.2.2C",
+      "ALC_FLR.2.2D",
+      "ALC_FLR.2.3D",
+      "ALC_FLR.2.3C",
+      "ALC_FLR.2.4C",
+      "ALC_FLR.2.5C",
+      "ALC_FLR.2.6C",
+      "ALC_FLR.2.7C",
+      "ALC_FLR.2.8C"
+    ],
+    "ALC_FLR.3": [
+      "ALC_FLR.3.1E",
+      "ALC_FLR.3.1D",
+      "ALC_FLR.3.1C",
+      "ALC_FLR.3.2D",
+      "ALC_FLR.3.2C",
+      "ALC_FLR.3.3C",
+      "ALC_FLR.3.3D",
+      "ALC_FLR.3.4C",
+      "ALC_FLR.3.5C",
+      "ALC_FLR.3.6C",
+      "ALC_FLR.3.7C",
+      "ALC_FLR.3.8C",
+      "ALC_FLR.3.9C",
+      "ALC_FLR.3.10C",
+      "ALC_FLR.3.11C"
+    ],
+    "ALC_LCD.1": [
+      "ALC_LCD.1.1E",
+      "ALC_LCD.1.1D",
+      "ALC_LCD.1.1C",
+      "ALC_LCD.1.2C",
+      "ALC_LCD.1.2D"
+    ],
+    "ALC_LCD.2": [
+      "ALC_LCD.2.1D",
+      "ALC_LCD.2.1E",
+      "ALC_LCD.2.1C",
+      "ALC_LCD.2.2D",
+      "ALC_LCD.2.2E",
+      "ALC_LCD.2.2C",
+      "ALC_LCD.2.3C",
+      "ALC_LCD.2.3D",
+      "ALC_LCD.2.4D"
+    ],
+    "ALC_TDA.1": [
+      "ALC_TDA.1.1C",
+      "ALC_TDA.1.1E",
+      "ALC_TDA.1.1D",
+      "ALC_TDA.1.2E",
+      "ALC_TDA.1.2C",
+      "ALC_TDA.1.2D",
+      "ALC_TDA.1.3E",
+      "ALC_TDA.1.3D",
+      "ALC_TDA.1.3C",
+      "ALC_TDA.1.4E",
+      "ALC_TDA.1.4C",
+      "ALC_TDA.1.4D",
+      "ALC_TDA.1.5E",
+      "ALC_TDA.1.5D",
+      "ALC_TDA.1.6D",
+      "ALC_TDA.1.6E"
+    ],
+    "ALC_TDA.2": [
+      "ALC_TDA.2.1E",
+      "ALC_TDA.2.1D",
+      "ALC_TDA.2.1C",
+      "ALC_TDA.2.2C",
+      "ALC_TDA.2.2E",
+      "ALC_TDA.2.2D",
+      "ALC_TDA.2.3E",
+      "ALC_TDA.2.3D",
+      "ALC_TDA.2.3C",
+      "ALC_TDA.2.4E",
+      "ALC_TDA.2.4D",
+      "ALC_TDA.2.4C",
+      "ALC_TDA.2.5E",
+      "ALC_TDA.2.5D",
+      "ALC_TDA.2.5C",
+      "ALC_TDA.2.6E",
+      "ALC_TDA.2.6D",
+      "ALC_TDA.2.7E",
+      "ALC_TDA.2.7D"
+    ],
+    "ALC_TDA.3": [
+      "ALC_TDA.3.1D",
+      "ALC_TDA.3.1E",
+      "ALC_TDA.3.1C",
+      "ALC_TDA.3.2C",
+      "ALC_TDA.3.2E",
+      "ALC_TDA.3.2D",
+      "ALC_TDA.3.3C",
+      "ALC_TDA.3.3D",
+      "ALC_TDA.3.3E",
+      "ALC_TDA.3.4D",
+      "ALC_TDA.3.4E",
+      "ALC_TDA.3.4C",
+      "ALC_TDA.3.5E",
+      "ALC_TDA.3.5D",
+      "ALC_TDA.3.5C",
+      "ALC_TDA.3.6E",
+      "ALC_TDA.3.6D",
+      "ALC_TDA.3.6C",
+      "ALC_TDA.3.7E",
+      "ALC_TDA.3.7D",
+      "ALC_TDA.3.8E",
+      "ALC_TDA.3.8D",
+      "ALC_TDA.3.9D"
+    ],
+    "ALC_TAT.1": [
+      "ALC_TAT.1.1E",
+      "ALC_TAT.1.1C",
+      "ALC_TAT.1.1D",
+      "ALC_TAT.1.2D",
+      "ALC_TAT.1.2C",
+      "ALC_TAT.1.3C"
+    ],
+    "ALC_TAT.2": [
+      "ALC_TAT.2.1E",
+      "ALC_TAT.2.1C",
+      "ALC_TAT.2.1D",
+      "ALC_TAT.2.2C",
+      "ALC_TAT.2.2E",
+      "ALC_TAT.2.2D",
+      "ALC_TAT.2.3C",
+      "ALC_TAT.2.3D"
+    ],
+    "ALC_TAT.3": [
+      "ALC_TAT.3.1C",
+      "ALC_TAT.3.1D",
+      "ALC_TAT.3.1E",
+      "ALC_TAT.3.2E",
+      "ALC_TAT.3.2C",
+      "ALC_TAT.3.2D",
+      "ALC_TAT.3.3C",
+      "ALC_TAT.3.3D"
+    ],
+    "ALC_COMP.1": [
+      "ALC_COMP.1.1D",
+      "ALC_COMP.1.1C",
+      "ALC_COMP.1.1E",
+      "ALC_COMP.1.2C",
+      "ALC_COMP.1.2E"
+    ],
+    "ATE_COV.1": [
+      "ATE_COV.1.1C",
+      "ATE_COV.1.1E",
+      "ATE_COV.1.1D"
+    ],
+    "ATE_COV.2": [
+      "ATE_COV.2.1C",
+      "ATE_COV.2.1E",
+      "ATE_COV.2.1D",
+      "ATE_COV.2.2C"
+    ],
+    "ATE_COV.3": [
+      "ATE_COV.3.1D",
+      "ATE_COV.3.1E",
+      "ATE_COV.3.1C",
+      "ATE_COV.3.2C"
+    ],
+    "ATE_DPT.1": [
+      "ATE_DPT.1.1E",
+      "ATE_DPT.1.1D",
+      "ATE_DPT.1.1C",
+      "ATE_DPT.1.2C"
+    ],
+    "ATE_DPT.2": [
+      "ATE_DPT.2.1E",
+      "ATE_DPT.2.1C",
+      "ATE_DPT.2.1D",
+      "ATE_DPT.2.2C",
+      "ATE_DPT.2.3C"
+    ],
+    "ATE_DPT.3": [
+      "ATE_DPT.3.1E",
+      "ATE_DPT.3.1C",
+      "ATE_DPT.3.1D",
+      "ATE_DPT.3.2C",
+      "ATE_DPT.3.3C"
+    ],
+    "ATE_DPT.4": [
+      "ATE_DPT.4.1C",
+      "ATE_DPT.4.1D",
+      "ATE_DPT.4.1E",
+      "ATE_DPT.4.2C",
+      "ATE_DPT.4.3C",
+      "ATE_DPT.4.4C"
+    ],
+    "ATE_FUN.1": [
+      "ATE_FUN.1.1E",
+      "ATE_FUN.1.1C",
+      "ATE_FUN.1.1D",
+      "ATE_FUN.1.2C",
+      "ATE_FUN.1.2D",
+      "ATE_FUN.1.3C",
+      "ATE_FUN.1.4C"
+    ],
+    "ATE_FUN.2": [
+      "ATE_FUN.2.1E",
+      "ATE_FUN.2.1D",
+      "ATE_FUN.2.1C",
+      "ATE_FUN.2.2C",
+      "ATE_FUN.2.2D",
+      "ATE_FUN.2.3C",
+      "ATE_FUN.2.4C",
+      "ATE_FUN.2.5C"
+    ],
+    "ATE_IND.1": [
+      "ATE_IND.1.1C",
+      "ATE_IND.1.1E",
+      "ATE_IND.1.1D",
+      "ATE_IND.1.2E"
+    ],
+    "ATE_IND.2": [
+      "ATE_IND.2.1D",
+      "ATE_IND.2.1C",
+      "ATE_IND.2.1E",
+      "ATE_IND.2.2E",
+      "ATE_IND.2.2C",
+      "ATE_IND.2.3E"
+    ],
+    "ATE_IND.3": [
+      "ATE_IND.3.1E",
+      "ATE_IND.3.1D",
+      "ATE_IND.3.1C",
+      "ATE_IND.3.2C",
+      "ATE_IND.3.2E",
+      "ATE_IND.3.3E"
+    ],
+    "ATE_COMP.1": [
+      "ATE_COMP.1.1E",
+      "ATE_COMP.1.1D",
+      "ATE_COMP.1.1C",
+      "ATE_COMP.1.2D",
+      "ATE_COMP.1.2C"
+    ],
+    "AVA_VAN.1": [
+      "AVA_VAN.1.1C",
+      "AVA_VAN.1.1E",
+      "AVA_VAN.1.1D",
+      "AVA_VAN.1.2E",
+      "AVA_VAN.1.3E"
+    ],
+    "AVA_VAN.2": [
+      "AVA_VAN.2.1C",
+      "AVA_VAN.2.1D",
+      "AVA_VAN.2.1E",
+      "AVA_VAN.2.2D",
+      "AVA_VAN.2.2E",
+      "AVA_VAN.2.2C",
+      "AVA_VAN.2.3E",
+      "AVA_VAN.2.4E"
+    ],
+    "AVA_VAN.3": [
+      "AVA_VAN.3.1C",
+      "AVA_VAN.3.1E",
+      "AVA_VAN.3.1D",
+      "AVA_VAN.3.2D",
+      "AVA_VAN.3.2C",
+      "AVA_VAN.3.2E",
+      "AVA_VAN.3.3E",
+      "AVA_VAN.3.4E"
+    ],
+    "AVA_VAN.4": [
+      "AVA_VAN.4.1E",
+      "AVA_VAN.4.1C",
+      "AVA_VAN.4.1D",
+      "AVA_VAN.4.2C",
+      "AVA_VAN.4.2D",
+      "AVA_VAN.4.2E",
+      "AVA_VAN.4.3E",
+      "AVA_VAN.4.4E"
+    ],
+    "AVA_VAN.5": [
+      "AVA_VAN.5.1C",
+      "AVA_VAN.5.1E",
+      "AVA_VAN.5.1D",
+      "AVA_VAN.5.2E",
+      "AVA_VAN.5.2D",
+      "AVA_VAN.5.2C",
+      "AVA_VAN.5.3E",
+      "AVA_VAN.5.4E"
+    ],
+    "AVA_COMP.1": [
+      "AVA_COMP.1.1C",
+      "AVA_COMP.1.1D",
+      "AVA_COMP.1.1E"
+    ],
+    "ACO_COR.1": [
+      "ACO_COR.1.1D",
+      "ACO_COR.1.1C",
+      "ACO_COR.1.1E"
+    ],
+    "ACO_DEV.1": [
+      "ACO_DEV.1.1C",
+      "ACO_DEV.1.1D",
+      "ACO_DEV.1.1E",
+      "ACO_DEV.1.2E",
+      "ACO_DEV.1.2C"
+    ],
+    "ACO_DEV.2": [
+      "ACO_DEV.2.1E",
+      "ACO_DEV.2.1D",
+      "ACO_DEV.2.1C",
+      "ACO_DEV.2.2E",
+      "ACO_DEV.2.2C",
+      "ACO_DEV.2.3C"
+    ],
+    "ACO_DEV.3": [
+      "ACO_DEV.3.1C",
+      "ACO_DEV.3.1E",
+      "ACO_DEV.3.1D",
+      "ACO_DEV.3.2E",
+      "ACO_DEV.3.2C",
+      "ACO_DEV.3.3C",
+      "ACO_DEV.3.4C",
+      "ACO_DEV.3.5C"
+    ],
+    "ACO_REL.1": [
+      "ACO_REL.1.1E",
+      "ACO_REL.1.1D",
+      "ACO_REL.1.1C",
+      "ACO_REL.1.2C",
+      "ACO_REL.1.3C"
+    ],
+    "ACO_REL.2": [
+      "ACO_REL.2.1C",
+      "ACO_REL.2.1D",
+      "ACO_REL.2.1E",
+      "ACO_REL.2.2C",
+      "ACO_REL.2.3C",
+      "ACO_REL.2.4C"
+    ],
+    "ACO_CTT.1": [
+      "ACO_CTT.1.1D",
+      "ACO_CTT.1.1E",
+      "ACO_CTT.1.1C",
+      "ACO_CTT.1.2E",
+      "ACO_CTT.1.2C",
+      "ACO_CTT.1.2D",
+      "ACO_CTT.1.3D",
+      "ACO_CTT.1.3C",
+      "ACO_CTT.1.3E",
+      "ACO_CTT.1.4D",
+      "ACO_CTT.1.4C"
+    ],
+    "ACO_CTT.2": [
+      "ACO_CTT.2.1E",
+      "ACO_CTT.2.1D",
+      "ACO_CTT.2.1C",
+      "ACO_CTT.2.2C",
+      "ACO_CTT.2.2D",
+      "ACO_CTT.2.2E",
+      "ACO_CTT.2.3E",
+      "ACO_CTT.2.3C",
+      "ACO_CTT.2.3D",
+      "ACO_CTT.2.4D",
+      "ACO_CTT.2.4C"
+    ],
+    "ACO_VUL.1": [
+      "ACO_VUL.1.1E",
+      "ACO_VUL.1.1D",
+      "ACO_VUL.1.1C",
+      "ACO_VUL.1.2E",
+      "ACO_VUL.1.3E",
+      "ACO_VUL.1.4E"
+    ],
+    "ACO_VUL.2": [
+      "ACO_VUL.2.1C",
+      "ACO_VUL.2.1E",
+      "ACO_VUL.2.1D",
+      "ACO_VUL.2.2E",
+      "ACO_VUL.2.3E",
+      "ACO_VUL.2.4E",
+      "ACO_VUL.2.5E"
+    ],
+    "ACO_VUL.3": [
+      "ACO_VUL.3.1C",
+      "ACO_VUL.3.1D",
+      "ACO_VUL.3.1E",
+      "ACO_VUL.3.2E",
+      "ACO_VUL.3.3E",
+      "ACO_VUL.3.4E",
+      "ACO_VUL.3.5E"
+    ]
+  },
+  "partial_element_mappings": {
+    "FMT_REV.1.2": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 61,
+      "observation": "Personal access token authentication reloads the persisted token and current owner attributes for each request. Deleted tokens and disabled, locked, expired or 2FA-enabled owners are rejected.",
+      "limit": "This traces enforcement for personal access tokens only. Authorized revocation roles (.1), browser sessions, distributed caches and the selected revocation timing still require evidence.",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "FMT_SAE.1.2": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 111,
+      "observation": "validateTokenExpiry rejects absent expiry and expiry at or before the current application clock before creating authenticated token state.",
+      "limit": "This traces rejection of expired personal access tokens only. Roles permitted to set expiry (.1), other security attributes and trusted time remain open.",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "FIA_USB.1.1": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 72,
+      "observation": "Authentication constructs a fresh ApiTokenAuthenticationToken using the persisted token and current UserDetails for its owner.",
+      "limit": "The selected user-attribute list, other authentication mechanisms and complete subject lifecycle are not specified by this mapping.",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "FIA_USB.1.2": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 80,
+      "observation": "Before binding a token to a user, validateAndCreateUserDetails checks owner existence and current enabled, credential-expiry, lock, account-expiry and 2FA state.",
+      "limit": "This is a partial initial-association rule trace for personal access tokens; selected ST rules and browser/OIDC subjects require separate checks.",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "FIA_USB.1.3": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 64,
+      "observation": "The authentication path avoids a process-local snapshot and reloads current owner information on each token request.",
+      "limit": "This supports changes between personal access token requests; it does not prove invalidation or propagation for every subject or deployment node.",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "FTA_SSL.4.1": {
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java",
+      "line": 436,
+      "observation": "The security chain configures logout and removal of session cookies, providing a candidate path for user-initiated session termination.",
+      "limit": "A browser logout test must verify server-side invalidation, replay rejection, CSRF handling and all configured session backends. Configuration alone is incomplete evidence.",
+      "source_sha256": "8f7f5d63dce2f6bdc10a559e2966cd2bb1580a1437163e10aeacdb23b268318a"
+    }
+  }
+}
