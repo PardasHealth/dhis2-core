@@ -4,6 +4,10 @@
 **Scope:** Reviewed DHIS2 web application, APIs and supporting deployment.  
 **Overall status:** Open gaps prevent release sign-off for this reviewed package and any claim of Common Criteria approval.
 
+For the later user-selected, narrower AFTA checklist, see the separate
+[AFTA selected-requirements report](afta-selected-requirements-review.md). Its
+element-based percentages use a different denominator from this broad report.
+
 ## What this means
 
 Common Criteria asks us to define the security promises of a particular release

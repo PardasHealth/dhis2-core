@@ -1,0 +1,1791 @@
+{
+  "review_date": "2026-11-07",
+  "source_identified_by_user": "AFTA",
+  "source_document_version": null,
+  "baseline_core_commit": "09441194f9c4043838f85b22c276d5f894dba67f",
+  "baseline_platform_commit": "e3b18d0e2572e70b85a9cb4a64ac6a38de7adc85",
+  "scoring": "One unique supplied identifier/iteration per item; duplicate preserved but counted once; only rows 63,64,66 explicitly optional; no partial-credit compliance score.",
+  "references": {
+    "auditgen": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditManager.java",
+      "line": 98,
+      "symbol": "public void send(",
+      "source_sha256": "3f8c0c225971d39cffe0daa36ac20206cff11ccc3974ff94ee056ecec1bba67b"
+    },
+    "authlog": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java",
+      "line": 61,
+      "symbol": "public void onApplicationEvent(",
+      "source_sha256": "2fc99f4be60a683ea419b80a811cf9105552712a94d3b8a8f171920de4f89b66"
+    },
+    "auditquery": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "line": 116,
+      "symbol": "public List<Audit> query(",
+      "source_sha256": "70bbd9573e5f3dbf722c459d648e971b5cd53e8fe8de54a0a245c987fc93de24"
+    },
+    "auditdelete": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "line": 94,
+      "symbol": "public void delete(AuditQuery",
+      "source_sha256": "70bbd9573e5f3dbf722c459d648e971b5cd53e8fe8de54a0a245c987fc93de24"
+    },
+    "auditselection": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/configuration/AuditMatrixConfigurer.java",
+      "line": 84,
+      "symbol": "public Map<AuditScope, Set<AuditType>> configure(",
+      "source_sha256": "df7515fda1589c6995d7de66348cc16e6ccce9239b66fec67e1d6a17b6b191e6"
+    },
+    "acl": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-acl/src/main/java/org/hisp/dhis/security/acl/DefaultAclService.java",
+      "line": 124,
+      "symbol": "public boolean canRead(UserDetails",
+      "source_sha256": "0c95f73763993f90dc67c423549fccddf0df8dd9965d4f1053eb5eb31c75b6f1"
+    },
+    "aclwrite": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-acl/src/main/java/org/hisp/dhis/security/acl/DefaultAclService.java",
+      "line": 208,
+      "symbol": "public boolean canWrite(UserDetails",
+      "source_sha256": "0c95f73763993f90dc67c423549fccddf0df8dd9965d4f1053eb5eb31c75b6f1"
+    },
+    "aclmanage": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-acl/src/main/java/org/hisp/dhis/security/acl/DefaultAclService.java",
+      "line": 363,
+      "symbol": "public boolean canManage(UserDetails",
+      "source_sha256": "0c95f73763993f90dc67c423549fccddf0df8dd9965d4f1053eb5eb31c75b6f1"
+    },
+    "import": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/metadata/objectbundle/validation/SecurityCheck.java",
+      "line": 51,
+      "symbol": "public class SecurityCheck",
+      "source_sha256": "bb65129259334b0401bdc63d024e237906a5efaa5b90169656f9648a4faaf3d5"
+    },
+    "export": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-dxf2/src/main/java/org/hisp/dhis/dxf2/metadata/DefaultMetadataExportService.java",
+      "line": 420,
+      "symbol": "public void validate(",
+      "source_sha256": "f73fde04f951f488dea246ef911517a3cd6be2cfb65453b2758334077f822ce9"
+    },
+    "sharingmapper": {
+      "repository": "core",
+      "path": "dhis-2/dhis-tracker/src/main/java/org/hisp/dhis/tracker/imports/preheat/mappers/SharingMapper.java",
+      "line": 39,
+      "symbol": "interface SharingMapper",
+      "source_sha256": "449d463e679a0d07ec050174d3ffc225b65905272ed391f299d27e38cc92e9e3"
+    },
+    "token": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+      "line": 61,
+      "symbol": "public Authentication authenticate(",
+      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+    },
+    "userdetails": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/user/UserDetailsImpl.java",
+      "line": 48,
+      "symbol": "class UserDetailsImpl",
+      "source_sha256": "58d5a08c19dc1f2b6f9b40d39f10c34193dbc1dbfc7d52fa3abd93048a374ef3"
+    },
+    "user": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
+      "line": 647,
+      "symbol": "public void setLastLogin(",
+      "source_sha256": "02559682d88dd6c5c2afeeecd3401696a70cd18629a74776a68d8ea7ab40d4e0"
+    },
+    "factor": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
+      "line": 71,
+      "symbol": "class TwoFactorAuthenticationProvider",
+      "source_sha256": "df9fbac69ecd0d2be68b660b4b74ca4d47550a38b18be03fc1f0494fbfb1400c"
+    },
+    "security": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java",
+      "line": 301,
+      "symbol": "private void configureMatchers(",
+      "source_sha256": "8f7f5d63dce2f6bdc10a559e2966cd2bb1580a1437163e10aeacdb23b268318a"
+    },
+    "sharing": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/sharing/DefaultSharingService.java",
+      "line": 62,
+      "symbol": "class DefaultSharingService",
+      "source_sha256": "0a88cf0d0791ca438a0e395239af168cba5a9e2ec37efff2b6ffa9e7f9a07ef9"
+    },
+    "configuration": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/ConfigurationController.java",
+      "line": 95,
+      "symbol": "class ConfigurationController",
+      "source_sha256": "6e069305af75ec3ef637ec78299b1d86b40e75432922973126221e23341926a3"
+    },
+    "settings": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/SystemSettingsController.java",
+      "line": 87,
+      "symbol": "class SystemSettingsController",
+      "source_sha256": "dc9f2fead78a2a4ceacc3b3fe592c1c57e0bc6813d5e7872c36dee6a2ae394eb"
+    },
+    "users": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/user/UserController.java",
+      "line": 135,
+      "symbol": "class UserController",
+      "source_sha256": "7960b62434d9922e21559e94ae14650c09beeace41256f068276aa75d62353f8"
+    },
+    "sessions": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/SessionController.java",
+      "line": 65,
+      "symbol": "class SessionController",
+      "source_sha256": "ff4fca7ebccf4120ddcec0cc8bb6a3d05710e7808f7747e9272417d34e705ef6"
+    },
+    "auditfailure": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
+      "line": 41,
+      "symbol": "class AbstractAuditConsumer",
+      "source_sha256": "17c3a7cffaa108b939094a81fcfdb1eddc4a9cd4adb96b77f1e33ff7aebe0f15"
+    },
+    "auditbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java",
+      "line": 57,
+      "symbol": "class AuditScheduler",
+      "source_sha256": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92"
+    },
+    "broker": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java",
+      "line": 66,
+      "symbol": "class ArtemisConfig",
+      "source_sha256": "a24efb5c1fa75219aadaf535d66f0cebce4e96a70a1dbe0dd2e31ed90e3ddd0f"
+    },
+    "password": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultPasswordValidationService.java",
+      "line": 38,
+      "symbol": "class DefaultPasswordValidationService",
+      "source_sha256": "0e7d9d2e837e7e014312eb25ef1bc6ea3e5b1b84001528be2c9908c5e833b295"
+    },
+    "hash": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/PasswordEncoderConfig.java",
+      "line": 43,
+      "symbol": "class PasswordEncoderConfig",
+      "source_sha256": "ab681506a5f5f3760af19edc5d57987571c19e12443de043d8c85fc9809594b1"
+    },
+    "crypto": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-hibernate/src/main/java/org/hisp/dhis/config/HibernateEncryptionConfig.java",
+      "line": 51,
+      "symbol": "class HibernateEncryptionConfig",
+      "source_sha256": "5c514852e82a5afbd5bd68261c5ac262fdc58ed273864a4a0a4a4e2a6af783f8"
+    },
+    "keygen": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthorizationServerConfig.java",
+      "line": 385,
+      "symbol": "private static @Nonnull RSAKey generateEphemeralKey(",
+      "source_sha256": "176e835151cb26c214db537f665007862669f2a00e1cf3fc9fdc1aac865f24e4"
+    },
+    "tls": {
+      "repository": "platform",
+      "path": "container/nginx/https.conf.template",
+      "line": 20,
+      "symbol": "ssl_protocols",
+      "source_sha256": "08adcd64a2604bdf888082f41a166a321caab781e73af556527f8c3bb98f4a28"
+    },
+    "edge": {
+      "repository": "platform",
+      "path": "compose.https.yaml",
+      "line": 7,
+      "symbol": "ports: !override []",
+      "source_sha256": "b244ec0206069c327729794a6791773386fce87a9ca7104d7566428f7c277b23"
+    },
+    "update": {
+      "repository": "platform",
+      "path": "scripts/update-core.sh",
+      "line": 32,
+      "symbol": "git -C \"$candidate\" fetch",
+      "source_sha256": "635ad584e795227c203f91ff8a4fcd44f0c266eeca2215638500714201e41a61"
+    },
+    "keys": {
+      "repository": "platform",
+      "path": "container/entrypoint.sh",
+      "line": 21,
+      "symbol": "keytool -genkeypair",
+      "source_sha256": "cdf3d26ca132ac8d9480dd3803bb96af39edcae71369d4876e5f6c2eb390d60c"
+    },
+    "config": {
+      "repository": "platform",
+      "path": "container/entrypoint.sh",
+      "line": 37,
+      "symbol": "http.security.csrf.enabled",
+      "source_sha256": "cdf3d26ca132ac8d9480dd3803bb96af39edcae71369d4876e5f6c2eb390d60c"
+    },
+    "modes": {
+      "repository": "platform",
+      "path": "container/deployment-mode.sh",
+      "line": 4,
+      "symbol": "production) csrf_setting=on",
+      "source_sha256": "2b6e714722d0b177305031322d7ba1e1c9df6322d7b45f63fb96b20424189111"
+    }
+  },
+  "rows": [
+    {
+      "row": 1,
+      "key": "FAU_GEN.1.1",
+      "supplied_line": "1.\t\t FAU_GEN.1.1تولید داده ممیزی 1( الزام 1 کلاس ممیزی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Audit events",
+      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events.",
+      "gap_and_acceptance": "Select the AFTA event list, including audit start/stop and security actions; exercise every required event.",
+      "references": [
+        "auditgen",
+        "authlog"
+      ],
+      "source_key": "FAU_GEN.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 2,
+      "key": "FAU_GEN.1.2",
+      "supplied_line": "2.\t\tFAU_GEN.1.2 تولید داده ممیزی 2  (الزام 2 کلاس ممیزی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Audit record fields",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths.",
+      "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
+      "references": [
+        "auditquery",
+        "authlog"
+      ],
+      "source_key": "FAU_GEN.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 3,
+      "key": "FAU_GEN.2.1",
+      "supplied_line": "3.\t\tFAU_GEN.2.1  مرتبط نمودن هویت کاربر به رویداد 1 (الزام 2 کلاس ممیزی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Link events to users",
+      "observation": "Selected authentication events and audit data carry user identity.",
+      "gap_and_acceptance": "Demonstrate attribution for every required event, including failed authentication, jobs and service accounts.",
+      "references": [
+        "authlog",
+        "auditgen"
+      ],
+      "source_key": "FAU_GEN.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 4,
+      "key": "FAU_SAR.1.1",
+      "supplied_line": "4.\t\tFAU_SAR.1.1  بازبینی داده ممیزی 1 ( الزام 3 کلاس ممیزی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Read audit records",
+      "observation": "JdbcAuditRepository.query provides a record retrieval path.",
+      "gap_and_acceptance": "Identify authorized reviewer roles and prove all selected records can be retrieved through authorized interfaces.",
+      "references": [
+        "auditquery"
+      ],
+      "source_key": "FAU_SAR.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 5,
+      "key": "FAU_SAR.1.2",
+      "supplied_line": "5.\t\tFAU_SAR.1.2   بازبینی داده ممیزی 2(الزام 4 کلاس ممیزی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Understand audit records",
+      "observation": "Audit query mapping exposes structured records.",
+      "gap_and_acceptance": "Confirm the AFTA readability requirement and demonstrate reviewer interpretation of required fields in the delivered review interface.",
+      "references": [
+        "auditquery"
+      ],
+      "source_key": "FAU_SAR.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 6,
+      "key": "FAU_SAR.2.1",
+      "supplied_line": "6.\t\tFAU_SAR.2.1 (الزام 3 از کلاس ممیزی سند چک‌لیست الزامات امنیتی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Restrict audit review",
+      "observation": "Selected API/application controls exist, but the deployed audit-reader boundary has not been fully verified.",
+      "gap_and_acceptance": "Test permitted and forbidden review through every API and direct database route; freeze grants and reviewer roles.",
+      "references": [
+        "security",
+        "auditquery"
+      ],
+      "source_key": "FAU_SAR.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 7,
+      "key": "FAU_SAR.3.1",
+      "supplied_line": "7.\t\tFAU_SAR.3.1  بازبینی داده ممیزی قابل انتخاب 1 (الزام شماره 5 کلاس ممیزی )",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Search/filter audit records",
+      "observation": "JdbcAuditRepository builds audit queries and parameterized filters.",
+      "gap_and_acceptance": "Specify the selected filter/sort criteria and demonstrate each combination and access restriction.",
+      "references": [
+        "auditquery"
+      ],
+      "source_key": "FAU_SAR.3.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 8,
+      "key": "FAU_SEL.1.1",
+      "supplied_line": "8.\t\tFAU_SEL.1.1 (الزام پنجم از کلاس ممیزی سند چک‌لیست الزامات امنیتی)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Select events to audit",
+      "observation": "AuditMatrixConfigurer selects event types by configured audit scope.",
+      "gap_and_acceptance": "Match the required subject/object/event selection attributes; scope/type selection alone does not prove all AFTA options.",
+      "references": [
+        "auditselection"
+      ],
+      "source_key": "FAU_SEL.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 9,
+      "key": "FAU_STG.1.1",
+      "supplied_line": "9.\t\tFAU_STG.1.1 (الزام ششم از کلاس ممیزی سند چک‌لیست الزامات امنیتی)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Audit storage numbering",
+      "observation": "Audit persistence, retry and query boundaries are identifiable, but the checklist storage labels do not align with the supplied 2026 numbering.",
+      "gap_and_acceptance": "Obtain the AFTA edition/text before comparing deletion/modification protection, threshold action and full-storage behavior. Separately verify retention, restricted deletion/modification, alerts and the agreed full-storage policy.",
+      "references": [
+        "auditdelete",
+        "broker",
+        "auditbuffer"
+      ],
+      "source_key": "FAU_STG.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 10,
+      "key": "FAU_STG.1.2",
+      "supplied_line": "10.\t\tFAU_STG.1.2  ذخیره سازی رویداد های ممیزی 2(الزام 6 کلاس ممیزی)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Audit storage numbering",
+      "observation": "Audit persistence, retry and query boundaries are identifiable, but the checklist storage labels do not align with the supplied 2026 numbering.",
+      "gap_and_acceptance": "Obtain the AFTA edition/text before comparing deletion/modification protection, threshold action and full-storage behavior. Separately verify retention, restricted deletion/modification, alerts and the agreed full-storage policy.",
+      "references": [
+        "auditdelete",
+        "broker",
+        "auditbuffer"
+      ],
+      "source_key": "FAU_STG.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 11,
+      "key": "FAU_STG.3.1",
+      "supplied_line": "11.\t\tFAU_STG.3.1  اقدامات لازم در زمان از دست رفتن داده ممیزی 1 (الزام 7 کلاس ممیزی)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Audit storage numbering",
+      "observation": "Audit persistence, retry and query boundaries are identifiable, but the checklist storage labels do not align with the supplied 2026 numbering.",
+      "gap_and_acceptance": "Obtain the AFTA edition/text before comparing deletion/modification protection, threshold action and full-storage behavior. Separately verify retention, restricted deletion/modification, alerts and the agreed full-storage policy.",
+      "references": [
+        "auditdelete",
+        "broker",
+        "auditbuffer"
+      ],
+      "source_key": "FAU_STG.3.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 12,
+      "key": "FAU_STG.4.1",
+      "supplied_line": "12.\t\tFAU_STG.4.1  پیشگیری ازاتلاف و از بین رفتن داده ممیزی 1 ( الزام  8 کلاس ممیزی )",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Audit storage numbering",
+      "observation": "Audit persistence, retry and query boundaries are identifiable, but the checklist storage labels do not align with the supplied 2026 numbering.",
+      "gap_and_acceptance": "Obtain the AFTA edition/text before comparing deletion/modification protection, threshold action and full-storage behavior. Separately verify retention, restricted deletion/modification, alerts and the agreed full-storage policy.",
+      "references": [
+        "auditdelete",
+        "broker",
+        "auditbuffer"
+      ],
+      "source_key": "FAU_STG.4.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 13,
+      "key": "FCS_COP.1.1(1)",
+      "supplied_line": "13.\t\tFCS_COP.1.1(1) (الزام دوم از کلاس رمزنگاری سند چک‌لیست الزامات امنیتی)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Cryptographic operation iteration",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
+      "references": [
+        "hash",
+        "crypto"
+      ],
+      "source_key": "FCS_COP.1.1(1)",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 14,
+      "key": "FCS_COP.1.1(2)",
+      "supplied_line": "14.\t\tFCS_COP.1.1(2)  عملیات رمزنگاری 1 (2) (الزام 1  کلاس رمزنگاری)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Cryptographic operation iteration",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
+      "references": [
+        "hash",
+        "crypto"
+      ],
+      "source_key": "FCS_COP.1.1(2)",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 15,
+      "key": "FDP_ACC.1.1",
+      "supplied_line": "15.\t\tFDP_ACC.1.1  خط مشی کنترل دسترسی 1 (الزام 1 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Access-control policy boundary",
+      "observation": "ACL and metadata import checks enforce access for selected objects and actions.",
+      "gap_and_acceptance": "Enumerate AFTA subjects, objects and operations; map all entry points and denied operations without side effects.",
+      "references": [
+        "acl",
+        "import"
+      ],
+      "source_key": "FDP_ACC.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 16,
+      "key": "FDP_ACF.1.1",
+      "supplied_line": "16.\t\tFDP_ACF.1.1 عملیات کنترل دسترسی 1 (الزام 2 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Access-control attributes",
+      "observation": "ACL code evaluates user and object/sharing attributes.",
+      "gap_and_acceptance": "Specify required attributes, sources and freshness; test each attribute combination across relevant endpoints.",
+      "references": [
+        "acl",
+        "token"
+      ],
+      "source_key": "FDP_ACF.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 17,
+      "key": "FDP_ACF.1.2",
+      "supplied_line": "17.\t\tFDP_ACF.1.2  عملیات کنترل دسترسی 2 (الزام 3 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Access-control decision rules",
+      "observation": "ACL read/write paths implement selected access decisions.",
+      "gap_and_acceptance": "Write the selected allow/deny policy and prove its enforcement for metadata, data and tracker actions.",
+      "references": [
+        "acl",
+        "aclwrite"
+      ],
+      "source_key": "FDP_ACF.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 18,
+      "key": "FDP_ACF.1.3",
+      "supplied_line": "18.\t\tFDP_ACF.1.3 (عملیات کنترل دسترسی 3)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Explicit access allowance",
+      "observation": "ACL includes privileged/owner/sharing decision paths.",
+      "gap_and_acceptance": "Identify permitted explicit overrides and test precedence without unintentionally bypassing object/data policy.",
+      "references": [
+        "acl",
+        "aclmanage"
+      ],
+      "source_key": "FDP_ACF.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 19,
+      "key": "FDP_ACF.1.4",
+      "supplied_line": "19.\t\tالزام 1 کلاس حفاظت از دادهFDP_ACF.1.4  عملیات کنترل دسترسی 4  (الزام 4 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Explicit access denial",
+      "observation": "ACL and import checks contain deny/error paths for selected actions.",
+      "gap_and_acceptance": "Specify explicit denial precedence and verify every relevant route, import format and privileged exception.",
+      "references": [
+        "aclwrite",
+        "import"
+      ],
+      "source_key": "FDP_ACF.1.4",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 20,
+      "key": "FDP_RIP.2.1",
+      "supplied_line": "20.\t\tFDP_RIP.2.1   حفاظت کامل از اطلاعات باقیمانده در منابع 1 (الزام 5 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Residual information after reuse",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection.",
+      "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. No full implementation trace is established.",
+      "references": [
+        "crypto"
+      ],
+      "source_key": "FDP_RIP.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 21,
+      "key": "FDP_ITC.2.1",
+      "supplied_line": "21.\t\tFDP_ITC.2.1 (ورود داده کاربری به محصول با مشخصه امنیتی 1) الزام 6 کلاس حفاظت از داده",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Access policy on import",
+      "observation": "Metadata SecurityCheck validates selected import operations.",
+      "gap_and_acceptance": "Demonstrate the complete import policy across object types, formats, actors and privileged/bypass options.",
+      "references": [
+        "import"
+      ],
+      "source_key": "FDP_ITC.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 22,
+      "key": "FDP_ITC.2.2",
+      "supplied_line": "22.\t\tITC.2.2 ورود داده کاربری به محصول با مشخصه امنیتی 2 (الزام 6 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Bind imported security attributes",
+      "observation": "Tracker SharingMapper and metadata checks process sharing attributes.",
+      "gap_and_acceptance": "Test that security attributes stay associated with the correct imported objects, including malformed and substituted attributes.",
+      "references": [
+        "sharingmapper",
+        "import"
+      ],
+      "source_key": "ITC.2.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "Expanded the missing FDP_ prefix based on adjacent supplied entries; confirm with AFTA source.",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 23,
+      "key": "FDP_ITC.2.3",
+      "supplied_line": "23.\t\tFDP_ITC.2.3  ورود داده کاربری به محصول با مشخصه امنیتی 3 (الزام 7 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Interpret imported security attributes",
+      "observation": "Sharing mapping and security validation interpret selected imported values.",
+      "gap_and_acceptance": "Agree origin/recipient semantics and trusted sources; test conflicting, unknown, forged and downgraded attributes.",
+      "references": [
+        "sharingmapper",
+        "import"
+      ],
+      "source_key": "FDP_ITC.2.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 24,
+      "key": "FDP_ETC.2.1",
+      "supplied_line": "24.\t\tFDP_ETC.2.1 (خروج داده کاربری از محصول با مشخصه امنیتی 1) الزام 8 کلاس حفاظت از داده",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Access policy on export",
+      "observation": "Metadata export validation restricts unfiltered export to authorized users/authority.",
+      "gap_and_acceptance": "Prove object/data export checks for all selected formats, scopes and recipients, including restricted users.",
+      "references": [
+        "export",
+        "acl"
+      ],
+      "source_key": "FDP_ETC.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 25,
+      "key": "FDP_ETC.2.2",
+      "supplied_line": "25.\t\tFDP_ETC.2.2  خروج داده کاربری از محصول با مشخصه امنیتی 2  (الزام 8 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Export data with security attributes",
+      "observation": "Metadata export supports object field selection; sharing is represented in the metadata model.",
+      "gap_and_acceptance": "Freeze required export attributes and show they accompany every protected object in each selected format.",
+      "references": [
+        "export"
+      ],
+      "source_key": "FDP_ETC.2.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 26,
+      "key": "FDP_ETC.2.4",
+      "supplied_line": "26.\t\tFDP_ETC.2.4  خروج داده کاربری از محصول با مشخصه امنیتی 4 (الزام 9 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Additional export rules",
+      "observation": "Export validation and object access paths are implementation candidates.",
+      "gap_and_acceptance": "Obtain the selected additional AFTA rules; test each rule and attribute/recipient combination. The candidate paths do not establish those rules yet.",
+      "references": [
+        "export",
+        "acl"
+      ],
+      "source_key": "FDP_ETC.2.4",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 27,
+      "key": "FDP_SDI.2.1",
+      "supplied_line": "27.\t\tFDP_SDI.2.1  صحت داده کاربری ذخیره شده 2 (الزام 10 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Detect tampering with stored data",
+      "observation": "No complete user-data integrity monitoring scheme is established by the reviewed audit/repository boundaries.",
+      "gap_and_acceptance": "Define protected data and tampering scenarios; demonstrate detection of persistent unauthorized modification.",
+      "references": [
+        "auditquery"
+      ],
+      "source_key": "FDP_SDI.2.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 28,
+      "key": "FDP_SDI.2.2",
+      "supplied_line": "28.\t\tFDP_SDI.2.2  صحت داده کاربری ذخیره شده 3 (الزام 11 کلاس حفاظت از داده)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Respond to stored-data tampering",
+      "observation": "No complete selected tamper-response policy or end-to-end response evidence is established.",
+      "gap_and_acceptance": "Define alert, containment and recovery actions, then inject tampering and prove the intended response and failed-alert handling.",
+      "references": [
+        "auditquery"
+      ],
+      "source_key": "FDP_SDI.2.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 29,
+      "key": "FIA_AFL.1.1",
+      "supplied_line": "29.\t\tFIA_AFL.1.1  مدیریت احرا هویت ناموفق1(الزام 1 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Count failed authentication",
+      "observation": "The authentication provider and user service have lockout/failure handling.",
+      "gap_and_acceptance": "Fix the AFTA threshold, counting conditions and reset rules; test all login mechanisms and distributed counters.",
+      "references": [
+        "factor"
+      ],
+      "source_key": "FIA_AFL.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 30,
+      "key": "FIA_AFL.1.2",
+      "supplied_line": "30.\t\tFIA_AFL.1.2  مدیریت احرا هویت ناموفق 2 (الزام 2  احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Act after failed authentication",
+      "observation": "Provider lockout checks and user account state restrict selected authentication attempts.",
+      "gap_and_acceptance": "Verify block duration, reset/unlock authorization and counter races across providers/nodes; preserve authorized recovery.",
+      "references": [
+        "factor",
+        "token"
+      ],
+      "source_key": "FIA_AFL.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 31,
+      "key": "FIA_ATD.1.1",
+      "supplied_line": "31.\t\tFIA_ATD.1.1  تعریف مشخصات کاربر1 (الزام 3 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "User security attributes",
+      "observation": "UserDetails and fresh PAT authentication expose current user/security state.",
+      "gap_and_acceptance": "Define the complete AFTA attribute list and prove maintenance/freshness for password, token, SSO and interactive sessions.",
+      "references": [
+        "userdetails",
+        "token"
+      ],
+      "source_key": "FIA_ATD.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 32,
+      "key": "FIA_PMG_EXT.1.1",
+      "supplied_line": "32.\t\tFIA_PMG_EXT.1.1 مدیریت کلمه عبور (الزام 4 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended password management",
+      "observation": "DefaultPasswordValidationService chains password-quality/history checks.",
+      "gap_and_acceptance": "Obtain FIA_PMG_EXT.1.1 text, selections and parameters. Existing length/character/history controls do not establish compliance with an unknown extension.",
+      "references": [
+        "password"
+      ],
+      "source_key": "FIA_PMG_EXT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 33,
+      "key": "FIA_UAU.1.1",
+      "supplied_line": "33.\t\tFIA_UAU.1.1  احراز هویت کاربر 1(الزام 5 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Actions allowed before login",
+      "observation": "The web security matcher configuration explicitly permits selected public/bootstrap actions.",
+      "gap_and_acceptance": "Agree the complete pre-login allowlist and verify no other protected action can be invoked anonymously.",
+      "references": [
+        "security"
+      ],
+      "source_key": "FIA_UAU.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 34,
+      "key": "FIA_UAU.1.2",
+      "supplied_line": "34.\t\tFIA_UAU.1.2 احراز هویت کاربر 2 (احراز هویت 2)  (الزام  6 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Require authentication for other actions",
+      "observation": "The security chain and login controller authenticate protected requests on selected paths.",
+      "gap_and_acceptance": "Complete endpoint/format coverage and browser acceptance; production CSRF-on login currently returns 403, while development bypass is excluded from security acceptance.",
+      "references": [
+        "security",
+        "token",
+        "config",
+        "modes"
+      ],
+      "source_key": "FIA_UAU.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 35,
+      "key": "FIA_UAU.5.1",
+      "supplied_line": "35.\t\tFIA_UAU.5.1 ( سازوکاراحرازهویت چندگانه 1)  (الزام  6 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Multiple authentication mechanisms",
+      "observation": "The configuration and provider code support multiple mechanisms.",
+      "gap_and_acceptance": "List the selected mechanisms and verify the delivered browser/API/provider paths and recovery flows.",
+      "references": [
+        "security",
+        "factor",
+        "token"
+      ],
+      "source_key": "FIA_UAU.5.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 36,
+      "key": "FIA_UAU.5.2",
+      "supplied_line": "36.\t\t FIA_UAU.5.2( سازوکاراحرازهویت چندگانه 2) (الزام  6 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Rules combining authentication mechanisms",
+      "observation": "The two-factor provider applies factor-dependent checks; globally disabled enrolled factor types can skip code validation on the reviewed path.",
+      "gap_and_acceptance": "Agree and enforce the fail-closed or approved fallback rules, single-use/replay policy and concurrent-node behavior. Test password/MFA/SSO/token combinations.",
+      "references": [
+        "factor",
+        "token"
+      ],
+      "source_key": "FIA_UAU.5.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 37,
+      "key": "FIA_USB.1.1",
+      "supplied_line": "37.\t\tFIA_USB.1.1  انقیاد مشخصه های امنیتی کاربر 1 (الزام 7 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Bind user attributes to a subject",
+      "observation": "PAT authentication returns a fresh authentication object using current owner details.",
+      "gap_and_acceptance": "Map the full selected attribute list and every subject type; PAT evidence alone does not cover browser, SSO, jobs or all sessions.",
+      "references": [
+        "token",
+        "userdetails"
+      ],
+      "source_key": "FIA_USB.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 38,
+      "key": "FIA_USB.1.2",
+      "supplied_line": "38.\t\tFIA_USB.1.2  انقیاد مشخصه های امنیتی کاربر2  (الزام  8 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Initial subject-binding rules",
+      "observation": "PAT authentication validates owner existence and account state before binding the principal.",
+      "gap_and_acceptance": "Verify the selected initial-association rules for every authentication/provider/session path.",
+      "references": [
+        "token"
+      ],
+      "source_key": "FIA_USB.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 39,
+      "key": "FIA_USB.1.3",
+      "supplied_line": "39.\t\tFIA_USB.1.3  انقیاد مشخصه های امنیتی کاربر 3 (الزام 9 کلاس احراز هویت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Changes to subject attributes",
+      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot.",
+      "gap_and_acceptance": "Demonstrate the selected update/revocation timing for browser/SSO subjects, background jobs and multiple nodes.",
+      "references": [
+        "token",
+        "sessions"
+      ],
+      "source_key": "FIA_USB.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 40,
+      "key": "FMT_MOF.1.1",
+      "supplied_line": "40.\t\tFMT_MOF.1.1  مدیریت کارکرد در محصول 1  (الزام 1 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Restrict changes to security functions",
+      "observation": "Configuration management controllers are security-function management candidates.",
+      "gap_and_acceptance": "Enumerate enable/disable/modify actions and allowed roles; test unauthorized management, including bulk and alternate interfaces.",
+      "references": [
+        "configuration",
+        "settings"
+      ],
+      "source_key": "FMT_MOF.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 41,
+      "key": "FMT_MSA.1.1",
+      "supplied_line": "41.\t\tFMT_MSA.1.1  مدیریت مشخصه های امنیتی 1 (الزام 2 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Restrict security-attribute changes",
+      "observation": "Sharing management and ACL management checks control selected changes.",
+      "gap_and_acceptance": "Specify who may read/set/change/delete each selected attribute and prove each rule with positive and negative tests.",
+      "references": [
+        "sharing",
+        "aclmanage"
+      ],
+      "source_key": "FMT_MSA.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 42,
+      "key": "FMT_MTD.1.1",
+      "supplied_line": "42.\t\tFMT_MTD.1.1  مدیریت داده محصول 1 (الزام 3 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Restrict security-data changes",
+      "observation": "SystemSettingsController provides management interfaces for selected configuration data.",
+      "gap_and_acceptance": "Inventory all selected TSF data, operations and authorized roles; verify API/direct-store paths and effective deployment permissions.",
+      "references": [
+        "settings"
+      ],
+      "source_key": "FMT_MTD.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 43,
+      "key": "FMT_SMF.1.1",
+      "supplied_line": "43.\t\tFMT_SMF.1.1  کارکردهای مدیریتی محصول 1 (الزام 4 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Provide security management functions",
+      "observation": "User, session and configuration controllers expose security management operations.",
+      "gap_and_acceptance": "Obtain the required management-function inventory and link every selected function to authorization and acceptance tests.",
+      "references": [
+        "users",
+        "sessions",
+        "configuration"
+      ],
+      "source_key": "FMT_SMF.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 44,
+      "key": "FMT_SMR.1.1",
+      "supplied_line": "44.\t\tFMT_SMR.1.1  نقش های امنیتی 1 (الزام 5 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Maintain security roles",
+      "observation": "User/ACL/controller paths consume security authorities and role assignments.",
+      "gap_and_acceptance": "Document AFTA roles and authority mappings; verify role creation, modification and all protected actions.",
+      "references": [
+        "users",
+        "aclmanage"
+      ],
+      "source_key": "FMT_SMR.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 45,
+      "key": "FMT_SMR.1.2",
+      "supplied_line": "45.\t\tFMT_SMR.1.2 -نقش های امنیتی 2 (الزام 6 کلاس مدیریت ا منیت)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Associate users with roles",
+      "observation": "User management and UserDetails represent user authority/role state.",
+      "gap_and_acceptance": "Verify authorized assignment/removal, self-escalation denial and propagation to every subject/provider.",
+      "references": [
+        "users",
+        "userdetails",
+        "token"
+      ],
+      "source_key": "FMT_SMR.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 46,
+      "key": "FPT_FLS.1.1",
+      "supplied_line": "46.\t\tFPT_FLS.1.1  حفظ وضعیت امن در زمان شکست 1 (الزام 1 کلاس حفاظت از توابع امنیتی محصول)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Keep a secure state after failure",
+      "observation": "Audit consumer failure propagation and buffered retry have targeted regression evidence.",
+      "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
+      "references": [
+        "auditfailure",
+        "auditbuffer"
+      ],
+      "source_key": "FPT_FLS.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 47,
+      "key": "FPT_ITT.1.1",
+      "supplied_line": "47.\t\tFPT_ITT.1.1  انتقال داده امنیتی در داخل محصول (الزام 2 کلاس حفاظت از توابع امنیتی محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Protect internal security-data transfers",
+      "observation": "Broker/client connection configuration is a boundary reference, not proof of protected internal TSF-data transfer.",
+      "gap_and_acceptance": "Define internal links and threats; configure and verify authenticated/encrypted or otherwise approved protection for each selected link.",
+      "references": [
+        "broker"
+      ],
+      "source_key": "FPT_ITT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 48,
+      "key": "FPT_TDC.1.1",
+      "supplied_line": "48.\t\tFPT_TDC.1.1 سازگاری داده امنیتی بین محصول و موجودیت امن 1  (الزام 3 حفاظت از توابع امنیتی)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Consistent security-data interpretation",
+      "observation": "Import validation is related context; no complete cross-system interpretation contract is established.",
+      "gap_and_acceptance": "Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange.",
+      "references": [
+        "import"
+      ],
+      "source_key": "FPT_TDC.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 49,
+      "key": "FPT_STM.1.1",
+      "supplied_line": "49.\t\tFPT_STM.1.1  مهرهای زمانی 1 (الزام 4 کلاس حفاظت از توابع امنیتی محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Reliable time",
+      "observation": "The user service and audit repository consume application/JVM time. This is not evidence that the time source is reliable.",
+      "gap_and_acceptance": "Document clock authority, synchronization, access control and allowed drift; test rollback, skew and failure for audit/session/token behavior.",
+      "references": [
+        "user",
+        "auditquery"
+      ],
+      "source_key": "FPT_STM.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 50,
+      "key": "FPT_TUD_EXT.1.2",
+      "supplied_line": "50.\t\tFPT_TUD_EXT.1.2  به روز رسانی امن 2 (الزام 5 کلاس حفاظت از توابع امنیتی محصول)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended trusted updates",
+      "observation": "The platform fetches a selected revision, builds and records a local artifact checksum with backup/apply logic.",
+      "gap_and_acceptance": "Obtain the exact FPT_TUD_EXT element definition. Git pinning and a self-computed checksum alone do not prove approved-supplier signature verification or trusted update acceptance.",
+      "references": [
+        "update"
+      ],
+      "source_key": "FPT_TUD_EXT.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 51,
+      "key": "FPT_TUD_EXT.1.3",
+      "supplied_line": "51.\t\tFPT_TUD_EXT.1.3 به روز رسانی امن 3 (الزام 6 کلاس حفاظت از توابع امنیتی محصول)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended trusted updates",
+      "observation": "The platform fetches a selected revision, builds and records a local artifact checksum with backup/apply logic.",
+      "gap_and_acceptance": "Obtain the exact FPT_TUD_EXT element definition. Git pinning and a self-computed checksum alone do not prove approved-supplier signature verification or trusted update acceptance.",
+      "references": [
+        "update"
+      ],
+      "source_key": "FPT_TUD_EXT.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 52,
+      "key": "FRU_FLT.1.1",
+      "supplied_line": "52.\t\tFRU_FLT.1.1  تحمل خطا1 ( الزام شماره 1- تخصیص منابع)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Fault tolerance",
+      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee.",
+      "gap_and_acceptance": "Define required degraded functions/fault classes; demonstrate service/data behavior under the chosen database, broker, disk and node failures.",
+      "references": [
+        "auditfailure",
+        "auditbuffer"
+      ],
+      "source_key": "FRU_FLT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 53,
+      "key": "FTA_MCS.1.1",
+      "supplied_line": "53.\t\tFTA_MCS.1.1  محدودیت روی چندین نشست همزمان 1( الزام 1دسترسی به محصول)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Maximum concurrent sessions",
+      "observation": "Security configuration sets a configurable maximum-session policy.",
+      "gap_and_acceptance": "Select the limit and reject/evict behavior; test concurrent logins, race conditions and Redis/non-Redis backends.",
+      "references": [
+        "security",
+        "sessions"
+      ],
+      "source_key": "FTA_MCS.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 54,
+      "key": "FTA_SSL.3.1",
+      "supplied_line": "54.\t\tFTA_SSL.3.1 خاتمه دادن به نشست ها توسط محصول( الزام 2 دسترسی به محصول)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "End inactive sessions",
+      "observation": "Session configuration and management provide candidates for inactivity termination.",
+      "gap_and_acceptance": "Select the inactivity interval and prove termination at the boundary, refresh behavior and old-cookie rejection on each backend/node.",
+      "references": [
+        "security",
+        "sessions"
+      ],
+      "source_key": "FTA_SSL.3.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 55,
+      "key": "FTA_SSL.4.1",
+      "supplied_line": "55.\t\tFTA_SSL.4.1  خاتمه دادن به نشست ها توسط کاربر 1( الزام شماره 3- دسترسی به محصول)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "User-initiated logout",
+      "observation": "The security chain configures logout and removal of session cookies.",
+      "gap_and_acceptance": "Verify server-side invalidation, old-cookie replay rejection, CSRF-aware browser logout and any federated/session backend behavior.",
+      "references": [
+        "security",
+        "sessions"
+      ],
+      "source_key": "FTA_SSL.4.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 56,
+      "key": "FTA_TAH.1.1",
+      "supplied_line": "56.\t\tFTA_TAH.1.1  سوابق دسترسی به محصول 1( الزام شماره 4- دسترسی به محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Present previous access history",
+      "observation": "DefaultUserService records a last-login value; this does not establish all required previous-success/failure presentation and acknowledgement behavior.",
+      "gap_and_acceptance": "Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient.",
+      "references": [
+        "user"
+      ],
+      "source_key": "FTA_TAH.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 57,
+      "key": "FTA_TAH.1.2",
+      "supplied_line": "57.\t\tFTA_TAH.1.2  سوابق دسترسی به محصول 2 ( الزام شماره 5- دسترسی به محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Present previous access history",
+      "observation": "DefaultUserService records a last-login value; this does not establish all required previous-success/failure presentation and acknowledgement behavior.",
+      "gap_and_acceptance": "Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient.",
+      "references": [
+        "user"
+      ],
+      "source_key": "FTA_TAH.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 58,
+      "key": "FTA_TAH.1.3",
+      "supplied_line": "58.\t\tFTA_TAH.1.3  سوابق دسترسی به محصول 3 ( الزام شماره 6-کلاس دسترسی به محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Present previous access history",
+      "observation": "DefaultUserService records a last-login value; this does not establish all required previous-success/failure presentation and acknowledgement behavior.",
+      "gap_and_acceptance": "Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient.",
+      "references": [
+        "user"
+      ],
+      "source_key": "FTA_TAH.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 59,
+      "key": "FTA_TSE.1.1",
+      "supplied_line": "59.\t\tFTA_TSE.1.1  برقراری نشست 1( الزام شماره 7-کلاس دسترسی به محصول)",
+      "optional": false,
+      "status": "Gap / evidence not established",
+      "topic": "Session-establishment policy",
+      "observation": "Account/token constraints and security matchers are related controls; no complete selected session-denial policy is established.",
+      "gap_and_acceptance": "Select the required user/time/location/provider conditions and prove every allowed/denied session-establishment path.",
+      "references": [
+        "token",
+        "security"
+      ],
+      "source_key": "FTA_TSE.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 60,
+      "key": "FTP_TRP.1.1",
+      "supplied_line": "60.\t\tFTP_TRP.1.1  مسیر امن 1( الزام شماره 1-  کلاس کانال ها/مسیرهای مورد اعتماد)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Protected user-to-application path",
+      "observation": "The platform includes Nginx TLS termination and a TLS overlay that removes the backend host port; local certificate/gateway tests are recorded.",
+      "gap_and_acceptance": "Verify the real production domain/certificate, endpoint identity, confidentiality/integrity and blocked direct ingress. Development HTTP is excluded.",
+      "references": [
+        "tls",
+        "edge"
+      ],
+      "source_key": "FTP_TRP.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 61,
+      "key": "FTP_TRP.1.2",
+      "supplied_line": "61.\t\tFTP_TRP.1.2 مسیر امن 2 ( الزام شماره2-  کلاس کانال ها/مسیرهای مورد اعتماد)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Initiate the trusted path",
+      "observation": "The HTTPS edge permits browser-initiated TLS connections in the selected overlay.",
+      "gap_and_acceptance": "Confirm AFTA initiation selections and show the required parties can initiate the authenticated protected path in the real deployment.",
+      "references": [
+        "tls",
+        "edge"
+      ],
+      "source_key": "FTP_TRP.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 62,
+      "key": "FTP_TRP.1.3",
+      "supplied_line": "62.\t\tFTP_TRP.1.3  مسیر امن 3 ( الزام شماره3-  کلاس کانال ها/مسیرهای مورد اعتماد)",
+      "optional": false,
+      "status": "Partial evidence",
+      "topic": "Require the trusted path for sensitive actions",
+      "observation": "The TLS overlay removes the backend host port and the edge redirects HTTP; this is partial deployment evidence.",
+      "gap_and_acceptance": "Prove required login/security actions cannot use unprotected alternate routes and complete the production CSRF-aware browser workflows. Real certificate operation is not yet verified.",
+      "references": [
+        "tls",
+        "edge",
+        "modes"
+      ],
+      "source_key": "FTP_TRP.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 63,
+      "key": "FCS_CKM.1.1",
+      "supplied_line": "63.\t\tFCS_CKM.1.1  تولید کلیدرمزنگاری 1( اختیاری)",
+      "optional": true,
+      "status": "Partial evidence",
+      "topic": "Generate cryptographic keys (optional)",
+      "observation": "Core has RSA ephemeral generation; the platform provisions a persistent RSA-3072 signing store.",
+      "gap_and_acceptance": "Select approved algorithms, key sizes, randomness/provider requirements and lifecycle; verify production generation, permissions, restart and rotation.",
+      "references": [
+        "keygen",
+        "keys"
+      ],
+      "source_key": "FCS_CKM.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Partial implementation candidate only"
+    },
+    {
+      "row": 64,
+      "key": "FCS_CKM.4.1",
+      "supplied_line": "64.\t\tFCS_CKM.4.1 تخریب کلید رمزنگاری (اختیاری)",
+      "optional": true,
+      "status": "Definition or edition unresolved",
+      "topic": "Destroy cryptographic keys (optional)",
+      "observation": "FCS_CKM.4.1 is not an element in the supplied 2026 inventory; that edition addresses destruction under FCS_CKM.6. Persisted secrets are not a destruction mechanism.",
+      "gap_and_acceptance": "Obtain the AFTA edition and actual requirement. Define keys/material, destruction events/methods and backup/media behavior; demonstrate the approved destruction method. Do not automatically substitute a different element.",
+      "references": [
+        "keys",
+        "crypto"
+      ],
+      "source_key": "FCS_CKM.4.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 65,
+      "key": "FCS_COP.1.1(3)",
+      "supplied_line": "65.\t\tFCS_COP.1.1(3) ( عملیات رمزنگاری 1)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Cryptographic operation iteration",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
+      "references": [
+        "hash",
+        "crypto"
+      ],
+      "source_key": "FCS_COP.1.1(3)",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 66,
+      "key": "FCS_COP.1.1(4)",
+      "supplied_line": "66.\t\tFCS_COP.1.1(4) عملیات رمزنگاری 4 (اختیاری)",
+      "optional": true,
+      "status": "Definition or edition unresolved",
+      "topic": "Cryptographic operation iteration",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
+      "references": [
+        "hash",
+        "crypto"
+      ],
+      "source_key": "FCS_COP.1.1(4)",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 67,
+      "key": "FCS_HTTPS_EXT.1.1",
+      "supplied_line": "67.\t\tFCS_HTTPS_EXT.1.1 ( الزام شماره4-  کلاس کانال ها/مسیرهای مورد اعتماد/HTPS)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended HTTPS",
+      "observation": "Nginx HTTPS configuration is a boundary candidate, not evidence for an unspecified HTTPS extension.",
+      "gap_and_acceptance": "Obtain this exact FCS_HTTPS_EXT definition and selections; test the required HTTPS behavior against the actual edge, certificate and application routes.",
+      "references": [
+        "tls",
+        "edge"
+      ],
+      "source_key": "FCS_HTTPS_EXT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 68,
+      "key": "FCS_HTTPS_EXT.1.2",
+      "supplied_line": "68.\t\tFCS_HTTPS_EXT.1.2 ( الزام شماره5-  کلاس کانال ها/مسیرهای مورد اعتماد/HTPS)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended HTTPS",
+      "observation": "Nginx HTTPS configuration is a boundary candidate, not evidence for an unspecified HTTPS extension.",
+      "gap_and_acceptance": "Obtain this exact FCS_HTTPS_EXT definition and selections; test the required HTTPS behavior against the actual edge, certificate and application routes.",
+      "references": [
+        "tls",
+        "edge"
+      ],
+      "source_key": "FCS_HTTPS_EXT.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 69,
+      "key": "FCS_HTTPS_EXT.1.3",
+      "supplied_line": "69.\t\tFCS_HTTPS_EXT.1.3 ( الزام شماره3-  کلاس کانال ها/مسیرهای مورد اعتماد/HTPS)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended HTTPS",
+      "observation": "Nginx HTTPS configuration is a boundary candidate, not evidence for an unspecified HTTPS extension.",
+      "gap_and_acceptance": "Obtain this exact FCS_HTTPS_EXT definition and selections; test the required HTTPS behavior against the actual edge, certificate and application routes.",
+      "references": [
+        "tls",
+        "edge"
+      ],
+      "source_key": "FCS_HTTPS_EXT.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 70,
+      "key": "FCS_TLSC_EXT.1.1",
+      "supplied_line": "70.\t\tFCS_TLSC_EXT.1.1 ( الزام شماره7-  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Client)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS client",
+      "observation": "Application integrations, broker and JVM libraries can act as clients; no complete selected client-TLS profile is established.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSC_EXT definition; inventory outbound clients and prove required versions, ciphers, hostname/peer validation, failure behavior and certificate handling.",
+      "references": [
+        "broker",
+        "keygen"
+      ],
+      "source_key": "FCS_TLSC_EXT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 71,
+      "key": "FCS_TLSC_EXT.1.2",
+      "supplied_line": "71.\t\tFCS_TLSC_EXT.1.2 ( الزام شماره8-  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Client)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS client",
+      "observation": "Application integrations, broker and JVM libraries can act as clients; no complete selected client-TLS profile is established.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSC_EXT definition; inventory outbound clients and prove required versions, ciphers, hostname/peer validation, failure behavior and certificate handling.",
+      "references": [
+        "broker",
+        "keygen"
+      ],
+      "source_key": "FCS_TLSC_EXT.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 72,
+      "key": "FCS_TLSC_EXT.1.3",
+      "supplied_line": "72.\t\tFCS_TLSC_EXT.1.3 ( الزام شماره9-  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Client)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS client",
+      "observation": "Application integrations, broker and JVM libraries can act as clients; no complete selected client-TLS profile is established.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSC_EXT definition; inventory outbound clients and prove required versions, ciphers, hostname/peer validation, failure behavior and certificate handling.",
+      "references": [
+        "broker",
+        "keygen"
+      ],
+      "source_key": "FCS_TLSC_EXT.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 73,
+      "key": "FCS_TLSC_EXT.1.4",
+      "supplied_line": "73.\t\tFCS_TLSC_EXT.1.4 ( الزام شماره10-  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Client)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS client",
+      "observation": "Application integrations, broker and JVM libraries can act as clients; no complete selected client-TLS profile is established.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSC_EXT definition; inventory outbound clients and prove required versions, ciphers, hostname/peer validation, failure behavior and certificate handling.",
+      "references": [
+        "broker",
+        "keygen"
+      ],
+      "source_key": "FCS_TLSC_EXT.1.4",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 74,
+      "key": "FCS_TLSS_EXT.1.1",
+      "supplied_line": "74.\t\tFCS_TLSS_EXT.1.1 ( الزام شماره5 -  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Server)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server",
+      "observation": "The Nginx TLS template restricts protocol configuration, but extension-specific parameters and tests are not provided.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSS_EXT definition and selections; verify protocol/cipher/key/exchange and certificate behavior against the real deployed edge.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.1.1",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 75,
+      "key": "FCS_TLSS_EXT.1.2",
+      "supplied_line": "75.\t\tFCS_TLSS_EXT.1.2 ( الزام شماره6 -  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Server)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server",
+      "observation": "The Nginx TLS template restricts protocol configuration, but extension-specific parameters and tests are not provided.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSS_EXT definition and selections; verify protocol/cipher/key/exchange and certificate behavior against the real deployed edge.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.1.2",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 76,
+      "key": "FCS_TLSS_EXT.1.3",
+      "supplied_line": "76.\t\tFCS_TLSS_EXT.1.3 ( الزام شماره 7-  کلاس کانال ها/مسیرهای مورد اعتماد/TLS-Server)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server",
+      "observation": "The Nginx TLS template restricts protocol configuration, but extension-specific parameters and tests are not provided.",
+      "gap_and_acceptance": "Obtain this exact FCS_TLSS_EXT definition and selections; verify protocol/cipher/key/exchange and certificate behavior against the real deployed edge.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.1.3",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 77,
+      "key": "FCS_TLSS_EXT.2.4",
+      "supplied_line": "77.\t\tFCS_TLSS_EXT.2.4 ( الزام شماره 1-  کلاس پروتکل TLS مشترک کلاینت سرور/ X509 )",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server/client-certificate requirements",
+      "observation": "The supplied FCS_TLSS_EXT.2.4/.2.5/.2.6 labels do not identify the complete profile or selected mutual-authentication behavior.",
+      "gap_and_acceptance": "Obtain the source clauses; determine whether client-certificate authentication is required, configure the selected trust/revocation behavior and run its positive/negative tests. Do not infer a pass from HTTPS support.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.2.4",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 78,
+      "key": "FCS_TLSS_EXT.2.5",
+      "supplied_line": "78.\t\tFCS_TLSS_EXT.2.5",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server/client-certificate requirements",
+      "observation": "The supplied FCS_TLSS_EXT.2.4/.2.5/.2.6 labels do not identify the complete profile or selected mutual-authentication behavior.",
+      "gap_and_acceptance": "Obtain the source clauses; determine whether client-certificate authentication is required, configure the selected trust/revocation behavior and run its positive/negative tests. Do not infer a pass from HTTPS support.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.2.5",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 79,
+      "key": "FCS_TLSS_EXT.2.6",
+      "supplied_line": "79.\t\tFCS_TLSS_EXT.2.6 ( الزام شماره2-  کلاس پروتکل TLS مشترک کلاینت سرور)",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended TLS server/client-certificate requirements",
+      "observation": "The supplied FCS_TLSS_EXT.2.4/.2.5/.2.6 labels do not identify the complete profile or selected mutual-authentication behavior.",
+      "gap_and_acceptance": "Obtain the source clauses; determine whether client-certificate authentication is required, configure the selected trust/revocation behavior and run its positive/negative tests. Do not infer a pass from HTTPS support.",
+      "references": [
+        "tls"
+      ],
+      "source_key": "FCS_TLSS_EXT.2.6",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 80,
+      "key": "FIA_X509_EXT.1.1/Rev",
+      "supplied_line": "80.\t\tFIA_X509_EXT.1.1/Rev ( الزام شماره3-  کلاس اعتبارسنجی گواهینامه )",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended X.509 and revocation",
+      "observation": "The supplied list has the same FIA_X509_EXT.1.1/Rev identifier twice. No exact extension text or full certificate/revocation test set is supplied.",
+      "gap_and_acceptance": "Obtain the exact definitions/profile/version and clarify the duplicated identifier. Verify required certificate path, trust, purpose, expiry and revocation behavior for every selected client/server use.",
+      "references": [
+        "tls",
+        "keygen"
+      ],
+      "source_key": "FIA_X509_EXT.1.1/Rev",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 81,
+      "key": "FIA_X509_EXT.1.1/Rev",
+      "supplied_line": "81.\t\tFIA_X509_EXT.1.1/Rev ( الزام شماره4-  کلاس اعتبارسنجی گواهینامه )",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended X.509 and revocation",
+      "observation": "The supplied list has the same FIA_X509_EXT.1.1/Rev identifier twice. No exact extension text or full certificate/revocation test set is supplied.",
+      "gap_and_acceptance": "Obtain the exact definitions/profile/version and clarify the duplicated identifier. Verify required certificate path, trust, purpose, expiry and revocation behavior for every selected client/server use.",
+      "references": [
+        "tls",
+        "keygen"
+      ],
+      "source_key": "FIA_X509_EXT.1.1/Rev",
+      "counted": false,
+      "duplicate_of_row": 80,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    },
+    {
+      "row": 82,
+      "key": "FIA_X509_EXT.2.1/Rev",
+      "supplied_line": "82.\t\tFIA_X509_EXT.2.1/Rev ( الزام شماره 5-  کلاس پروتکل TLS مشترک کلاینت سرور/ X509 )",
+      "optional": false,
+      "status": "Definition or edition unresolved",
+      "topic": "Extended X.509 and revocation",
+      "observation": "The supplied list has the same FIA_X509_EXT.1.1/Rev identifier twice. No exact extension text or full certificate/revocation test set is supplied.",
+      "gap_and_acceptance": "Obtain the exact definitions/profile/version and clarify the duplicated identifier. Verify required certificate path, trust, purpose, expiry and revocation behavior for every selected client/server use.",
+      "references": [
+        "tls",
+        "keygen"
+      ],
+      "source_key": "FIA_X509_EXT.2.1/Rev",
+      "counted": true,
+      "duplicate_of_row": null,
+      "normalization_note": "",
+      "reference_role": "Related boundary/reference only; not implementation coverage"
+    }
+  ]
+}
