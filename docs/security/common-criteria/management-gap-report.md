@@ -1,0 +1,69 @@
+# DHIS2 Common Criteria gap report for management
+
+**Report date:** 7 November 2026  
+**Scope:** Reviewed DHIS2 web application, APIs and supporting deployment.  
+**Overall status:** Open gaps prevent release sign-off for this reviewed package and any claim of Common Criteria approval.
+
+## What this means
+
+Common Criteria asks us to define the security promises of a particular release
+and deployment, demonstrate that they work, and provide evidence for independent
+evaluation. Finding code or passing individual tests is only part of that work.
+
+We have made useful engineering fixes and documented the remaining work.
+**We have not completed certification or demonstrated that all application
+workflows work securely in the intended deployment.** Some gaps are confirmed
+problems; others mean that the required policy, configuration or proof is missing.
+Missing proof does not, by itself, mean a security vulnerability exists.
+
+## Main gaps and business impact
+
+| Priority | Gap in plain language | Why management should care | Required next step / proposed owner |
+| --- | --- | --- | --- |
+| Immediate | The reported installation cannot start because its packaged PDF library is corrupt. Repair is not yet confirmed. | The service cannot be accepted as working. | Re-download the affected dependency, rebuild, check the artifact and verify startup. Release engineering / operations. |
+| High | Browser login fails with the selected protection against forged browser requests enabled. That protection remains enabled. | Users cannot complete normal browser login in this profile. | Fix browser integration and test login, saving data and logout without weakening protection. Web application / security teams. |
+| High | Existing data-encryption configuration includes an unsafe fallback and an older encryption option; actual use needs confirmation. | Sensitive data protection may depend on deployment settings. Changing keys incorrectly could make existing data unreadable. | Inventory usage and keys; plan and test any required migration and recovery. Security / data / platform owners. |
+| High | Two-factor login needs stronger policy and tests for reused codes and globally disabled factor types. | An enrolled user's additional login protection may not behave as expected in some configurations. | Define the required behavior, implement necessary controls and test recovery and multiple servers. Authentication / security owners. |
+| High | Audit records are not yet proven durable and protected in the target deployment, especially during full storage or failures. | Required evidence of who did what could be lost or altered; operational response is unclear. | Set retention and failure policy; verify persistence, permissions, capacity alerts and recovery. Operations / database / security owners. |
+| High | HTTPS and Nginx support exist, but real certificate operation and all service-to-service protections remain unverified. | Sensitive information and identity checks depend on a correctly configured deployment. | Configure the real domain/certificate, verify protected connections and block bypass of the trusted proxy. Platform / network owners. |
+| High | App versions and dependencies are not fully frozen and accepted; an Interpretations app error remains open. | A successful build or home page does not prove the delivered product works or can be reproduced. | Record release contents, fix the app issue and test critical user workflows. Release engineering / app owners. |
+| Required for assurance | Access checks and broader web protections have only partial test coverage. | We cannot yet demonstrate that all sensitive actions reject unauthorized use. | Complete role/object/session tests and focused security testing of uploads, queries, integrations and data exposure. Application / security testing teams. |
+| Blocks certification | The exact security commitments, deployment and assurance target have not been finalized. | There is no agreed, measurable basis for formal approval. | Approve the evaluation scope and security document, with the evaluator. Product / security management. |
+| Blocks certification | Detailed traceability, organizational evidence and independent evaluation are incomplete. | Certification cannot be obtained from engineering fixes alone. | Finish requirement-to-code/test/process evidence and arrange independent evaluation. Engineering / quality / evaluator. |
+
+## Work already completed
+
+- Fixed personal access token authentication so it uses current user/token state rather than a stale local authentication snapshot.
+- Fixed loss of buffered audit events when publication fails, with focused recovery tests. This does not prove audit records survive every crash or deployment failure.
+- Added a component inventory, gap register and 199 individual component pages. Most detailed requirement mappings remain open; page counts are not completion percentages.
+- Added configurable Nginx/HTTPS support, build diagnostics and a staged update command that builds, backs up and applies a chosen core revision.
+- Recorded 262 passing core test cases and four existing skips across dated runs. The platform currently has 16 passing tests. These are targeted checks, not a full acceptance or independent evaluation.
+
+## Decisions and next milestones
+
+1. **Assign accountable owners.** Name the release, authentication, data-protection, operations and evaluation leads.
+2. **Agree the target.** Choose the release, enabled apps, deployment and required assurance level with the evaluator. Not every component in the standard is mandatory.
+3. **Restore and demonstrate working operation.** Resolve the corrupt artifact and browser-login blocker, then run representative user workflows.
+4. **Close priority security and deployment gaps.** Verify encryption, two-factor login, audit behavior, connections and access controls against agreed policies.
+5. **Complete the evidence and independent evaluation.** Accept the release only when the agreed checks pass; claim Common Criteria approval only after the relevant scheme's decision.
+
+Owners should estimate effort and dates after confirming the target deployment
+and acceptance requirements. This review does not provide a defensible completion
+date or budget yet.
+
+## Supporting detail
+
+The underlying register has 15 gap groups and 10 additional web-testing areas.
+The table above groups them for management; it does not replace their acceptance criteria.
+
+- Scope, evidence and evaluation: G-01, G-08, G-10, G-11; W-01–W-10.
+- Audit: G-02–G-04.
+- Browser protection, connections and proxy: G-05–G-07.
+- Release contents and web compatibility: G-09, G-12. The current corrupt PDF artifact is an additional release-integrity incident, not a separate Common Criteria component.
+- Encryption and two-factor authentication: G-13–G-15.
+
+See the [detailed gap register](../common-criteria-review.md#gap-register),
+[solutions and acceptance checks](web-gap-solutions.md),
+[code trace index](component-traces/README.md),
+[core verification record](../common-criteria-verification.md) and
+[platform validation limits](https://github.com/PardasHealth/dhis2-platform/blob/main/docs/validation.md).

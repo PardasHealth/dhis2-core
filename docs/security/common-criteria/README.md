@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| What should management know? | [Plain-language gap report](management-gap-report.md) |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
 | Which code covers a key such as `FMT_MSA.3`? | [Component-to-code index](../common-criteria-component-code-index.md), [CSV](../common-criteria-component-code-index.csv), [199 individual component pages and exclusions](component-traces/README.md), [detailed FMT_MSA.3 element trace](component-traces/FMT_MSA.3.md) |
 | What is the disposition of every standard component? | [261-component gap assessment](../common-criteria-gap-assessment.md), [machine-readable dispositions](../evidence/component-gap-assessment-2026-11-04.json) |
