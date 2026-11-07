@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1008pt" height="504pt" viewBox="0 0 1008 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-07T06:07:41.456283</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 1008 504 
+L 1008 0 
+L 0 0 
+z
+" style="fill: #f7f9fc"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 383.312412 242.452181 
+C 379.311876 220.659276 367.791187 200.945181 350.768041 186.762536 
+C 333.744895 172.579891 312.274697 164.808 290.117643 164.808 
+L 290.117644 191.33856 
+C 306.070723 191.33856 321.529265 196.934321 333.785931 207.145826 
+C 346.042596 217.35733 354.337492 231.551479 357.217878 247.24237 
+z
+" style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 217.801188 320.783129 
+C 231.289798 336.715814 249.67298 347.752763 270.076329 352.168245 
+C 290.479678 356.583726 311.781306 354.134946 330.650474 345.204799 
+C 349.519643 336.274653 364.918822 321.354164 374.440194 302.77631 
+C 383.961566 284.198456 387.081587 262.98475 383.312412 242.452181 
+L 357.217878 247.24237 
+C 359.931684 262.02582 357.685268 277.299688 350.829881 290.675743 
+C 343.974493 304.051798 332.887084 314.79455 319.301283 321.224255 
+C 305.715481 327.653961 290.378309 329.417083 275.687898 326.237936 
+C 260.997487 323.05879 247.761596 315.112186 238.049797 303.640653 
+z
+" style="fill: #e7a43a; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 290.117648 164.808 
+C 272.047667 164.808 254.349261 169.977139 239.119848 179.702837 
+C 223.890438 189.428536 211.756352 203.310804 204.155574 219.704471 
+C 196.554796 236.098141 193.799935 254.328976 196.21745 272.236512 
+C 198.634964 290.144046 206.125438 306.991788 217.801188 320.783129 
+L 238.049797 303.640653 
+C 229.643256 293.710887 224.250115 281.580513 222.509505 268.687088 
+C 220.768895 255.793662 222.752394 242.667461 228.224954 230.864019 
+C 233.697514 219.060579 242.434057 209.065346 253.399232 202.062843 
+C 264.364409 195.06034 277.107262 191.33856 290.117648 191.33856 
+z
+" style="fill: #7967a8; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 29px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="290.117647" y="251.97984" transform="rotate(-0 290.117647 251.97984)">22.1%</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="290.117647" y="278.5104" transform="rotate(-0 290.117647 278.5104)">partial code evidence</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="290.117647" y="127.12" transform="rotate(-0 290.117647 127.12)">What evidence is documented?</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_5">
+     <path d="M 168.930928 401.704837 
+L 178.930928 401.704837 
+L 178.930928 394.704837 
+L 168.930928 394.704837 
+z
+" style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_4">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="186.930928" y="401.704837" transform="rotate(-0 186.930928 401.704837)">Partial implementation evidence: 44 (22.1%)</text>
+    </g>
+    <g id="patch_6">
+     <path d="M 168.930928 418.382962 
+L 178.930928 418.382962 
+L 178.930928 411.382962 
+L 168.930928 411.382962 
+z
+" style="fill: #e7a43a; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="186.930928" y="418.382962" transform="rotate(-0 186.930928 418.382962)">No direct implementation trace: 83 (41.7%)</text>
+    </g>
+    <g id="patch_7">
+     <path d="M 168.930928 435.061087 
+L 178.930928 435.061087 
+L 178.930928 428.061087 
+L 168.930928 428.061087 
+z
+" style="fill: #7967a8; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="186.930928" y="435.061087" transform="rotate(-0 186.930928 435.061087)">Incomplete assurance evidence: 72 (36.2%)</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_8">
+    <path d="M 837.834353 259.56 
+C 837.834353 247.117281 835.383409 234.795552 830.621786 223.299979 
+C 825.860164 211.804406 818.880465 201.358549 810.082135 192.560218 
+C 801.283804 183.761888 790.837947 176.782189 779.342374 172.020567 
+C 767.8468 167.258944 755.525072 164.808 743.082353 164.808 
+C 730.639634 164.808 718.317905 167.258944 706.822332 172.020567 
+C 695.326759 176.782189 684.880902 183.761888 676.082571 192.560218 
+C 667.28424 201.358549 660.304542 211.804406 655.542919 223.299979 
+C 650.781297 234.795552 648.330353 247.117281 648.330353 259.56 
+C 648.330353 272.002719 650.781297 284.324448 655.542919 295.820021 
+C 660.304542 307.315594 667.28424 317.761451 676.082571 326.559782 
+C 684.880902 335.358112 695.326759 342.337811 706.822332 347.099433 
+C 718.317905 351.861056 730.639634 354.312 743.082353 354.312 
+C 755.525072 354.312 767.8468 351.861056 779.342374 347.099433 
+C 790.837947 342.337811 801.283804 335.358112 810.082135 326.559782 
+C 818.880465 317.761451 825.860164 307.315594 830.621786 295.820021 
+C 835.383409 284.324448 837.834353 272.002719 837.834353 259.56 
+M 811.303793 259.56 
+C 811.303793 268.518757 809.539113 277.390402 806.110745 285.667215 
+C 802.682377 293.944027 797.656994 301.465045 791.322196 307.799843 
+C 784.987398 314.134641 777.46638 319.160024 769.189568 322.588392 
+C 760.912755 326.01676 752.04111 327.78144 743.082353 327.78144 
+C 734.123596 327.78144 725.251951 326.01676 716.975138 322.588392 
+C 708.698326 319.160024 701.177308 314.134641 694.84251 307.799843 
+C 688.507712 301.465045 683.482329 293.944027 680.053961 285.667215 
+C 676.625593 277.390402 674.860913 268.518757 674.860913 259.56 
+C 674.860913 250.601243 676.625593 241.729598 680.053961 233.452785 
+C 683.482329 225.175973 688.507712 217.654955 694.84251 211.320157 
+C 701.177308 204.985359 708.698326 199.959976 716.975138 196.531608 
+C 725.251951 193.10324 734.123596 191.33856 743.082353 191.33856 
+C 752.04111 191.33856 760.912755 193.10324 769.189568 196.531608 
+C 777.46638 199.959976 784.987398 204.985359 791.322196 211.320157 
+C 797.656994 217.654955 802.682377 225.175973 806.110745 233.452785 
+C 809.539113 241.729598 811.303793 250.601243 811.303793 259.56 
+z
+" style="fill: #d08327; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4"/>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #a65e12" x="743.082353" y="251.97984" transform="rotate(-0 743.082353 251.97984)">100%</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="743.082353" y="278.5104" transform="rotate(-0 743.082353 278.5104)">further work required</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(607.378447 405.308681)">199 of 199 candidates still have open obligations</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(636.261181 421.805416)">0 of 199 documented fully closed (0%)</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="743.082353" y="127.12" transform="rotate(-0 743.082353 127.12)">What still needs closure?</text>
+   </g>
+  </g>
+  <g id="text_11">
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="60.48" y="40.32" transform="rotate(-0 60.48 40.32)">DHIS2 Common Criteria review</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #43556c" x="60.48" y="70.56" transform="rotate(-0 60.48 70.56)">Evidence and remaining work - not a certification score</text>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #52637a" x="60.48" y="95.76" transform="rotate(-0 60.48 95.76)">199 provisional review candidates | 62 excluded/conditional components omitted | 7 November 2026</text>
+  </g>
+  <g id="text_14">
+   <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="60.48" y="448.56" transform="rotate(-0 60.48 448.56)">These percentages measure documentation status, not product security, effort, time remaining or formal compliance.</text>
+  </g>
+  <g id="text_15">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(60.48 472.882656)">Partial evidence is not a completed requirement. Final scope/assurance selection and independent evaluation remain open.</text>
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(60.48 486.36)">Source: component gap assessment dated 4 November 2026; dispositions carried forward in this report.</text>
+  </g>
+ </g>
+</svg>

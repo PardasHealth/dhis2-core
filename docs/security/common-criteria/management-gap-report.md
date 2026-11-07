@@ -16,6 +16,36 @@ workflows work securely in the intended deployment.** Some gaps are confirmed
 problems; others mean that the required policy, configuration or proof is missing.
 Missing proof does not, by itself, mean a security vulnerability exists.
 
+## Progress charts
+
+![Common Criteria evidence and remaining work](charts/management-gap-dashboard.png)
+
+| Management question | Current measured result |
+| --- | --- |
+| What percentage is proven fully closed against the reviewed components? | **0% (0 of 199)** documented fully closed. This does **not** mean DHIS2 is 0% secure. |
+| What percentage still needs work or evidence? | **100% (199 of 199)** retain open obligations. This is not an estimate that 100% of development must be redone. |
+| Where is partial implementation evidence already recorded? | **22.1% (44 of 199)**. Partial evidence is not a completed requirement or a compliance score. |
+| Where has no direct implementation trace been established? | **41.7% (83 of 199)**. This does not prove that the feature is absent. |
+| Where is assurance evidence incomplete? | **36.2% (72 of 199)**. These need documentation, process, testing and/or evaluator evidence. |
+
+**A defensible “percentage of the project that fits Common Criteria” is not yet
+available.** The charts measure the disposition of review candidates, not the
+percentage of the code that is secure, certification likelihood, time or cost.
+The final evaluation target is still open. Components differ greatly in size,
+and some are alternative levels; they are counted equally here only to explain
+the current register. The 62 excluded/conditional components are outside the
+199-component denominator and are not counted as passing requirements.
+
+The 22.1%, 41.7% and 36.2% categories add to 100% of the register. The separate
+100% “further work” chart includes all three categories because none is fully
+closed. Figures come from the 4 November component dispositions, carried forward
+in this report; they are not a new evaluation of every component.
+
+Chart downloads: [PNG](charts/management-gap-dashboard.png),
+[SVG](charts/management-gap-dashboard.svg), [printable PDF](charts/management-gap-dashboard.pdf).
+Regenerate using `python3 docs/security/tools/render_management_charts.py`
+(requires Matplotlib); the renderer checks counts against the report's baseline.
+
 ## Main gaps and business impact
 
 | Priority | Gap in plain language | Why management should care | Required next step / proposed owner |
