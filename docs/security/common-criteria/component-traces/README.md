@@ -99,7 +99,7 @@ See the [component gap assessment](../../common-criteria-gap-assessment.md), [ve
 | [FMT_SMR.1](FMT_SMR.1.md) — Security roles | Component code candidates; element mapping open |
 | [FMT_SMR.2](FMT_SMR.2.md) — Restrictions on security roles | Boundary/artifact references; element mapping open |
 | [FMT_SMR.3](FMT_SMR.3.md) — Assuming roles | Boundary/artifact references; element mapping open |
-| [FPT_FLS.1](FPT_FLS.1.md) — Failure with preservation of secure state | Component code candidates; element mapping open |
+| [FPT_FLS.1](FPT_FLS.1.md) — Failure with preservation of secure state | Partial element mappings; remaining elements open |
 | [FPT_INI.1](FPT_INI.1.md) — TSF initialization | Boundary/artifact references; element mapping open |
 | [FPT_ITA.1](FPT_ITA.1.md) — Inter-TSF availability within a defined availability metric | Boundary/artifact references; element mapping open |
 | [FPT_ITC.1](FPT_ITC.1.md) — Inter-TSF confidentiality during transmission | Boundary/artifact references; element mapping open |

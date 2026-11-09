@@ -1,8 +1,8 @@
 # FPT_FLS.1 — Failure with preservation of secure state
 
-ISO/IEC 15408-2:2026, clause 15.4.6. Trace update: 2026-11-07; component disposition baseline: 2026-11-04.
+ISO/IEC 15408-2:2026, clause 15.4.6. Trace update: 2026-11-09; component disposition baseline: 2026-11-04.
 
-**Status: Partial implementation evidence.** Component code candidates; element mapping open. No conformance claim.
+**Status: Partial implementation evidence.** Partial element mappings; remaining elements open. No conformance claim.
 
 [All component pages](README.md) · [Component disposition](../../common-criteria-gap-assessment.md#fpt-fls-1)
 
@@ -14,6 +14,7 @@ Related to web application; component/level selection requires ST completion. We
 
 - [AbstractAuditConsumer.java](../../../../dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java)
 - [AuditScheduler.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java)
+- [TwoFactorReplayService.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java)
 
 Symbols to inspect: `AbstractAuditConsumer._consume`; `AuditScheduler.process`. This component-level list is not a mapping to every element below.
 
@@ -23,16 +24,20 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FPT_FLS.1.1
 
-**Unmapped — Functional requirement.** No individual implementation or artifact mapping has been established for this element in this review. The component candidates above must not be treated as proof for it. Complete the element-specific trace, applicable ST operations and verification.
+**Partial source mapping.** [TwoFactorReplayService.java:69](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java#L69): Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary.
+
+**Open:** One identified failure case, not the complete selected AFTA failure list or whole-application secure-state proof. Reliable time, restore and broader fault tolerance remain open.
 
 ## Evidence and limits
 
-Selected audit rejection, rollback, retry and recovery paths are tested; this does not establish secure recovery or fault tolerance of the whole TOE.
+Audit retry/failure paths and MFA replay-reservation failure provide bounded examples. A denied or unavailable replay write prevents the provider from returning authentication in targeted tests; these do not establish all secure-state failure transitions.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
 - [AbstractAuditConsumerFailureTest.java](../../../../dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java)
 - [AuditSchedulerTest.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java)
+- [TwoFactorReplayServiceTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java)
+- [TwoFactorReplayPostgresTest.java](../../../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java)
 
 Related boundary references, **not implementation coverage**:
 
@@ -41,7 +46,7 @@ Related boundary references, **not implementation coverage**:
 
 ## Work required before closure
 
-Audit failures propagate/retry on tested paths; secure state for all selected TOE failures is not defined. Specify preserved invariants and test failure transitions including unavailable storage.
+Select every relevant failure class and secure invariant. MFA replay storage failure is covered by targeted tests; broader storage, time, restore, provider, session and whole-application failure acceptance remains open.
 
 Proposed owner: Reliability / security / operations.
 

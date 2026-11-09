@@ -58,7 +58,7 @@ def render(data):
           '**Date:** 7 November 2026. **Source identified by user:** AFTA; exact checklist title/version and full clause definitions not supplied.\n\n',
           '**Scope:** only the supplied 82 numbered entries. This is a separate, narrower work list; it does not replace or declare completion of the broader Common Criteria review. '
           'An official evaluation may require dependencies or assurance work beyond this list. Those need explicit agreement rather than silent expansion here.\n\n',
-          'Implementation follow-up: **9 November 2026**. See the [remediation progress record](afta-remediation-progress.md) for the disabled-factor authentication fix, test evidence and remaining work. The checklist counts remain unchanged because the full requirement is still open.\n\n',
+          'Implementation follow-up: **9 November 2026**. See the [remediation progress record](afta-remediation-progress.md) for the disabled-factor and single-use login fixes, test evidence and remaining work. The checklist counts remain unchanged because the full requirement is still open.\n\n',
           '## Manager summary\n\n',
           '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 42 of 78 (53.8%). '
           'All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, '

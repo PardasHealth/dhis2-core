@@ -1,6 +1,6 @@
 # FPT_RPL.1 — Replay detection
 
-ISO/IEC 15408-2:2026, clause 15.12.6. Trace update: 2026-11-07; component disposition baseline: 2026-11-04.
+ISO/IEC 15408-2:2026, clause 15.12.6. Trace update: 2026-11-09; component disposition baseline: 2026-11-04.
 
 **Status: No direct implementation trace established.** Boundary/artifact references; element mapping open. No conformance claim.
 
@@ -28,7 +28,7 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ## Evidence and limits
 
-Expiry/signature verification does not alone prevent replay; reviewed 2FA helpers have no consumed-code or accepted-time-step state.
+The 2026-11-09 selected AFTA follow-up implements login-only proof reservations under FIA_UAU.5.2. This is related context for this component, not a full component-specific trace or an assertion that all mechanisms/data flows meet its selected operations.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
@@ -38,10 +38,11 @@ Related boundary references, **not implementation coverage**:
 
 - [TwoFactorAuthUtils.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java)
 - [TwoFactorAuthenticationProvider.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java)
+- [TwoFactorReplayService.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java)
 
 ## Work required before closure
 
-Token expiry/signature checks alone do not detect replay; reviewed 2FA has no consumption state. Define replay-protected entities/protocols and atomic replay rejection plus reaction tests.
+This component is not added to the user-selected AFTA list by this fix. If selected separately, establish its precise mechanism/data scope and element mapping, including other purposes, context binding, clocks, recovery and failure policy. Do not infer absent code or a passing requirement from the current trace status.
 
 Proposed owner: Authentication / protocol engineering.
 

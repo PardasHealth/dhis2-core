@@ -4,6 +4,18 @@ Updated: **9 November 2026**. Scope: the [user-selected AFTA checklist](afta-sel
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## Latest implementation: login replay protection
+
+The next implementation adds durable single-use reservations for email challenges
+and accepted authenticator time steps. Reuse and failed storage cannot return
+successful MFA authentication. The new internal table is created through a
+fork-specific, additive repeatable migration; no existing user secret is cleared.
+See [login replay protection, upgrade notes and evidence](afta-login-replay-protection.md).
+
+The first-phase counts below belong to commit `d62f105528`; the source files now
+also contain the replay follow-up. The separate dated replay record carries the
+latest **94-case** passing inventory (including overlaps with the first phase). Neither phase closes the entire AFTA item.
+
 ## Implemented: prevent password-only downgrade of enrolled two-factor accounts
 
 **Checklist:** source row 36, `FIA_UAU.5.2`; related broader gap G-15.
@@ -67,7 +79,7 @@ mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
 | Work | Why it is not closed by this patch |
 | --- | --- |
 | Full `FIA_UAU.5.2` fit | The complete selected AFTA mechanism-combination rules, provider/SSO paths, recovery, browser and multi-node evidence are not finalized. The row remains **Partial evidence**. |
-| Code replay / single use, G-14 | This change does not consume email challenges or store accepted TOTP time steps. Authoritative atomic state and the chosen acceptance rules are still required. |
+| Wider single-use policy, G-14 | Login reservation is now implemented. Enrollment/disable/other purposes, attribute freshness, trusted clocks, restore and full deployed acceptance remain open. |
 | Production CSRF-aware login | Local development can use the explicitly selected localhost-only CSRF-off mode. The production client integration gap remains open. |
 | Audit protection, capacity and failure policy | Retention/grants, threshold/full-storage actions, persistence and recovery need the selected AFTA definitions and deployed evidence. |
 | Integrity/residual protection, reliable time, fault tolerance and access history | The selected guarantees still need implementation/environment designs and acceptance evidence as described per checklist row. |

@@ -161,11 +161,12 @@ keys. Where no value is selected, the corresponding acceptance remains open.
 <a id="g-14"></a>
 ### G-14 — single-use 2FA acceptance and replay
 
-- **State/owner:** confirmed lack of consumption in the reviewed helper/provider path, with selected single-use semantics and end-to-end replay evidence still open; authentication/distributed-data owners. High if single-use/replay resistance is required. Candidates: `FIA_UAU.4`, `FPT_RPL.1`.
+- **2026-11-09 implementation update:** login proofs now require a committed database reservation. See [scope, upgrade notes and evidence](afta-login-replay-protection.md). Full cross-purpose/deployment acceptance remains open.
+- **Original plan / owner:** confirmed lack of consumption in the reviewed helper/provider path, with selected single-use semantics and end-to-end replay evidence still open; authentication/distributed-data owners. High if single-use/replay resistance is required. Candidates: `FIA_UAU.4`, `FPT_RPL.1`.
 - **Source:** [TwoFactorAuthUtils](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java), [TwoFactorAuthenticationProvider](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java); [detailed evidence](crypto-and-two-factor-gaps.md#g-14-single-use-and-replay-evidence).
 - **Solution:** define challenge scope, retry, skew and consumption point. Atomically consume an email challenge or record an accepted TOTP step using authoritative state shared across nodes; bind it to the intended user/challenge/purpose. Specify failure and rollback behavior. A local-only replay cache is insufficient for a distributed guarantee.
 - **Acceptance:** a fresh challenge succeeds once, immediate reuse and simultaneous same-code attempts fail after one success, including across nodes; test expiry/skew, resend/replacement, enrollment versus login, storage outage and restart. Verify unsuccessful password authentication does not incorrectly consume another user's challenge.
-- **Compatibility:** distinguish login/enrollment/recovery purposes and test existing clients. Design transactional state/migration using existing DHIS2 service/store conventions; no new replay schema or successful replay test is asserted here.
+- **Compatibility:** distinguish login/enrollment/recovery purposes and test existing clients. Design transactional state/migration using existing DHIS2 service/store conventions; the login-only schema and targeted tests are now recorded in the follow-up; other purpose policies remain open.
 
 <a id="g-15"></a>
 ### G-15 — enrolled factor disabled globally

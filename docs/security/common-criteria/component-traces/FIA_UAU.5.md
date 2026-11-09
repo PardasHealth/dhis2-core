@@ -14,8 +14,10 @@ Related to web application; component/level selection requires ST completion. We
 
 - [TwoFactorAuthenticationProvider.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java)
 - [ApiTokenAuthManager.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java)
+- [TwoFactorReplayService.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java)
+- [TwoFactorAuthUtils.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java)
 
-Symbols to inspect: `TwoFactorAuthenticationProvider`; `ApiTokenAuthManager`. This component-level list is not a mapping to every element below.
+Symbols to inspect: `TwoFactorAuthenticationProvider`; `ApiTokenAuthManager`; `TwoFactorReplayService.consume`; `TwoFactorAuthUtils verification helpers`. This component-level list is not a mapping to every element below.
 
 ## Element trace
 
@@ -27,29 +29,33 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FIA_UAU.5.2
 
-**Partial source mapping.** [TwoFactorAuthenticationProvider.java:168](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L168): The existing two-factor provider rejects enrolled logins when the globally configured factor is disabled, unsupported or missing, rather than accepting a password-only downgrade. Enabled types continue through factor validation.
+**Partial source mapping.** [TwoFactorAuthenticationProvider.java:171](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L171): The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return.
 
-**Open:** This traces the disabled-factor policy correction only. Full selected AFTA/provider-combination rules, replay protection, browser recovery, SSO and multi-node acceptance remain open. See ../afta-remediation-progress.md for dated evidence.
+**Open:** Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md.
 
 ## Evidence and limits
 
-Multiple provider paths are identified. On 2026-11-09 the existing provider was changed to reject globally disabled enrolled factors, with focused policy and API regressions; complete selected provider-combination coverage remains open.
+The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
 - [ApiTokenAuthManagerTest.java](../../../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java)
 - [TwoFactorAuthenticationPolicyTest.java](../../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java)
 - [TwoFactorLoginPolicyTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java)
+- [TwoFactorReplayServiceTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java)
+- [TwoFactorReplayPostgresTest.java](../../../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java)
 
 Related boundary references, **not implementation coverage**:
 
 - [DhisWebApiWebSecurityConfig.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java)
 - [TwoFactorAuthUtils.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java)
 - [UserAccountController.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java)
+- [UsedTwoFactorCode.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/UsedTwoFactorCode.java)
+- [R__PardasHealth_two_factor_login_replay.sql](../../../../dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_two_factor_login_replay.sql)
 
 ## Work required before closure
 
-The disabled enrolled-factor password-only downgrade is corrected. Define remaining AFTA combination/replay rules and verify every selected provider, browser recovery and multi-node flow; this component remains partially evidenced, not fully closed.
+Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, attribute freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.
 
 Proposed owner: Authentication / product security.
 

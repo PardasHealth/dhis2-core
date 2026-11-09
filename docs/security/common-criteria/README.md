@@ -10,7 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
-| Which AFTA gaps have implementation changes? | [Remediation progress and evidence](afta-remediation-progress.md) |
+| Which AFTA gaps have implementation changes? | [Remediation progress](afta-remediation-progress.md), [login replay protection and upgrade notes](afta-login-replay-protection.md) |
 | What is the result for the user-selected AFTA list? | [Selected AFTA requirements, gaps and percentages](afta-selected-requirements-review.md) |
 | What should management know? | [Plain-language gap report](management-gap-report.md) |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
@@ -41,7 +41,7 @@ dependencies and coverage still need an ST and supporting evidence.
 
 The production patch fixes stale PAT authorization/shared authentication objects
 and audit-buffer loss on publication failure. The 2026-11-09 provider fix also
-rejects disabled enrolled second factors. Changes now touch three production classes;
+rejects disabled enrolled second factors. Login replay reservation is also implemented; see the remediation progress record. The replay follow-up also changes the OTP utility and adds two internal persistence/service classes plus an additive migration;
 other additions are focused tests, fork CI and documentation. No change to
 dependencies or app selection is implied by this review package.
 

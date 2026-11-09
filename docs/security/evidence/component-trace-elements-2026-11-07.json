@@ -1784,10 +1784,17 @@
     },
     "FIA_UAU.5.2": {
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
-      "line": 168,
-      "source_sha256": "22e325aac48f50f534a75bf69ed001e4d4e38ac02081f30df6032506d81778e5",
-      "observation": "The existing two-factor provider rejects enrolled logins when the globally configured factor is disabled, unsupported or missing, rather than accepting a password-only downgrade. Enabled types continue through factor validation.",
-      "limit": "This traces the disabled-factor policy correction only. Full selected AFTA/provider-combination rules, replay protection, browser recovery, SSO and multi-node acceptance remain open. See ../afta-remediation-progress.md for dated evidence."
+      "line": 171,
+      "source_sha256": "d04d077df3b6ec1fbd76cf13f5a52a71ad3189d45b04dffe69b7de7c1ef23d8b",
+      "observation": "The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return.",
+      "limit": "Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md."
+    },
+    "FPT_FLS.1.1": {
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
+      "line": 69,
+      "source_sha256": "e919fa0a690f2f2444394351e8025db357575be0c05b91215527717f32d457c2",
+      "observation": "Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary.",
+      "limit": "One identified failure case, not the complete selected AFTA failure list or whole-application secure-state proof. Reliable time, restore and broader fault tolerance remain open."
     }
   }
 }

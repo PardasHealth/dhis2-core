@@ -327,3 +327,18 @@ to the historical 262-pass total. They do not establish complete AFTA fit or
 new browser, recovery, replay or multi-node acceptance. Details, commands and
 limits: [remediation progress](common-criteria/afta-remediation-progress.md) and
 [dated evidence](evidence/afta-remediation-2026-11-09.json).
+
+
+## 2026-11-09 login replay protection follow-up
+
+Login proof acceptance now requires a committed database reservation. Targeted
+provider, deterministic H2 transaction/race, real security-chain API and isolated
+PostgreSQL/Flyway tests exercise the implementation. These overlap earlier
+classes and must not be added blindly to the earlier passing-case totals.
+The migration is an additive repeatable script in the existing Flyway root,
+under a fork-specific subdirectory; no numbered upstream migration is changed.
+
+See [implementation and upgrade limits](common-criteria/afta-login-replay-protection.md)
+and [source hashes, final test counts and packaging evidence](evidence/afta-replay-protection-2026-11-09.json).
+This does not establish other-purpose single use, reliable time, snapshot
+recovery, full deployed multi-node/browser acceptance or complete AFTA fit.

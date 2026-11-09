@@ -1,6 +1,6 @@
 # FIA_UAU.4 — Single-use authentication mechanisms
 
-ISO/IEC 15408-2:2026, clause 12.7.9. Trace update: 2026-11-07; component disposition baseline: 2026-11-04.
+ISO/IEC 15408-2:2026, clause 12.7.9. Trace update: 2026-11-09; component disposition baseline: 2026-11-04.
 
 **Status: No direct implementation trace established.** Boundary/artifact references; element mapping open. No conformance claim.
 
@@ -24,7 +24,7 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ## Evidence and limits
 
-Filter-chain permissions, multiple providers, 2FA verification and account management are candidate paths; complete authentication protocol coverage is outstanding.
+The 2026-11-09 selected AFTA follow-up implements login-only proof reservations under FIA_UAU.5.2. This is related context for this component, not a full component-specific trace or an assertion that all mechanisms/data flows meet its selected operations.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
@@ -36,10 +36,11 @@ Related boundary references, **not implementation coverage**:
 - [TwoFactorAuthenticationProvider.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java)
 - [TwoFactorAuthUtils.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java)
 - [UserAccountController.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java)
+- [TwoFactorReplayService.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java)
 
 ## Work required before closure
 
-Reviewed email/TOTP verification has no consumed-code or accepted-step guard. Define single-use mechanisms and add atomic cross-node consumption and concurrent/replay tests if selected.
+This component is not added to the user-selected AFTA list by this fix. If selected separately, establish its precise mechanism/data scope and element mapping, including other purposes, context binding, clocks, recovery and failure policy. Do not infer absent code or a passing requirement from the current trace status.
 
 Proposed owner: Authentication / product security.
 

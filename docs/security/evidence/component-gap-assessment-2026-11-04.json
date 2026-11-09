@@ -2074,19 +2074,21 @@
         "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java",
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
-        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java"
+        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java"
       ],
       "test_files": [],
       "evidence": "[Class-level scope and remaining work](common-criteria-traceability.md#part-2-all-functional-classes-considered); [Single-use source finding](common-criteria/crypto-and-two-factor-gaps.md#g-14-single-use-and-replay-evidence)",
-      "evidence_basis": "Filter-chain permissions, multiple providers, 2FA verification and account management are candidate paths; complete authentication protocol coverage is outstanding.",
-      "gap_and_required_action": "Reviewed email/TOTP verification has no consumed-code or accepted-step guard. Define single-use mechanisms and add atomic cross-node consumption and concurrent/replay tests if selected.",
+      "evidence_basis": "The 2026-11-09 selected AFTA follow-up implements login-only proof reservations under FIA_UAU.5.2. This is related context for this component, not a full component-specific trace or an assertion that all mechanisms/data flows meet its selected operations.",
+      "gap_and_required_action": "This component is not added to the user-selected AFTA list by this fix. If selected separately, establish its precise mechanism/data scope and element mapping, including other purposes, context binding, clocks, recovery and failure policy. Do not infer absent code or a passing requirement from the current trace status.",
       "owner": "Authentication / product security",
       "gap_groups": [
         "G-08",
         "G-14",
         "G-15"
       ],
-      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
+      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions.",
+      "last_update_date": "2026-11-09"
     },
     {
       "standard_key": "FIA_UAU.5",
@@ -2098,25 +2100,33 @@
       "applicability": "Related to web application; component/level selection requires ST completion",
       "code_files": [
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
-        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java"
+        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java"
       ],
       "code_symbols": [
         "TwoFactorAuthenticationProvider",
-        "ApiTokenAuthManager"
+        "ApiTokenAuthManager",
+        "TwoFactorReplayService.consume",
+        "TwoFactorAuthUtils verification helpers"
       ],
       "related_sources": [
         "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java",
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
-        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java"
+        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/UsedTwoFactorCode.java",
+        "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_two_factor_login_replay.sql"
       ],
       "test_files": [
         "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java",
         "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java",
-        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java"
+        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java",
+        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java",
+        "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java"
       ],
       "evidence": "[ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java); [Factor configuration source finding](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy)",
-      "evidence_basis": "Multiple provider paths are identified. On 2026-11-09 the existing provider was changed to reject globally disabled enrolled factors, with focused policy and API regressions; complete selected provider-combination coverage remains open.",
-      "gap_and_required_action": "The disabled enrolled-factor password-only downgrade is corrected. Define remaining AFTA combination/replay rules and verify every selected provider, browser recovery and multi-node flow; this component remains partially evidenced, not fully closed.",
+      "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open.",
+      "gap_and_required_action": "Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, attribute freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.",
       "owner": "Authentication / product security",
       "gap_groups": [
         "G-08",
@@ -3020,7 +3030,8 @@
       "applicability": "Related to web application; component/level selection requires ST completion",
       "code_files": [
         "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
-        "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java"
+        "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java"
       ],
       "code_symbols": [
         "AbstractAuditConsumer._consume",
@@ -3032,18 +3043,21 @@
       ],
       "test_files": [
         "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java",
-        "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java"
+        "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java",
+        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java",
+        "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java"
       ],
       "evidence": "[AbstractAuditConsumerFailureTest](../../dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java); [AuditSchedulerTest](../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java)",
-      "evidence_basis": "Selected audit rejection, rollback, retry and recovery paths are tested; this does not establish secure recovery or fault tolerance of the whole TOE.",
-      "gap_and_required_action": "Audit failures propagate/retry on tested paths; secure state for all selected TOE failures is not defined. Specify preserved invariants and test failure transitions including unavailable storage.",
+      "evidence_basis": "Audit retry/failure paths and MFA replay-reservation failure provide bounded examples. A denied or unavailable replay write prevents the provider from returning authentication in targeted tests; these do not establish all secure-state failure transitions.",
+      "gap_and_required_action": "Select every relevant failure class and secure invariant. MFA replay storage failure is covered by targeted tests; broader storage, time, restore, provider, session and whole-application failure acceptance remains open.",
       "owner": "Reliability / security / operations",
       "gap_groups": [
         "G-02",
         "G-03",
         "G-08"
       ],
-      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
+      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions.",
+      "last_update_date": "2026-11-09"
     },
     {
       "standard_key": "FPT_INI.1",
@@ -3436,18 +3450,20 @@
       "code_symbols": [],
       "related_sources": [
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
-        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java"
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java"
       ],
       "test_files": [],
       "evidence": "[Class-level scope and remaining work](common-criteria-traceability.md#part-2-all-functional-classes-considered); [Single-use source finding](common-criteria/crypto-and-two-factor-gaps.md#g-14-single-use-and-replay-evidence)",
-      "evidence_basis": "Expiry/signature verification does not alone prevent replay; reviewed 2FA helpers have no consumed-code or accepted-time-step state.",
-      "gap_and_required_action": "Token expiry/signature checks alone do not detect replay; reviewed 2FA has no consumption state. Define replay-protected entities/protocols and atomic replay rejection plus reaction tests.",
+      "evidence_basis": "The 2026-11-09 selected AFTA follow-up implements login-only proof reservations under FIA_UAU.5.2. This is related context for this component, not a full component-specific trace or an assertion that all mechanisms/data flows meet its selected operations.",
+      "gap_and_required_action": "This component is not added to the user-selected AFTA list by this fix. If selected separately, establish its precise mechanism/data scope and element mapping, including other purposes, context binding, clocks, recovery and failure policy. Do not infer absent code or a passing requirement from the current trace status.",
       "owner": "Authentication / protocol engineering",
       "gap_groups": [
         "G-08",
         "G-14"
       ],
-      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
+      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions.",
+      "last_update_date": "2026-11-09"
     },
     {
       "standard_key": "FPT_SSP.1",

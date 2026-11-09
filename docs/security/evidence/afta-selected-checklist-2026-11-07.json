@@ -109,7 +109,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "line": 71,
       "symbol": "class TwoFactorAuthenticationProvider",
-      "source_sha256": "22e325aac48f50f534a75bf69ed001e4d4e38ac02081f30df6032506d81778e5"
+      "source_sha256": "d04d077df3b6ec1fbd76cf13f5a52a71ad3189d45b04dffe69b7de7c1ef23d8b"
     },
     "security": {
       "repository": "core",
@@ -243,6 +243,13 @@
       "line": 4,
       "symbol": "production) csrf_setting=on",
       "source_sha256": "2b6e714722d0b177305031322d7ba1e1c9df6322d7b45f63fb96b20424189111"
+    },
+    "replay": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
+      "line": 69,
+      "symbol": "public boolean consume(",
+      "source_sha256": "e919fa0a690f2f2444394351e8025db357575be0c05b91215527717f32d457c2"
     }
   },
   "rows": [
@@ -913,11 +920,12 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Rules combining authentication mechanisms",
-      "observation": "The provider now rejects enrolled accounts when their factor type is globally disabled, unsupported or missing. Enabled factors still require code validation. The prior silent password-only downgrade has been removed; the existing provider architecture is retained.",
-      "gap_and_acceptance": "Provider-level downgrade subgap implemented on 2026-11-09; see the remediation progress record for executed tests. The full AFTA combination rules, replay/single-use behavior, browser recovery, SSO and multi-node acceptance remain open; this row remains Partial evidence.",
+      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained.",
+      "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09. Full AFTA combination rules, cross-purpose consumption, account/seed-change freshness, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
       "references": [
         "factor",
-        "token"
+        "token",
+        "replay"
       ],
       "source_key": "FIA_UAU.5.2",
       "counted": true,
@@ -933,7 +941,16 @@
         ],
         "full_requirement_closed": false,
         "implementation_commit": "d62f10552816e93a19f8e4bb37e6f87a12bca44d"
-      }
+      },
+      "implementation_followups": [
+        {
+          "date": "2026-11-09",
+          "scope": "login-only challenge/step replay reservations",
+          "trace": "afta-login-replay-protection.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "85c6310a5bca76251f9981266570b0ab8046a85d"
+        }
+      ]
     },
     {
       "row": 37,
@@ -1113,11 +1130,12 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Keep a secure state after failure",
-      "observation": "Audit consumer failure propagation and buffered retry have targeted regression evidence.",
+      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model.",
       "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
       "references": [
         "auditfailure",
-        "auditbuffer"
+        "auditbuffer",
+        "replay"
       ],
       "source_key": "FPT_FLS.1.1",
       "counted": true,

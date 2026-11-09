@@ -32,6 +32,12 @@ were executed in this documentation follow-up.
 
 ## G-14: single-use and replay evidence
 
+**2026-11-09 follow-up:** normal MFA login now reserves email challenges and
+accepted TOTP steps in the primary database. Duplicate proof or storage failure
+prevents acceptance. The following source-review paragraphs describe the
+pre-fix finding; enrollment/disable and other purposes still use separate
+verification helpers. See [implementation, limits and tests](afta-login-replay-protection.md).
+
 Candidate components: FIA_UAU.4 and FPT_RPL.1, if selected. FIA_UAU.5 and trusted
 time requirements are also relevant to the protocol definition.
 
@@ -56,7 +62,8 @@ Keep enrollment, ordinary login and administrative recovery semantics explicit.
 
 Required verification: repeated use before expiry, concurrent same-code requests,
 cross-node races, expiry/skew boundaries, replacement challenges, database/cache
-failure and restart. No replay or race test was executed in this follow-up.
+failure and restart. No replay or race test was executed in the original 4 November source review.
+The 9 November login-only follow-up records the new database and API tests.
 
 ## G-15: disabled-factor-type policy
 

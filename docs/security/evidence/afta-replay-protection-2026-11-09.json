@@ -1,0 +1,133 @@
+{
+  "date": "2026-11-09",
+  "scope": "Login-only email challenge / accepted TOTP step single use; supports selected AFTA row 36 / FIA_UAU.5.2 and bounded FPT_FLS.1.1 failure evidence; not full requirement approval",
+  "baseline_core_commit": "620f5046bc41c91e14dbf4a1f0e1089f8752188e",
+  "tested_revision": "baseline plus changes identified by source hashes",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "d04d077df3b6ec1fbd76cf13f5a52a71ad3189d45b04dffe69b7de7c1ef23d8b",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "c88ad4df65e7e47568ad454942b13eaaf7742b7628dfa006e122a862c72f5126",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java": "e919fa0a690f2f2444394351e8025db357575be0c05b91215527717f32d457c2",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/UsedTwoFactorCode.java": "79a4b7f6b97b8236749709bc25f432636ada1037b7c9acd24a7d19f95bda4934",
+    "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_two_factor_login_replay.sql": "5a1c75c0aacb0e47d2e3244c3d40b0442d4455a5f706ad48d77115d6a4766c20",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "6a50d80f4194dbba7c081f1474aab7eb255fd543edc104783edbad194d9bb10f",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java": "9656cd4a039fb027bf994e9e65938ae32caea17632dda6718a990e7fc547dcfb",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "0371b7c2609b9d6f79b208ec050329b7b64a446c3d9a8357316d349d854b4903",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java": "27225c67a46e906764f8e39924364d034b04a5fafa4cadc3547445a35bedf8e3",
+    ".github/workflows/cc-audit-regression.yml": "c04a49557235d4a8db0bcbd603bfebb6f4ebb61780d7070029787c5580362bd5"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 94,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "new_regression": {
+    "bounded_clock_skew_cleanup": "Initial short-retention implementation reproduced one failure in 17 deterministic H2 cases. It was corrected before publication by retaining replay reservations 24 hours past code validity. This is not a defect published in the prior release."
+  },
+  "implementation": {
+    "state": "unique fingerprint and retention deadline in usedtwofactorcode; no raw OTP/seed/UID persisted in this new table",
+    "transaction": "REQUIRES_NEW; committed before provider can return authentication",
+    "database": "primary application jdbcTemplate; shared writer constraint, not analytics/read-only connection or local cache",
+    "otp_window": "existing email deadline (exclusive) and AeroGear current/previous 30-second step; no new validity extension",
+    "retention_margin_millis": 86400000,
+    "migration": "org/hisp/dhis/db/migration/pardas/R__PardasHealth_two_factor_login_replay.sql",
+    "migration_type": "additive fork-specific Flyway repeatable; actual PostgreSQL test applies once and then observes no migration on the second call",
+    "postgres_schema_matches_hibernate_mapping": true
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "offline existing local cache",
+    "build_jit": "-XX:TieredStopAtLevel=1",
+    "postgres_image": "dhis2-platform/postgis-flat:test, isolated PostgreSQL 16 family fixture, temporary storage; default CI image remains imresamu/postgis:16-3.5-alpine",
+    "email_fixture": "project DefaultFakeMessageSender bound only in the API regression context; no real SMTP delivery tested",
+    "dependency_caveat": "Existing locally source-built sms-compression 0.3.2 artifact retains earlier provenance caveat; no dependency declarations changed."
+  },
+  "build": {
+    "result": "success",
+    "profile": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "existing unchanged bundled/target assets reused; no fresh download or browser acceptance",
+    "war_sha256": "b8c94ddcbad3c4067e62b2559d8c2aa5cd70e1763052e49f6633730485bd7c6a",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.class",
+      "org/hisp/dhis/security/twofa/TwoFactorAuthUtils.class",
+      "org/hisp/dhis/security/twofa/TwoFactorReplayService.class",
+      "org/hisp/dhis/security/twofa/UsedTwoFactorCode.class"
+    ],
+    "packaged_repeatable_matches_source": true,
+    "temporary_numbered_migration_absent": true,
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-integration -am -Pintegration-test -Dtest=TwoFactorReplayPostgresTest -Dcc.replay.postgres.image=dhis2-platform/postgis-flat:test -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "not_established": [
+    "Complete AFTA definition/operations/dependency or independent approval",
+    "Single-use policy for enrollment/disable/other purposes",
+    "Authoritative attribute freshness when factors/seeds change",
+    "Arbitrary clock rollback or unsynchronized clocks",
+    "Physical power-loss/backup snapshot restore acceptance",
+    "Real SMTP or real browser MFA/recovery acceptance",
+    "Full deployed multi-node concurrency/upgrade test",
+    "Production CSRF-aware login fix",
+    "Fresh cold frontend/release build"
+  ],
+  "implementation_commit": "85c6310a5bca76251f9981266570b0ab8046a85d"
+}
