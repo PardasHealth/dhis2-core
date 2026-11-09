@@ -14,6 +14,8 @@ on:
       - 'dhis-2/dhis-api/src/main/java/org/hisp/dhis/audit/**'
       - 'dhis-2/dhis-services/dhis-service-acl/**'
       - 'dhis-2/dhis-support/dhis-support-external/**'
+      - 'dhis-2/dhis-support/dhis-support-db-migration/**'
+      - 'dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/**'
       - 'dhis-2/dhis-support/dhis-support-test/**'
       - 'dhis-2/dhis-web-api/**'
       - 'dhis-2/dhis-test-web-api/**'
@@ -66,7 +68,13 @@ jobs:
             -Dtest=AuditRepositoryTest,AuditRepositoryFailureRecoveryTest,AuditStorageDeliveryRecoveryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
-      - name: Verify all nine audit test classes actually executed
+      - name: Verify PostgreSQL two-factor replay reservations
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-test-integration -am -Pintegration-test \
+            -Dtest=TwoFactorReplayPostgresTest \
+            -Dsurefire.failIfNoSpecifiedTests=false test
+      - name: Verify all required audit and replay test classes actually executed
         if: success()
         working-directory: dhis-2
         run: |
@@ -84,6 +92,7 @@ jobs:
               "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
               "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
               "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+              "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
           }
           seen = {}
           for report in Path(".").rglob("target/surefire-reports/TEST-*.xml"):
@@ -137,7 +146,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
-            -Dtest=ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
+            -Dtest=TwoFactorReplayServiceTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify required authentication and web reports actually executed
         working-directory: dhis-2
@@ -149,6 +158,7 @@ jobs:
           expected = {
               "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
               "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+              "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
               "org.hisp.dhis.webapi.filter.CspFilterTest",

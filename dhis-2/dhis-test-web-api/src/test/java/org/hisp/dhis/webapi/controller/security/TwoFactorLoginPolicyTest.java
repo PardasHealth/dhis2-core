@@ -37,21 +37,34 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.http.HttpStatus;
+import org.hisp.dhis.message.MessageSender;
 import org.hisp.dhis.security.twofa.TwoFactorType;
+import org.hisp.dhis.test.message.DefaultFakeMessageSender;
 import org.hisp.dhis.test.webapi.AuthenticationApiTestBase;
 import org.hisp.dhis.test.webapi.json.domain.JsonLoginResponse;
 import org.hisp.dhis.user.User;
 import org.jboss.aerogear.security.otp.Totp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ContextConfiguration;
 
 /** Checks login response semantics; HTTP 200 alone does not mean authentication succeeded. */
+@ContextConfiguration(classes = TwoFactorLoginPolicyTest.EmailFixture.class)
 class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
-  private static final String SECRET = "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP";
+  static class EmailFixture {
+    @Bean("emailMessageSender")
+    public MessageSender emailMessageSender() {
+      return new DefaultFakeMessageSender();
+    }
+  }
+
   @Autowired private DhisConfigurationProvider config;
+  @Autowired private MessageSender emailMessageSender;
   private String originalEmail;
   private String originalTotp;
 
@@ -65,6 +78,7 @@ class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
   void restoreFlagsAndSessions() {
     restore(EMAIL_2FA_ENABLED.getKey(), originalEmail);
     restore(TOTP_2FA_ENABLED.getKey(), originalTotp);
+    emailMessageSender.clearMessages();
     userService.invalidateAllSessions();
     clearSecurityContext();
   }
@@ -99,6 +113,30 @@ class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
     assertNotNull(response.getRedirectUrl());
   }
 
+  @ParameterizedTest
+  @EnumSource(
+      value = TwoFactorType.class,
+      names = {"TOTP_ENABLED", "EMAIL_ENABLED"})
+  void secondLoginCannotReuseAcceptedCode(TwoFactorType type) {
+    String code = prepare(type, true);
+    assertEquals("SUCCESS", login(code).getLoginStatus());
+    clearSecurityContext();
+    assertDenied(type, login(code));
+  }
+
+  @Test
+  void newEmailChallengeAllowsAnotherLoginAfterThePreviousOneWasConsumed() {
+    String first = prepare(TwoFactorType.EMAIL_ENABLED, true);
+    assertEquals("SUCCESS", login(first).getLoginStatus());
+    clearSecurityContext();
+    assertDenied(TwoFactorType.EMAIL_ENABLED, login(first));
+    clearSecurityContext();
+    assertEquals("EMAIL_TWO_FACTOR_CODE_SENT", login(null).getLoginStatus());
+    String replacement = userService.getUserByUsername("admin").getSecret().split("\\|")[0];
+    clearSecurityContext();
+    assertEquals("SUCCESS", login(replacement).getLoginStatus());
+  }
+
   private String prepare(TwoFactorType type, boolean enabled) {
     String key =
         type == TwoFactorType.EMAIL_ENABLED
@@ -114,8 +152,11 @@ class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
       user.setVerifiedEmail("test@example.invalid");
       user.setSecret(code + "|" + (System.currentTimeMillis() + 60_000));
     } else {
-      user.setSecret(SECRET);
-      code = new Totp(SECRET).now();
+      String seed =
+          org.jboss.aerogear.security.otp.api.Base32.encode(
+              org.hisp.dhis.common.CodeGenerator.generateSecureRandomBytes(20));
+      user.setSecret(seed);
+      code = new Totp(seed).now();
     }
     userService.updateUser(user);
     manager.flush();

@@ -31,6 +31,9 @@ package org.hisp.dhis.security.spring2fa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -40,7 +43,10 @@ import java.util.Set;
 import org.hisp.dhis.external.conf.ConfigurationKey;
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.security.twofa.TwoFactorAuthService;
+import org.hisp.dhis.security.twofa.TwoFactorAuthUtils;
+import org.hisp.dhis.security.twofa.TwoFactorReplayService;
 import org.hisp.dhis.security.twofa.TwoFactorType;
+import org.hisp.dhis.user.UserDetails;
 import org.hisp.dhis.user.UserDetailsImpl;
 import org.hisp.dhis.user.UserService;
 import org.jboss.aerogear.security.otp.Totp;
@@ -69,15 +75,24 @@ class TwoFactorAuthenticationPolicyTest {
   @Mock private UserService userService;
   @Mock private TwoFactorAuthService twoFactorService;
   @Mock private DhisConfigurationProvider configuration;
+  @Mock private TwoFactorReplayService replayService;
 
   private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
   private TwoFactorAuthenticationProvider provider;
 
   @BeforeEach
   void setUp() {
+    lenient()
+        .when(replayService.consume(any(UserDetails.class), anyString()))
+        .thenAnswer(
+            call -> {
+              UserDetails user = call.getArgument(0);
+              return TwoFactorAuthUtils.isValid2FACode(
+                  user.getTwoFactorType(), call.getArgument(1), user.getSecret());
+            });
     provider =
         new TwoFactorAuthenticationProvider(
-            detailsService, encoder, userService, twoFactorService, configuration);
+            detailsService, encoder, userService, twoFactorService, configuration, replayService);
   }
 
   @ParameterizedTest
@@ -220,6 +235,37 @@ class TwoFactorAuthenticationPolicyTest {
     when(userService.isLocked("alice")).thenReturn(true);
     assertThrows(LockedException.class, () -> provider.authenticate(login(PASSWORD, null)));
     verifyNoInteractions(detailsService, configuration, twoFactorService);
+  }
+
+  @Test
+  void alreadyConsumedCodeIsRejectedBeforeAuthenticationReturns() {
+    givenUser(
+        TwoFactorType.EMAIL_ENABLED,
+        true,
+        "123456|" + (System.currentTimeMillis() + 60_000),
+        false,
+        Set.of());
+    when(configuration.isEnabled(ConfigurationKey.EMAIL_2FA_ENABLED)).thenReturn(true);
+    when(replayService.consume(any(UserDetails.class), anyString())).thenReturn(false);
+    assertThrows(
+        TwoFactorAuthenticationException.class,
+        () -> provider.authenticate(login(PASSWORD, "123456")));
+  }
+
+  @Test
+  void unavailableReplayStorageDoesNotReturnAuthentication() {
+    givenUser(
+        TwoFactorType.EMAIL_ENABLED,
+        true,
+        "123456|" + (System.currentTimeMillis() + 60_000),
+        false,
+        Set.of());
+    when(configuration.isEnabled(ConfigurationKey.EMAIL_2FA_ENABLED)).thenReturn(true);
+    when(replayService.consume(any(UserDetails.class), anyString()))
+        .thenThrow(new org.springframework.dao.DataAccessResourceFailureException("unavailable"));
+    assertThrows(
+        org.springframework.dao.DataAccessResourceFailureException.class,
+        () -> provider.authenticate(login(PASSWORD, "123456")));
   }
 
   private void givenUser(

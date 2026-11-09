@@ -142,16 +142,21 @@ public class TwoFactorAuthUtils {
    * @return true if the code is valid, false otherwise.
    */
   public static boolean verifyEmail2FACode(@Nonnull String code, @Nonnull String secretAndTTL) {
-    if (!SECRET_AND_TTL.matcher(secretAndTTL).matches()) {
+    return verifyEmail2FACode(code, secretAndTTL, System.currentTimeMillis());
+  }
+
+  static boolean verifyEmail2FACode(String code, String secretAndTTL, long now) {
+    if (code == null || secretAndTTL == null || !SECRET_AND_TTL.matcher(secretAndTTL).matches()) {
       return false;
     }
     String[] parts = PIPE_SPLIT.split(secretAndTTL);
     String secret = parts[0];
-    long ttl = Long.parseLong(parts[1]);
-    if (ttl < System.currentTimeMillis()) {
+    try {
+      long ttl = Long.parseLong(parts[1]);
+      return ttl > now && code.equals(secret);
+    } catch (NumberFormatException e) {
       return false;
     }
-    return code.equals(secret);
   }
 
   /**
@@ -162,7 +167,11 @@ public class TwoFactorAuthUtils {
    * @return true if the code is valid, false otherwise.
    */
   public static boolean verifyTOTP2FACode(@Nonnull String code, @Nonnull String secret) {
-    if (!TWO_FACTOR_CODE.matcher(code).matches()) {
+    return verifyTOTP2FACode(code, secret, System.currentTimeMillis());
+  }
+
+  static boolean verifyTOTP2FACode(String code, String secret, long now) {
+    if (code == null || StringUtils.isBlank(secret) || !TWO_FACTOR_CODE.matcher(code).matches()) {
       return false;
     }
 
@@ -179,11 +188,21 @@ public class TwoFactorAuthUtils {
     }
 
     try {
-      Totp totp = new Totp(secret);
-      return totp.verify(code);
+      return totpAtInterval(secret, now / 30_000).verify(code);
     } catch (Exception e) {
       log.warn("TOTP secret decoding or verification failed", e);
       return false;
     }
+  }
+
+  static Totp totpAtInterval(String secret, long interval) {
+    return new Totp(
+        secret,
+        new org.jboss.aerogear.security.otp.api.Clock() {
+          @Override
+          public long getCurrentInterval() {
+            return interval;
+          }
+        });
   }
 }

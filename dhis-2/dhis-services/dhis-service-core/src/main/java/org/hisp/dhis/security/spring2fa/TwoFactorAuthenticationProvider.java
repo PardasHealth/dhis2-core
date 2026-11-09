@@ -30,7 +30,6 @@
 package org.hisp.dhis.security.spring2fa;
 
 import static org.hisp.dhis.security.twofa.TwoFactorAuthService.TWO_FACTOR_AUTH_REQUIRED_RESTRICTION_NAME;
-import static org.hisp.dhis.security.twofa.TwoFactorAuthUtils.isValid2FACode;
 
 import java.util.Set;
 import javax.annotation.CheckForNull;
@@ -43,6 +42,7 @@ import org.hisp.dhis.feedback.ConflictException;
 import org.hisp.dhis.feedback.ErrorCode;
 import org.hisp.dhis.security.ForwardedIpAwareWebAuthenticationDetails;
 import org.hisp.dhis.security.twofa.TwoFactorAuthService;
+import org.hisp.dhis.security.twofa.TwoFactorReplayService;
 import org.hisp.dhis.security.twofa.TwoFactorType;
 import org.hisp.dhis.user.UserDetails;
 import org.hisp.dhis.user.UserService;
@@ -72,6 +72,7 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
   private UserService userService;
   private TwoFactorAuthService twoFactorAuthService;
   private DhisConfigurationProvider configurationProvider;
+  private final TwoFactorReplayService replayService;
 
   @Autowired
   public TwoFactorAuthenticationProvider(
@@ -79,11 +80,13 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
       PasswordEncoder passwordEncoder,
       @Lazy UserService userService,
       @Lazy TwoFactorAuthService twoFactorAuthService,
-      DhisConfigurationProvider configurationProvider) {
+      DhisConfigurationProvider configurationProvider,
+      TwoFactorReplayService replayService) {
     super(detailsService);
     this.userService = userService;
     this.twoFactorAuthService = twoFactorAuthService;
     this.configurationProvider = configurationProvider;
+    this.replayService = replayService;
     setPasswordEncoder(passwordEncoder);
   }
 
@@ -201,10 +204,10 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
     }
 
     // Validate the provided 2FA code.
-    if (!isValid2FACode(type, code, userDetails.getSecret())) {
+    if (!replayService.consume(userDetails, code)) {
       throw new TwoFactorAuthenticationException(ErrorCode.E3023.getMessage(), type);
     }
-    // If no exception is thrown, the 2FA code is valid.
+    // The code is valid and its challenge/time step has been reserved durably.
   }
 
   private void sendEmail2FACode(UserDetails userDetails) {
