@@ -44,6 +44,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import lombok.extern.slf4j.Slf4j;
+import org.hisp.dhis.external.conf.ConfigurationKey;
+import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.http.HttpStatus;
 import org.hisp.dhis.security.twofa.TwoFactorAuthService;
 import org.hisp.dhis.security.twofa.TwoFactorAuthService.Email2FACode;
@@ -76,6 +78,7 @@ import org.springframework.security.web.session.HttpSessionCreatedEvent;
 class AuthenticationControllerTest extends AuthenticationApiTestBase {
 
   @Autowired private SystemSettingsService settingsService;
+  @Autowired private DhisConfigurationProvider configurationProvider;
   @Autowired private SessionRegistry sessionRegistry;
   @Autowired private ConfigurableApplicationContext applicationContext;
 
@@ -265,17 +268,28 @@ class AuthenticationControllerTest extends AuthenticationApiTestBase {
 
   @Test
   void testLoginEmail2FA() {
-    User admin = userService.getUserByUsername("admin");
-    String emailAddress = "valid.x@email.com";
-    admin.setEmail(emailAddress);
-    admin.setVerifiedEmail(emailAddress);
-    Email2FACode email2FACode = TwoFactorAuthService.generateEmail2FACode();
-    String secret = email2FACode.encodedCode();
-    admin.setSecret(secret);
-    admin.setTwoFactorType(TwoFactorType.EMAIL_ENABLED);
-    userService.updateUser(admin);
+    String key = ConfigurationKey.EMAIL_2FA_ENABLED.getKey();
+    String previous = configurationProvider.getProperties().getProperty(key);
+    configurationProvider.getProperties().setProperty(key, "on");
+    try {
+      User admin = userService.getUserByUsername("admin");
+      String emailAddress = "valid.x@email.com";
+      admin.setEmail(emailAddress);
+      admin.setVerifiedEmail(emailAddress);
+      Email2FACode email2FACode = TwoFactorAuthService.generateEmail2FACode();
+      String secret = email2FACode.encodedCode();
+      admin.setSecret(secret);
+      admin.setTwoFactorType(TwoFactorType.EMAIL_ENABLED);
+      userService.updateUser(admin);
 
-    loginWith2FACode(email2FACode.code());
+      loginWith2FACode(email2FACode.code());
+    } finally {
+      if (previous == null) {
+        configurationProvider.getProperties().remove(key);
+      } else {
+        configurationProvider.getProperties().setProperty(key, previous);
+      }
+    }
   }
 
   @Test

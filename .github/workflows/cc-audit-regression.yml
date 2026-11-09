@@ -131,13 +131,13 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=ApiTokenAuthManagerTest,ApiTokenResolverTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=TwoFactorAuthenticationPolicyTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify authentication and session web regressions with H2
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
-            -Dtest=ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
+            -Dtest=ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify required authentication and web reports actually executed
         working-directory: dhis-2
@@ -147,6 +147,8 @@ jobs:
           import xml.etree.ElementTree as ET
 
           expected = {
+              "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+              "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
               "org.hisp.dhis.webapi.filter.CspFilterTest",

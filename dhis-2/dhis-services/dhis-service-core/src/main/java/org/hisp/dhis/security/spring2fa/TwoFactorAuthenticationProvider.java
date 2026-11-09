@@ -165,13 +165,19 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
               + userDetails.getUsername());
     }
 
-    // Only validate the 2FA code if the configured type is enabled.
-    if (isTwoFactorTypeEnabled(userDetails.getTwoFactorType())) {
-      validate2FACode(authDetails.getCode(), userDetails);
+    // Disabling a factor globally must not silently downgrade an enrolled account
+    // to password-only authentication. Recovery must explicitly change enrollment.
+    if (!isTwoFactorTypeEnabled(userDetails.getTwoFactorType())) {
+      throw new TwoFactorAuthenticationException(
+          ErrorCode.E3023.getMessage(), userDetails.getTwoFactorType());
     }
+    validate2FACode(authDetails.getCode(), userDetails);
   }
 
-  private boolean isTwoFactorTypeEnabled(TwoFactorType type) {
+  private boolean isTwoFactorTypeEnabled(@CheckForNull TwoFactorType type) {
+    if (type == null) {
+      return false;
+    }
     return switch (type) {
       case EMAIL_ENABLED -> configurationProvider.isEnabled(ConfigurationKey.EMAIL_2FA_ENABLED);
       case TOTP_ENABLED -> configurationProvider.isEnabled(ConfigurationKey.TOTP_2FA_ENABLED);
