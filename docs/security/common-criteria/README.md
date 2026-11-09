@@ -1,7 +1,7 @@
 # DHIS2 web-application Common Criteria review guide
 
-Review baseline: `07d4f3f7ea`, DHIS2 `2.44-SNAPSHOT`, plus the recorded two-class
-security patch. Documentation date: 2026-11-04.
+Review baseline: `07d4f3f7ea`, DHIS2 `2.44-SNAPSHOT`, plus the recorded security
+patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-09.
 
 The engineering package documents web scope, component dispositions, code/test
 traces, known findings and proposed solutions. **It is not a claim that the full
@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Which AFTA gaps have implementation changes? | [Remediation progress and evidence](afta-remediation-progress.md) |
 | What is the result for the user-selected AFTA list? | [Selected AFTA requirements, gaps and percentages](afta-selected-requirements-review.md) |
 | What should management know? | [Plain-language gap report](management-gap-report.md) |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
@@ -39,7 +40,8 @@ complete element-by-element implementation mappings; selected operations,
 dependencies and coverage still need an ST and supporting evidence.
 
 The production patch fixes stale PAT authorization/shared authentication objects
-and audit-buffer loss on publication failure. It changes two production classes;
+and audit-buffer loss on publication failure. The 2026-11-09 provider fix also
+rejects disabled enrolled second factors. Changes now touch three production classes;
 other additions are focused tests, fork CI and documentation. No change to
 dependencies or app selection is implied by this review package.
 

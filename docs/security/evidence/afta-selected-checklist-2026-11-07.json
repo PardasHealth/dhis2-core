@@ -109,7 +109,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "line": 71,
       "symbol": "class TwoFactorAuthenticationProvider",
-      "source_sha256": "df9fbac69ecd0d2be68b660b4b74ca4d47550a38b18be03fc1f0494fbfb1400c"
+      "source_sha256": "22e325aac48f50f534a75bf69ed001e4d4e38ac02081f30df6032506d81778e5"
     },
     "security": {
       "repository": "core",
@@ -913,8 +913,8 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Rules combining authentication mechanisms",
-      "observation": "The two-factor provider applies factor-dependent checks; globally disabled enrolled factor types can skip code validation on the reviewed path.",
-      "gap_and_acceptance": "Agree and enforce the fail-closed or approved fallback rules, single-use/replay policy and concurrent-node behavior. Test password/MFA/SSO/token combinations.",
+      "observation": "The provider now rejects enrolled accounts when their factor type is globally disabled, unsupported or missing. Enabled factors still require code validation. The prior silent password-only downgrade has been removed; the existing provider architecture is retained.",
+      "gap_and_acceptance": "Provider-level downgrade subgap implemented on 2026-11-09; see the remediation progress record for executed tests. The full AFTA combination rules, replay/single-use behavior, browser recovery, SSO and multi-node acceptance remain open; this row remains Partial evidence.",
       "references": [
         "factor",
         "token"
@@ -923,7 +923,17 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followup": {
+        "date": "2026-11-09",
+        "trace": "afta-remediation-progress.md",
+        "tests": [
+          "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java",
+          "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java"
+        ],
+        "full_requirement_closed": false,
+        "implementation_commit": "d62f10552816e93a19f8e4bb37e6f87a12bca44d"
+      }
     },
     {
       "row": 37,
@@ -1787,5 +1797,6 @@
       "normalization_note": "",
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
-  ]
+  ],
+  "last_update_date": "2026-11-09"
 }

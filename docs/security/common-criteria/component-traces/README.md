@@ -79,7 +79,7 @@ See the [component gap assessment](../../common-criteria-gap-assessment.md), [ve
 | [FIA_UAU.2](FIA_UAU.2.md) — User authentication before any action | Boundary/artifact references; element mapping open |
 | [FIA_UAU.3](FIA_UAU.3.md) — Unforgeable authentication | Boundary/artifact references; element mapping open |
 | [FIA_UAU.4](FIA_UAU.4.md) — Single-use authentication mechanisms | Boundary/artifact references; element mapping open |
-| [FIA_UAU.5](FIA_UAU.5.md) — Multiple authentication mechanisms | Component code candidates; element mapping open |
+| [FIA_UAU.5](FIA_UAU.5.md) — Multiple authentication mechanisms | Partial element mappings; remaining elements open |
 | [FIA_UAU.6](FIA_UAU.6.md) — Re-authenticating | Boundary/artifact references; element mapping open |
 | [FIA_UAU.7](FIA_UAU.7.md) — Protected authentication feedback | Boundary/artifact references; element mapping open |
 | [FIA_UID.1](FIA_UID.1.md) — Timing of identification | Component code candidates; element mapping open |

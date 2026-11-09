@@ -58,6 +58,7 @@ def render(data):
           '**Date:** 7 November 2026. **Source identified by user:** AFTA; exact checklist title/version and full clause definitions not supplied.\n\n',
           '**Scope:** only the supplied 82 numbered entries. This is a separate, narrower work list; it does not replace or declare completion of the broader Common Criteria review. '
           'An official evaluation may require dependencies or assurance work beyond this list. Those need explicit agreement rather than silent expansion here.\n\n',
+          'Implementation follow-up: **9 November 2026**. See the [remediation progress record](afta-remediation-progress.md) for the disabled-factor authentication fix, test evidence and remaining work. The checklist counts remain unchanged because the full requirement is still open.\n\n',
           '## Manager summary\n\n',
           '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 42 of 78 (53.8%). '
           'All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, '
@@ -81,7 +82,7 @@ def render(data):
            '## What needs management attention\n\n',
            '1. **Confirm the AFTA checklist version and exact requirements.** Resolve extensions, crypto iterations, edition changes and the duplicated certificate identifier. '
            'This unblocks 25 primary items from a valid fit decision.\n',
-           '2. **Make the selected production release work securely.** Verify repair of the reported corrupt PDF artifact; fix and test the CSRF-aware browser login integration. '
+           '2. **Make the selected production release work securely.** Retain artifact-integrity checks after the user-confirmed successful startup on 9 November; fix and test the CSRF-aware production browser login integration. '
            'Local CSRF-off development mode is explicitly excluded from security acceptance.\n',
            '3. **Close the important behavior gaps.** Prioritize audit retention/full-storage policy, encryption and MFA rules, access control, integrity/tamper response, reliable time, '
            'session history/fault tolerance and protected connections according to the selected requirements.\n',
@@ -123,7 +124,7 @@ def render(data):
             r['gap_and_acceptance'], '<br>'.join(link(k) for k in r['references']))) + ' |\n')
     md += ['\n## Evidence boundary and maintaining this report\n\n',
            f'Reviewed code references use core baseline `{data["baseline_core_commit"]}` and platform baseline `{data["baseline_platform_commit"]}`. '
-           'Core links are relative to the checkout; platform links are pinned to that commit. Core source hashes and line assertions are checked by the renderer; platform references are pinned to the reviewed commit. '
+           'Core links are relative to the checkout and include the dated implementation follow-up identified by source hashes; platform links are pinned to that commit. Core source hashes and line assertions are checked by the renderer; platform references are pinned to the reviewed commit. '
            'source changes require revalidation.\n\n',
            'This review reuses the recorded source analysis and targeted tests; it is not a fresh full-suite, penetration or independent evaluation. '
            'The core evidence records 262 passing cases/four existing skips across dated runs, not 262 tests of this selected checklist. '

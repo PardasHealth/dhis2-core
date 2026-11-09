@@ -1781,6 +1781,13 @@
       "observation": "The security chain configures logout and removal of session cookies, providing a candidate path for user-initiated session termination.",
       "limit": "A browser logout test must verify server-side invalidation, replay rejection, CSRF handling and all configured session backends. Configuration alone is incomplete evidence.",
       "source_sha256": "8f7f5d63dce2f6bdc10a559e2966cd2bb1580a1437163e10aeacdb23b268318a"
+    },
+    "FIA_UAU.5.2": {
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
+      "line": 168,
+      "source_sha256": "22e325aac48f50f534a75bf69ed001e4d4e38ac02081f30df6032506d81778e5",
+      "observation": "The existing two-factor provider rejects enrolled logins when the globally configured factor is disabled, unsupported or missing, rather than accepting a password-only downgrade. Enabled types continue through factor validation.",
+      "limit": "This traces the disabled-factor policy correction only. Full selected AFTA/provider-combination rules, replay protection, browser recovery, SSO and multi-node acceptance remain open. See ../afta-remediation-progress.md for dated evidence."
     }
   }
 }

@@ -2110,18 +2110,21 @@
         "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/UserAccountController.java"
       ],
       "test_files": [
-        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java"
+        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java",
+        "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java",
+        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java"
       ],
       "evidence": "[ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java); [Factor configuration source finding](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy)",
-      "evidence_basis": "Filter-chain permissions, multiple providers, 2FA verification and account management are candidate paths; complete authentication protocol coverage is outstanding.",
-      "gap_and_required_action": "Multiple providers exist, but factor/provider combination rules are not fixed. Disabled enrolled 2FA types skip code validation in the reviewed provider; specify fail-closed/fallback policy and test combinations.",
+      "evidence_basis": "Multiple provider paths are identified. On 2026-11-09 the existing provider was changed to reject globally disabled enrolled factors, with focused policy and API regressions; complete selected provider-combination coverage remains open.",
+      "gap_and_required_action": "The disabled enrolled-factor password-only downgrade is corrected. Define remaining AFTA combination/replay rules and verify every selected provider, browser recovery and multi-node flow; this component remains partially evidenced, not fully closed.",
       "owner": "Authentication / product security",
       "gap_groups": [
         "G-08",
         "G-14",
         "G-15"
       ],
-      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
+      "scope_reason": "Web/API security behavior, supporting deployment or relevant software assurance; source review does not select every alternative component level. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions.",
+      "last_update_date": "2026-11-09"
     },
     {
       "standard_key": "FIA_UAU.6",
@@ -6575,5 +6578,6 @@
       ],
       "scope_reason": "This task evaluates the DHIS2 application, not a new PP/PP-Module/PP-Configuration or a formally composed/composite TOE using base evaluation evidence. Third-party libraries remain in dependency and vulnerability review. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
     }
-  ]
+  ],
+  "last_update_date": "2026-11-09"
 }

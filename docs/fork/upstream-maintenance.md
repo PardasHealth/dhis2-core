@@ -14,15 +14,18 @@ those that occur.
 The Common Criteria review adds documentation under `docs/security/`, this guide,
 a separate `README.fork.md`, and focused regression classes. It restores the
 upstream README and existing integration-test files byte-for-byte to their
-pre-review state. Maven POMs, bundled app versions, dependency declarations,
+pre-review state. The 2026-11-09 MFA fix additionally adjusts only the successful
+email-login fixture in `AuthenticationControllerTest` to explicitly enable and
+restore the factor under test. Maven POMs, bundled app versions, dependency declarations,
 repository identity, existing branches and remote URLs are unchanged.
 
-The necessary production changes are confined to these two classes:
+The necessary production changes are confined to three classes (the third added on 2026-11-09):
 
 | Patch | Production file / symbols | Behavior that must survive an upstream merge | Fork regression |
 | --- | --- | --- | --- |
 | CC-2026-01/02 | [ApiTokenAuthManager](../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java): constructor, `authenticate`, `validateTokenExpiry` | Resolve current token/account/permissions/constraints for each authentication; use a fresh authentication object; reject malformed expiry. Do not restore the one-hour authentication snapshot. | [ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java), [ApiTokenStateAuthenticationTest](../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java) |
 | CC-2026-03 | [AuditScheduler](../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java): `process` and explanatory Javadoc | A publication exception retains the failed and unprocessed events, surfaces the error, and permits later recovery. Successful earlier publications are not unnecessarily replayed. | [AuditSchedulerTest](../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java) |
+| AFTA-2026-01 / G-15 | [TwoFactorAuthenticationProvider](../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java): `checkTwoFactorAuthentication`, `isTwoFactorTypeEnabled` | A globally disabled, unsupported or missing enrolled factor must reject login; never restore silent password-only downgrade. Enabled-factor verification and explicit recovery paths remain in the existing architecture. | [TwoFactorAuthenticationPolicyTest](../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java), [TwoFactorLoginPolicyTest](../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java) |
 
 The PostgreSQL recovery regression is a separate
 [AuditRepositoryFailureRecoveryTest](../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryFailureRecoveryTest.java).
@@ -85,7 +88,7 @@ git switch -c integration/dhis2-upstream-review
 git merge --no-commit --no-ff "$upstream_ref"
 ```
 
-Inspect the proposed changes, especially the two production classes in the patch
+Inspect the proposed changes, especially the three production classes in the patch
 ledger. Resolve each conflict by preserving both upstream behavior and the security
 properties above. A blanket choice of `ours` or `theirs` can silently discard one
 side's fixes. If the integration needs to be abandoned, `git merge --abort` is

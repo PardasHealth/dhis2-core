@@ -66,7 +66,8 @@ def render(data):
 
     introduction = (
         "Reviewed baseline: DHIS2-Core `2.44-SNAPSHOT`, `07d4f3f7ea` plus the recorded "
-        "two-class security patch. Disposition date: 2026-11-04.\n\n"
+        "security patches. Original disposition date: 2026-11-04. "
+        f"Latest follow-up: {data.get('last_update_date', data['review_date'])}.\n\n"
         "**261 component IDs have a baseline gap disposition: 155 from Part 2 and 106 "
         "from Part 3. This is component-level gap triage, not a completed element-by-element "
         "evaluation or a conformance/certification claim.** Applicability, assignments, "
@@ -150,7 +151,7 @@ def render(data):
                 for g in row["gap_groups"]
             ),
         )) + " |\n")
-    fields = list(rows[0])
+    fields = list(dict.fromkeys(k for row in rows for k in row))
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
     writer.writeheader()

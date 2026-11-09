@@ -60,6 +60,12 @@ failure and restart. No replay or race test was executed in this follow-up.
 
 ## G-15: disabled-factor-type policy
 
+**2026-11-09 implementation update:** the provider downgrade described below has
+been corrected. Disabled, unsupported or missing enrolled factor types now reject
+login. Enabled types still validate their codes. See the
+[remediation/test record](afta-remediation-progress.md). The following paragraphs
+describe the original 2026-11-04 finding; full provider/recovery acceptance remains open.
+
 Candidate component: FIA_UAU.5, together with the selected account/role policy.
 
 Source: [TwoFactorAuthenticationProvider](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java),
@@ -83,5 +89,5 @@ Document emergency recovery so changing the flag does not strand administrators.
 Then test TOTP/email enrollment states against each global flag, required-role
 constraints, missing/wrong/valid codes, alternate providers, PAT denial rules,
 browser messaging and recovery. Preserve generic failure handling and complete
-the normal login regressions. No behavior change or new passing provider test
-is asserted here.
+the normal login regressions. The 2026-11-09 follow-up records the provider/API
+change and its tests; it does not close replay, browser or multi-node acceptance.

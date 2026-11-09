@@ -170,11 +170,11 @@ keys. Where no value is selected, the corresponding acceptance remains open.
 <a id="g-15"></a>
 ### G-15 — enrolled factor disabled globally
 
-- **State/owner:** confirmed configuration-dependent provider branch; product security/authentication and recovery owners. High when mandatory enrolled MFA is intended. Candidate: `FIA_UAU.5`.
-- **Source:** [TwoFactorAuthenticationProvider.checkTwoFactorAuthentication/isTwoFactorTypeEnabled](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java). Code validation occurs only if that type is globally enabled; see [detailed finding](crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy).
+- **State/owner:** provider downgrade corrected; complete deployment/provider/recovery acceptance remains open. Product security/authentication and recovery owners. Candidate: `FIA_UAU.5`.
+- **Implementation update, 2026-11-09:** the existing provider now rejects disabled, unsupported or missing enrolled factor types before accepting authentication; enabled types still require code validation. See the [remediation and test record](afta-remediation-progress.md). The earlier branch behavior is preserved as a historical [source finding](crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy).
 - **Solution:** select explicit semantics. Recommended secure-profile behavior is to deny enrolled-factor login when the factor is unavailable, unless a separately authorized, attributable recovery procedure applies. Implement the policy in the existing provider; do not silently treat enrollment as factor proof or add a parallel authentication subsystem.
 - **Acceptance:** cover every enrollment/type/global-flag/role-required combination with absent/wrong/valid codes and the relevant alternative providers. Verify denial, useful generic UI feedback, authorized recovery and normal login/PAT behavior. Exercise the browser flow, not only the private helper.
-- **Compatibility:** plan administrator recovery before changing behavior; disabling a type currently has different semantics. Record the chosen fallback/fail-closed policy so an upgrade does not accidentally strand users or weaken MFA.
+- **Compatibility:** plan administrator recovery before changing behavior; disabling a type no longer permits password-only login for enrolled accounts. Record the chosen fallback/fail-closed policy so an upgrade does not accidentally strand users or weaken MFA.
 
 ## Additional web coverage gaps and solutions
 

@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-09",
+  "scope": "AFTA source row 36 / FIA_UAU.5.2 disabled enrolled factor downgrade subgap; not full requirement closure",
+  "baseline_core_commit": "407995690e75a91c5efb5c637746c96c3994fee2",
+  "tested_revision": "baseline plus source-hash-identified working-tree fix",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "22e325aac48f50f534a75bf69ed001e4d4e38ac02081f30df6032506d81778e5",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "8af73cecc890e9f6190ecff42c78c21c73a5bd588d1e8855903671c09322f016",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "8ca6402d2481846006de412cd8dfcd2edf79ac8eaecf7b5b46d2fd153bc9bbd0",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "57e9dc18a6200a53ae3e8c67717fc2f8fcc7e29682e93279fe856cae0fc57230",
+    ".github/workflows/cc-audit-regression.yml": "0fbcb3b556cc087f5aeb301c79b55dbb8fe33f9e2feb059975a001c5512b2dc3"
+  },
+  "provider_before_fix": {
+    "tests": 19,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 11,
+    "note": "Recorded after correcting initial non-null UserDetails fixture fields; this baseline reproduces expected-denial failures and missing-type exception behavior."
+  },
+  "after_fix_suites": [
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "after_fix_total": {
+    "tests": 68,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": {
+    "result": "success",
+    "profile": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "reused existing unchanged target/bundled app assets; no fresh app download or browser acceptance run",
+    "war_sha256": "4b64624e9297125096c9d2de25f0a9aa92c0ae7a276fd89e80bc578b353c329a",
+    "packaged_provider_matches_compiled_class": true,
+    "pdf_class_check": "passed using Java 17 source launcher",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false -Djacoco.skip=true test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false -Djacoco.skip=true test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "conditions": {
+    "java": "Temurin 17.0.17+10; official archive SHA-256 verified",
+    "maven": "3.9.11",
+    "build_jit_options": "-XX:TieredStopAtLevel=1",
+    "repository_mode": "offline existing local cache",
+    "web_fixture": "Local H2, real security filter chain and embedded broker sockets; run outside command sandbox after sandbox port allocation failure.",
+    "fixture_correction": "Existing successful email-2FA controller test now explicitly enables/restores the factor; original success depended on globally disabled factor acceptance.",
+    "dependency_caveat": "Existing sms-compression 0.3.2 source-built cache artifact retains earlier provenance caveat; not asserted binary-identical to JitPack."
+  },
+  "not_established": [
+    "Full FIA_UAU.5.2/AFTA approval",
+    "Single-use/replay resistance",
+    "Browser CSRF-aware production login fix",
+    "Real browser MFA recovery and UI acceptance",
+    "Multi-node propagation",
+    "Actual deployment of patched WAR",
+    "Fresh cold build/download of bundled applications",
+    "Automatic revocation of existing sessions when global factor settings change"
+  ],
+  "user_report": {
+    "date": "2026-11-09",
+    "statement": "User confirms the earlier project starts successfully; this is not a live acceptance test of this new patch."
+  },
+  "implementation_commit": "d62f10552816e93a19f8e4bb37e6f87a12bca44d"
+}

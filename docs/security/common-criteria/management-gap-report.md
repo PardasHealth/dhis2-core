@@ -8,6 +8,10 @@ For the later user-selected, narrower AFTA checklist, see the separate
 [AFTA selected-requirements report](afta-selected-requirements-review.md). Its
 element-based percentages use a different denominator from this broad report.
 
+**9 November implementation update:** the enrolled-factor password-only downgrade
+is corrected, with targeted provider/API regression evidence. Full MFA and
+production acceptance remain open; see [remediation progress](afta-remediation-progress.md).
+
 ## What this means
 
 Common Criteria asks us to define the security promises of a particular release
@@ -54,10 +58,10 @@ Regenerate using `python3 docs/security/tools/render_management_charts.py`
 
 | Priority | Gap in plain language | Why management should care | Required next step / proposed owner |
 | --- | --- | --- | --- |
-| Immediate | The reported installation cannot start because its packaged PDF library is corrupt. Repair is not yet confirmed. | The service cannot be accepted as working. | Re-download the affected dependency, rebuild, check the artifact and verify startup. Release engineering / operations. |
+| Startup restored (user-confirmed, 9 November) | The earlier corrupt PDF dependency blocked startup; the user now confirms the project starts successfully. | This clears the reported startup incident, but does not demonstrate all workflows or certification readiness. | Retain artifact checks and validate each new release. Release engineering / operations. |
 | High | Browser login fails with the selected protection against forged browser requests enabled. That protection remains enabled. | Users cannot complete normal browser login in this profile. | Fix browser integration and test login, saving data and logout without weakening protection. Web application / security teams. |
 | High | Existing data-encryption configuration includes an unsafe fallback and an older encryption option; actual use needs confirmation. | Sensitive data protection may depend on deployment settings. Changing keys incorrectly could make existing data unreadable. | Inventory usage and keys; plan and test any required migration and recovery. Security / data / platform owners. |
-| High | Two-factor login needs stronger policy and tests for reused codes and globally disabled factor types. | An enrolled user's additional login protection may not behave as expected in some configurations. | Define the required behavior, implement necessary controls and test recovery and multiple servers. Authentication / security owners. |
+| High | The disabled-factor password-only downgrade is corrected. Two-factor login still needs replay protection and complete recovery/provider testing. | An enrolled user's additional login protection may not behave as expected in some configurations. | Define the required behavior, implement necessary controls and test recovery and multiple servers. Authentication / security owners. |
 | High | Audit records are not yet proven durable and protected in the target deployment, especially during full storage or failures. | Required evidence of who did what could be lost or altered; operational response is unclear. | Set retention and failure policy; verify persistence, permissions, capacity alerts and recovery. Operations / database / security owners. |
 | High | HTTPS and Nginx support exist, but real certificate operation and all service-to-service protections remain unverified. | Sensitive information and identity checks depend on a correctly configured deployment. | Configure the real domain/certificate, verify protected connections and block bypass of the trusted proxy. Platform / network owners. |
 | High | App versions and dependencies are not fully frozen and accepted; an Interpretations app error remains open. | A successful build or home page does not prove the delivered product works or can be reproduced. | Record release contents, fix the app issue and test critical user workflows. Release engineering / app owners. |
@@ -71,13 +75,13 @@ Regenerate using `python3 docs/security/tools/render_management_charts.py`
 - Fixed loss of buffered audit events when publication fails, with focused recovery tests. This does not prove audit records survive every crash or deployment failure.
 - Added a component inventory, gap register and 199 individual component pages. Most detailed requirement mappings remain open; page counts are not completion percentages.
 - Added configurable Nginx/HTTPS support, build diagnostics and a staged update command that builds, backs up and applies a chosen core revision.
-- Recorded 262 passing core test cases and four existing skips across dated runs. The platform currently has 16 passing tests. These are targeted checks, not a full acceptance or independent evaluation.
+- Recorded 262 passing core test cases and four existing skips across dated runs. The platform has 24 passing setup/policy tests. The 9 November MFA follow-up separately records 68 passing targeted provider/API cases; these are not added blindly to the earlier overlapping inventory. These are targeted checks, not a full acceptance or independent evaluation.
 
 ## Decisions and next milestones
 
 1. **Assign accountable owners.** Name the release, authentication, data-protection, operations and evaluation leads.
 2. **Agree the target.** Choose the release, enabled apps, deployment and required assurance level with the evaluator. Not every component in the standard is mandatory.
-3. **Restore and demonstrate working operation.** Resolve the corrupt artifact and browser-login blocker, then run representative user workflows.
+3. **Restore and demonstrate working operation.** Retain the restored startup and resolve the production browser-login blocker, then run representative user workflows.
 4. **Close priority security and deployment gaps.** Verify encryption, two-factor login, audit behavior, connections and access controls against agreed policies.
 5. **Complete the evidence and independent evaluation.** Accept the release only when the agreed checks pass; claim Common Criteria approval only after the relevant scheme's decision.
 

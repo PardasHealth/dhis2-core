@@ -56,7 +56,7 @@ def render_traces(rows):
             continue
         body = [f'# {key} — {row["component"]}\n\n',
                 f'ISO/IEC 15408-{row["part"]}:2026, clause {row["clause"]}. '
-                'Trace update: 2026-11-07; component disposition baseline: 2026-11-04.\n\n',
+                f'Trace update: {row.get("last_update_date", "2026-11-07")}; component disposition baseline: 2026-11-04.\n\n',
                 f'**Status: {row["coverage_status"]}.** {depth}. No conformance claim.\n\n',
                 '[All component pages](README.md) · '
                 f'[Component disposition](../../common-criteria-gap-assessment.md#{key.lower().replace("_", "-").replace(".", "-")})\n\n',

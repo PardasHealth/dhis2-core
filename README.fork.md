@@ -5,6 +5,8 @@ The original [README](README.md) describes the upstream project.
 
 Fork-specific security work:
 
+- [Selected AFTA remediation progress](docs/security/common-criteria/afta-remediation-progress.md)
+
 - [Web review guide: scope, evidence, gaps and solutions](docs/security/common-criteria/README.md)
 - [Common Criteria 2026 standard-to-code traceability](docs/security/common-criteria-traceability.md)
 - [Exact standard component ID → code lookup](docs/security/common-criteria-component-code-index.md)

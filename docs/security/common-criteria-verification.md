@@ -310,3 +310,20 @@ hashes still match that successful build. No new WAR/browser run is asserted.
 The [web attack-surface review](common-criteria/web-attack-surface-review.md)
 identifies what these tests cover and what remains open. These checks do not
 close all injection, file-domain authorization, browser-app or dependency gaps.
+
+
+## 2026-11-09 AFTA authentication remediation
+
+The enrolled-factor downgrade in checklist row 36 / FIA_UAU.5.2 / G-15 is
+corrected in the existing provider. The new provider-policy suite reproduces
+eight failures on the original implementation and passes all 19 cases after
+the patch. Six new full-security-chain H2 API checks and 43 existing
+authentication/two-factor controller cases also pass (49 web cases total, no
+failures/errors/skips). The successful email fixture now explicitly enables and
+restores the factor under test; it previously depended on the downgrade.
+
+These 68 targeted cases overlap some earlier suites and are not added blindly
+to the historical 262-pass total. They do not establish complete AFTA fit or
+new browser, recovery, replay or multi-node acceptance. Details, commands and
+limits: [remediation progress](common-criteria/afta-remediation-progress.md) and
+[dated evidence](evidence/afta-remediation-2026-11-09.json).

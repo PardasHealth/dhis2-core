@@ -138,7 +138,7 @@ coverage gaps. A proposed solution is not an implemented fix or a passing test.
 | G-11 | Assurance | Development environment, delivery controls, complete vulnerability assessment and independent tests are outside this source review | Complete selected ALC/ADV/AGD/ATE/AVA evidence with organization and evaluator. |
 | G-13 | High, conditional on encrypted-data use/configuration | Field-encryption configuration has a built-in password fallback and a legacy 3DES/fixed-salt bean; active field/bean use and deployment key settings are not fully inventoried | Security/platform/data owners inventory ciphertext and keys; require explicit secret provisioning in the evaluated profile and design tested re-encryption, backup and rollback before changing existing keys or ciphers. See the [source findings](common-criteria/crypto-and-two-factor-gaps.md#g-13-encryption-configuration-and-migration). |
 | G-14 | High if single-use/replay resistance is selected | Reviewed email/TOTP helpers and provider success path do not record consumed codes or accepted time steps | Authentication owner define single-use/replay scope; implement atomic cross-node acceptance state and test reuse, races, expiry and recovery. This source finding is not an end-to-end exploit test. See the [source findings](common-criteria/crypto-and-two-factor-gaps.md#g-14-single-use-and-replay-evidence). |
-| G-15 | High, configuration dependent | An enrolled user's 2FA code is checked only if that factor type is enabled globally; otherwise the reviewed provider continues after password authentication | Product/security owner specify fail-closed or explicit recovery/fallback policy, then implement/test provider and browser combinations without locking out authorized recovery. See the [source findings](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy). |
+| G-15 | Provider fix implemented; deployment acceptance open | On 2026-11-09 the provider was changed to reject disabled, unsupported or missing enrolled factor types; enabled factors still require validation. Targeted provider/API regressions are recorded. | Deploy and verify the change, authorized recovery, alternate providers and multi-node behavior. Full AFTA FIA_UAU.5.2 coverage remains partial; see [remediation progress](common-criteria/afta-remediation-progress.md). |
 
 ## Follow-up review status and next closure order
 
@@ -153,7 +153,7 @@ remain untraced at element level. Missing evidence is not proof that code is abs
    alternative levels and PP/composition requirements are not all mandatory.
    The [evaluation decision worksheet](common-criteria/evaluation-decisions.md)
    supplies concrete proposals and identifies missing deployment/owner inputs.
-2. Resolve G-13–15 with the concrete source findings and compatibility/migration
+2. Validate the G-15 provider fix and resolve G-13–14 with the concrete source findings and compatibility/migration
    plan, then verify authentication and encrypted-data upgrades/recovery.
 3. Freeze the release/app/dependency inventory. Resolve the independently bundled
    Interpretations error and execute critical workflows, including the selected
