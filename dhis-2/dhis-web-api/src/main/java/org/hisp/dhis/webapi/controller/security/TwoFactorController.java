@@ -47,6 +47,7 @@ import org.hisp.dhis.feedback.ConflictException;
 import org.hisp.dhis.feedback.ErrorCode;
 import org.hisp.dhis.feedback.ForbiddenException;
 import org.hisp.dhis.security.twofa.TwoFactorAuthService;
+import org.hisp.dhis.security.twofa.TwoFactorType;
 import org.hisp.dhis.user.CurrentUser;
 import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserDetails;
@@ -136,7 +137,13 @@ public class TwoFactorController {
   @Deprecated(forRemoval = true, since = "2.42")
   public void generateQRCode(@CurrentUser User currentUser, HttpServletResponse response)
       throws IOException, ConflictException {
-    twoFactorAuthService.enrollTOTP2FA(currentUser.getUsername());
+    // The bundled profile app reads this deprecated URL as an image. Re-reading
+    // a pending QR must not replace the seed that the user may already have scanned.
+    // Explicit POST enrollment remains available to rotate an unconfirmed seed.
+    if (currentUser.getTwoFactorType() != TwoFactorType.ENROLLING_TOTP
+        || Strings.isNullOrEmpty(currentUser.getSecret())) {
+      twoFactorAuthService.enrollTOTP2FA(currentUser.getUsername());
+    }
     byte[] qrCode = twoFactorAuthService.generateQRCode(currentUser);
     response.getOutputStream().write(qrCode);
   }
