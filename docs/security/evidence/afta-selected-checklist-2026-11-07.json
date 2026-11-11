@@ -257,6 +257,13 @@
       "line": 46,
       "symbol": "static ActiveMQJMSConnectionFactory create(",
       "source_sha256": "7c0ddbb2ba3262b0b0ba10d4aaf9c4764ccc235633817c0db2417176fb6a1410"
+    },
+    "qr": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java",
+      "line": 138,
+      "symbol": "public void generateQRCode(",
+      "source_sha256": "2aeb815a17a0155d34dc087cad19341bc5d7e7d47df889789cad3c1a6cf5b67a"
     }
   },
   "rows": [
@@ -945,12 +952,13 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Rules combining authentication mechanisms",
-      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained. Login proof consumption also checks and locks the current primary user row; stale secret/type snapshots and deleted users are rejected. The same locked primary row must now also retain the password hash, allow local login and not be disabled or expired.",
+      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained. Login proof consumption also checks and locks the current primary user row; stale secret/type snapshots and deleted users are rejected. The same locked primary row must now also retain the password hash, allow local login and not be disabled or expired. The legacy QR read now preserves a nonempty pending TOTP seed; explicit POST rotation remains available.",
       "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09; factor-state consumption freshness is added on 2026-11-11. Full AFTA combination rules, cross-purpose consumption, freshness across other providers, roles and existing sessions, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
       "references": [
         "factor",
         "token",
-        "replay"
+        "replay",
+        "qr"
       ],
       "source_key": "FIA_UAU.5.2",
       "counted": true,
@@ -988,6 +996,13 @@
           "trace": "afta-account-state-freshness.md",
           "full_requirement_closed": false,
           "implementation_commit": "6dcdde2c3eeb3cb5c9949e7c81cee187b9116319"
+        },
+        {
+          "date": "2026-11-11",
+          "scope": "stable pending TOTP QR GET/HEAD reads; initial legacy GET remains state-changing",
+          "trace": "afta-pending-qr-stability.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "bb1acc0c8d7ab63502aa641d01feb7c8fa8012a6"
         }
       ]
     },

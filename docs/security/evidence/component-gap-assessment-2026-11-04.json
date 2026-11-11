@@ -2103,13 +2103,15 @@
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
         "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
         "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
-        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java"
+        "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
+        "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java"
       ],
       "code_symbols": [
         "TwoFactorAuthenticationProvider",
         "ApiTokenAuthManager",
         "TwoFactorReplayService.consume",
-        "TwoFactorAuthUtils verification helpers"
+        "TwoFactorAuthUtils verification helpers",
+        "TwoFactorController.generateQRCode"
       ],
       "related_sources": [
         "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java",
@@ -2123,10 +2125,11 @@
         "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java",
         "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java",
         "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java",
-        "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java"
+        "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java",
+        "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorQrStabilityTest.java"
       ],
       "evidence": "[ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java); [Factor configuration source finding](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy)",
-      "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check.",
+      "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check. Legacy QR GET/HEAD reads preserve a nonempty pending TOTP seed; explicit POST rotation and the bundled image route are retained. Initial GET state change and distributed enrollment races remain open.",
       "gap_and_required_action": "Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, broader account/password/role/session freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.",
       "owner": "Authentication / product security",
       "gap_groups": [

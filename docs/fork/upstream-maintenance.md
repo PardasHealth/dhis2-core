@@ -18,9 +18,9 @@ these are test-isolation changes, not relaxed successful-login expectations.
 Maven POMs, bundled app versions, dependency declarations, repository identity,
 existing branches and remote URLs are unchanged.
 
-Existing upstream production edits affect seven classes: the PAT manager, audit
+Existing upstream production edits affect eight classes: the PAT manager, audit
 scheduler, two-factor provider, OTP utility, Artemis configuration, configuration
-key catalog and Hibernate encryption configuration. The replay and broker-TLS follow-ups add three small internal classes
+key catalog, Hibernate encryption configuration and the two-factor QR controller. The replay and broker-TLS follow-ups add three small internal classes
 and one additive fork-specific repeatable migration.
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:
@@ -165,3 +165,12 @@ setting; the platform selects it with its retained encryption secret. Existing
 algorithms, public endpoints and dependency declarations remain unchanged. A
 focused test class checks startup rejection and ciphertext read compatibility.
 See the [trace and migration limits](../security/common-criteria/afta-explicit-encryption-key.md).
+
+### 11 November 2026: stable pending TOTP QR reads
+
+The deprecated `TwoFactorController.generateQRCode` route now avoids re-enrolling
+a user with an existing nonempty pending TOTP seed. First enrollment and missing
+seed repair keep their prior behavior; explicit enrollment POST still rotates a
+pending seed. The bundled profile app uses this legacy image route, so no assets
+or endpoint names are changed. A new controller regression class checks QR
+contents and enrollment behavior. See the [trace and remaining legacy GET risk](../security/common-criteria/afta-pending-qr-stability.md).

@@ -16,8 +16,9 @@ Related to web application; component/level selection requires ST completion. We
 - [ApiTokenAuthManager.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java)
 - [TwoFactorReplayService.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java)
 - [TwoFactorAuthUtils.java](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java)
+- [TwoFactorController.java](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java)
 
-Symbols to inspect: `TwoFactorAuthenticationProvider`; `ApiTokenAuthManager`; `TwoFactorReplayService.consume`; `TwoFactorAuthUtils verification helpers`. This component-level list is not a mapping to every element below.
+Symbols to inspect: `TwoFactorAuthenticationProvider`; `ApiTokenAuthManager`; `TwoFactorReplayService.consume`; `TwoFactorAuthUtils verification helpers`; `TwoFactorController.generateQRCode`. This component-level list is not a mapping to every element below.
 
 ## Element trace
 
@@ -35,7 +36,7 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ## Evidence and limits
 
-The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check.
+The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check. Legacy QR GET/HEAD reads preserve a nonempty pending TOTP seed; explicit POST rotation and the bundled image route are retained. Initial GET state change and distributed enrollment races remain open.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
@@ -44,6 +45,7 @@ Test sources (execution and scope are recorded separately in the [verification r
 - [TwoFactorLoginPolicyTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java)
 - [TwoFactorReplayServiceTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java)
 - [TwoFactorReplayPostgresTest.java](../../../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java)
+- [TwoFactorQrStabilityTest.java](../../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorQrStabilityTest.java)
 
 Related boundary references, **not implementation coverage**:
 

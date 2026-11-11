@@ -383,3 +383,13 @@ The [explicit-key trace](common-criteria/afta-explicit-encryption-key.md) and
 checks. WAR packaging, packaged-class identity and PDF checks pass. Strict-mode
 startup rejects missing/default keys; cipher/key migration and AFTA crypto
 approval remain open. No existing key or site ciphertext is changed.
+
+## 11 November 2026: stable pending TOTP QR reads
+
+The [QR trace](common-criteria/afta-pending-qr-stability.md) and
+[evidence inventory](evidence/afta-pending-qr-stability-2026-11-11.json) record
+109 passing targeted authentication checks. Eight QR cases reproduce two
+seed-stability failures on the preceding handler and pass with the fix.
+WAR/controller identity, unchanged packaged profile ZIP and PDF checks pass.
+Initial legacy GET still changes state; full CSRF and enrollment-race acceptance
+remain open. Checklist dispositions are unchanged.

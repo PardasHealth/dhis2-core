@@ -87,3 +87,5 @@ an open gap's status.
 - [11 November: current account state during MFA login](afta-account-state-freshness.md).
 
 - [11 November: explicit encryption-key startup guard](afta-explicit-encryption-key.md).
+
+- [11 November: stable pending TOTP QR reads](afta-pending-qr-stability.md).

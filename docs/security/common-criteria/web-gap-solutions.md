@@ -81,6 +81,12 @@ keys. Where no value is selected, the corresponding acceptance remains open.
 <a id="g-05"></a>
 ### G-05 — browser CSRF, cookies, CORS and CSP profile
 
+**11 November QR follow-up:** repeated reads of the legacy TOTP image reuse a
+pending seed. The bundled profile app still uses this GET route, which can
+start initial enrollment; see the [trace and client-migration limit](afta-pending-qr-stability.md).
+This is not full safe-method/CSRF closure.
+
+
 - **State/owner:** confirmed configurable source behavior with incomplete deployed/browser evidence; browser integration and security owners. High. Candidates: `FIA_UAU`, `FTP_TRP.1`, `AVA_VAN`.
 - **Source:** [DhisWebApiWebSecurityConfig.filterChain](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java), [CspFilter](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/filter/CspFilter.java). `http.security.csrf.enabled` defaults off; the existing browser run used that local HTTP configuration.
 - **Solution:** use the supported SPA CSRF token handling in the evaluated browser profile; define allowed origins and intended cookie attributes, framing and script policies. Inventory machine-client exceptions by authentication mechanism and threat model rather than broadly disabling protection. Configure the actual HTTPS boundary; cookie/HSTS flags alone do not provide TLS.

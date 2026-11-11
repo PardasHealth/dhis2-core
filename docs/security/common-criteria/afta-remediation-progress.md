@@ -4,7 +4,14 @@ Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: explicit platform encryption key
+## Latest follow-up: stable pending TOTP QR reads
+
+The deprecated QR image route now reuses an existing nonempty pending TOTP seed,
+so a refresh does not replace the seed already scanned by the user. The bundled
+profile app, initial legacy flow and explicit POST rotation are retained. See the
+[QR stability trace and remaining GET/CSRF limits](afta-pending-qr-stability.md).
+
+## Earlier 11 November follow-up: explicit platform encryption key
 
 The platform now enables a core startup guard requiring a nonblank, non-default
 encryption password. Its existing secret is retained; no key rotation or
@@ -17,8 +24,8 @@ The proof guard now rechecks the current stored password hash, disabled and
 external-only flags, and account expiry under its primary-row lock. See the
 [account-state trace, ordering and remaining limits](afta-account-state-freshness.md).
 This prevents these stale snapshots from accepting an MFA proof; it does not
-revoke existing sessions or cover every other authentication provider. The latest
-scoped inventory has **114 passing authentication/database checks** plus successful
+revoke existing sessions or cover every other authentication provider. This phase
+records **114 passing authentication/database checks** plus successful
 WAR packaging and PDF verification; counts overlap the historical inventories.
 
 ## Earlier 11 November follow-up: external broker TLS
@@ -35,7 +42,7 @@ accepting a proof. Replaced email challenges, changed secret/type snapshots and
 deleted users are rejected. Database-read failure prevents acceptance. See the
 [factor-state freshness trace and limits](afta-factor-state-freshness.md).
 This does not revoke existing sessions or close broader account/provider freshness.
-The latest scoped inventory is **102 passing targeted cases**; WAR packaging and
+This phase records **102 passing targeted cases**; WAR packaging and
 the PDF check pass. It overlaps the older inventories below.
 
 ## 9 November implementation: login replay protection

@@ -1,0 +1,138 @@
+{
+  "date": "2026-11-11",
+  "baseline_core_commit": "62f6edf4855048e516fe0e7c38095ce2b4d8ca8c",
+  "implementation_commit": "bb1acc0c8d7ab63502aa641d01feb7c8fa8012a6",
+  "scope": "Selected AFTA row 36 / FIA_UAU.5.2: retain nonempty pending TOTP seed on sequential legacy QR GET/HEAD reads, not full CSRF or enrollment-race closure.",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "4f6942cb20257e9fa14a9b8cb648fc43f26f3c98a591f53e430f65e5667bc9d8",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorQrStabilityTest.java": "301f689b6d83795d152d75af6b6b21fd39ac1046e9792c15dd0d414a9e17add9",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java": "2aeb815a17a0155d34dc087cad19341bc5d7e7d47df889789cad3c1a6cf5b67a"
+  },
+  "implementation": {
+    "handler": "TwoFactorController.generateQRCode, deprecated GET /api/2fa/qrCode",
+    "reuse": "Nonempty ENROLLING_TOTP seed is rendered without calling enrollment again",
+    "compatibility": "First legacy request and missing-seed repair retained; explicit enrollment POST still rotates pending seed; enabled/global-disabled-factor rejection retained",
+    "schema_dependency_configuration_asset_changes": "none"
+  },
+  "baseline_regression": {
+    "source_commit": "62f6edf4855048e516fe0e7c38095ce2b4d8ca8c",
+    "result": {
+      "tests": 8,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    },
+    "cases": [
+      "repeatedLegacyReadPreservesScannedSeedAndCanCompleteEnrollment",
+      "headReadCannotRotatePendingSeed"
+    ],
+    "interpretation": "Prior controller replaced pending seed during image reads; real controller/service regression comparison, not deployed CSRF exploit."
+  },
+  "fixture_corrections": [
+    "No-Accept and wildcard-Accept fixtures selected default JSON and gave seven 406 failures. Explicit octet-stream plus JSON Accept types corrected the fixture; prior controller then gave the intended two seed-stability failures.",
+    "Final test formatting did not change behavior. An unrelated email literal formatter wrap was restored before packaging to minimize upstream conflicts."
+  ],
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 109,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "bundled_client": {
+    "archive": "user-profile-app.zip",
+    "archive_sha256": "23c3df9472677c8a0c995049f5f079606eead7b777c245e5c5c6c5a570d3af82",
+    "script_entries_with_legacy_image_route": [
+      "user-profile-app-master/assets/AppWrapper-BnntFkwH.js"
+    ],
+    "route_pattern": "/api/${version}/2fa/qrCode",
+    "scope": "Static JavaScript inspection, not browser execution",
+    "packaged_archive_matches_inspected": true,
+    "war_entry": "WEB-INF/lib/dhis-web-server-2.44-SNAPSHOT.jar!/static/dhis-web-apps/user-profile-app.zip"
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "Offline existing cache; previously source-built sms-compression 0.3.2 provenance caveat retained",
+    "jvm_options": "-Xmx2g -XX:TieredStopAtLevel=1",
+    "web": "H2/MockMvc controller/service QR tests plus existing real security-chain authentication cases; no new browser session",
+    "email": "Project fake sender, not SMTP acceptance"
+  },
+  "build": {
+    "result": "success",
+    "profiles": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "Existing unchanged assets reused; no cold frontend/browser acceptance",
+    "war_sha256": "2b7ef54765f759762b417fe10a60354d5498aff228008019911524d2da9702d3",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/webapi/controller/security/TwoFactorController.class"
+    ],
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorQrStabilityTest -Dsurefire.failIfNoSpecifiedTests=false test (prior controller, then restore fix)",
+    "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorQrStabilityTest,TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "not_established": [
+    "Safe/read-only initial legacy GET or full CSRF closure",
+    "Coordinated profile client migration to POST/read-only routes",
+    "Concurrent initial enrollment/rotation/enable/disable ordering",
+    "Cross-purpose single use, recovery or trusted time",
+    "Real browser/multi-node acceptance or independent AFTA approval",
+    "Hosted CI or fresh cold frontend build"
+  ]
+}

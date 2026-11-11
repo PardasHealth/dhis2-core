@@ -138,3 +138,11 @@ against missing, blank or built-in default values. It does not change keys or
 algorithms. [Review the guard and legacy migration limits](afta-explicit-encryption-key.md).
 This is configuration protection, not crypto approval; checklist percentages
 remain unchanged.
+
+### 11 November: preserve a pending TOTP QR seed
+
+The legacy QR image endpoint no longer replaces an existing pending seed on
+refresh. The bundled profile app and explicit enrollment POST are retained.
+[Review the enrollment trace](afta-pending-qr-stability.md). The initial legacy
+GET still changes state and needs a coordinated client migration; this is not
+full CSRF closure. Checklist percentages are unchanged.
