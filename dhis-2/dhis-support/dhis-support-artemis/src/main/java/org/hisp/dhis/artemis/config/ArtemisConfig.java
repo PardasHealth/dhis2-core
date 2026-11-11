@@ -82,13 +82,12 @@ public class ArtemisConfig {
   @Bean
   public ConnectionFactory jmsConnectionFactory(ArtemisConfigData artemisConfigData)
       throws JMSException {
-    ActiveMQJMSConnectionFactory connectionFactory = new ActiveMQJMSConnectionFactory();
+    ActiveMQJMSConnectionFactory connectionFactory;
 
     if (artemisConfigData.isEmbedded()) {
-      connectionFactory.setBrokerURL("vm://0?broker.persistent=true");
+      connectionFactory = new ActiveMQJMSConnectionFactory("vm://0?broker.persistent=true");
     } else {
-      connectionFactory.setBrokerURL(
-          String.format("tcp://%s:%d", artemisConfigData.getHost(), artemisConfigData.getPort()));
+      connectionFactory = ExternalArtemisConnectionFactory.create(artemisConfigData, dhisConfig);
 
       connectionFactory.setUser(artemisConfigData.getUsername());
       connectionFactory.setPassword(artemisConfigData.getPassword());

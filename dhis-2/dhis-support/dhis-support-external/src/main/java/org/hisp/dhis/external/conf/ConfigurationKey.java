@@ -509,6 +509,18 @@ public enum ConfigurationKey {
    */
   ARTEMIS_PASSWORD("artemis.password", "guest", true),
 
+  /** Enable server-authenticated TLS for NATIVE Artemis connections. Embedded mode is unchanged. */
+  ARTEMIS_SSL_ENABLED("artemis.ssl.enabled", Constants.OFF),
+
+  /** Optional external broker truststore; empty uses the JDK provider's default trust anchors. */
+  ARTEMIS_SSL_TRUSTSTORE_PATH("artemis.ssl.truststore.path", ""),
+
+  /** External broker truststore password. Never expose through system-information APIs. */
+  ARTEMIS_SSL_TRUSTSTORE_PASSWORD("artemis.ssl.truststore.password", "", true),
+
+  /** External broker truststore format. */
+  ARTEMIS_SSL_TRUSTSTORE_TYPE("artemis.ssl.truststore.type", "PKCS12"),
+
   /**
    * Enable/disable security for the embedded Artemis. (default: false).
    *
