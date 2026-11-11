@@ -1,10 +1,19 @@
 # External Artemis audit retention and recovery runbook
 
-Status: operator deployment guidance and verification checklist; **not** evidence of a successful external-broker test.
+Status: operator deployment guidance and verification checklist; **not site deployment acceptance**. The [11 November TLS transport trace](common-criteria/afta-external-broker-tls.md) records separate local connection tests.
 
 ## Deployment prerequisites
 
 External Artemis is configured outside DHIS2. Enable persistent journal storage, durable shared topic subscriptions, TLS and authentication, restricted management access, backups, and alert delivery. DHIS2 uses the configured external broker host, port, username and password. Confirm network reachability from every DHIS2 node. Do not assume the embedded broker address settings are applied remotely.
+
+## Application TLS configuration
+
+The NATIVE client supports `artemis.ssl.enabled=on` with certificate and hostname
+verification, plus `artemis.ssl.truststore.path`, `.type` and `.password`. See the
+[configuration template and limitations](common-criteria/afta-external-broker-tls.md#configuration).
+The compatibility default is plaintext; set TLS explicitly on every node and
+use the broker's TLS acceptor port. Embedded transport is unchanged. These
+application settings do not configure the external broker itself.
 
 ## Artemis broker.xml example
 

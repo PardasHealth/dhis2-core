@@ -81,3 +81,5 @@ passes. Follow the solution plan's closure record requirements before changing
 an open gap's status.
 
 - [11 November: current factor state at login consumption](afta-factor-state-freshness.md).
+
+- [11 November: optional external broker TLS and code trace](afta-external-broker-tls.md).

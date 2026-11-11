@@ -3189,18 +3189,27 @@
       "clause": "15.9.7",
       "component": "Basic internal TSF data transfer protection",
       "review_depth": "Component-level gap triage; full element/operation review remains open",
-      "coverage_status": "No direct implementation trace established",
+      "coverage_status": "Partial implementation evidence",
       "applicability": "Related when distributed application parts are enabled",
-      "code_files": [],
-      "code_symbols": [],
-      "related_sources": [
+      "code_files": [
         "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java",
+        "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.java",
+        "dhis-2/dhis-support/dhis-support-external/src/main/java/org/hisp/dhis/external/conf/ConfigurationKey.java"
+      ],
+      "code_symbols": [
+        "ArtemisConfig.jmsConnectionFactory",
+        "ExternalArtemisConnectionFactory.create"
+      ],
+      "related_sources": [
         "dhis-2/dhis-support/dhis-support-cache-invalidation/src/main/java/org/hisp/dhis/cacheinvalidation/redis/CacheInvalidationListener.java"
       ],
-      "test_files": [],
-      "evidence": "[Class-level scope and remaining work](common-criteria-traceability.md#part-2-all-functional-classes-considered)",
-      "evidence_basis": "JMS and cache invalidation cross component boundaries; full topology, protected transport and integrity monitoring are not demonstrated.",
-      "gap_and_required_action": "No complete internal TSF-data transfer protection profile is demonstrated. Define links/threats and verify transport and endpoint protection.",
+      "test_files": [
+        "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactoryTest.java",
+        "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ArtemisExternalTlsIntegrationTest.java"
+      ],
+      "evidence": "[External broker TLS implementation and limits](common-criteria/afta-external-broker-tls.md)",
+      "evidence_basis": "The optional external broker path supports verified TLS and targeted Netty/JMS positive/negative tests. This is conditional evidence for one link, not the complete internal transfer boundary.",
+      "gap_and_required_action": "Select the internal boundary/threats and verify every configured broker, Redis, database and other selected link. Production deployment, certificate rotation/recovery and complete internal TSF-data protection remain open.",
       "owner": "Distributed platform / deployment owner",
       "gap_groups": [
         "G-06",

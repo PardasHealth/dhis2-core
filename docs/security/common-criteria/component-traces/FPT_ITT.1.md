@@ -2,7 +2,7 @@
 
 ISO/IEC 15408-2:2026, clause 15.9.7. Trace update: 2026-11-07; component disposition baseline: 2026-11-04.
 
-**Status: No direct implementation trace established.** Boundary/artifact references; element mapping open. No conformance claim.
+**Status: Partial implementation evidence.** Partial element mappings; remaining elements open. No conformance claim.
 
 [All component pages](README.md) · [Component disposition](../../common-criteria-gap-assessment.md#fpt-itt-1)
 
@@ -12,7 +12,11 @@ Related when distributed application parts are enabled. Embedded/external broker
 
 ## Code candidates
 
-None established in this review.
+- [ArtemisConfig.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java)
+- [ExternalArtemisConnectionFactory.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.java)
+- [ConfigurationKey.java](../../../../dhis-2/dhis-support/dhis-support-external/src/main/java/org/hisp/dhis/external/conf/ConfigurationKey.java)
+
+Symbols to inspect: `ArtemisConfig.jmsConnectionFactory`; `ExternalArtemisConnectionFactory.create`. This component-level list is not a mapping to every element below.
 
 ## Element trace
 
@@ -20,24 +24,26 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FPT_ITT.1.1
 
-**Unmapped — Functional requirement.** No individual implementation or artifact mapping has been established for this element in this review. The component candidates above must not be treated as proof for it. Complete the element-specific trace, applicable ST operations and verification.
+**Partial source mapping.** [ExternalArtemisConnectionFactory.java:46](../../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.java#L46): NATIVE broker configuration can require server-authenticated TLS 1.2/1.3, certificate chain and hostname validation without plaintext fallback. Local JMS tests exercise negotiated TLS message transfer and certificate/credential/transport rejection.
+
+**Open:** Optional broker path only, conditional on the TOE boundary. TLS is opt-in; embedded transport is unchanged. Other internal links, deployed configuration, rotation/recovery and exact AFTA selections remain open. See ../afta-external-broker-tls.md.
 
 ## Evidence and limits
 
-JMS and cache invalidation cross component boundaries; full topology, protected transport and integrity monitoring are not demonstrated.
+The optional external broker path supports verified TLS and targeted Netty/JMS positive/negative tests. This is conditional evidence for one link, not the complete internal transfer boundary.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
-None established in this review.
+- [ExternalArtemisConnectionFactoryTest.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactoryTest.java)
+- [ArtemisExternalTlsIntegrationTest.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ArtemisExternalTlsIntegrationTest.java)
 
 Related boundary references, **not implementation coverage**:
 
-- [ArtemisConfig.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java)
 - [CacheInvalidationListener.java](../../../../dhis-2/dhis-support/dhis-support-cache-invalidation/src/main/java/org/hisp/dhis/cacheinvalidation/redis/CacheInvalidationListener.java)
 
 ## Work required before closure
 
-No complete internal TSF-data transfer protection profile is demonstrated. Define links/threats and verify transport and endpoint protection.
+Select the internal boundary/threats and verify every configured broker, Redis, database and other selected link. Production deployment, certificate rotation/recovery and complete internal TSF-data protection remain open.
 
 Proposed owner: Distributed platform / deployment owner.
 

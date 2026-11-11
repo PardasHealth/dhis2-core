@@ -1,0 +1,177 @@
+{
+  "date": "2026-11-11",
+  "baseline_core_commit": "cbbfca4f151f5e0380c085ea21ad85ca04a1c05d",
+  "implementation_commit": "a3f6a77f45260ebd11c44b574739e8418d928dd2",
+  "scope": "AFTA selected row 47 / FPT_ITT.1.1: optional NATIVE broker server-authenticated TLS. Conditional on evaluated broker boundary; partial path only, not full item approval.",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "c628e7e979146d49ac7846c60d4534eb020dae35b9a200880da7ea3668f1a764",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java": "cea554cd815b318299a1f4ab17bae4fcea7d31bdf7da9b4badc3e1e41cf3ffca",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.java": "7c0ddbb2ba3262b0b0ba10d4aaf9c4764ccc235633817c0db2417176fb6a1410",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ArtemisExternalTlsIntegrationTest.java": "823f822367af86c045121273e8c6629711d285689297a28d5ee883ab1f1c9327",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactoryTest.java": "5c967d1603b91cec3ce8296d665534659216f397b40460372ebe387d3f21ebe5",
+    "dhis-2/dhis-support/dhis-support-external/src/main/java/org/hisp/dhis/external/conf/ConfigurationKey.java": "c14235e6edccd8845bdf73f4f127bd5ba16a0343153b6c6ec38c29db9757c870"
+  },
+  "implementation": {
+    "tls": "JDK provider; TLSv1.2/TLSv1.3; verifyHost=true, trustAll=false, forceSSLParameters=true",
+    "transport": "structured Netty TransportConfiguration; one TLS connector, no automatic plaintext fallback",
+    "credentials": "Existing broker username/password retained; new truststore password marked confidential",
+    "defaults": "Embedded in-VM behavior retained; NATIVE plaintext compatibility default unless explicitly enabled",
+    "invalid_configuration": "truststore/password with TLS disabled, or store password without path, rejects factory construction",
+    "schema_dependency_changes": "none"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ArtemisExternalTlsIntegrationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.config.ExternalArtemisConnectionFactoryTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 118,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "offline existing cache; previously source-built sms-compression 0.3.2 provenance caveat retained",
+    "jvm_options": "-Xmx2g -XX:TieredStopAtLevel=1",
+    "broker": "Real local Netty TCP acceptor, existing Artemis 2.57.0 dependencies, password-authenticated fixture, temporary storage",
+    "certificates": "Fresh temporary RSA-2048 test CA and signed DNS localhost leaves made with JDK keytool; expired leaf signed with -startdate -2d -validity 1. These parameters are fixture choices, not an approved AFTA crypto selection.",
+    "tls_protocol": "Positive test asserts negotiated TLSv1.2 or TLSv1.3 and non-NULL cipher after JMS send/receive",
+    "email": "Existing fake sender for authentication regressions; no SMTP delivery acceptance"
+  },
+  "new_tests": {
+    "factory": 8,
+    "tls_transport": 8,
+    "tls_rejection_cases": [
+      "wrong hostname with trusted CA",
+      "unrelated CA",
+      "expired CA-signed leaf",
+      "invalid broker password",
+      "TLS client against plaintext broker",
+      "plaintext client against TLS-only broker",
+      "missing truststore"
+    ]
+  },
+  "fixture_corrections": [
+    "The first positive TLS run completed authentication but failed queue creation because its isolated role lacked CREATE_DURABLE_QUEUE. The fixture permission was added; all 24 scoped audit/broker cases then passed.",
+    "Final unit and web suites were executed after Java formatting/import cleanup."
+  ],
+  "build": {
+    "result": "success",
+    "profiles": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "existing unchanged assets reused; no cold frontend build or real browser acceptance",
+    "war_sha256": "a1e51d08025b2b086a620cfe733adf1a11a92d86f62e02c0a246ec3ecb6e4b9d",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.class",
+      "org/hisp/dhis/artemis/config/ArtemisConfig.class",
+      "org/hisp/dhis/external/conf/ConfigurationKey.class"
+    ],
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "checklist_change": {
+    "row": 47,
+    "before": "Gap / evidence not established",
+    "after": "Partial evidence",
+    "reason": "Concrete optional broker TLS implementation and positive/negative transport evidence; whole internal link boundary remains open.",
+    "primary_counts": {
+      "total": 78,
+      "partial": 43,
+      "gap": 10,
+      "definition_unresolved": 25,
+      "fully_closed": 0
+    }
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-support/dhis-support-artemis,dhis-services/dhis-service-core -am -Punit-test -Dtest=ExternalArtemisConnectionFactoryTest,ArtemisExternalTlsIntegrationTest,ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest,AuditSchedulerTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "not_established": [
+    "Full FPT_ITT.1.1 or independent AFTA approval",
+    "Final TOE broker boundary and every internal link",
+    "Site deployment on a real external broker or multi-node topology",
+    "Certificate rotation, revocation checking policy and recovery",
+    "Mutual TLS/client certificates",
+    "AFTA TLS/X.509 extension definitions or approved crypto iteration selection",
+    "Fresh browser/SMTP/cold frontend acceptance",
+    "Hosted CI execution"
+  ]
+}

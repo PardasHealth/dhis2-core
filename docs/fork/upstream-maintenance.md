@@ -12,16 +12,16 @@ those that occur.
 ## Current patch boundary
 
 The Common Criteria review adds documentation under `docs/security/`, this guide,
-a separate `README.fork.md`, and focused regression classes. It restores the
-upstream README and existing integration-test files byte-for-byte to their
-pre-review state. The 2026-11-09 MFA fix additionally adjusts only the successful
-email-login fixture in `AuthenticationControllerTest` to explicitly enable and
-restore the factor under test. Maven POMs, bundled app versions, dependency declarations,
-repository identity, existing branches and remote URLs are unchanged.
+a separate `README.fork.md`, and focused regressions. Existing authentication
+fixtures are adjusted for explicitly enabled factors and committed primary state;
+these are test-isolation changes, not relaxed successful-login expectations.
+Maven POMs, bundled app versions, dependency declarations, repository identity,
+existing branches and remote URLs are unchanged.
 
-Existing upstream production edits remain confined to four classes: the PAT
-manager, audit scheduler, two-factor provider and OTP utility. The replay follow-up
-adds two small internal classes and an additive fork-specific repeatable migration.
+Existing upstream production edits affect six classes: the PAT manager, audit
+scheduler, two-factor provider, OTP utility, Artemis configuration and configuration
+key catalog. The replay and broker-TLS follow-ups add three small internal classes
+and one additive fork-specific repeatable migration.
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:
 
@@ -137,3 +137,13 @@ authentication web tests now commit the MFA fixtures visible to the independent
 transaction. The policy suite uses class-end database cleanup; the three existing
 MFA-success cases explicitly clean committed fixtures and resume test rollback.
 See the [trace and limitations](../security/common-criteria/afta-factor-state-freshness.md).
+
+### 11 November 2026: optional external broker TLS
+
+Two upstream files have small additive changes: `ArtemisConfig.jmsConnectionFactory`
+delegates its NATIVE branch to the fork-owned `ExternalArtemisConnectionFactory`,
+and `ConfigurationKey` adds four TLS settings. Embedded mode retains in-VM
+transport; existing external defaults remain compatible. No dependency, database
+migration or browser asset change is introduced. Keep the helper and its
+positive/negative Netty/JMS tests when rebasing. See the
+[trace and operator settings](../security/common-criteria/afta-external-broker-tls.md).

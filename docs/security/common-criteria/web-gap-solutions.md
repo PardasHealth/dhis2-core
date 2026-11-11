@@ -90,8 +90,14 @@ keys. Where no value is selected, the corresponding acceptance remains open.
 <a id="g-06"></a>
 ### G-06 — trusted channels and external service boundaries
 
+**11 November update:** the NATIVE broker client now supports verified TLS. See
+the [code trace and local transport tests](afta-external-broker-tls.md). The
+remaining link/deployment work below still applies; plaintext is the compatibility
+default until TLS is explicitly configured.
+
+
 - **State/owner:** source/deployment gap; platform/network and integration security. High. Candidates: `FTP_ITC.1`, `FTP_PRO.1–3`, `FTP_TRP.1`, `FDP_UCT/UIT`, `FPT_ITC/ITI/ITT`.
-- **Source:** [embedded Main](../../../dhis-2/dhis-web-server/src/main/java/org/hisp/dhis/web/tomcat/Main.java), [ArtemisConfig.jmsConnectionFactory](../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java); external broker configuration currently constructs a TCP URL.
+- **Source:** [embedded Main](../../../dhis-2/dhis-web-server/src/main/java/org/hisp/dhis/web/tomcat/Main.java), [ArtemisConfig.jmsConnectionFactory](../../../dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ArtemisConfig.java); external broker configuration delegates to structured Netty transport options, with optional verified TLS.
 - **Solution:** enumerate browser/proxy, database, broker, Redis, identity and other outbound links; specify endpoint authentication, encrypted transport, protocol/options, key/certificate management and network isolation. Determine which library-supported options are exposed; implement missing client configuration where required. Network isolation alone is not a claimed encryption mechanism.
 - **Acceptance:** inspect actual negotiated connections; test wrong peer/hostname, expired/untrusted certificates, invalid credentials, downgrade/fallback and unavailable peers. Verify secrets are not logged. Apply the [external broker runbook](../common-criteria-artemis-external-operations.md) only after validating client capability and deployed versions.
 - **Compatibility:** stage certificate/credential overlap and rotation; preserve endpoint verification. Do not disable TLS validation to restore connectivity or assume embedded broker settings configure an external broker.

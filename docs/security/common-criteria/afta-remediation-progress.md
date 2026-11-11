@@ -4,7 +4,14 @@ Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: current factor state at consumption
+## Latest follow-up: external broker TLS
+
+The optional NATIVE audit-broker connection now supports server-authenticated TLS
+with certificate and hostname verification. See the [implementation, configuration
+and limits](afta-external-broker-tls.md). One bounded transfer path moves row 47
+from gap to partial evidence; full internal transport protection remains open.
+
+## Earlier 11 November follow-up: current factor state at consumption
 
 The login guard now locks and rechecks the current primary user row before
 accepting a proof. Replaced email challenges, changed secret/type snapshots and
@@ -95,7 +102,7 @@ mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
 | Integrity/residual protection, reliable time, fault tolerance and access history | The selected guarantees still need implementation/environment designs and acceptance evidence as described per checklist row. |
 | Extensions, iterations and edition mismatches | Exact AFTA document/version and clause definitions remain missing. No behavior or algorithm is assigned to an unknown extension/crypto iteration by guesswork. |
 
-The checklist percentages remain unchanged: **42/78 primary entries have partial
-evidence; 11 have gaps; 25 need definitions; none is fully closed**. This patch
-closes a concrete provider downgrade subgap within one partially evidenced
-requirement. Count changes require complete item-specific closure evidence.
+The current checklist has **43/78 primary entries with partial evidence; 10 gaps;
+25 needing definitions; none fully closed**. The external broker transport tests
+add partial evidence for one previously untraced item. They do not close the whole
+item. Earlier MFA fixes corrected subgaps within an already partial requirement.

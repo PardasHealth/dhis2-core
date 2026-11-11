@@ -1,6 +1,6 @@
 # DHIS2 Common Criteria gap report for management
 
-**Report date:** 7 November 2026  
+**Report updated:** 11 November 2026
 **Scope:** Reviewed DHIS2 web application, APIs and supporting deployment.  
 **Overall status:** Open gaps prevent release sign-off for this reviewed package and any claim of Common Criteria approval.
 
@@ -32,8 +32,8 @@ Missing proof does not, by itself, mean a security vulnerability exists.
 | --- | --- |
 | What percentage is proven fully closed against the reviewed components? | **0% (0 of 199)** documented fully closed. This does **not** mean DHIS2 is 0% secure. |
 | What percentage still needs work or evidence? | **100% (199 of 199)** retain open obligations. This is not an estimate that 100% of development must be redone. |
-| Where is partial implementation evidence already recorded? | **22.1% (44 of 199)**. Partial evidence is not a completed requirement or a compliance score. |
-| Where has no direct implementation trace been established? | **41.7% (83 of 199)**. This does not prove that the feature is absent. |
+| Where is partial implementation evidence already recorded? | **22.6% (45 of 199)**. Partial evidence is not a completed requirement or a compliance score. |
+| Where has no direct implementation trace been established? | **41.2% (82 of 199)**. This does not prove that the feature is absent. |
 | Where is assurance evidence incomplete? | **36.2% (72 of 199)**. These need documentation, process, testing and/or evaluator evidence. |
 
 **A defensible “percentage of the project that fits Common Criteria” is not yet
@@ -44,10 +44,10 @@ and some are alternative levels; they are counted equally here only to explain
 the current register. The 62 excluded/conditional components are outside the
 199-component denominator and are not counted as passing requirements.
 
-The 22.1%, 41.7% and 36.2% categories add to 100% of the register. The separate
+The 22.6%, 41.2% and 36.2% categories add to 100% of the register. The separate
 100% “further work” chart includes all three categories because none is fully
-closed. Figures come from the 4 November component dispositions, carried forward
-in this report; they are not a new evaluation of every component.
+closed. Figures come from the 4 November component dispositions plus the scoped
+11 November external-broker transport update; they are not a new evaluation of every component.
 
 Chart downloads: [PNG](charts/management-gap-dashboard.png),
 [SVG](charts/management-gap-dashboard.svg), [printable PDF](charts/management-gap-dashboard.pdf).
@@ -113,3 +113,11 @@ challenge or changing a factor cannot leave its old snapshot acceptable at proof
 consumption. [Read the trace and remaining limits](afta-factor-state-freshness.md).
 This improves one part of an already partial requirement; the dashboard
 percentages remain unchanged and do not represent certification.
+
+### 11 November: external audit-broker TLS
+
+The optional external broker client can now encrypt its connection and verify the
+broker certificate/hostname. One previously untraced transfer requirement gains
+partial implementation/test evidence. Other connections and site acceptance
+remain open; no complete requirement is closed. See the
+[plain-language summary, settings and code trace](afta-external-broker-tls.md).

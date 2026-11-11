@@ -352,3 +352,14 @@ primary-row validation under a lock before login-proof consumption. The new
 browser assets, packaged-class identity and PDF dependency verification. The
 counts overlap earlier inventories; deployed browser/multi-node acceptance and
 full AFTA requirements remain open.
+
+## 11 November 2026: optional external broker TLS
+
+The [broker TLS trace](common-criteria/afta-external-broker-tls.md) and
+[evidence inventory](evidence/afta-external-broker-tls-2026-11-11.json) record
+118 passing targeted cases, including a real negotiated-TLS JMS exchange and
+certificate/credential/transport rejection. Embedded WAR packaging, changed
+packaged-class identity and the PDF check pass with existing browser assets.
+This is conditional evidence for one link, not site deployment acceptance or
+full `FPT_ITT.1.1` closure. The scoped item moves to Partial evidence; charts and
+trace counts are regenerated from the assessment data.

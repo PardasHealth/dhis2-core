@@ -1795,6 +1795,13 @@
       "source_sha256": "378a63410526e4d835f096aa1130ce94ee5fc3966c85ba9d0e624f99c7bdb172",
       "observation": "Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary. Authoritative user-row read/lock failure also prevents acceptance; secret/type mismatch or a deleted user rejects the proof.",
       "limit": "One identified failure case, not the complete selected AFTA failure list or whole-application secure-state proof. Reliable time, restore and broader fault tolerance remain open."
+    },
+    "FPT_ITT.1.1": {
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/config/ExternalArtemisConnectionFactory.java",
+      "line": 46,
+      "source_sha256": "7c0ddbb2ba3262b0b0ba10d4aaf9c4764ccc235633817c0db2417176fb6a1410",
+      "observation": "NATIVE broker configuration can require server-authenticated TLS 1.2/1.3, certificate chain and hostname validation without plaintext fallback. Local JMS tests exercise negotiated TLS message transfer and certificate/credential/transport rejection.",
+      "limit": "Optional broker path only, conditional on the TOE boundary. TLS is opt-in; embedded transport is unchanged. Other internal links, deployed configuration, rotation/recovery and exact AFTA selections remain open. See ../afta-external-broker-tls.md."
     }
   }
 }

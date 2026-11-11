@@ -105,7 +105,7 @@ See the [component gap assessment](../../common-criteria-gap-assessment.md), [ve
 | [FPT_ITC.1](FPT_ITC.1.md) — Inter-TSF confidentiality during transmission | Boundary/artifact references; element mapping open |
 | [FPT_ITI.1](FPT_ITI.1.md) — Inter-TSF detection of modification | Boundary/artifact references; element mapping open |
 | [FPT_ITI.2](FPT_ITI.2.md) — Inter-TSF detection and correction of modification | Boundary/artifact references; element mapping open |
-| [FPT_ITT.1](FPT_ITT.1.md) — Basic internal TSF data transfer protection | Boundary/artifact references; element mapping open |
+| [FPT_ITT.1](FPT_ITT.1.md) — Basic internal TSF data transfer protection | Partial element mappings; remaining elements open |
 | [FPT_ITT.2](FPT_ITT.2.md) — TSF data transfer separation | Boundary/artifact references; element mapping open |
 | [FPT_ITT.3](FPT_ITT.3.md) — TSF data integrity monitoring | Boundary/artifact references; element mapping open |
 | [FPT_RCV.1](FPT_RCV.1.md) — Manual recovery | Boundary/artifact references; element mapping open |

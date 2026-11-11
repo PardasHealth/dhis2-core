@@ -53,16 +53,16 @@ def render(data):
     optional = [r for r in unique if r['optional']]
     assert len(primary) == 78 and len(optional) == 3
     counts = Counter(r['status'] for r in primary)
-    assert [counts[s] for s in STATUSES] == [42, 11, 25]
+    assert [counts[s] for s in STATUSES] == [43, 10, 25]
     md = ['# AFTA selected-checklist review and gap report\n\n',
           '**Date:** 7 November 2026. **Source identified by user:** AFTA; exact checklist title/version and full clause definitions not supplied.\n\n',
           '**Scope:** only the supplied 82 numbered entries. This is a separate, narrower work list; it does not replace or declare completion of the broader Common Criteria review. '
           'An official evaluation may require dependencies or assurance work beyond this list. Those need explicit agreement rather than silent expansion here.\n\n',
-          'Implementation follow-up: **9 November 2026**. See the [remediation progress record](afta-remediation-progress.md) for the disabled-factor and single-use login fixes, test evidence and remaining work. The checklist counts remain unchanged because the full requirement is still open.\n\n',
+          'Implementation follow-up: **11 November 2026**. See the [remediation progress record](afta-remediation-progress.md) for MFA fixes and [external broker TLS](afta-external-broker-tls.md). Broker-path evidence moves row 47 from a gap to partial evidence; no complete item is closed.\n\n',
           '## Manager summary\n\n',
-          '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 42 of 78 (53.8%). '
+          '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 43 of 78 (55.1%). '
           'All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, '
-          'that 53.8% is certified, or that all development must be redone.\n\n',
+          'that 55.1% is certified, or that all development must be redone.\n\n',
           '![AFTA selected checklist evidence and open work](charts/afta-selected-dashboard.png)\n\n',
           '| Result for primary work list | Count | Percentage | Meaning |\n| --- | ---: | ---: | --- |\n',
           '| Fully demonstrated fit | 0 | 0.0% | No item has complete agreed AFTA definition/operations and sufficient end-to-end evidence to close it. |\n']
@@ -74,7 +74,7 @@ def render(data):
     md += ['| Still require work or evidence | 78 | 100.0% | Includes every partial, gap and unresolved item above; not an additional category. |\n\n',
            'The primary denominator is **78 unique entries not explicitly marked optional**, not an approved declaration that all 78 are mandatory. '
            'Three explicitly optional entries are shown separately: one has partial evidence and two need definitions. '
-           'Including optional items gives **81 unique entries: 43 partial (53.1%), 11 gaps (13.6%) and 27 unresolved (33.3%); 0 fully closed**. '
+           'Including optional items gives **81 unique entries: 44 partial (54.3%), 10 gaps (12.3%) and 27 unresolved (33.3%); 0 fully closed**. '
            'The source has 82 rows because rows 80 and 81 repeat the same identifier.\n\n',
            'Do not compare these percentages directly with the earlier 199-component chart: this report counts selected **element/iteration identifiers**, '
            'while the earlier report counts broader components. Neither measures effort, time, cost or certification probability. '
@@ -161,7 +161,7 @@ def charts(counts):
     fig.subplots_adjust(top=.71, bottom=.25, wspace=.4)
     fig.text(.06, .92, 'AFTA selected-checklist review', fontsize=25, weight='bold', color='#172B46')
     fig.text(.06, .86, 'Provisional evidence coverage and open work - not an approval score', fontsize=14, color='#43556C')
-    fig.text(.06, .81, '78 unique primary entries | 3 optional entries reported separately | duplicate counted once | 7 November 2026',
+    fig.text(.06, .81, '78 unique primary entries | 3 optional entries reported separately | duplicate counted once | updated 11 November 2026',
              fontsize=10.5, color='#52637A')
     colors = ['#2679A6', '#C95747', '#B48528']
     axes[0].pie([counts[s] for s in STATUSES], colors=colors, startangle=90, counterclock=False,
@@ -188,6 +188,9 @@ def charts(counts):
     folder = FOLDER / 'charts'
     for ext in ('png', 'svg', 'pdf'):
         fig.savefig(folder / f'afta-selected-dashboard.{ext}', dpi=180, facecolor=fig.get_facecolor())
+        if ext == 'svg':
+            path = folder / f'afta-selected-dashboard.{ext}'
+            path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines()) + '\n')
     plt.close(fig)
 
 
@@ -204,7 +207,7 @@ def main():
             path.write_text(content)
     if not args.check:
         charts(counts)
-    print('Validated 82 source rows, 81 unique items, 78 primary and 3 optional; 42 partial, 11 gaps, 25 unresolved primary items.')
+    print('Validated 82 source rows, 81 unique items, 78 primary and 3 optional; 43 partial, 10 gaps, 25 unresolved primary items.')
 
 
 if __name__ == '__main__':
