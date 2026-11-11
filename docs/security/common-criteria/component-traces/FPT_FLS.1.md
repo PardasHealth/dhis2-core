@@ -24,7 +24,7 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FPT_FLS.1.1
 
-**Partial source mapping.** [TwoFactorReplayService.java:69](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java#L69): Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary.
+**Partial source mapping.** [TwoFactorReplayService.java:69](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java#L69): Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary. Authoritative user-row read/lock failure also prevents acceptance; secret/type mismatch or a deleted user rejects the proof.
 
 **Open:** One identified failure case, not the complete selected AFTA failure list or whole-application secure-state proof. Reliable time, restore and broader fault tolerance remain open.
 

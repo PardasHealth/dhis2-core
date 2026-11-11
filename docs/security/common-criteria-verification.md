@@ -342,3 +342,13 @@ See [implementation and upgrade limits](common-criteria/afta-login-replay-protec
 and [source hashes, final test counts and packaging evidence](evidence/afta-replay-protection-2026-11-09.json).
 This does not establish other-purpose single use, reliable time, snapshot
 recovery, full deployed multi-node/browser acceptance or complete AFTA fit.
+
+## 11 November 2026: factor-state freshness follow-up
+
+The [factor-state trace](common-criteria/afta-factor-state-freshness.md) records
+primary-row validation under a lock before login-proof consumption. The new
+[evidence inventory](evidence/afta-factor-state-freshness-2026-11-11.json) records
+102 passing targeted checks, successful embedded WAR packaging with existing
+browser assets, packaged-class identity and PDF dependency verification. The
+counts overlap earlier inventories; deployed browser/multi-node acceptance and
+full AFTA requirements remain open.

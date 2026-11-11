@@ -1786,14 +1786,14 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "line": 171,
       "source_sha256": "d04d077df3b6ec1fbd76cf13f5a52a71ad3189d45b04dffe69b7de7c1ef23d8b",
-      "observation": "The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return.",
-      "limit": "Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md."
+      "observation": "The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return. The delegated guard directly locks the primary user row and rejects a stale secret/type snapshot or deleted user at proof consumption.",
+      "limit": "Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md. The 11 November freshness follow-up is traced in ../afta-factor-state-freshness.md."
     },
     "FPT_FLS.1.1": {
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
       "line": 69,
-      "source_sha256": "e919fa0a690f2f2444394351e8025db357575be0c05b91215527717f32d457c2",
-      "observation": "Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary.",
+      "source_sha256": "378a63410526e4d835f096aa1130ce94ee5fc3966c85ba9d0e624f99c7bdb172",
+      "observation": "Login factor acceptance requires a successful durable replay reservation; duplicate keys reject and storage exceptions propagate before authentication returns. Targeted H2 and PostgreSQL tests exercise this failure boundary. Authoritative user-row read/lock failure also prevents acceptance; secret/type mismatch or a deleted user rejects the proof.",
       "limit": "One identified failure case, not the complete selected AFTA failure list or whole-application secure-state proof. Reliable time, restore and broader fault tolerance remain open."
     }
   }

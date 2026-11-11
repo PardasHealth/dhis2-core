@@ -2126,7 +2126,7 @@
       ],
       "evidence": "[ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java); [Factor configuration source finding](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy)",
       "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open.",
-      "gap_and_required_action": "Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, attribute freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.",
+      "gap_and_required_action": "Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, broader account/password/role/session freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.",
       "owner": "Authentication / product security",
       "gap_groups": [
         "G-08",
@@ -6595,5 +6595,5 @@
       "scope_reason": "This task evaluates the DHIS2 application, not a new PP/PP-Module/PP-Configuration or a formally composed/composite TOE using base evaluation evidence. Third-party libraries remain in dependency and vulnerability review. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
     }
   ],
-  "last_update_date": "2026-11-09"
+  "last_update_date": "2026-11-11"
 }

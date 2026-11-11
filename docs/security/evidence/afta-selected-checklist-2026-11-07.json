@@ -249,7 +249,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
       "line": 69,
       "symbol": "public boolean consume(",
-      "source_sha256": "e919fa0a690f2f2444394351e8025db357575be0c05b91215527717f32d457c2"
+      "source_sha256": "378a63410526e4d835f096aa1130ce94ee5fc3966c85ba9d0e624f99c7bdb172"
     }
   },
   "rows": [
@@ -920,8 +920,8 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Rules combining authentication mechanisms",
-      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained.",
-      "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09. Full AFTA combination rules, cross-purpose consumption, account/seed-change freshness, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
+      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained. Login proof consumption also checks and locks the current primary user row; stale secret/type snapshots and deleted users are rejected.",
+      "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09; factor-state consumption freshness is added on 2026-11-11. Full AFTA combination rules, cross-purpose consumption, broader account/password/role/session freshness, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
       "references": [
         "factor",
         "token",
@@ -949,6 +949,13 @@
           "trace": "afta-login-replay-protection.md",
           "full_requirement_closed": false,
           "implementation_commit": "85c6310a5bca76251f9981266570b0ab8046a85d"
+        },
+        {
+          "date": "2026-11-11",
+          "scope": "primary secret/type freshness at login proof consumption",
+          "trace": "afta-factor-state-freshness.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "685579cd43e53b86fcaecd1570a9d74ece54b16c"
         }
       ]
     },
@@ -1816,5 +1823,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-09"
+  "last_update_date": "2026-11-11"
 }

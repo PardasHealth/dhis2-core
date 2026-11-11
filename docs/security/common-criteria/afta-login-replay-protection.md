@@ -3,6 +3,10 @@
 Date: **9 November 2026**. Related checklist item: row 36, `FIA_UAU.5.2`;
 broader finding: G-14. No unselected SFR is added to the user-selected checklist by this hardening. **Implementation and targeted evidence; not full AFTA approval.**
 
+**11 November follow-up:** current primary secret/type is now rechecked under a
+row lock at consumption. See the [new trace and test record](afta-factor-state-freshness.md).
+The 94-case counts below describe the original 9 November implementation.
+
 ## Management summary
 
 A valid second-factor login code must not be reusable. The provider now requires
@@ -33,7 +37,7 @@ flowchart LR
 - **Transactions:** `REQUIRES_NEW` commits the reservation independently before authentication returns. A later session error, caller transaction rollback or lost response must not make an accepted code reusable. The user may need a fresh email challenge or next authenticator code when retrying.
 - **Retention:** reservations remain for **24 hours beyond their code-validity window**, then are cleaned during a valid consumption attempt. This is an engineering cleanup margin against bounded clock skew, not a claim that codes remain valid for 24 hours. It does not establish trusted time or protection against arbitrary clock rollback/incorrect server clocks.
 - **Failure:** duplicate reservations return the existing incorrect-code result. Missing/unwritable replay storage raises a failure before authentication can be returned. Ordinary non-enrolled password login and the prior disabled-factor rejection remain unchanged.
-- **Scope:** this patch consumes **login** proofs. Existing enrollment/disable/other management verification helpers remain separate. Cross-purpose single-use policy, factor-change freshness, browser recovery, restore of an old database snapshot and full deployed multi-node acceptance remain open.
+- **Scope:** this patch consumes **login** proofs. Existing enrollment/disable/other management verification helpers remain separate. Cross-purpose single-use policy, broader account/session freshness, browser recovery, restore of an old database snapshot and full deployed multi-node acceptance remain open.
 
 ## Code trace
 

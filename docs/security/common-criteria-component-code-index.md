@@ -1,6 +1,6 @@
 # Common Criteria 2026 — component ID to code index
 
-Reviewed baseline: DHIS2-Core `2.44-SNAPSHOT`, `07d4f3f7ea` plus the recorded security patches. Original disposition date: 2026-11-04. Latest follow-up: 2026-11-09.
+Reviewed baseline: DHIS2-Core `2.44-SNAPSHOT`, `07d4f3f7ea` plus the recorded security patches. Original disposition date: 2026-11-04. Latest follow-up: 2026-11-11.
 
 **261 component IDs have a baseline gap disposition: 155 from Part 2 and 106 from Part 3. This is component-level gap triage, not a completed element-by-element evaluation or a conformance/certification claim.** Applicability, assignments, selections, refinements and dependency closure remain subject to an agreed Security Target (ST), Protection Profile and assurance package. Higher levels, alternative approaches, PP/Module work and composition requirements are not all simultaneously mandatory. No component is silently excluded.
 

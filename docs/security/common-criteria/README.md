@@ -79,3 +79,5 @@ recorded hashes, rerun affected security and browser tests when behavior changes
 and preserve dated evidence rather than rewriting failed/skipped outcomes as
 passes. Follow the solution plan's closure record requirements before changing
 an open gap's status.
+
+- [11 November: current factor state at login consumption](afta-factor-state-freshness.md).

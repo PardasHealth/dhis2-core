@@ -127,3 +127,13 @@ upstream control replaces this one, compare the one-use and failure invariants
 and plan state migration/cutover before retiring the local guard. Simply dropping
 its table or running a mixture of guarded and unguarded nodes does not preserve
 replay protection.
+
+### 11 November 2026: factor state at login consumption
+
+`TwoFactorReplayService.consume` now directly locks and compares the current
+primary user secret/type before proof reservation. This extends the existing
+login guard without a new migration/dependency or another upstream runtime-file change. The
+authentication web tests now commit the MFA fixtures visible to the independent
+transaction. The policy suite uses class-end database cleanup; the three existing
+MFA-success cases explicitly clean committed fixtures and resume test rollback.
+See the [trace and limitations](../security/common-criteria/afta-factor-state-freshness.md).

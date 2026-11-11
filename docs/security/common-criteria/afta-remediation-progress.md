@@ -1,10 +1,20 @@
 # AFTA remediation implementation progress
 
-Updated: **9 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest implementation: login replay protection
+## Latest follow-up: current factor state at consumption
+
+The login guard now locks and rechecks the current primary user row before
+accepting a proof. Replaced email challenges, changed secret/type snapshots and
+deleted users are rejected. Database-read failure prevents acceptance. See the
+[factor-state freshness trace and limits](afta-factor-state-freshness.md).
+This does not revoke existing sessions or close broader account/provider freshness.
+The latest scoped inventory is **102 passing targeted cases**; WAR packaging and
+the PDF check pass. It overlaps the older inventories below.
+
+## 9 November implementation: login replay protection
 
 The next implementation adds durable single-use reservations for email challenges
 and accepted authenticator time steps. Reuse and failed storage cannot return
@@ -14,7 +24,7 @@ See [login replay protection, upgrade notes and evidence](afta-login-replay-prot
 
 The first-phase counts below belong to commit `d62f105528`; the source files now
 also contain the replay follow-up. The separate dated replay record carries the
-latest **94-case** passing inventory (including overlaps with the first phase). Neither phase closes the entire AFTA item.
+9 November **94-case** passing inventory (including overlaps with the first phase). Neither phase closes the entire AFTA item.
 
 ## Implemented: prevent password-only downgrade of enrolled two-factor accounts
 
@@ -79,7 +89,7 @@ mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
 | Work | Why it is not closed by this patch |
 | --- | --- |
 | Full `FIA_UAU.5.2` fit | The complete selected AFTA mechanism-combination rules, provider/SSO paths, recovery, browser and multi-node evidence are not finalized. The row remains **Partial evidence**. |
-| Wider single-use policy, G-14 | Login reservation is now implemented. Enrollment/disable/other purposes, attribute freshness, trusted clocks, restore and full deployed acceptance remain open. |
+| Wider single-use policy, G-14 | Login reservation is now implemented. Enrollment/disable/other purposes, broader account/session freshness, trusted clocks, restore and full deployed acceptance remain open. |
 | Production CSRF-aware login | Local development can use the explicitly selected localhost-only CSRF-off mode. The production client integration gap remains open. |
 | Audit protection, capacity and failure policy | Retention/grants, threshold/full-storage actions, persistence and recovery need the selected AFTA definitions and deployed evidence. |
 | Integrity/residual protection, reliable time, fault tolerance and access history | The selected guarantees still need implementation/environment designs and acceptance evidence as described per checklist row. |

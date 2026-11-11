@@ -29,9 +29,9 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FIA_UAU.5.2
 
-**Partial source mapping.** [TwoFactorAuthenticationProvider.java:171](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L171): The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return.
+**Partial source mapping.** [TwoFactorAuthenticationProvider.java:171](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L171): The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return. The delegated guard directly locks the primary user row and rejects a stale secret/type snapshot or deleted user at proof consumption.
 
-**Open:** Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md.
+**Open:** Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md. The 11 November freshness follow-up is traced in ../afta-factor-state-freshness.md.
 
 ## Evidence and limits
 
@@ -55,7 +55,7 @@ Related boundary references, **not implementation coverage**:
 
 ## Work required before closure
 
-Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, attribute freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.
+Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, broader account/password/role/session freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.
 
 Proposed owner: Authentication / product security.
 

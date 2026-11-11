@@ -105,3 +105,11 @@ See the [detailed gap register](../common-criteria-review.md#gap-register),
 [code trace index](component-traces/README.md),
 [core verification record](../common-criteria-verification.md) and
 [platform validation limits](https://github.com/PardasHealth/dhis2-platform/blob/main/docs/validation.md).
+
+### 11 November follow-up: outdated MFA state
+
+The login guard now checks the current database factor settings, so replacing a
+challenge or changing a factor cannot leave its old snapshot acceptable at proof
+consumption. [Read the trace and remaining limits](afta-factor-state-freshness.md).
+This improves one part of an already partial requirement; the dashboard
+percentages remain unchanged and do not represent certification.

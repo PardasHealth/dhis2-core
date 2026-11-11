@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-11",
+  "baseline_core_commit": "42e23bb1fc94c935d1f8d767ea6de367c7348a38",
+  "implementation_commit": "685579cd43e53b86fcaecd1570a9d74ece54b16c",
+  "scope": "Selected AFTA row 36 / FIA_UAU.5.2: primary factor secret/type freshness at login proof consumption; related bounded FPT_FLS.1.1 failure evidence. Not full approval.",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java": "378a63410526e4d835f096aa1130ce94ee5fc3966c85ba9d0e624f99c7bdb172",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java": "b804eebdd0c9e617b03cba4676c93067881e79a811712531c74d539d249bad2d",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java": "5057510851c9709ac8b52a0c2ec4d4442b869d96af33d06581fe7b2ba37f120e",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "94c6b0642148af5aec3a92d90e9fb333b1da2b1c4644cbc915519f2121ef2c65",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "93f73de5fdb6ccb099833f357ae7f9d04b372ef26c13c19681127fe32136909b"
+  },
+  "implementation": {
+    "read": "primary jdbcTemplate: select secret, twofactortype from userinfo where uid = ? for update",
+    "transaction": "Existing REQUIRES_NEW reservation transaction; compare fields under row lock and capture validation time after acquiring lock",
+    "rejection": "missing/changed primary state rejects before reservation; read/lock errors propagate before successful authentication",
+    "schema_dependency_changes": "none"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 102,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "offline existing cache; unchanged source-built sms-compression 0.3.2 provenance caveat",
+    "jvm_options": "-Xmx2g -XX:TieredStopAtLevel=1",
+    "postgres_image": "dhis2-platform/postgis-flat:test; isolated Testcontainers temporary PostgreSQL storage",
+    "email": "project fake sender; no real SMTP delivery"
+  },
+  "fixture_corrections": [
+    "Initial compile found and corrected a local variable-name collision before execution.",
+    "Initial web run rejected uncommitted test-fixture MFA state as intended. The policy suite now uses committed fixtures and class-end project cleanup. The three existing MFA-success tests commit their fixture, clean the committed database in finally, and resume the rollback boundary.",
+    "An intermediate attempt to share the original authentication suite across committed tests failed because it intentionally deletes the admin; that attempt was removed. Final original-suite count is 16 passing tests.",
+    "Java test formatting only was normalized after successful H2/PostgreSQL execution; no test behavior changed."
+  ],
+  "build": {
+    "result": "success",
+    "profiles": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "existing unchanged assets reused; no cold frontend build or browser acceptance",
+    "war_sha256": "605821490b9fee905675846135cd499bda2f711f57fd4deaa219160bc54482e0",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/security/twofa/TwoFactorReplayService.class",
+      "org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.class"
+    ],
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-integration -am -Pintegration-test -Dtest=TwoFactorReplayPostgresTest -Dcc.replay.postgres.image=dhis2-platform/postgis-flat:test -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "not_established": [
+    "Complete AFTA title/version/definitions or independent approval",
+    "Account/password/role/session freshness across all providers",
+    "Session revocation or changes after proof consumption",
+    "Reset-and-restore to identical secret/type values",
+    "Enrollment/disable/recovery cross-purpose single use",
+    "Deployed multi-node/browser/SMTP/recovery acceptance",
+    "Trusted time, physical power loss or backup/restore",
+    "Production CSRF-aware login client fix"
+  ]
+}
