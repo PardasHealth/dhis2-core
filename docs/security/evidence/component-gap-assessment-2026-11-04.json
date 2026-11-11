@@ -2125,7 +2125,7 @@
         "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java"
       ],
       "evidence": "[ApiTokenAuthManagerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java); [Factor configuration source finding](common-criteria/crypto-and-two-factor-gaps.md#g-15-disabled-factor-type-policy)",
-      "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open.",
+      "evidence_basis": "The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check.",
       "gap_and_required_action": "Login downgrade and single-use implementation subgaps are corrected. Define full AFTA combination/cross-purpose rules and verify all provider/SSO paths, broader account/password/role/session freshness, clocks, database recovery, browser flows and deployed multi-node behavior. The component remains partial.",
       "owner": "Authentication / product security",
       "gap_groups": [

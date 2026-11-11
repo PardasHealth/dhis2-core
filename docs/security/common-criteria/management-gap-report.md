@@ -121,3 +121,12 @@ broker certificate/hostname. One previously untraced transfer requirement gains
 partial implementation/test evidence. Other connections and site acceptance
 remain open; no complete requirement is closed. See the
 [plain-language summary, settings and code trace](afta-external-broker-tls.md).
+
+### 11 November: account changes during MFA login
+
+The MFA proof guard now rejects a login snapshot after its password changes, its
+account is disabled or made external-only, or its expiry has passed. Normal
+permitted logins remain supported. This is a bounded check during login; existing
+sessions and other providers still need separate coverage. See the
+[account-state trace](afta-account-state-freshness.md). Checklist percentages are
+unchanged because the improvement belongs to an already partial item.

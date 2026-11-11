@@ -4,7 +4,17 @@ Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: external broker TLS
+## Latest follow-up: current account state during MFA login
+
+The proof guard now rechecks the current stored password hash, disabled and
+external-only flags, and account expiry under its primary-row lock. See the
+[account-state trace, ordering and remaining limits](afta-account-state-freshness.md).
+This prevents these stale snapshots from accepting an MFA proof; it does not
+revoke existing sessions or cover every other authentication provider. The latest
+scoped inventory has **114 passing authentication/database checks** plus successful
+WAR packaging and PDF verification; counts overlap the historical inventories.
+
+## Earlier 11 November follow-up: external broker TLS
 
 The optional NATIVE audit-broker connection now supports server-authenticated TLS
 with certificate and hostname verification. See the [implementation, configuration

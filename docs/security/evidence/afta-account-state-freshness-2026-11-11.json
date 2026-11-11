@@ -1,0 +1,142 @@
+{
+  "date": "2026-11-11",
+  "baseline_core_commit": "84b70964c5f2d6445cb2e5ff3d5c21eec0cc67b1",
+  "implementation_commit": "6dcdde2c3eeb3cb5c9949e7c81cee187b9116319",
+  "scope": "AFTA row 36 / FIA_UAU.5.2: current password hash and existing account restrictions at password-based MFA proof consumption. Row 59 / FTA_TSE.1.1 remains a session-policy gap. Not full approval.",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java": "84ec2e1776204de49a88271b2a3a4968219bc0e2a6fc8c7e6adaf16a4797eece",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java": "064172073880bbf6fa0da92445d55f402b028b2b8cab587639bcae2ae9938467",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayServiceTest.java": "93cc937a180990cfd601ceaf6cadee0490d59933cf883ce41e67d93b5ab7958b"
+  },
+  "implementation": {
+    "read": "Existing locked primary userinfo row additionally supplies password, disabled, externalauth and accountexpiry",
+    "acceptance": "Snapshot hash must be nonblank and match current stored hash; account must permit local password login, not be disabled and have null or strictly future expiry",
+    "time": "Expiry checked with the captured clock after acquiring the primary-row lock, matching the existing User strict expiry boundary",
+    "transaction": "Existing REQUIRES_NEW consumption ordering; rejected snapshots do not reserve a proof",
+    "storage": "No new password/hash field, SQL value parameter or replay-fingerprint input; private result record contains only match flag and expiry",
+    "schema_dependency_configuration_changes": "none"
+  },
+  "baseline_regression": {
+    "guard_source_commit": "84b70964c5f2d6445cb2e5ff3d5c21eec0cc67b1",
+    "tests_from": "new deterministic H2 guard suite identified by source hash",
+    "result": {
+      "tests": 28,
+      "failures": 6,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interpretation": "Six expected-denial assertions accepted proof with the preceding guard; this is a component regression reproduction, not a deployed exploit. The fix was restored in finally before final verification.",
+    "cases": [
+      "disabledAccountRejectsPreviouslyLoadedPrincipal",
+      "externalOnlyAccountRejectsPreviouslyLoadedPasswordPrincipal",
+      "resetPasswordRejectsOldHashWithoutConsumingProofForFreshLogin",
+      "missingPasswordHashCannotUsePasswordLoginGuard",
+      "expiredAccountRejectsEvenWhenFactorSnapshotMatches",
+      "accountExpiryIsExclusiveAtTheDeadline"
+    ]
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "offline existing cache; existing source-built sms-compression 0.3.2 provenance caveat retained",
+    "jvm_options": "-Xmx2g -XX:TieredStopAtLevel=1",
+    "postgres": "isolated Testcontainers dhis2-platform/postgis-flat:test with temporary storage and non-superuser writer",
+    "hash_fixtures": "H2/standalone PostgreSQL guard fixtures compare synthetic hash strings. Existing authentication API tests retain real provider password verification. No password algorithm change or approval is inferred.",
+    "email": "project fake sender; no real SMTP acceptance"
+  },
+  "postgres_races": [
+    "secret replacement",
+    "password reset",
+    "account disablement",
+    "external-only conversion",
+    "account-expiry change"
+  ],
+  "build": {
+    "result": "success",
+    "profiles": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "Existing unchanged assets reused; not a cold frontend/release build or browser acceptance",
+    "war_sha256": "ef5e31c1d0ccccda7067465310e9968cc295d76f4f8eb6580806672bea4e83c0",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/security/twofa/TwoFactorReplayService.class",
+      "org/hisp/dhis/security/twofa/TwoFactorReplayService$CurrentLoginState.class",
+      "org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.class"
+    ],
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest -Dsurefire.failIfNoSpecifiedTests=false test (baseline guard only; then restore patched source)",
+    "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-integration -am -Pintegration-test -Dtest=TwoFactorReplayPostgresTest -Dcc.replay.postgres.image=dhis2-platform/postgis-flat:test -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+  ],
+  "not_established": [
+    "Existing session revocation or preventing completion after a later account update",
+    "All password-only/SSO/OIDC/LDAP/PAT and recovery paths",
+    "Role/username/global-setting/lockout/credential-age freshness",
+    "Reset-and-restore to identical values",
+    "Trusted time or real deployed multi-node/browser recovery",
+    "Complete FTA_TSE conditions or independent AFTA approval",
+    "Hosted CI run or fresh cold frontend build"
+  ]
+}

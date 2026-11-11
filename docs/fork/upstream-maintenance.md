@@ -147,3 +147,12 @@ transport; existing external defaults remain compatible. No dependency, database
 migration or browser asset change is introduced. Keep the helper and its
 positive/negative Netty/JMS tests when rebasing. See the
 [trace and operator settings](../security/common-criteria/afta-external-broker-tls.md).
+
+### 11 November 2026: account state at MFA consumption
+
+The existing fork-owned `TwoFactorReplayService` primary-row query additionally
+checks the stored password hash, disabled/external-only flags and account expiry.
+Its private result record carries only a match flag and expiry. Two existing
+fork tests add stale-account and row-lock regressions. No further upstream
+runtime file, migration, dependency, configuration or browser asset change is
+introduced. See the [scope and trace](../security/common-criteria/afta-account-state-freshness.md).

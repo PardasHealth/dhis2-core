@@ -3,6 +3,11 @@
 Date: **11 November 2026**. Checklist row 36, `FIA_UAU.5.2`; related gap G-14.
 This is a scoped implementation improvement, not AFTA approval.
 
+**Later 11 November follow-up:** the same guard now also rechecks the password
+hash, disabled/external-only flags and account expiry. See the
+[account-state follow-up](afta-account-state-freshness.md). The original scope and
+102-case inventory below describe the preceding factor-only change.
+
 ## Management summary
 
 A login request can hold an older copy of a user's second-factor settings.

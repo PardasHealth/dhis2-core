@@ -29,13 +29,13 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FIA_UAU.5.2
 
-**Partial source mapping.** [TwoFactorAuthenticationProvider.java:171](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L171): The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return. The delegated guard directly locks the primary user row and rejects a stale secret/type snapshot or deleted user at proof consumption.
+**Partial source mapping.** [TwoFactorAuthenticationProvider.java:171](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java#L171): The provider rejects unavailable/malformed enrolled factor types. Enabled login factors delegate to database-backed single-use validation before authentication can return. The delegated guard directly locks the primary user row and rejects a stale secret/type snapshot or deleted user at proof consumption. The consumption guard additionally requires a current matching password hash, enabled/local-login account state and non-expired account.
 
-**Open:** Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md. The 11 November freshness follow-up is traced in ../afta-factor-state-freshness.md.
+**Open:** Login-scoped provider correction only. Full AFTA provider-combination policy, other verification purposes, trusted clocks, recovery and deployed multi-node acceptance remain open. See ../afta-login-replay-protection.md. The 11 November freshness follow-up is traced in ../afta-factor-state-freshness.md. See ../afta-account-state-freshness.md for the bounded account-state follow-up.
 
 ## Evidence and limits
 
-The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open.
+The provider rejects unavailable enrolled factors and requires a committed database-backed login challenge/step reservation. Targeted provider, H2/API and PostgreSQL tests cover replay and failure boundaries; see the dated 2026-11-09 replay evidence. Complete selected mechanism-combination coverage remains open. The MFA consumption guard rechecks the primary password hash, disabled/external-only flags and account expiry under its row lock; other providers/roles/sessions remain outside that check.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 

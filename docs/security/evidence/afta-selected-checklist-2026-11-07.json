@@ -249,7 +249,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
       "line": 69,
       "symbol": "public boolean consume(",
-      "source_sha256": "378a63410526e4d835f096aa1130ce94ee5fc3966c85ba9d0e624f99c7bdb172"
+      "source_sha256": "84ec2e1776204de49a88271b2a3a4968219bc0e2a6fc8c7e6adaf16a4797eece"
     },
     "broker_tls": {
       "repository": "core",
@@ -927,8 +927,8 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Rules combining authentication mechanisms",
-      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained. Login proof consumption also checks and locks the current primary user row; stale secret/type snapshots and deleted users are rejected.",
-      "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09; factor-state consumption freshness is added on 2026-11-11. Full AFTA combination rules, cross-purpose consumption, broader account/password/role/session freshness, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
+      "observation": "Disabled or malformed enrolled factor types are rejected. Valid login proofs now also require a committed database reservation: email challenges and accepted TOTP steps cannot be reserved twice. The existing provider and OTP library are retained. Login proof consumption also checks and locks the current primary user row; stale secret/type snapshots and deleted users are rejected. The same locked primary row must now also retain the password hash, allow local login and not be disabled or expired.",
+      "gap_and_acceptance": "Disabled-factor and login-replay subgaps have implementation changes dated 2026-11-09; factor-state consumption freshness is added on 2026-11-11. Full AFTA combination rules, cross-purpose consumption, freshness across other providers, roles and existing sessions, browser recovery, trusted time, backup/restore and deployed multi-node acceptance remain open. This row remains Partial evidence; see the remediation progress and replay record.",
       "references": [
         "factor",
         "token",
@@ -963,6 +963,13 @@
           "trace": "afta-factor-state-freshness.md",
           "full_requirement_closed": false,
           "implementation_commit": "685579cd43e53b86fcaecd1570a9d74ece54b16c"
+        },
+        {
+          "date": "2026-11-11",
+          "scope": "password hash, local-login flags and account expiry at MFA proof consumption",
+          "trace": "afta-account-state-freshness.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "6dcdde2c3eeb3cb5c9949e7c81cee187b9116319"
         }
       ]
     },
@@ -1395,11 +1402,12 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Session-establishment policy",
-      "observation": "Account/token constraints and security matchers are related controls; no complete selected session-denial policy is established.",
+      "observation": "Account/token constraints and security matchers are related controls; no complete selected session-denial policy is established. Password-based MFA consumption now rechecks current password/disabled/external-only/expiry state, but the full selected session policy is still unagreed.",
       "gap_and_acceptance": "Select the required user/time/location/provider conditions and prove every allowed/denied session-establishment path.",
       "references": [
         "token",
-        "security"
+        "security",
+        "replay"
       ],
       "source_key": "FTA_TSE.1.1",
       "counted": true,

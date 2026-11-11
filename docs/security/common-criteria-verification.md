@@ -363,3 +363,14 @@ packaged-class identity and the PDF check pass with existing browser assets.
 This is conditional evidence for one link, not site deployment acceptance or
 full `FPT_ITT.1.1` closure. The scoped item moves to Partial evidence; charts and
 trace counts are regenerated from the assessment data.
+
+## 11 November 2026: current account state during MFA consumption
+
+The [account-state trace](common-criteria/afta-account-state-freshness.md) and
+[evidence inventory](evidence/afta-account-state-freshness-2026-11-11.json) record
+114 passing authentication/database cases and a six-failure deterministic
+regression comparison against the preceding guard. PostgreSQL tests cover
+locked-row ordering for password/disabled/external-only/expiry updates. WAR
+packaging with existing browser assets, guard/result-record/provider byte identity
+and PDF checks pass. Existing sessions, other providers and complete selected
+session policy remain open. Checklist dispositions are unchanged.

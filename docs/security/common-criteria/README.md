@@ -83,3 +83,5 @@ an open gap's status.
 - [11 November: current factor state at login consumption](afta-factor-state-freshness.md).
 
 - [11 November: optional external broker TLS and code trace](afta-external-broker-tls.md).
+
+- [11 November: current account state during MFA login](afta-account-state-freshness.md).
