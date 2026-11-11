@@ -14,6 +14,7 @@ on:
       - 'dhis-2/dhis-api/src/main/java/org/hisp/dhis/audit/**'
       - 'dhis-2/dhis-services/dhis-service-acl/**'
       - 'dhis-2/dhis-support/dhis-support-external/**'
+      - 'dhis-2/dhis-support/dhis-support-hibernate/**'
       - 'dhis-2/dhis-support/dhis-support-db-migration/**'
       - 'dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/**'
       - 'dhis-2/dhis-support/dhis-support-test/**'
@@ -47,6 +48,12 @@ jobs:
             -Dtest=JdbcAuditRepositoryCompressionTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
+      - name: Verify explicit encryption-key startup policy
+        working-directory: dhis-2
+        run: |
+          mvn -B -ntp -pl dhis-support/dhis-support-hibernate -am -Punit-test \
+            -Dtest=HibernateEncryptionPolicyTest \
+            -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Execute audit write-failure propagation tests
         working-directory: dhis-2
         run: |
@@ -84,6 +91,7 @@ jobs:
 
           expected = {
               "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+              "org.hisp.dhis.config.HibernateEncryptionPolicyTest",
               "org.hisp.dhis.audit.AuditRepositoryTest",
               "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest",
               "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",

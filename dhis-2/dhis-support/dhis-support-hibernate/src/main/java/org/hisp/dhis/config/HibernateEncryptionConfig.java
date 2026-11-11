@@ -12,7 +12,7 @@
  * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * 3. Neither the name of the copyright holder nor the names of its contributors
  * may be used to endorse or promote products derived from this software without
  * specific prior written permission.
  *
@@ -55,12 +55,21 @@ public class HibernateEncryptionConfig {
 
   @Autowired private DhisConfigurationProvider config;
 
+  private static final String LEGACY_PASSWORD = "J7GhAs287hsSQlKd9g5";
+
   private String password;
 
   @PostConstruct
   public void init() {
+    String configured = config.getProperty(ConfigurationKey.ENCRYPTION_PASSWORD);
+    if (config.isEnabled(ConfigurationKey.ENCRYPTION_REQUIRE_EXPLICIT_PASSWORD)
+        && (StringUtils.isBlank(configured) || LEGACY_PASSWORD.equals(configured))) {
+      throw new IllegalStateException(
+          "Explicit non-default encryption.password is required; preserve existing keys and"
+              + " migrate legacy ciphertext before enabling strict mode");
+    }
     password =
-        (String) getConnectionProperty(ConfigurationKey.ENCRYPTION_PASSWORD, "J7GhAs287hsSQlKd9g5");
+        (String) getConnectionProperty(ConfigurationKey.ENCRYPTION_PASSWORD, LEGACY_PASSWORD);
   }
 
   /** Used only for SystemSettings (due to bug with JCE policy restrictions in Jasypt. */

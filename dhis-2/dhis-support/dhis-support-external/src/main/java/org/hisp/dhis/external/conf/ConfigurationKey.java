@@ -12,7 +12,7 @@
  * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its contributors 
+ * 3. Neither the name of the copyright holder nor the names of its contributors
  * may be used to endorse or promote products derived from this software without
  * specific prior written permission.
  *
@@ -79,6 +79,9 @@ public enum ConfigurationKey {
 
   /** Encryption password (sensitive). */
   ENCRYPTION_PASSWORD("encryption.password", "", true),
+
+  /** Require an explicit nonblank, non-default encryption password at startup. */
+  ENCRYPTION_REQUIRE_EXPLICIT_PASSWORD("encryption.require_explicit_password", "off"),
 
   /** Hibernate SQL dialect. */
   CONNECTION_DIALECT("connection.dialect", "", false),
