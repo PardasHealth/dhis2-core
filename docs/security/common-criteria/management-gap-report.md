@@ -130,3 +130,11 @@ permitted logins remain supported. This is a bounded check during login; existin
 sessions and other providers still need separate coverage. See the
 [account-state trace](afta-account-state-freshness.md). Checklist percentages are
 unchanged because the improvement belongs to an already partial item.
+
+### 11 November: reject missing/default platform encryption keys
+
+The platform retains its generated encryption secret and enables a startup check
+against missing, blank or built-in default values. It does not change keys or
+algorithms. [Review the guard and legacy migration limits](afta-explicit-encryption-key.md).
+This is configuration protection, not crypto approval; checklist percentages
+remain unchanged.

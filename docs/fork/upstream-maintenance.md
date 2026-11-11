@@ -18,9 +18,9 @@ these are test-isolation changes, not relaxed successful-login expectations.
 Maven POMs, bundled app versions, dependency declarations, repository identity,
 existing branches and remote URLs are unchanged.
 
-Existing upstream production edits affect six classes: the PAT manager, audit
-scheduler, two-factor provider, OTP utility, Artemis configuration and configuration
-key catalog. The replay and broker-TLS follow-ups add three small internal classes
+Existing upstream production edits affect seven classes: the PAT manager, audit
+scheduler, two-factor provider, OTP utility, Artemis configuration, configuration
+key catalog and Hibernate encryption configuration. The replay and broker-TLS follow-ups add three small internal classes
 and one additive fork-specific repeatable migration.
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:
@@ -156,3 +156,12 @@ Its private result record carries only a match flag and expiry. Two existing
 fork tests add stale-account and row-lock regressions. No further upstream
 runtime file, migration, dependency, configuration or browser asset change is
 introduced. See the [scope and trace](../security/common-criteria/afta-account-state-freshness.md).
+
+### 11 November 2026: explicit encryption-key startup guard
+
+`HibernateEncryptionConfig.init` adds strict-mode validation while preserving
+legacy fallback behavior when the new flag is off. `ConfigurationKey` adds one
+setting; the platform selects it with its retained encryption secret. Existing
+algorithms, public endpoints and dependency declarations remain unchanged. A
+focused test class checks startup rejection and ciphertext read compatibility.
+See the [trace and migration limits](../security/common-criteria/afta-explicit-encryption-key.md).

@@ -374,3 +374,12 @@ locked-row ordering for password/disabled/external-only/expiry updates. WAR
 packaging with existing browser assets, guard/result-record/provider byte identity
 and PDF checks pass. Existing sessions, other providers and complete selected
 session policy remain open. Checklist dispositions are unchanged.
+
+## 11 November 2026: explicit platform encryption-key startup policy
+
+The [explicit-key trace](common-criteria/afta-explicit-encryption-key.md) and
+[evidence inventory](evidence/afta-explicit-encryption-key-2026-11-11.json) record
+112 passing core checks, 24 platform tests and four isolated entrypoint render
+checks. WAR packaging, packaged-class identity and PDF checks pass. Strict-mode
+startup rejects missing/default keys; cipher/key migration and AFTA crypto
+approval remain open. No existing key or site ciphertext is changed.

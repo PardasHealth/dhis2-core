@@ -7,6 +7,13 @@ exploit, deployment compromise or completed cryptographic evaluation is claimed.
 
 ## G-13: encryption configuration and migration
 
+**11 November follow-up:** core now has opt-in strict explicit-key validation;
+the platform enables it using its retained secret. See the
+[configuration guard, tests and legacy migration limits](afta-explicit-encryption-key.md).
+The original fallback remains in the core compatibility profile. The historical
+findings below are not a claim that migration or crypto approval is complete.
+
+
 Candidate components: FCS_CKM.5, FCS_COP.1, FDP_SDC.1/2; also the key lifecycle
 and management requirements selected in the ST.
 

@@ -193,7 +193,7 @@
       "path": "dhis-2/dhis-support/dhis-support-hibernate/src/main/java/org/hisp/dhis/config/HibernateEncryptionConfig.java",
       "line": 51,
       "symbol": "class HibernateEncryptionConfig",
-      "source_sha256": "5c514852e82a5afbd5bd68261c5ac262fdc58ed273864a4a0a4a4e2a6af783f8"
+      "source_sha256": "f32e341529b99e8dbfa9c20cad652373c862ca731a932a279a5cbb9006b4abed"
     },
     "keygen": {
       "repository": "core",
@@ -495,7 +495,7 @@
       "optional": false,
       "status": "Definition or edition unresolved",
       "topic": "Cryptographic operation iteration",
-      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list. Strict explicit-key startup validation is available and enabled by the platform; it does not identify or approve this unresolved crypto iteration.",
       "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
       "references": [
         "hash",
@@ -505,7 +505,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-11",
+          "scope": "related strict explicit-key startup guard; not an iteration assignment",
+          "trace": "afta-explicit-encryption-key.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "27a7c8ddf6099e5c724194a30a416d9d91344e87"
+        }
+      ]
     },
     {
       "row": 14,
@@ -514,7 +523,7 @@
       "optional": false,
       "status": "Definition or edition unresolved",
       "topic": "Cryptographic operation iteration",
-      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list. Strict explicit-key startup validation is available and enabled by the platform; it does not identify or approve this unresolved crypto iteration.",
       "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
       "references": [
         "hash",
@@ -524,7 +533,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-11",
+          "scope": "related strict explicit-key startup guard; not an iteration assignment",
+          "trace": "afta-explicit-encryption-key.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "27a7c8ddf6099e5c724194a30a416d9d91344e87"
+        }
+      ]
     },
     {
       "row": 15,
@@ -1518,7 +1536,7 @@
       "optional": false,
       "status": "Definition or edition unresolved",
       "topic": "Cryptographic operation iteration",
-      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list. Strict explicit-key startup validation is available and enabled by the platform; it does not identify or approve this unresolved crypto iteration.",
       "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
       "references": [
         "hash",
@@ -1528,7 +1546,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-11",
+          "scope": "related strict explicit-key startup guard; not an iteration assignment",
+          "trace": "afta-explicit-encryption-key.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "27a7c8ddf6099e5c724194a30a416d9d91344e87"
+        }
+      ]
     },
     {
       "row": 66,
@@ -1537,7 +1564,7 @@
       "optional": true,
       "status": "Definition or edition unresolved",
       "topic": "Cryptographic operation iteration",
-      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list.",
+      "observation": "Password hashing, token hashing and field encryption are code candidates; the four numbered iterations are not defined in the supplied list. Strict explicit-key startup validation is available and enabled by the platform; it does not identify or approve this unresolved crypto iteration.",
       "gap_and_acceptance": "For this particular iteration, obtain operation, approved algorithm, mode, key size, standard and provider requirements; then map and test the matching operation. Do not assign an iteration to a feature by guesswork.",
       "references": [
         "hash",
@@ -1547,7 +1574,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-11",
+          "scope": "related strict explicit-key startup guard; not an iteration assignment",
+          "trace": "afta-explicit-encryption-key.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "27a7c8ddf6099e5c724194a30a416d9d91344e87"
+        }
+      ]
     },
     {
       "row": 67,

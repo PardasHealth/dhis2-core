@@ -85,3 +85,5 @@ an open gap's status.
 - [11 November: optional external broker TLS and code trace](afta-external-broker-tls.md).
 
 - [11 November: current account state during MFA login](afta-account-state-freshness.md).
+
+- [11 November: explicit encryption-key startup guard](afta-explicit-encryption-key.md).

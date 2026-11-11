@@ -1,0 +1,167 @@
+{
+  "date": "2026-11-11",
+  "baseline_core_commit": "fe329e815c008807037c74936cba791b4e7f35dd",
+  "implementation_commit": "27a7c8ddf6099e5c724194a30a416d9d91344e87",
+  "scope": "G-13 explicit encryption-key startup guard, enabled by platform using retained key. Related AFTA crypto iterations remain undefined; no operation/algorithm approval assigned.",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "0991b2b0efdafca43ed80b4974c9c708cd32c1985f151a8f73577a6386f0c037",
+    "dhis-2/dhis-support/dhis-support-external/src/main/java/org/hisp/dhis/external/conf/ConfigurationKey.java": "174ed11fe7b4f10020fcbd90f3ac5d233279c11d05a7983c367e326b00fda0d0",
+    "dhis-2/dhis-support/dhis-support-hibernate/src/main/java/org/hisp/dhis/config/HibernateEncryptionConfig.java": "f32e341529b99e8dbfa9c20cad652373c862ca731a932a279a5cbb9006b4abed",
+    "dhis-2/dhis-support/dhis-support-hibernate/src/test/java/org/hisp/dhis/config/HibernateEncryptionPolicyTest.java": "361376fd63506a2434980e035d75cc1431681a7e4ae9e2045bc402e10c9f3f5f"
+  },
+  "platform_entrypoint_sha256": "f89034bace47fa9e4c56c8aa60f029a178f8b396c960e4ffdfe73cdaad5e740a",
+  "implementation": {
+    "flag": "encryption.require_explicit_password",
+    "core_default": "off to preserve legacy read compatibility",
+    "platform_selection": "on in generated configuration for both production and development",
+    "strict_rejection": "null/empty/whitespace-only password or exact built-in fallback value",
+    "retention": "Configured nondefault password is unchanged; no key generation/rotation or ciphertext rewrite occurs",
+    "crypto_changes": "none; existing AES and legacy encryptor algorithms/salt/provider configuration retained",
+    "schema_dependency_changes": "none"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.config.HibernateEncryptionPolicyTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 112,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "platform_verification": {
+    "unit_tests": {
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "shell_syntax": "passed for CLI/container/scripts",
+    "entrypoint_fixture": {
+      "runs": [
+        {
+          "mode": "production",
+          "attempt": 1,
+          "strict_setting": true,
+          "key_unchanged": true,
+          "secrets_not_printed": true,
+          "config_mode": "600",
+          "csrf_setting": "on"
+        },
+        {
+          "mode": "production",
+          "attempt": 2,
+          "strict_setting": true,
+          "key_unchanged": true,
+          "secrets_not_printed": true,
+          "config_mode": "600",
+          "csrf_setting": "on"
+        },
+        {
+          "mode": "development",
+          "attempt": 1,
+          "strict_setting": true,
+          "key_unchanged": true,
+          "secrets_not_printed": true,
+          "config_mode": "600",
+          "csrf_setting": "off"
+        },
+        {
+          "mode": "development",
+          "attempt": 2,
+          "strict_setting": true,
+          "key_unchanged": true,
+          "secrets_not_printed": true,
+          "config_mode": "600",
+          "csrf_setting": "off"
+        }
+      ],
+      "scope": "Actual entrypoint rendering with isolated fixture secrets and Java stand-in; not a real application start"
+    },
+    "runtime_fixture_image": "cached eclipse-temurin:21-jre-jammy; isolated network-none containers; synthetic secrets and Java stand-in, not real application startup"
+  },
+  "conditions": {
+    "java": "checksum-verified Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "repositories": "offline existing cache; source-built sms-compression 0.3.2 provenance caveat retained",
+    "jvm_options": "-Xmx2g -XX:TieredStopAtLevel=1",
+    "cipher_tests": "Compatibility-mode encryptors generate synthetic settings; strict encryptors with same explicit key read them and vice versa. AES test uses per-encryptor BouncyCastle provider; legacy test retains default provider. No site ciphertext migration is tested.",
+    "email": "existing fake sender; no SMTP delivery acceptance"
+  },
+  "build": {
+    "result": "success",
+    "profiles": "embedded,unit-test",
+    "skip_tests_during_package": true,
+    "skip_bundle_apps": true,
+    "browser_assets": "Existing unchanged assets reused; not a cold release/frontend build or browser acceptance",
+    "war_sha256": "d0468a90d1e6eacc4a8d5a345d5c5e8e76ddd29a45fcf613a812d03d6b091ba2",
+    "packaged_classes_match_compiled": [
+      "org/hisp/dhis/config/HibernateEncryptionConfig.class",
+      "org/hisp/dhis/external/conf/ConfigurationKey.class"
+    ],
+    "pdf_class_load_check": "passed",
+    "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
+  },
+  "commands": [
+    "mvn -o -B -ntp -pl dhis-support/dhis-support-hibernate,dhis-services/dhis-service-core -am -Punit-test -Dtest=HibernateEncryptionPolicyTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package",
+    "python3 -m unittest discover -s tests -v (platform)",
+    "bash -n dhis2 container/*.sh scripts/*.sh (platform)"
+  ],
+  "not_established": [
+    "Required AFTA crypto-iteration definitions or algorithm/provider approval",
+    "Legacy algorithm retirement, encrypted-field inventory or full health-data encryption",
+    "Site key rotation/re-encryption or backup restoration",
+    "Entropy/strength of an arbitrary supplied nondefault password",
+    "Full deployed application startup/browser acceptance",
+    "Hosted CI execution or fresh cold platform build"
+  ]
+}

@@ -27,12 +27,13 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ## Evidence and limits
 
-Encryption configuration, RSA key generation/loading and key publication are evidence candidates, not an approved cryptographic profile.
+Encryption configuration, RSA key generation/loading and key publication are evidence candidates, not an approved cryptographic profile. Strict encryption-key startup checks and unchanged-cipher compatibility tests are a related configuration guard; algorithms and selected operations still require approval.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
 - [PasswordManagerTest.java](../../../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/PasswordManagerTest.java)
 - [ApiKeyTokenGeneratorTest.java](../../../../dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiKeyTokenGeneratorTest.java)
+- [HibernateEncryptionPolicyTest.java](../../../../dhis-2/dhis-support/dhis-support-hibernate/src/test/java/org/hisp/dhis/config/HibernateEncryptionPolicyTest.java)
 
 Related boundary references, **not implementation coverage**:
 

@@ -4,7 +4,14 @@ Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: current account state during MFA login
+## Latest follow-up: explicit platform encryption key
+
+The platform now enables a core startup guard requiring a nonblank, non-default
+encryption password. Its existing secret is retained; no key rotation or
+ciphertext migration occurs. See the [key guard and migration limits](afta-explicit-encryption-key.md).
+The unknown AFTA crypto iterations remain unresolved; percentages do not change.
+
+## Earlier 11 November follow-up: current account state during MFA login
 
 The proof guard now rechecks the current stored password hash, disabled and
 external-only flags, and account expiry under its primary-row lock. See the

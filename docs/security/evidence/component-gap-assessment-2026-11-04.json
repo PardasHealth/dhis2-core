@@ -771,10 +771,11 @@
       ],
       "test_files": [
         "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/PasswordManagerTest.java",
-        "dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiKeyTokenGeneratorTest.java"
+        "dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiKeyTokenGeneratorTest.java",
+        "dhis-2/dhis-support/dhis-support-hibernate/src/test/java/org/hisp/dhis/config/HibernateEncryptionPolicyTest.java"
       ],
       "evidence": "[PasswordManagerTest](../../dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/PasswordManagerTest.java); [ApiKeyTokenGeneratorTest](../../dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiKeyTokenGeneratorTest.java); [Encryption source finding](common-criteria/crypto-and-two-factor-gaps.md#g-13-encryption-configuration-and-migration)",
-      "evidence_basis": "Encryption configuration, RSA key generation/loading and key publication are evidence candidates, not an approved cryptographic profile.",
+      "evidence_basis": "Encryption configuration, RSA key generation/loading and key publication are evidence candidates, not an approved cryptographic profile. Strict encryption-key startup checks and unchanged-cipher compatibility tests are a related configuration guard; algorithms and selected operations still require approval.",
       "gap_and_required_action": "Password/token/PBE/signing operations exist; complete approved algorithm/parameter/provider correspondence is missing, and a legacy 3DES bean remains configured. Inventory active usages and migrate safely under a selected profile.",
       "owner": "Security / platform / data migration owner",
       "gap_groups": [
