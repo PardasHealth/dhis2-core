@@ -70,6 +70,7 @@ public class TwoFactorReplayService {
     if (user == null
         || StringUtils.isBlank(user.getUid())
         || StringUtils.isBlank(user.getSecret())
+        || StringUtils.isBlank(user.getPassword())
         || StringUtils.isBlank(suppliedCode)) {
       return false;
     }
@@ -82,12 +83,22 @@ public class TwoFactorReplayService {
     // with updates to that row until this independent transaction commits.
     var authoritative =
         jdbcTemplate.query(
-            "select secret, twofactortype from userinfo where uid = ? for update",
-            (rs, row) -> secret.equals(rs.getString(1)) && type.name().equals(rs.getString(2)),
+            "select secret, twofactortype, password, disabled, externalauth, accountexpiry"
+                + " from userinfo where uid = ? for update",
+            (rs, row) ->
+                new CurrentLoginState(
+                    secret.equals(rs.getString(1))
+                        && type.name().equals(rs.getString(2))
+                        && user.getPassword().equals(rs.getString(3))
+                        && !rs.getBoolean(4)
+                        && !rs.getBoolean(5),
+                    rs.getTimestamp(6)),
             user.getUid());
-    if (authoritative.size() != 1 || !authoritative.get(0)) return false;
+    if (authoritative.size() != 1 || !authoritative.get(0).matches()) return false;
     // Capture time after waiting for the row lock, so waiting cannot prolong validity.
     long now = clock.getAsLong();
+    var accountExpiry = authoritative.get(0).accountExpiry();
+    if (accountExpiry != null && accountExpiry.getTime() <= now) return false;
     long expires;
     String challenge;
     if (type == TwoFactorType.EMAIL_ENABLED) {
@@ -122,6 +133,8 @@ public class TwoFactorReplayService {
             Math.addExact(expires, RETENTION_MILLIS))
         == 1;
   }
+
+  private record CurrentLoginState(boolean matches, java.sql.Timestamp accountExpiry) {}
 
   private static String fingerprint(String value) {
     try {

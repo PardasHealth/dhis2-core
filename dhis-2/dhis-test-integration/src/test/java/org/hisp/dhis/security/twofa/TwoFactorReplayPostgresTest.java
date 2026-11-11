@@ -50,6 +50,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -103,7 +105,8 @@ class TwoFactorReplayPostgresTest {
         "create role replay_writer login password 'isolated-writer-test-only' nosuperuser");
     admin.execute(
         "create table userinfo (uid varchar(11) primary key, secret text, twofactortype"
-            + " varchar(50))");
+            + " varchar(50), password text default 'fixture-password-hash', disabled boolean"
+            + " default false, externalauth boolean default false, accountexpiry timestamp)");
     admin.execute("grant select, update on userinfo to replay_writer");
     admin.execute("grant usage on schema public to replay_writer");
     admin.execute("grant select, insert, delete on usedtwofactorcode to replay_writer");
@@ -216,15 +219,24 @@ class TwoFactorReplayPostgresTest {
     assertFalse(newNode().consume(old, new Totp(seed).now()));
   }
 
-  @Test
-  void concurrentReplacementIsObservedAfterWaitingForUserRow() throws Exception {
+  @ParameterizedTest
+  @ValueSource(strings = {"secret", "password", "disabled", "externalauth", "accountexpiry"})
+  void concurrentSecurityChangeIsObservedAfterWaitingForUserRow(String field) throws Exception {
     var old = user(TwoFactorType.EMAIL_ENABLED, "123456|" + (System.currentTimeMillis() + 120_000));
     var worker = Executors.newSingleThreadExecutor();
     try (var updating = DATABASE.createConnection("")) {
       updating.setAutoCommit(false);
+      Object replacement =
+          switch (field) {
+            case "secret" -> "654321|" + (System.currentTimeMillis() + 120_000);
+            case "password" -> "replacement-password-hash";
+            case "disabled", "externalauth" -> true;
+            case "accountexpiry" -> new java.sql.Timestamp(System.currentTimeMillis() - 60_000);
+            default -> throw new IllegalArgumentException("Unexpected fixture field");
+          };
       try (var statement =
-          updating.prepareStatement("update userinfo set secret = ? where uid = ?")) {
-        statement.setString(1, "654321|" + (System.currentTimeMillis() + 120_000));
+          updating.prepareStatement("update userinfo set " + field + " = ? where uid = ?")) {
+        statement.setObject(1, replacement);
         statement.setString(2, old.getUid());
         statement.executeUpdate();
       }
@@ -262,6 +274,16 @@ class TwoFactorReplayPostgresTest {
     }
   }
 
+  @Test
+  void newPasswordSnapshotCanUseProofRejectedForTheOldPassword() {
+    var user =
+        user(TwoFactorType.EMAIL_ENABLED, "123456|" + (System.currentTimeMillis() + 120_000));
+    admin.update("update userinfo set password = ?", "replacement-password-hash");
+    assertFalse(newNode().consume(user, "123456"));
+    when(user.getPassword()).thenReturn("replacement-password-hash");
+    assertTrue(newNode().consume(user, "123456"));
+  }
+
   private UserDetails user(TwoFactorType type, String secret) {
     admin.update(
         "insert into userinfo (uid, secret, twofactortype) values (?, ?, ?)",
@@ -272,6 +294,7 @@ class TwoFactorReplayPostgresTest {
     when(user.getUid()).thenReturn("User1234567");
     when(user.getTwoFactorType()).thenReturn(type);
     when(user.getSecret()).thenReturn(secret);
+    when(user.getPassword()).thenReturn("fixture-password-hash");
     return user;
   }
 }

@@ -79,7 +79,8 @@ class TwoFactorReplayServiceTest {
             + " null)");
     jdbc.execute(
         "create table userinfo (uid varchar(11) primary key, secret text, twofactortype"
-            + " varchar(50))");
+            + " varchar(50), password text default 'fixture-password-hash', disabled boolean"
+            + " default false, externalauth boolean default false, accountexpiry timestamp)");
     transactions = new DataSourceTransactionManager(data);
     node = newNode();
   }
@@ -256,6 +257,59 @@ class TwoFactorReplayServiceTest {
     assertFalse(node.consume(old, codeAt(NOW)));
   }
 
+  @Test
+  void disabledAccountRejectsPreviouslyLoadedPrincipal() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set disabled = true");
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void externalOnlyAccountRejectsPreviouslyLoadedPasswordPrincipal() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set externalauth = true");
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void resetPasswordRejectsOldHashWithoutConsumingProofForFreshLogin() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set password = ?", "replacement-password-hash");
+    assertFalse(node.consume(old, codeAt(NOW)));
+    assertEquals(0, jdbc.queryForObject("select count(*) from usedtwofactorcode", Integer.class));
+    // A new provider-authenticated snapshot carries the new stored hash.
+    when(old.getPassword()).thenReturn("replacement-password-hash");
+    assertTrue(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void missingPasswordHashCannotUsePasswordLoginGuard() {
+    UserDetails old = totp("User1234567");
+    when(old.getPassword()).thenReturn(null);
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void expiredAccountRejectsEvenWhenFactorSnapshotMatches() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set accountexpiry = ?", new java.sql.Timestamp(NOW - 1));
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void accountExpiryIsExclusiveAtTheDeadline() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set accountexpiry = ?", new java.sql.Timestamp(NOW));
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void accountWithFutureExpiryRetainsNormalLogin() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set accountexpiry = ?", new java.sql.Timestamp(NOW + 1));
+    assertTrue(node.consume(old, codeAt(NOW)));
+  }
+
   private void assertSingleWinner(UserDetails user, String code) throws Exception {
     var start = new CountDownLatch(1);
     var workers = Executors.newFixedThreadPool(8);
@@ -315,6 +369,7 @@ class TwoFactorReplayServiceTest {
     when(user.getUid()).thenReturn(uid);
     when(user.getTwoFactorType()).thenReturn(type);
     when(user.getSecret()).thenReturn(secret);
+    when(user.getPassword()).thenReturn("fixture-password-hash");
     return user;
   }
 }
