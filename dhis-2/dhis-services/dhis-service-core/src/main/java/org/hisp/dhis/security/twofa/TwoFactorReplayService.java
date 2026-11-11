@@ -76,6 +76,17 @@ public class TwoFactorReplayService {
     String code = StringUtils.deleteWhitespace(suppliedCode);
     String secret = user.getSecret();
     TwoFactorType type = user.getTwoFactorType();
+    if (type != TwoFactorType.EMAIL_ENABLED && type != TwoFactorType.TOTP_ENABLED) return false;
+    // A principal may predate a replacement email challenge or factor reset. Read
+    // the primary row directly, bypassing ORM caches, and serialize consumption
+    // with updates to that row until this independent transaction commits.
+    var authoritative =
+        jdbcTemplate.query(
+            "select secret, twofactortype from userinfo where uid = ? for update",
+            (rs, row) -> secret.equals(rs.getString(1)) && type.name().equals(rs.getString(2)),
+            user.getUid());
+    if (authoritative.size() != 1 || !authoritative.get(0)) return false;
+    // Capture time after waiting for the row lock, so waiting cannot prolong validity.
     long now = clock.getAsLong();
     long expires;
     String challenge;

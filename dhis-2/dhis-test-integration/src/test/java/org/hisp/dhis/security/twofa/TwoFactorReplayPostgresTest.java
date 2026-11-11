@@ -101,6 +101,10 @@ class TwoFactorReplayPostgresTest {
     admin = new JdbcTemplate(data);
     admin.execute(
         "create role replay_writer login password 'isolated-writer-test-only' nosuperuser");
+    admin.execute(
+        "create table userinfo (uid varchar(11) primary key, secret text, twofactortype"
+            + " varchar(50))");
+    admin.execute("grant select, update on userinfo to replay_writer");
     admin.execute("grant usage on schema public to replay_writer");
     admin.execute("grant select, insert, delete on usedtwofactorcode to replay_writer");
     writer =
@@ -117,6 +121,7 @@ class TwoFactorReplayPostgresTest {
   void clearReplayState() {
     admin.execute("grant insert on usedtwofactorcode to replay_writer");
     admin.execute("delete from usedtwofactorcode");
+    admin.execute("delete from userinfo");
   }
 
   @Test
@@ -194,7 +199,75 @@ class TwoFactorReplayPostgresTest {
     }
   }
 
+  @Test
+  void committedReplacementRejectsStaleEmailSnapshot() {
+    var old = user(TwoFactorType.EMAIL_ENABLED, "123456|" + (System.currentTimeMillis() + 120_000));
+    admin.update(
+        "update userinfo set secret = ?", "654321|" + (System.currentTimeMillis() + 120_000));
+    assertFalse(newNode().consume(old, "123456"));
+    assertEquals(0, admin.queryForObject("select count(*) from usedtwofactorcode", Integer.class));
+  }
+
+  @Test
+  void committedFactorResetRejectsStaleTotpSnapshot() {
+    String seed = "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP";
+    var old = user(TwoFactorType.TOTP_ENABLED, seed);
+    admin.update("update userinfo set secret = null, twofactortype = null");
+    assertFalse(newNode().consume(old, new Totp(seed).now()));
+  }
+
+  @Test
+  void concurrentReplacementIsObservedAfterWaitingForUserRow() throws Exception {
+    var old = user(TwoFactorType.EMAIL_ENABLED, "123456|" + (System.currentTimeMillis() + 120_000));
+    var worker = Executors.newSingleThreadExecutor();
+    try (var updating = DATABASE.createConnection("")) {
+      updating.setAutoCommit(false);
+      try (var statement =
+          updating.prepareStatement("update userinfo set secret = ? where uid = ?")) {
+        statement.setString(1, "654321|" + (System.currentTimeMillis() + 120_000));
+        statement.setString(2, old.getUid());
+        statement.executeUpdate();
+      }
+      var attempt = worker.submit(() -> newNode().consume(old, "123456"));
+      boolean waiting = false;
+      long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
+      while (System.nanoTime() < deadline) {
+        waiting =
+            Boolean.TRUE.equals(
+                admin.queryForObject(
+                    "select exists (select 1 from pg_stat_activity where usename = 'replay_writer'"
+                        + " and wait_event_type = 'Lock')",
+                    Boolean.class));
+        if (waiting || attempt.isDone()) break;
+        Thread.sleep(20);
+      }
+      assertTrue(waiting, "consumption must wait for the concurrent primary-row update");
+      updating.commit();
+      assertFalse(attempt.get(10, TimeUnit.SECONDS));
+      assertEquals(
+          0, admin.queryForObject("select count(*) from usedtwofactorcode", Integer.class));
+    } finally {
+      worker.shutdownNow();
+    }
+  }
+
+  @Test
+  void unavailableAuthoritativeStateFailsClosed() {
+    var old = user(TwoFactorType.EMAIL_ENABLED, "123456|" + (System.currentTimeMillis() + 120_000));
+    admin.execute("revoke select on userinfo from replay_writer");
+    try {
+      assertThrows(DataAccessException.class, () -> newNode().consume(old, "123456"));
+    } finally {
+      admin.execute("grant select on userinfo to replay_writer");
+    }
+  }
+
   private UserDetails user(TwoFactorType type, String secret) {
+    admin.update(
+        "insert into userinfo (uid, secret, twofactortype) values (?, ?, ?)",
+        "User1234567",
+        secret,
+        type.name());
     UserDetails user = mock(UserDetails.class);
     when(user.getUid()).thenReturn("User1234567");
     when(user.getTwoFactorType()).thenReturn(type);

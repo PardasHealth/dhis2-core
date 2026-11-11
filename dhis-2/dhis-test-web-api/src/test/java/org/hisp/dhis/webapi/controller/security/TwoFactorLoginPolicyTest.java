@@ -47,14 +47,21 @@ import org.jboss.aerogear.security.otp.Totp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /** Checks login response semantics; HTTP 200 alone does not mean authentication succeeded. */
 @ContextConfiguration(classes = TwoFactorLoginPolicyTest.EmailFixture.class)
+// Use committed fixtures: the login guard reads primary state in REQUIRES_NEW.
+// PER_CLASS makes the project extension bind a session and empty the DB after the class.
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
   static class EmailFixture {
     @Bean("emailMessageSender")

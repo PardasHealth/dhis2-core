@@ -77,6 +77,9 @@ class TwoFactorReplayServiceTest {
     jdbc.execute(
         "create table usedtwofactorcode (codehash varchar(64) primary key, expires bigint not"
             + " null)");
+    jdbc.execute(
+        "create table userinfo (uid varchar(11) primary key, secret text, twofactortype"
+            + " varchar(50))");
     transactions = new DataSourceTransactionManager(data);
     node = newNode();
   }
@@ -223,6 +226,36 @@ class TwoFactorReplayServiceTest {
     assertFalse(newNode().consume(user, first));
   }
 
+  @Test
+  void replacedEmailChallengeRejectsStalePrincipalWithoutReservingIt() {
+    UserDetails old = email("User1234567", "123456|" + (NOW + 60_000));
+    UserDetails replacement = email("User1234567", "654321|" + (NOW + 90_000));
+    assertFalse(node.consume(old, "123456"));
+    assertEquals(0, jdbc.queryForObject("select count(*) from usedtwofactorcode", Integer.class));
+    assertTrue(node.consume(replacement, "654321"));
+  }
+
+  @Test
+  void changedTotpSeedRejectsStalePrincipal() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set secret = ?", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ");
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void changedFactorTypeRejectsStalePrincipal() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("update userinfo set twofactortype = ?", "ENROLLING_TOTP");
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
+  @Test
+  void deletedUserRejectsStalePrincipal() {
+    UserDetails old = totp("User1234567");
+    jdbc.update("delete from userinfo");
+    assertFalse(node.consume(old, codeAt(NOW)));
+  }
+
   private void assertSingleWinner(UserDetails user, String code) throws Exception {
     var start = new CountDownLatch(1);
     var workers = Executors.newFixedThreadPool(8);
@@ -268,6 +301,16 @@ class TwoFactorReplayServiceTest {
   }
 
   private UserDetails user(String uid, TwoFactorType type, String secret) {
+    jdbc.update(
+        "insert into userinfo (uid, secret, twofactortype) values (?, ?, ?) on conflict do nothing",
+        uid,
+        secret,
+        type == null ? null : type.name());
+    jdbc.update(
+        "update userinfo set secret = ?, twofactortype = ? where uid = ?",
+        secret,
+        type == null ? null : type.name(),
+        uid);
     UserDetails user = mock(UserDetails.class);
     when(user.getUid()).thenReturn(uid);
     when(user.getTwoFactorType()).thenReturn(type);

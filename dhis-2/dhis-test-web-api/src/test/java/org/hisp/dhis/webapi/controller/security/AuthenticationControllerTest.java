@@ -70,6 +70,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.session.HttpSessionCreatedEvent;
+import org.springframework.test.context.transaction.TestTransaction;
 
 /**
  * @author Morten Svanæs <msvanaes@dhis2.org>
@@ -438,13 +439,23 @@ class AuthenticationControllerTest extends AuthenticationApiTestBase {
   }
 
   private void loginWith2FACode(String code) {
-    JsonLoginResponse ok2FaCodeResponse =
-        POST(
-                "/auth/login",
-                "{'username':'admin','password':'district','twoFactorCode':'%s'}".formatted(code))
-            .content(HttpStatus.OK)
-            .as(JsonLoginResponse.class);
-    assertEquals("SUCCESS", ok2FaCodeResponse.getLoginStatus());
-    assertEquals("/", ok2FaCodeResponse.getRedirectUrl());
+    // The guard must see committed primary state, not an enclosing test's writes.
+    TestTransaction.flagForCommit();
+    TestTransaction.end();
+    try {
+      JsonLoginResponse ok2FaCodeResponse =
+          POST(
+                  "/auth/login",
+                  "{'username':'admin','password':'district','twoFactorCode':'%s'}".formatted(code))
+              .content(HttpStatus.OK)
+              .as(JsonLoginResponse.class);
+      assertEquals("SUCCESS", ok2FaCodeResponse.getLoginStatus());
+      assertEquals("/", ok2FaCodeResponse.getRedirectUrl());
+    } finally {
+      // These three MFA cases commit their fixtures; restore the usual empty DB
+      // isolation even on assertion failure, then resume Spring's rollback boundary.
+      doInTransaction(dbmsManager::emptyDatabase);
+      TestTransaction.start();
+    }
   }
 }
