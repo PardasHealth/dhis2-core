@@ -51,6 +51,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @ExtendWith(MockitoExtension.class)
 class ApiTokenAuthManagerTest {
   private static final String TOKEN_KEY = "test-token-hash";
+  private static final String OWNER_UID = "Owner123456";
 
   @Mock private ApiTokenService apiTokenService;
   @Mock private UserService userService;
@@ -63,11 +64,13 @@ class ApiTokenAuthManagerTest {
   void setUp() {
     manager = new ApiTokenAuthManager(apiTokenService, userService);
     User owner = new User();
+    owner.setUid(OWNER_UID);
     owner.setUsername("alice");
     token = new ApiToken();
     token.setCreatedBy(owner);
     token.setExpire(System.currentTimeMillis() + 60_000);
     user = mock(UserDetails.class);
+    lenient().when(user.getUid()).thenReturn(OWNER_UID);
     lenient().when(user.isEnabled()).thenReturn(true);
     lenient().when(user.isAccountNonLocked()).thenReturn(true);
     lenient().when(user.isAccountNonExpired()).thenReturn(true);
@@ -99,6 +102,7 @@ class ApiTokenAuthManagerTest {
     first.setDetails("first-request");
     first.setAuthenticated(true);
     UserDetails changedUser = mock(UserDetails.class);
+    lenient().when(changedUser.getUid()).thenReturn(OWNER_UID);
     doReturn(List.of(new SimpleGrantedAuthority("F_VIEW_EVENT")))
         .when(changedUser)
         .getAuthorities();
@@ -125,6 +129,34 @@ class ApiTokenAuthManagerTest {
     authenticate();
     when(userService.createUserDetailsByUsername("alice")).thenReturn(null);
     assertThrows(ApiTokenAuthenticationException.class, this::authenticate);
+  }
+
+  @Test
+  void rejectsDifferentAccountReturnedForOwnersUsername() {
+    authenticate();
+    // A stale owner name or a concurrent rename/reuse must never bind the token
+    // to the new holder of that name, even when that account is fully enabled.
+    when(user.getUid()).thenReturn("Other123456");
+    assertThrows(ApiTokenAuthenticationException.class, this::authenticate);
+  }
+
+  @Test
+  void rejectsOwnerWithoutStableIdentity() {
+    token.getCreatedBy().setUid(null);
+    assertThrows(ApiTokenAuthenticationException.class, this::authenticate);
+  }
+
+  @Test
+  void rejectsReloadedAccountWithoutStableIdentity() {
+    when(user.getUid()).thenReturn(null);
+    assertThrows(ApiTokenAuthenticationException.class, this::authenticate);
+  }
+
+  @Test
+  void renamedOwnerWithSameIdentityRetainsAccess() {
+    token.getCreatedBy().setUsername("renamed-alice");
+    when(userService.createUserDetailsByUsername("renamed-alice")).thenReturn(user);
+    assertSame(user, authenticate().getPrincipal());
   }
 
   @Test

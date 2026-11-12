@@ -78,7 +78,7 @@ public class ApiTokenAuthManager implements AuthenticationManager {
   }
 
   private UserDetails validateAndCreateUserDetails(User createdBy) {
-    if (createdBy == null) {
+    if (createdBy == null || createdBy.getUid() == null || createdBy.getUid().isBlank()) {
       throw new ApiTokenAuthenticationException(
           ApiTokenErrors.invalidToken("The API token does not have any owner."));
     }
@@ -87,7 +87,9 @@ public class ApiTokenAuthManager implements AuthenticationManager {
     // collections (e.g. User.userRoles) are accessible. This code can run on endpoints excluded
     // from open-session-in-view, where no Hibernate session is otherwise available.
     UserDetails userDetails = userService.createUserDetailsByUsername(createdBy.getUsername());
-    if (userDetails == null) {
+    // A username is mutable and can be reused by a different account. A current
+    // name lookup must never transfer the token to a different stable identity.
+    if (userDetails == null || !createdBy.getUid().equals(userDetails.getUid())) {
       throw new ApiTokenAuthenticationException(
           ApiTokenErrors.invalidToken("The API token owner does not exists."));
     }
