@@ -8,7 +8,11 @@
     "product_header": "Dhis2 محصول پردازش داده های سلامت پرداس",
     "organization_as_printed": "شرکت صنایع امنیت فضای تبادل اطلاعات صاایران-مرکز ارزیابی ایمنی و امنیتی",
     "visible_numeric_marker": "1234",
-    "visible_page_markers": ["9|54", "10|54", "11|54"],
+    "visible_page_markers": [
+      "9|54",
+      "10|54",
+      "11|54"
+    ],
     "content": "Selected requirement identifiers and Persian titles; no full normative clauses, extension definitions, crypto iteration assignments or policy parameters",
     "transcription_notes": "Number prefixes for entries 26, 53 and 80 are absent in the pasted text; existing source ordering is retained. Row 22 remains ITC.2.2 in the source and rows 80/81 repeat FIA_X509_EXT.1.1/Rev.",
     "trace": "docs/security/common-criteria/afta-source-provenance.md"
@@ -99,7 +103,7 @@
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java",
       "line": 61,
       "symbol": "public Authentication authenticate(",
-      "source_sha256": "3aaab76c71db6ea9f3618aebf3641b2bc0681d51dcdd102f5384212cead81c8d"
+      "source_sha256": "be9b3e43ee50dbd23837db71318d460c90ccab7ca0c67589cb2207d701741a97"
     },
     "userdetails": {
       "repository": "core",
@@ -1024,7 +1028,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Bind user attributes to a subject",
-      "observation": "PAT authentication returns a fresh authentication object using current owner details.",
+      "observation": "PAT authentication returns a fresh authentication object using current owner details. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
       "gap_and_acceptance": "Map the full selected attribute list and every subject type; PAT evidence alone does not cover browser, SSO, jobs or all sessions.",
       "references": [
         "token",
@@ -1034,7 +1038,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-12",
+          "scope": "PAT owner UID binding before accepting current account details",
+          "trace": "afta-token-owner-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        }
+      ]
     },
     {
       "row": 38,
@@ -1043,7 +1056,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Initial subject-binding rules",
-      "observation": "PAT authentication validates owner existence and account state before binding the principal.",
+      "observation": "PAT authentication validates owner existence and account state before binding the principal. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
       "gap_and_acceptance": "Verify the selected initial-association rules for every authentication/provider/session path.",
       "references": [
         "token"
@@ -1052,7 +1065,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-12",
+          "scope": "PAT owner UID binding before accepting current account details",
+          "trace": "afta-token-owner-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        }
+      ]
     },
     {
       "row": 39,
@@ -1061,7 +1083,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Changes to subject attributes",
-      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot.",
+      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
       "gap_and_acceptance": "Demonstrate the selected update/revocation timing for browser/SSO subjects, background jobs and multiple nodes.",
       "references": [
         "token",
@@ -1071,7 +1093,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-12",
+          "scope": "PAT owner UID binding before accepting current account details",
+          "trace": "afta-token-owner-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        }
+      ]
     },
     {
       "row": 40,
@@ -1910,5 +1941,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-11"
+  "last_update_date": "2026-11-12"
 }

@@ -11,6 +11,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 | Review question | Document |
 | --- | --- |
 | Which AFTA gaps have implementation changes? | [Remediation progress](afta-remediation-progress.md), [login replay protection and upgrade notes](afta-login-replay-protection.md) |
+| How are API tokens bound to their owner? | [PAT owner UID validation, regressions and evidence](afta-token-owner-binding.md) |
 | What is the result for the user-selected AFTA list? | [Selected AFTA requirements, gaps and percentages](afta-selected-requirements-review.md) |
 | How does each selected AFTA row trace to code, tests and dated evidence? | [AFTA-only traceability register](afta-requirement-traceability.md), [CSV](afta-requirement-traceability.csv), [current work and blockers](afta-gap-remediation-2026-11-12.md) |
 | What source excerpt identifies the selected list? | [AFTA source provenance and transcription limits](afta-source-provenance.md) |

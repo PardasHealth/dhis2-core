@@ -1,8 +1,17 @@
 # AFTA remediation implementation progress
 
-Updated: **11 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **12 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
+
+## Latest follow-up: stable PAT owner binding
+
+Rows 37–39 now have a concrete identity-binding fix: a token's reloaded account
+must have the same stable UID as its owner. Missing or mismatched identities
+reject; a legitimate rename retains access. Three baseline denial assertions
+failed before the fix; all 23 targeted manager/resolver cases pass after it.
+See the [code, tests, execution evidence and remaining boundaries](afta-token-owner-binding.md).
+The selected rows remain partial; full checklist percentages do not change.
 
 ## Latest follow-up: stable pending TOTP QR reads
 

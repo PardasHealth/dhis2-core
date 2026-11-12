@@ -9,8 +9,8 @@ only. Preserve all 82 source rows, the row 80/81 duplicate and optional rows
 The [requirement traceability register](afta-requirement-traceability.md) and
 [CSV](afta-requirement-traceability.csv) connect each original row to its existing
 code or boundary references, remaining acceptance work and explicitly linked
-implementation follow-ups. Six rows have follow-up execution records linked in
-the checklist: 13, 14, 36, 47, 65 and 66. The crypto iteration references remain
+implementation follow-ups. Nine rows have follow-up execution records linked in
+the checklist: 13, 14, 36–39, 47, 65 and 66. The crypto iteration references remain
 boundary context; their definitions remain unresolved. Other rows explicitly
 show that item-specific execution evidence is not linked in this register;
 this does not mean the repository contains no related tests or evidence.
@@ -31,6 +31,12 @@ omitted from that CI command. This fixes a regression-coverage gap for enrollmen
 and its audit behavior; it is not a new authentication implementation.
 
 ## Verification performed in this follow-up
+
+The subsequent [PAT owner-binding fix](afta-token-owner-binding.md) adds runtime
+protection for selected rows 37–39. It reproduced three failed denial assertions
+on the preceding implementation and passes 23 targeted Java cases after the fix.
+The no-new-Java-execution statement below describes the earlier traceability-only
+phase, not that subsequent implementation record.
 
 From the repository root:
 

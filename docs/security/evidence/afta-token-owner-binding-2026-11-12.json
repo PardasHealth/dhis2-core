@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-12",
+  "scope": "Selected AFTA rows 37–39, FIA_USB.1.1/1.2/1.3: stable PAT owner binding only; no full requirement closure",
+  "baseline_core_commit": "7fc7f90114",
+  "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "be9b3e43ee50dbd23837db71318d460c90ccab7ca0c67589cb2207d701741a97",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b"
+  },
+  "baseline_regression": {
+    "production_source": "7fc7f90114",
+    "test_source": "New ApiTokenAuthManagerTest at the recorded source hash",
+    "counts": {
+      "tests": 16,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0
+    },
+    "failed_cases": [
+      "rejectsReloadedAccountWithoutStableIdentity",
+      "rejectsOwnerWithoutStableIdentity",
+      "rejectsDifferentAccountReturnedForOwnersUsername"
+    ],
+    "interpretation": "Three expected-denial assertions accepted an identity mismatch or missing owner/loaded UID. Component regression reproduction, not a deployed exploit."
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "conditions": {
+    "java": "Checksum-verified Eclipse Temurin 17.0.17+10; system Java trust store, TLS verification retained",
+    "maven": "3.9.11",
+    "profile": "unit-test",
+    "database": "None; account/token service mocks, real manager and resolver",
+    "dependency_provenance": "JitPack denied; unchanged dhis2/sms-compression 0.3.2 tag 74f6bbcabce84ae47df21c966ba00dba5a4217d6 compiled and tested from GitHub using a temporary Maven descriptor matching build.gradle, then installed only into the local cache. Not asserted binary-identical to the JitPack artifact. Same workaround as existing verification record.",
+    "sms_build_log_sha256": "d645b6e592b6afc79a84146439225b83e0d7e102a169ccfda1dd08f1f7081f9f"
+  },
+  "commands": [
+    "mvn -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenAuthManagerTest -Dsurefire.failIfNoSpecifiedTests=false test (baseline source, with new test; exit 1, three assertion failures)",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenAuthManagerTest,ApiTokenResolverTest -Dsurefire.failIfNoSpecifiedTests=false test (patched source; exit 0)"
+  ],
+  "not_established": [
+    "Full AFTA element definitions, attribute inventory or independent approval",
+    "Real database username-reuse/cache-race exploit",
+    "Browser/SSO/job/session revocation or every provider/multi-node ordering",
+    "Hosted GitHub Actions run or production deployment acceptance"
+  ]
+}
