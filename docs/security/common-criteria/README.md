@@ -12,6 +12,8 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 | --- | --- |
 | Which AFTA gaps have implementation changes? | [Remediation progress](afta-remediation-progress.md), [login replay protection and upgrade notes](afta-login-replay-protection.md) |
 | What is the result for the user-selected AFTA list? | [Selected AFTA requirements, gaps and percentages](afta-selected-requirements-review.md) |
+| How does each selected AFTA row trace to code, tests and dated evidence? | [AFTA-only traceability register](afta-requirement-traceability.md), [CSV](afta-requirement-traceability.csv), [current work and blockers](afta-gap-remediation-2026-11-12.md) |
+| What source excerpt identifies the selected list? | [AFTA source provenance and transcription limits](afta-source-provenance.md) |
 | What should management know? | [Plain-language gap report](management-gap-report.md) |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
 | Which code covers a key such as `FMT_MSA.3`? | [Component-to-code index](../common-criteria-component-code-index.md), [CSV](../common-criteria-component-code-index.csv), [199 individual component pages and exclusions](component-traces/README.md), [detailed FMT_MSA.3 element trace](component-traces/FMT_MSA.3.md) |

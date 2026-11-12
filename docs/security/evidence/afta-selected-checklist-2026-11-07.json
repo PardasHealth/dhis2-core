@@ -2,6 +2,17 @@
   "review_date": "2026-11-07",
   "source_identified_by_user": "AFTA",
   "source_document_version": null,
+  "source_provenance": {
+    "received_date": "2026-11-12",
+    "medium": "User-supplied text excerpt in this chat; original PDF not supplied",
+    "product_header": "Dhis2 محصول پردازش داده های سلامت پرداس",
+    "organization_as_printed": "شرکت صنایع امنیت فضای تبادل اطلاعات صاایران-مرکز ارزیابی ایمنی و امنیتی",
+    "visible_numeric_marker": "1234",
+    "visible_page_markers": ["9|54", "10|54", "11|54"],
+    "content": "Selected requirement identifiers and Persian titles; no full normative clauses, extension definitions, crypto iteration assignments or policy parameters",
+    "transcription_notes": "Number prefixes for entries 26, 53 and 80 are absent in the pasted text; existing source ordering is retained. Row 22 remains ITC.2.2 in the source and rows 80/81 repeat FIA_X509_EXT.1.1/Rev.",
+    "trace": "docs/security/common-criteria/afta-source-provenance.md"
+  },
   "baseline_core_commit": "09441194f9c4043838f85b22c276d5f894dba67f",
   "baseline_platform_commit": "e3b18d0e2572e70b85a9cb4a64ac6a38de7adc85",
   "scoring": "One unique supplied identifier/iteration per item; duplicate preserved but counted once; only rows 63,64,66 explicitly optional; no partial-credit compliance score.",

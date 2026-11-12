@@ -28,6 +28,19 @@ permissions:
   contents: read
 
 jobs:
+  afta-traceability:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate selected AFTA checklist and evidence traces
+        run: |
+          python3 docs/security/tools/render_afta_selected_review.py --check
+          python3 docs/security/tools/render_afta_traceability.py --check
+          python3 -m unittest discover -s docs/security/tools -p 'test_afta_traceability.py'
+
   audit-postgres:
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -156,7 +169,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
-            -Dtest=TwoFactorReplayServiceTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,TwoFactorQrStabilityTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
+            -Dtest=TwoFactorReplayServiceTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,TwoFactorQrStabilityTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify required authentication and web reports actually executed
         working-directory: dhis-2
@@ -169,6 +182,8 @@ jobs:
               "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
               "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
               "org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest",
+              "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+              "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
               "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
