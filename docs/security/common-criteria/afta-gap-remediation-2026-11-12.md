@@ -47,6 +47,11 @@ hosted CI result, deployed browser acceptance or full AFTA item closure is
 claimed. CI must actually execute the newly selected existing suites and retain
 their XML reports before new regression evidence can be recorded.
 
+The workflow now also runs on pushes to the `work` branch. Previously its
+pull-request/manual-only triggers meant that publishing directly to `work`
+did not automatically collect regression evidence. Enabling this trigger does
+not itself establish a successful hosted run.
+
 ## Remaining requirements and blockers
 
 The primary work list remains 78 unique entries not explicitly optional:
