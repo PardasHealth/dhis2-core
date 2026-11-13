@@ -166,7 +166,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=AuditControllerPagingTest,TwoFactorAuthenticationPolicyTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=AuditControllerPagingTest,TwoFactorAuthenticationPolicyTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify authentication and session web regressions with H2
         working-directory: dhis-2
@@ -191,6 +191,7 @@ jobs:
               "org.hisp.dhis.security.twofa.TwoFactorReplayServiceTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
               "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+              "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
               "org.hisp.dhis.webapi.filter.CspFilterTest",
               "org.hisp.dhis.webapi.filter.LoginConfigCorsFilterTest",
               "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
