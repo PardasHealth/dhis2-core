@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-13",
+  "scope": "Selected AFTA rows 16, 17 and 19, FDP_ACF.1.1/1.2/1.4: token IP attribute source and allow/deny enforcement only",
+  "baseline_core_commit": "22c2c5ba0a",
+  "implementation_commit": "e7035884301d1ade648bf5424f560c539df128e2",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java": "6a1d2b41f35f87dfbdfe2e24fb3da67b6d3b415dceef9162ba46ba439ab52c43",
+    ".github/workflows/cc-audit-regression.yml": "1fed874b6a000ee501e8366363788e9fbf4737dfab3898eacf46d9a94f5baecc",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "0ab52b41fbb57ae3d4c9e2bd3acfecc6aaea6ef39cad77eb5677855ccd2e428d",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/controller/AuditControllerPagingTest.java": "363a886c1a1d866d2accd56679afad7dba1e2572254bc7305485bc0274bdbd12"
+  },
+  "baseline_regression": {
+    "counts": {
+      "tests": 7,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    },
+    "failed_cases": [
+      "spoofedForwardedAddressCannotSatisfyAnIpConstraint",
+      "rawForwardedHeaderCannotOverrideAllowedServletAddress"
+    ],
+    "interpretation": "A client-supplied X-Forwarded-For satisfied a token IP rule despite a disallowed remote address; another raw header wrongly rejected an allowed servlet address. Servlet-filter reproduction with mocked token/account authentication, not evidence of exploitation in a deployed network."
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.AuditControllerPagingTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 37,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "implementation": {
+    "address_source": "HttpServletRequest.getRemoteAddr(), not a raw X-Forwarded-For header",
+    "proxy_contract": "Any client-address rewriting must be performed by a container/proxy integration that validates trusted proxy peers and sanitizes forwarding headers; application code does not establish that deployment trust.",
+    "compatibility": "IP-constrained tokens behind a proxy can be denied until trusted servlet address resolution is configured. Adding a shared proxy IP allows all clients arriving through that proxy. Tokens without IP constraints retain existing behavior.",
+    "other_rules": "Method/referrer rules and owner/token validation remain; method-denial interaction tested"
+  },
+  "conditions": {
+    "java": "Eclipse Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "profile": "unit-test",
+    "test_boundary": "Real servlet filter, API-token resolver/checksum/hash and security-context handling; mocked token/account manager, failure entry point, event publisher and filter chain. No external HTTP requests.",
+    "dependencies": "Offline existing Maven cache, retaining the unchanged sms-compression 0.3.2 source-build caveat from afta-token-owner-binding-2026-11-12.json."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenIpConstraintTest -Dsurefire.failIfNoSpecifiedTests=false test (baseline exit 1: 7 cases, 2 failures)",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenIpConstraintTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,AuditControllerPagingTest -Dsurefire.failIfNoSpecifiedTests=false test (patched exit 0: 37 passed)"
+  ],
+  "not_established": [
+    "Trusted proxy configuration or deployed end-to-end client-address provenance",
+    "All access-control attributes, data types, subjects or AFTA selected policies",
+    "Spoof-resistant IP handling in unrelated login/audit/lockout helpers",
+    "Application-wide session or authentication behavior",
+    "Hosted CI results, production acceptance or full requirement closure"
+  ]
+}

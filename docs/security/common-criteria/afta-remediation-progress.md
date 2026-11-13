@@ -11,6 +11,16 @@ identities, handles optional details without unsafe casts, and escapes supplied
 line/field boundaries consistently. See the [audit-field trace and remaining
 storage/policy limits](afta-authentication-audit-records.md).
 
+## 13 November follow-up: token IP constraints and raw forwarding headers
+
+Rows 16, 17 and 19 have a concrete access-control fix: token IP rules now use
+the servlet remote address rather than trusting raw `X-Forwarded-For`. Two
+baseline assertions reproduce the header-trust defect; all 37 targeted
+filter/token/audit-review cases pass with the fix. Proxy deployments need trusted
+server-side client-address resolution before accepting IP-constrained tokens.
+See the [implementation, compatibility notes and execution evidence](afta-token-ip-constraints.md).
+The selected rows remain partial.
+
 ## 13 November follow-up: audit-review paging and optional filters
 
 Selected rows 4, 5 and 7 have two concrete controller fixes: requested paging

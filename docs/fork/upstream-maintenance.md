@@ -18,9 +18,10 @@ these are test-isolation changes, not relaxed successful-login expectations.
 Maven POMs, bundled app versions, dependency declarations, repository identity,
 existing branches and remote URLs are unchanged.
 
-Existing upstream production edits affect nine classes: the PAT manager, audit
+Existing upstream production edits affect eleven classes: the PAT manager, audit
 scheduler, two-factor provider, OTP utility, Artemis configuration, configuration
-key catalog, Hibernate encryption configuration the two-factor QR controller and authentication event logger. The replay and broker-TLS follow-ups add three small internal classes
+key catalog, Hibernate encryption configuration the two-factor QR controller, authentication event logger, audit-review controller
+and API-token request filter. The replay and broker-TLS follow-ups add three small internal classes
 and one additive fork-specific repeatable migration.
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:

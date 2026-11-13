@@ -398,7 +398,7 @@ remain open. Checklist dispositions are unchanged.
 
 The [audit-field trace](common-criteria/afta-authentication-audit-records.md) and
 [evidence inventory](evidence/afta-authentication-audit-records-2026-11-13.json)
-record 167 passing combined audit, token, review and authentication/API checks. A
+record 174 passing combined audit, token, review and authentication/API checks. A
 14-case prior-listener subset reproduces 13 failures; the final audit suite has
 15 passing cases. The 12 November token-owner/traceability changes are preserved.
 WAR/listener/token-manager byte identity and PDF checks pass. Required-event

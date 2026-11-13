@@ -48,16 +48,19 @@ remain stable.
 
 ## Regression verification
 
-**167 combined checks pass, with no failures, errors or skips:** 15 audit-message,
-21 provider-policy, 23 token manager/resolver, seven audit-review and 101 H2 authentication/API cases.
+**174 combined checks pass, with no failures, errors or skips:** 15 audit-message,
+21 provider-policy, 23 token manager/resolver, seven token-IP, seven audit-review and 101 H2 authentication/API cases.
 A preceding 14-case listener subset reproduced 13 failures on the original code;
 an extra compatibility case preserves attempted OIDC identities in the final
 15-case suite. Counts overlap earlier inventories and are not added to them.
-WAR packaging, packaged listener/token-manager identity and PDF checks pass using
+WAR packaging, packaged listener/token-manager/controller/filter identity and PDF checks pass using
 existing browser assets. The newer 12 November token-owner and traceability
 commits and the later audit-review paging fix are preserved. The latter
 seven-case suite was rerun after integration; duplicate executions are not
-counted twice.
+counted twice. The later servlet-address token-IP fix is also preserved; its seven
+unit cases and the 13 H2 token cases passed after integration. Token enforcement
+uses the servlet remote address; logger forwarded-address context remains
+untrusted without controlled ingress.
 
 [AuthenticationAuditRecordTest](../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java)
 captures actual emitted log messages. Cases cover failure addresses/reasons,

@@ -43,7 +43,6 @@ import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.security.apikey.IpAllowedList;
 import org.hisp.dhis.security.apikey.MethodAllowedList;
 import org.hisp.dhis.security.apikey.RefererAllowedList;
-import org.hisp.dhis.util.ObjectUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
@@ -60,8 +59,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * @author Morten Svanæs <msvanaes@dhis2.org>
  */
 public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
-  private static final String HEADER_FORWARDED_FOR = "X-Forwarded-For";
-
   private final ApiTokenResolver apiTokenResolver = new ApiTokenResolver();
 
   private final AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource =
@@ -189,9 +186,9 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
   private void validateIp(
       HttpServletRequest request, List<String> errors, IpAllowedList attribute) {
     if (!attribute.getAllowedIps().isEmpty()) {
-      String requestRemoteAddr =
-          ObjectUtils.firstNonNull(
-              request.getHeader(HEADER_FORWARDED_FOR), request.getRemoteAddr());
+      // Forwarded headers are client input unless a trusted container/proxy
+      // integration validates them and rewrites the servlet remote address.
+      String requestRemoteAddr = request.getRemoteAddr();
 
       if (!attribute.getAllowedIps().contains(requestRemoteAddr)) {
         errors.add("Failed to authenticate API token, request ip address is not allowed.");
