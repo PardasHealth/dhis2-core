@@ -279,6 +279,13 @@
       "line": 138,
       "symbol": "public void generateQRCode(",
       "source_sha256": "2aeb815a17a0155d34dc087cad19341bc5d7e7d47df889789cad3c1a6cf5b67a"
+    },
+    "auditweb": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/AuditController.java",
+      "line": 228,
+      "symbol": "public RootNode getTrackedEntityAudit(",
+      "source_sha256": "37fe66662af4e46130041d80078d5e442a8c3c4df387caf48cf4cb6c15f6ad0d"
     }
   },
   "rows": [
@@ -346,16 +353,26 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Read audit records",
-      "observation": "JdbcAuditRepository.query provides a record retrieval path.",
+      "observation": "JdbcAuditRepository.query provides a record retrieval path. Tracked-entity audit review now forwards page bounds and returns matching pager metadata; explicit unpaged requests omit the pager/count, and an omitted optional entity filter no longer throws. Controller tests preserve entity/user/operation/date/field selections.",
       "gap_and_acceptance": "Identify authorized reviewer roles and prove all selected records can be retrieved through authorized interfaces.",
       "references": [
-        "auditquery"
+        "auditquery",
+        "auditweb"
       ],
       "source_key": "FAU_SAR.1.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "tracked-entity audit-review paging and optional filter correctness",
+          "trace": "afta-audit-review-paging.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "efc15293821dcd9469160173abf8fcae3a02a05a"
+        }
+      ]
     },
     {
       "row": 5,
@@ -364,16 +381,26 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Understand audit records",
-      "observation": "Audit query mapping exposes structured records.",
+      "observation": "Audit query mapping exposes structured records. Tracked-entity audit review now forwards page bounds and returns matching pager metadata; explicit unpaged requests omit the pager/count, and an omitted optional entity filter no longer throws. Controller tests preserve entity/user/operation/date/field selections.",
       "gap_and_acceptance": "Confirm the AFTA readability requirement and demonstrate reviewer interpretation of required fields in the delivered review interface.",
       "references": [
-        "auditquery"
+        "auditquery",
+        "auditweb"
       ],
       "source_key": "FAU_SAR.1.2",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "tracked-entity audit-review paging and optional filter correctness",
+          "trace": "afta-audit-review-paging.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "efc15293821dcd9469160173abf8fcae3a02a05a"
+        }
+      ]
     },
     {
       "row": 6,
@@ -401,16 +428,26 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Search/filter audit records",
-      "observation": "JdbcAuditRepository builds audit queries and parameterized filters.",
+      "observation": "JdbcAuditRepository builds audit queries and parameterized filters. Tracked-entity audit review now forwards page bounds and returns matching pager metadata; explicit unpaged requests omit the pager/count, and an omitted optional entity filter no longer throws. Controller tests preserve entity/user/operation/date/field selections.",
       "gap_and_acceptance": "Specify the selected filter/sort criteria and demonstrate each combination and access restriction.",
       "references": [
-        "auditquery"
+        "auditquery",
+        "auditweb"
       ],
       "source_key": "FAU_SAR.3.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "tracked-entity audit-review paging and optional filter correctness",
+          "trace": "afta-audit-review-paging.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "efc15293821dcd9469160173abf8fcae3a02a05a"
+        }
+      ]
     },
     {
       "row": 8,
@@ -1941,5 +1978,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-12"
+  "last_update_date": "2026-11-13"
 }

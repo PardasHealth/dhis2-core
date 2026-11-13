@@ -1,10 +1,20 @@
 # AFTA remediation implementation progress
 
-Updated: **12 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **13 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: stable PAT owner binding
+## Latest follow-up: audit-review paging and optional filters
+
+Selected rows 4, 5 and 7 have two concrete controller fixes: requested paging
+now reaches the audit query and response metadata; omitting the optional entity
+filter no longer causes a null-pointer exception. Seven new cases reproduce six
+failed assertions and one error on the preceding controller. With the fixes,
+all 30 targeted audit-review and token cases pass. See the
+[code/test trace, dated evidence and remaining acceptance](afta-audit-review-paging.md).
+The rows remain partial; complete AFTA fit is not asserted.
+
+## Earlier 12 November follow-up: stable PAT owner binding
 
 Rows 37–39 now have a concrete identity-binding fix: a token's reloaded account
 must have the same stable UID as its owner. Missing or mismatched identities
