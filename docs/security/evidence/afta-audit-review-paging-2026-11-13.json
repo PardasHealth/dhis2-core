@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-13",
+  "scope": "Selected AFTA rows 4, 5 and 7: FAU_SAR.1.1, FAU_SAR.1.2, FAU_SAR.3.1; tracked-entity audit review paging and optional filter handling only",
+  "baseline_core_commit": "5f2db7205f",
+  "implementation_commit": "efc15293821dcd9469160173abf8fcae3a02a05a",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/AuditController.java": "37fe66662af4e46130041d80078d5e442a8c3c4df387caf48cf4cb6c15f6ad0d",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/controller/AuditControllerPagingTest.java": "363a886c1a1d866d2accd56679afad7dba1e2572254bc7305485bc0274bdbd12",
+    ".github/workflows/cc-audit-regression.yml": "c9fc8687c39c3d401e1ce507afb18d3fa1800cfd5b672f7aa2dd1bee1fcb5264",
+    "dhis-2/dhis-tracker/src/main/java/org/hisp/dhis/tracker/audit/HibernateTrackedEntityAuditStore.java": "fede85b1786623c68e28b636111c030456fa80d1dc3112f96764129982f9a4e9",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b"
+  },
+  "baseline_regression": {
+    "source": "AuditController from 5f2db7205f, temporarily restored and returned to the patched source in finally",
+    "counts": {
+      "tests": 7,
+      "failures": 6,
+      "errors": 1,
+      "skipped": 0
+    },
+    "failed_cases": [
+      "pagedReviewPreservesSelectionAndFieldFilters",
+      "skipPagingTrueOverridesPagingTrue",
+      "disablingPagingOmitsPagerAndCountQuery",
+      "defaultRequestBoundsTheQueryAndIncludesPager",
+      "requestedPageAndSizeReachTheAuditService",
+      "skipPagingFalseOverridesPagingFalse"
+    ],
+    "error_cases": [
+      "omittedOptionalEntityFilterDoesNotFailAuditReview"
+    ],
+    "interpretation": "Six paging/selection assertions fail; omitted optional trackedEntities throws NullPointerException. These are controller regressions, not a deployed exploit.",
+    "fixture_notes": "Initial paging fixtures also omitted trackedEntities, masking paging assertions with the second defect. Rebaseline uses explicit empty sets for paging cases and a separate omitted-filter test. Later edits only format the test source."
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.controller.AuditControllerPagingTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "implementation": {
+    "paging": "Construct a Pager only when PagerUtils says paging is enabled; attach it to query params before the read and include the corresponding response node",
+    "unpaged": "Explicit paging=false or skipPaging=true remains unpaged and omits the count query and response pager; existing skipPaging precedence is retained",
+    "optional_filter": "Normalize the optional trackedEntities set to empty before UID conversion",
+    "filters": "Entity, author, operation, date range and field selections remain forwarded",
+    "store_review": "Existing HibernateTrackedEntityAuditStore uses the forwarded Pager for setFirstResult/setMaxResults; it is reviewed source context, not exercised by these mocks"
+  },
+  "conditions": {
+    "java": "Eclipse Temurin 17.0.17+10",
+    "maven": "3.9.11",
+    "profile": "unit-test",
+    "isolation": "Real AuditController, node construction and PagerUtils; mocked query and field-filter services. No database, HTTP/browser or deployed authorization tests.",
+    "dependencies": "Offline existing Maven cache. Retains the local unchanged sms-compression 0.3.2 source-build caveat documented in afta-token-owner-binding-2026-11-12.json; no project dependency version changes."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=AuditControllerPagingTest -Dsurefire.failIfNoSpecifiedTests=false test (baseline: exit 1; 6 failures, 1 error)",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -B -ntp -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=AuditControllerPagingTest,ApiTokenAuthManagerTest,ApiTokenResolverTest -Dsurefire.failIfNoSpecifiedTests=false test (patched: exit 0; 30 passed)"
+  ],
+  "not_established": [
+    "Complete selected FAU_SAR clauses or evaluator approval",
+    "SQL execution, database query limits or deployed end-to-end response serialization",
+    "Authorization completeness or authorization-sensitive count totals",
+    "Application-wide resource bounds; explicit unpaged requests remain supported",
+    "Hosted CI results or production/browser acceptance"
+  ]
+}

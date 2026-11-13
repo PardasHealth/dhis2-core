@@ -11,6 +11,16 @@ identities, handles optional details without unsafe casts, and escapes supplied
 line/field boundaries consistently. See the [audit-field trace and remaining
 storage/policy limits](afta-authentication-audit-records.md).
 
+## 13 November follow-up: audit-review paging and optional filters
+
+Selected rows 4, 5 and 7 have two concrete controller fixes: requested paging
+now reaches the audit query and response metadata; omitting the optional entity
+filter no longer causes a null-pointer exception. Seven new cases reproduce six
+failed assertions and one error on the preceding controller. With the fixes,
+all 30 targeted audit-review and token cases pass. See the
+[code/test trace, dated evidence and remaining acceptance](afta-audit-review-paging.md).
+The rows remain partial; complete AFTA fit is not asserted.
+
 ## 12 November follow-up: stable PAT owner binding
 
 Rows 37–39 now have a concrete identity-binding fix: a token's reloaded account

@@ -243,24 +243,22 @@ public class AuditController {
 
     TrackedEntityAuditQueryParams params =
         new TrackedEntityAuditQueryParams()
-            .setTrackedEntities(UID.toValueList(trackedEntities))
+            .setTrackedEntities(UID.toValueList(emptyIfNull(trackedEntities)))
             .setUsers(user)
             .setAuditTypes(auditOperationTypes)
             .setStartDate(startDate)
             .setEndDate(endDate);
 
-    List<TrackedEntityAudit> teAudits;
     Pager pager = null;
 
-    if (PagerUtils.isSkipPaging(skipPaging, paging)) {
+    if (!PagerUtils.isSkipPaging(skipPaging, paging)) {
       int total = trackedEntityAuditService.getTrackedEntityAuditsCount(params);
 
       pager = new Pager(page, total, pageSize);
-
-      teAudits = trackedEntityAuditService.getTrackedEntityAudits(params);
-    } else {
-      teAudits = trackedEntityAuditService.getTrackedEntityAudits(params.setPager(pager));
     }
+
+    List<TrackedEntityAudit> teAudits =
+        trackedEntityAuditService.getTrackedEntityAudits(params.setPager(pager));
 
     RootNode rootNode = NodeUtils.createMetadata();
 

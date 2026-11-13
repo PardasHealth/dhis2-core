@@ -5,7 +5,7 @@
   "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425",
   "scope": "Selected AFTA rows 1-3 / FAU_GEN.1.1, FAU_GEN.1.2, FAU_GEN.2.1: authentication log fields and optional-detail robustness only; no full requirement approval",
   "source_sha256": {
-    ".github/workflows/cc-audit-regression.yml": "0ccf474b39dcce2dc2dde0f36fa5bd8bf33aaa4fcecab8adc8c8b1312c7758a2",
+    ".github/workflows/cc-audit-regression.yml": "0316cb56b9eb6db2f1efcaeac9d3037ee3cbc9126dad481c4b09d60f795c3f41",
     "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585",
     "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "6046860a5dcfb470cae890ba3be9bb268f753121dd3fd4f1b82506aa4606dc22",
     "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "6a50d80f4194dbba7c081f1474aab7eb255fd543edc104783edbad194d9bb10f",
@@ -20,7 +20,9 @@
     "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "be9b3e43ee50dbd23837db71318d460c90ccab7ca0c67589cb2207d701741a97",
     "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
     "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b",
-    "docs/security/tools/test_afta_traceability.py": "e3bf2a35f1cd532b6f5d38e06e219075c16885b44166b59dcbec92355caf5077"
+    "docs/security/tools/test_afta_traceability.py": "e3bf2a35f1cd532b6f5d38e06e219075c16885b44166b59dcbec92355caf5077",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/AuditController.java": "37fe66662af4e46130041d80078d5e442a8c3c4df387caf48cf4cb6c15f6ad0d",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/controller/AuditControllerPagingTest.java": "363a886c1a1d866d2accd56679afad7dba1e2572254bc7305485bc0274bdbd12"
   },
   "implementation": {
     "identity": "Known local OIDC/PAT username independent of detail type; preserve attempted OIDC name if no local name exists; Unicode preserved",
@@ -50,9 +52,11 @@
       "72cccc21c6",
       "7fc7f90114",
       "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7",
-      "5f2db7205ff1f267e5060fae230fa23b07c606a0"
+      "5f2db7205ff1f267e5060fae230fa23b07c606a0",
+      "efc15293821dcd9469160173abf8fcae3a02a05a",
+      "22c2c5ba0ac2133c2febe8f8ad7058bcc6246b60"
     ],
-    "details": "Fast-forwarded concurrent source-provenance/traceability/CI/token-owner fixes, then reapplied audit changes; preserved provenance and owner bindings. Revalidated five component element anchors/hashes for updated token manager."
+    "details": "Fast-forwarded concurrent source-provenance/traceability/CI/token-owner fixes, then reapplied audit changes; preserved provenance and owner bindings. Revalidated five component element anchors/hashes for updated token manager. Also merged the later audit-review paging/optional-filter fix and reran its seven cases plus the token suites. Prior auth suites cover unchanged authentication code."
   },
   "suites": [
     {
@@ -138,10 +142,17 @@
       "failures": 0,
       "errors": 0,
       "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.AuditControllerPagingTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
     }
   ],
   "totals": {
-    "tests": 160,
+    "tests": 167,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -160,10 +171,11 @@
     "skip_tests_during_package": true,
     "skip_bundle_apps": true,
     "browser_assets": "Existing unchanged assets reused; no cold frontend or deployed acceptance",
-    "war_sha256": "41436f0bd7dbf64e9a170516e8c783acb5c7a5d85c52a058b0d6e4cfc4b5ef91",
+    "war_sha256": "7bc2da03a8ab07a79a599cb6f4afc84a0c9f1c3a2d2172dcc6c609a02df6adb9",
     "packaged_classes_match_compiled": [
       "org/hisp/dhis/security/AuthenticationLoggerListener.class",
-      "org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.class"
+      "org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.class",
+      "org/hisp/dhis/webapi/controller/AuditController.class"
     ],
     "pdf_class_load_check": "passed",
     "openpdf_2_0_5_sha256": "831df8a643775410a1bd3566a9db7b2d3205c2aecbf1d077711ba7c315c07837"
@@ -173,7 +185,9 @@
     "mvn -o -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=AuthenticationAuditRecordTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
     "mvn -o -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenAuthManagerTest,ApiTokenResolverTest -Dsurefire.failIfNoSpecifiedTests=false test",
     "mvn -o -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorQrStabilityTest,TwoFactorReplayServiceTest,TwoFactorLoginPolicyTest,AuthenticationControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest -Dsurefire.failIfNoSpecifiedTests=false test",
-    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package"
+    "mvn -o -B -ntp -pl dhis-web-server -am -Pembedded,unit-test -DskipTests -Dskip.bundle.apps=true package",
+    "mvn -o -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=AuditControllerPagingTest,ApiTokenAuthManagerTest,ApiTokenResolverTest -Dsurefire.failIfNoSpecifiedTests=false test (after integrating later audit-review commits)",
+    "Repeat embedded package after the later audit-review merge; no unchanged test cases counted twice"
   ],
   "not_established": [
     "Full required event/field policy or independent AFTA approval",
