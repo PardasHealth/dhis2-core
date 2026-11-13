@@ -34,7 +34,6 @@ import static org.apache.commons.lang3.StringUtils.firstNonEmpty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
-import org.hisp.dhis.commons.util.TextUtils;
 import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.security.oidc.DhisOidcUser;
 import org.hisp.dhis.user.UserDetails;
@@ -59,7 +58,7 @@ public class AuthenticationLoggerListener
 
   @Override
   public void onApplicationEvent(AbstractAuthenticationEvent event) {
-    if (!log.isWarnEnabled()) {
+    if (!log.isInfoEnabled()) {
       return;
     }
 
@@ -71,8 +70,8 @@ public class AuthenticationLoggerListener
     if (event instanceof AuthenticationSwitchUserEvent switchUserEvent) {
       log.info(
           "Authentication event: AuthenticationSwitchUserEvent; username: {}; targetUser: {}",
-          switchUserEvent.getAuthentication().getName(),
-          switchUserEvent.getTargetUser().getUsername());
+          escapeLogField(switchUserEvent.getAuthentication().getName()),
+          escapeLogField(switchUserEvent.getTargetUser().getUsername()));
     }
 
     logAuthenticationEvent(event);
@@ -85,26 +84,26 @@ public class AuthenticationLoggerListener
     String ipAddress = "";
     String exceptionMessage = "";
 
-    if (event instanceof AbstractAuthenticationFailureEvent failureEvent) {
-      exceptionMessage = "exception: " + failureEvent.getException().getMessage();
-    } else if (authentication.getDetails()
-        instanceof ForwardedIpAwareWebAuthenticationDetails authDetails) {
-      ipAddress = formatIpAddress(authDetails.getIp());
-    } else if (authentication instanceof OAuth2LoginAuthenticationToken authenticationToken) {
-      authName = getUsernameFromPrincipal(authenticationToken.getPrincipal());
-      WebAuthenticationDetails oauthDetails =
-          (WebAuthenticationDetails) authenticationToken.getDetails();
-      ipAddress = formatIpAddress(oauthDetails.getRemoteAddress());
-    } else if (event.getSource() instanceof OAuth2AuthenticationToken authenticationToken) {
-      authName = getUsernameFromPrincipal(authenticationToken.getPrincipal());
-    } else if (event.getSource() instanceof ApiTokenAuthenticationToken authenticationToken) {
+    // Resolve identity independently of details and outcome. Never log token keys
+    // or serialize an authentication/principal object to obtain audit fields.
+    if (authentication instanceof OAuth2LoginAuthenticationToken authenticationToken) {
+      authName =
+          firstNonEmpty(getUsernameFromPrincipal(authenticationToken.getPrincipal()), authName);
+    } else if (authentication instanceof OAuth2AuthenticationToken authenticationToken) {
+      authName =
+          firstNonEmpty(getUsernameFromPrincipal(authenticationToken.getPrincipal()), authName);
+    } else if (authentication instanceof ApiTokenAuthenticationToken authenticationToken) {
       UserDetails principal = authenticationToken.getPrincipal();
-      if (principal != null) {
-        authName = principal.getUsername();
-      }
-      WebAuthenticationDetails apiTokenDetails =
-          (WebAuthenticationDetails) authenticationToken.getDetails();
-      ipAddress = formatIpAddress(apiTokenDetails.getRemoteAddress());
+      authName = principal == null ? "" : firstNonEmpty(principal.getUsername(), "");
+    }
+
+    if (authentication.getDetails() instanceof ForwardedIpAwareWebAuthenticationDetails details) {
+      ipAddress = formatIpAddress(details.getIp());
+    } else if (authentication.getDetails() instanceof WebAuthenticationDetails details) {
+      ipAddress = formatIpAddress(details.getRemoteAddress());
+    }
+    if (event instanceof AbstractAuthenticationFailureEvent failureEvent) {
+      exceptionMessage = "exception: " + escapeLogField(failureEvent.getException().getMessage());
     }
 
     logMessage(event, authName, ipAddress, exceptionMessage);
@@ -118,16 +117,49 @@ public class AuthenticationLoggerListener
     String eventClassName =
         String.format("Authentication event: %s; ", ClassUtils.getShortName(event.getClass()));
     String usernamePrefix =
-        StringUtils.isEmpty(authName) ? "" : String.format("username: %s; ", authName);
-    String msg =
-        TextUtils.removeNonEssentialChars(
-            eventClassName + usernamePrefix + ipAddress + exceptionMessage);
+        StringUtils.isEmpty(authName)
+            ? ""
+            : String.format("username: %s; ", escapeLogField(authName));
+    String msg = eventClassName + usernamePrefix + ipAddress + exceptionMessage;
 
     log.info(Strings.CS.removeEnd(msg.stripTrailing(), ";"));
   }
 
   private static String formatIpAddress(String ip) {
-    return String.format("ip: %s; ", ip);
+    return String.format("ip: %s; ", escapeLogField(ip));
+  }
+
+  // Preserve international identities while keeping each value inside one line
+  // and one semicolon-delimited field. Escape backslashes to avoid ambiguity.
+  private static String escapeLogField(String value) {
+    if (value == null) return "";
+    StringBuilder safe = new StringBuilder();
+    value
+        .codePoints()
+        .forEach(
+            c -> {
+              int type = Character.getType(c);
+              if (c == '\\'
+                  || c == ';'
+                  || c == '<'
+                  || c == '>'
+                  || c == '&'
+                  || c == '"'
+                  || Character.isISOControl(c)
+                  || type == Character.FORMAT
+                  || type == Character.LINE_SEPARATOR
+                  || type == Character.PARAGRAPH_SEPARATOR
+                  || type == Character.SURROGATE) {
+                String hex = Integer.toHexString(c);
+                int width = c > 0xffff ? 8 : 4;
+                safe.append(c > 0xffff ? "\\U" : "\\u");
+                for (int i = hex.length(); i < width; i++) safe.append('0');
+                safe.append(hex);
+              } else {
+                safe.appendCodePoint(c);
+              }
+            });
+    return safe.toString();
   }
 
   private static String getUsernameFromPrincipal(Object principal) {
