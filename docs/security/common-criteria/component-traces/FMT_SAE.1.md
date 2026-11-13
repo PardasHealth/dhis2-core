@@ -26,7 +26,7 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FMT_SAE.1.2
 
-**Partial source mapping.** [ApiTokenAuthManager.java:111](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L111): validateTokenExpiry rejects absent expiry and expiry at or before the current application clock before creating authenticated token state.
+**Partial source mapping.** [ApiTokenAuthManager.java:113](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L113): validateTokenExpiry rejects absent expiry and expiry at or before the current application clock before creating authenticated token state.
 
 **Open:** This traces rejection of expired personal access tokens only. Roles permitted to set expiry (.1), other security attributes and trusted time remain open.
 

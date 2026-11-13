@@ -21,7 +21,8 @@ class AftaTraceabilityTest(unittest.TestCase):
         self.assertEqual(81, sum(r['counted'] for r in rows))
         self.assertEqual([63, 64, 66], [r['row'] for r in rows if r['optional']])
         self.assertEqual(80, rows[80]['duplicate_of_row'])
-        self.assertEqual('No item-specific execution record linked', rows[0]['evidence_currency'])
+        self.assertIn('afta-authentication-audit-records-2026-11-13.json', rows[0]['dated_evidence'])
+        self.assertNotEqual('No item-specific execution record linked', rows[0]['evidence_currency'])
 
     def test_missing_execution_record_is_rejected(self):
         with self.assertRaisesRegex(ValueError, 'Missing dated evidence'):

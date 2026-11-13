@@ -11,8 +11,8 @@ See the [component gap assessment](../../common-criteria-gap-assessment.md), [ve
 | Component | Trace depth |
 | --- | --- |
 | [FAU_ARP.1](FAU_ARP.1.md) — Security alarms | Boundary/artifact references; element mapping open |
-| [FAU_GEN.1](FAU_GEN.1.md) — Audit data generation | Component code candidates; element mapping open |
-| [FAU_GEN.2](FAU_GEN.2.md) — User identity association | Component code candidates; element mapping open |
+| [FAU_GEN.1](FAU_GEN.1.md) — Audit data generation | Partial element mappings; remaining elements open |
+| [FAU_GEN.2](FAU_GEN.2.md) — User identity association | Partial element mappings; remaining elements open |
 | [FAU_SAA.1](FAU_SAA.1.md) — Potential violation analysis | Boundary/artifact references; element mapping open |
 | [FAU_SAA.2](FAU_SAA.2.md) — Profile based anomaly detection | Boundary/artifact references; element mapping open |
 | [FAU_SAA.3](FAU_SAA.3.md) — Simple attack heuristics | Boundary/artifact references; element mapping open |

@@ -31,9 +31,9 @@
     "authlog": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java",
-      "line": 61,
+      "line": 60,
       "symbol": "public void onApplicationEvent(",
-      "source_sha256": "2fc99f4be60a683ea419b80a811cf9105552712a94d3b8a8f171920de4f89b66"
+      "source_sha256": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585"
     },
     "auditquery": {
       "repository": "core",
@@ -289,7 +289,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit events",
-      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events.",
+      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome.",
       "gap_and_acceptance": "Select the AFTA event list, including audit start/stop and security actions; exercise every required event.",
       "references": [
         "auditgen",
@@ -299,7 +299,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "authentication message fields and robust optional detail handling",
+          "trace": "afta-authentication-audit-records.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        }
+      ]
     },
     {
       "row": 2,
@@ -308,7 +317,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit record fields",
-      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths.",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls.",
       "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
       "references": [
         "auditquery",
@@ -318,7 +327,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "authentication message fields and robust optional detail handling",
+          "trace": "afta-authentication-audit-records.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        }
+      ]
     },
     {
       "row": 3,
@@ -327,7 +345,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Link events to users",
-      "observation": "Selected authentication events and audit data carry user identity.",
+      "observation": "Selected authentication events and audit data carry user identity. Known local OIDC/PAT identity is resolved independently of details. Attempted names remain available when no local OIDC identity is known; token keys and credentials are not serialized.",
       "gap_and_acceptance": "Demonstrate attribution for every required event, including failed authentication, jobs and service accounts.",
       "references": [
         "authlog",
@@ -337,7 +355,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "authentication message fields and robust optional detail handling",
+          "trace": "afta-authentication-audit-records.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        }
+      ]
     },
     {
       "row": 4,
@@ -1941,5 +1968,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-12"
+  "last_update_date": "2026-11-13"
 }

@@ -54,10 +54,11 @@
       ],
       "test_files": [
         "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java",
-        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java"
+        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java",
+        "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java"
       ],
       "evidence": "[AuditManagerTest](../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java); [AuthenticationListenerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java)",
-      "evidence_basis": "Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests.",
+      "evidence_basis": "Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests. Authentication log-field regressions cover available failure addresses, typed optional details, Unicode identities and escaped value boundaries. Logging layout/time, required-event policy and durable destination remain separate obligations.",
       "gap_and_required_action": "Selected audit generation exists, but mandatory event inventory, start/stop, outcome fields and timestamps are not fully traced. Specify auditable events and test each selected field/event.",
       "owner": "Security engineering / operations",
       "gap_groups": [
@@ -89,10 +90,11 @@
       ],
       "test_files": [
         "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java",
-        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java"
+        "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java",
+        "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java"
       ],
       "evidence": "[AuditManagerTest](../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java); [AuthenticationListenerTest](../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java)",
-      "evidence_basis": "Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests.",
+      "evidence_basis": "Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests. Authentication log-field regressions cover available failure addresses, typed optional details, Unicode identities and escaped value boundaries. Logging layout/time, required-event policy and durable destination remain separate obligations.",
       "gap_and_required_action": "User identity is recorded on selected paths, but service/background/failed-auth identities are not exhaustively mapped. Trace every selected event to its attributable subject.",
       "owner": "Security engineering / operations",
       "gap_groups": [
@@ -6608,5 +6610,5 @@
       "scope_reason": "This task evaluates the DHIS2 application, not a new PP/PP-Module/PP-Configuration or a formally composed/composite TOE using base evaluation evidence. Third-party libraries remain in dependency and vulnerability review. User direction on 2026-11-04: review DHIS2 as a web application and document exclusions."
     }
   ],
-  "last_update_date": "2026-11-11"
+  "last_update_date": "2026-11-13"
 }

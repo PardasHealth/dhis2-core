@@ -58,7 +58,7 @@ Execution records preserve conditions at capture time, including publication
 status; Git history and branch state determine subsequent publication.
 
 The component-traces folder now inventories the normative element IDs for all
-199 retained components. Six additional partial element mappings cover PAT
+199 retained components. Additional partial element mappings cover PAT
 expiry, revocation, subject binding and logout. Unmapped elements are explicitly
 open. This expansion does not change the implementation coverage conclusions.
 
@@ -92,3 +92,5 @@ an open gap's status.
 - [11 November: explicit encryption-key startup guard](afta-explicit-encryption-key.md).
 
 - [11 November: stable pending TOTP QR reads](afta-pending-qr-stability.md).
+
+- [13 November: authentication audit record fields](afta-authentication-audit-records.md).

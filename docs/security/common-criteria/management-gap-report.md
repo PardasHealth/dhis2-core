@@ -1,6 +1,6 @@
 # DHIS2 Common Criteria gap report for management
 
-**Report updated:** 11 November 2026
+**Report updated:** 13 November 2026
 **Scope:** Reviewed DHIS2 web application, APIs and supporting deployment.  
 **Overall status:** Open gaps prevent release sign-off for this reviewed package and any claim of Common Criteria approval.
 
@@ -146,3 +146,12 @@ refresh. The bundled profile app and explicit enrollment POST are retained.
 [Review the enrollment trace](afta-pending-qr-stability.md). The initial legacy
 GET still changes state and needs a coordinated client migration; this is not
 full CSRF closure. Checklist percentages are unchanged.
+
+### 13 November: authentication audit record quality
+
+Failed login events now retain their available address, international identities
+are preserved and missing/unexpected request details do not drop a record through
+an unchecked cast. Supplied field values cannot add raw line/field boundaries.
+[Review the code trace and scope](afta-authentication-audit-records.md).
+Durability, selected events and storage-full policy remain open; percentages do
+not change for this improvement within already partial requirements.

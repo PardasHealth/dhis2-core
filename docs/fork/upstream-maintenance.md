@@ -18,9 +18,9 @@ these are test-isolation changes, not relaxed successful-login expectations.
 Maven POMs, bundled app versions, dependency declarations, repository identity,
 existing branches and remote URLs are unchanged.
 
-Existing upstream production edits affect eight classes: the PAT manager, audit
+Existing upstream production edits affect nine classes: the PAT manager, audit
 scheduler, two-factor provider, OTP utility, Artemis configuration, configuration
-key catalog, Hibernate encryption configuration and the two-factor QR controller. The replay and broker-TLS follow-ups add three small internal classes
+key catalog, Hibernate encryption configuration the two-factor QR controller and authentication event logger. The replay and broker-TLS follow-ups add three small internal classes
 and one additive fork-specific repeatable migration.
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:
@@ -174,3 +174,13 @@ seed repair keep their prior behavior; explicit enrollment POST still rotates a
 pending seed. The bundled profile app uses this legacy image route, so no assets
 or endpoint names are changed. A new controller regression class checks QR
 contents and enrollment behavior. See the [trace and remaining legacy GET risk](../security/common-criteria/afta-pending-qr-stability.md).
+
+### 13 November 2026: authentication audit record fields
+
+`AuthenticationLoggerListener` resolves outcome/identity/address independently,
+checks optional detail types and escapes untrusted field boundaries while
+preserving Unicode. A focused log-capture regression class checks real messages
+and restores logger configuration after each case. Existing INFO level, event
+labels and duplicate exclusions remain; review log consumers for escaped values.
+No migration, dependency or frontend change is introduced. See the
+[trace and limitations](../security/common-criteria/afta-authentication-audit-records.md).

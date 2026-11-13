@@ -393,3 +393,14 @@ seed-stability failures on the preceding handler and pass with the fix.
 WAR/controller identity, unchanged packaged profile ZIP and PDF checks pass.
 Initial legacy GET still changes state; full CSRF and enrollment-race acceptance
 remain open. Checklist dispositions are unchanged.
+
+## 13 November 2026: authentication audit record fields
+
+The [audit-field trace](common-criteria/afta-authentication-audit-records.md) and
+[evidence inventory](evidence/afta-authentication-audit-records-2026-11-13.json)
+record 160 passing combined audit, token and authentication/API checks. A
+14-case prior-listener subset reproduces 13 failures; the final audit suite has
+15 passing cases. The 12 November token-owner/traceability changes are preserved.
+WAR/listener/token-manager byte identity and PDF checks pass. Required-event
+policy, durable storage and deployed acceptance remain open; percentages do
+not change for this improvement within already partial items.

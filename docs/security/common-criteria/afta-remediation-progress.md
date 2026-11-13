@@ -1,10 +1,17 @@
 # AFTA remediation implementation progress
 
-Updated: **12 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **13 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
-## Latest follow-up: stable PAT owner binding
+## Latest follow-up: authentication audit records
+
+Authentication event logging now retains available failure addresses and Unicode
+identities, handles optional details without unsafe casts, and escapes supplied
+line/field boundaries consistently. See the [audit-field trace and remaining
+storage/policy limits](afta-authentication-audit-records.md).
+
+## 12 November follow-up: stable PAT owner binding
 
 Rows 37–39 now have a concrete identity-binding fix: a token's reloaded account
 must have the same stable UID as its owner. Missing or mismatched identities
@@ -13,7 +20,7 @@ failed before the fix; all 23 targeted manager/resolver cases pass after it.
 See the [code, tests, execution evidence and remaining boundaries](afta-token-owner-binding.md).
 The selected rows remain partial; full checklist percentages do not change.
 
-## Latest follow-up: stable pending TOTP QR reads
+## 11 November follow-up: stable pending TOTP QR reads
 
 The deprecated QR image route now reuses an existing nonempty pending TOTP seed,
 so a refresh does not replace the seed already scanned by the user. The bundled

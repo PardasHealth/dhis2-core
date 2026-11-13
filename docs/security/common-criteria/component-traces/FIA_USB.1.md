@@ -23,19 +23,19 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FIA_USB.1.1
 
-**Partial source mapping.** [ApiTokenAuthManager.java:72](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L72): Authentication constructs a fresh ApiTokenAuthenticationToken using the persisted token and current UserDetails for its owner.
+**Partial source mapping.** [ApiTokenAuthManager.java:61](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L61): Authentication constructs a fresh ApiTokenAuthenticationToken using the persisted token and current UserDetails for its owner. The token owner and reloaded account must have the same nonblank stable UID; see the 12 November owner-binding record.
 
 **Open:** The selected user-attribute list, other authentication mechanisms and complete subject lifecycle are not specified by this mapping.
 
 ### FIA_USB.1.2
 
-**Partial source mapping.** [ApiTokenAuthManager.java:80](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L80): Before binding a token to a user, validateAndCreateUserDetails checks owner existence and current enabled, credential-expiry, lock, account-expiry and 2FA state.
+**Partial source mapping.** [ApiTokenAuthManager.java:80](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L80): Before binding a token to a user, validateAndCreateUserDetails checks owner existence and current enabled, credential-expiry, lock, account-expiry and 2FA state. The token owner and reloaded account must have the same nonblank stable UID; see the 12 November owner-binding record.
 
 **Open:** This is a partial initial-association rule trace for personal access tokens; selected ST rules and browser/OIDC subjects require separate checks.
 
 ### FIA_USB.1.3
 
-**Partial source mapping.** [ApiTokenAuthManager.java:64](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L64): The authentication path avoids a process-local snapshot and reloads current owner information on each token request.
+**Partial source mapping.** [ApiTokenAuthManager.java:61](../../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java#L61): The authentication path avoids a process-local snapshot and reloads current owner information on each token request. The token owner and reloaded account must have the same nonblank stable UID; see the 12 November owner-binding record.
 
 **Open:** This supports changes between personal access token requests; it does not prove invalidation or propagation for every subject or deployment node.
 

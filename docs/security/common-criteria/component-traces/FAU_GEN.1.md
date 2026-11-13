@@ -2,7 +2,7 @@
 
 ISO/IEC 15408-2:2026, clause 8.4.7. Trace update: 2026-11-07; component disposition baseline: 2026-11-04.
 
-**Status: Partial implementation evidence.** Component code candidates; element mapping open. No conformance claim.
+**Status: Partial implementation evidence.** Partial element mappings; remaining elements open. No conformance claim.
 
 [All component pages](README.md) · [Component disposition](../../common-criteria-gap-assessment.md#fau-gen-1)
 
@@ -27,16 +27,19 @@ Identifiers below inventory the obligations; consult the licensed standard for t
 
 ### FAU_GEN.1.2
 
-**Unmapped — Functional requirement.** No individual implementation or artifact mapping has been established for this element in this review. The component candidates above must not be treated as proof for it. Complete the element-specific trace, applicable ST operations and verification.
+**Partial source mapping.** [AuthenticationLoggerListener.java:80](../../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java#L80): Authentication messages retain event class, available identity/address and failure reason; field escaping prevents raw line/semicolon boundary injection and retains Unicode values.
+
+**Open:** Selected authentication-message paths only. Timestamp layout/trusted time, full event and identity coverage, destinations/retention and actual AFTA operations remain open. Forwarded addresses depend on a trusted ingress policy. See ../afta-authentication-audit-records.md.
 
 ## Evidence and limits
 
-Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests.
+Audit generation, query/storage and broker configuration were reviewed with the recorded audit failure tests. Authentication log-field regressions cover available failure addresses, typed optional details, Unicode identities and escaped value boundaries. Logging layout/time, required-event policy and durable destination remain separate obligations.
 
 Test sources (execution and scope are recorded separately in the [verification record](../../common-criteria-verification.md)):
 
 - [AuditManagerTest.java](../../../../dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java)
 - [AuthenticationListenerTest.java](../../../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java)
+- [AuthenticationAuditRecordTest.java](../../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java)
 
 Related boundary references, **not implementation coverage**:
 
