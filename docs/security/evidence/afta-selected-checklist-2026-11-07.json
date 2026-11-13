@@ -286,6 +286,13 @@
       "line": 228,
       "symbol": "public RootNode getTrackedEntityAudit(",
       "source_sha256": "37fe66662af4e46130041d80078d5e442a8c3c4df387caf48cf4cb6c15f6ad0d"
+    },
+    "tokenip": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
+      "line": 186,
+      "symbol": "private void validateIp(",
+      "source_sha256": "6a1d2b41f35f87dfbdfe2e24fb3da67b6d3b415dceef9162ba46ba439ab52c43"
     }
   },
   "rows": [
@@ -629,17 +636,27 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Access-control attributes",
-      "observation": "ACL code evaluates user and object/sharing attributes.",
+      "observation": "ACL code evaluates user and object/sharing attributes. The PAT IP constraint now uses the servlet remote address instead of client-supplied X-Forwarded-For; filter tests reject header spoofing and preserve ordinary allow/deny and method-constraint behavior. Trusted proxy configuration remains a deployment prerequisite.",
       "gap_and_acceptance": "Specify required attributes, sources and freshness; test each attribute combination across relevant endpoints.",
       "references": [
         "acl",
-        "token"
+        "token",
+        "tokenip"
       ],
       "source_key": "FDP_ACF.1.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "PAT IP-rule enforcement without trusting raw forwarding headers",
+          "trace": "afta-token-ip-constraints.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e7035884301d1ade648bf5424f560c539df128e2"
+        }
+      ]
     },
     {
       "row": 17,
@@ -648,17 +665,27 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Access-control decision rules",
-      "observation": "ACL read/write paths implement selected access decisions.",
+      "observation": "ACL read/write paths implement selected access decisions. The PAT IP constraint now uses the servlet remote address instead of client-supplied X-Forwarded-For; filter tests reject header spoofing and preserve ordinary allow/deny and method-constraint behavior. Trusted proxy configuration remains a deployment prerequisite.",
       "gap_and_acceptance": "Write the selected allow/deny policy and prove its enforcement for metadata, data and tracker actions.",
       "references": [
         "acl",
-        "aclwrite"
+        "aclwrite",
+        "tokenip"
       ],
       "source_key": "FDP_ACF.1.2",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "PAT IP-rule enforcement without trusting raw forwarding headers",
+          "trace": "afta-token-ip-constraints.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e7035884301d1ade648bf5424f560c539df128e2"
+        }
+      ]
     },
     {
       "row": 18,
@@ -686,17 +713,27 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Explicit access denial",
-      "observation": "ACL and import checks contain deny/error paths for selected actions.",
+      "observation": "ACL and import checks contain deny/error paths for selected actions. The PAT IP constraint now uses the servlet remote address instead of client-supplied X-Forwarded-For; filter tests reject header spoofing and preserve ordinary allow/deny and method-constraint behavior. Trusted proxy configuration remains a deployment prerequisite.",
       "gap_and_acceptance": "Specify explicit denial precedence and verify every relevant route, import format and privileged exception.",
       "references": [
         "aclwrite",
-        "import"
+        "import",
+        "tokenip"
       ],
       "source_key": "FDP_ACF.1.4",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-13",
+          "scope": "PAT IP-rule enforcement without trusting raw forwarding headers",
+          "trace": "afta-token-ip-constraints.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e7035884301d1ade648bf5424f560c539df128e2"
+        }
+      ]
     },
     {
       "row": 20,
