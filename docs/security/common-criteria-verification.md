@@ -467,3 +467,24 @@ registry, not an external Redis deployment. Complete selected timing, concurrent
 new/in-flight requests, all provider/browser paths, Redis/cross-node acceptance
 and full AFTA row 39 closure remain open. No new WAR or deployment is claimed.
 These overlapping suite counts are not added to earlier evidence inventories.
+
+## 15 November 2026: OIDC event account association
+
+The [lifecycle-listener trace](common-criteria/afta-oidc-event-account-association.md)
+and [dated evidence](evidence/afta-oidc-event-account-association-2026-11-15.json)
+record **81 passing checks**: 52 lifecycle/token/audit units and 29 H2 login/token
+API cases, with no failures/errors/skips. Eight new assertions fail among 19
+listener cases against the preceding implementation. Missing/non-HTTP OIDC
+details no longer interrupt bookkeeping; completed OAuth events use a resolved
+local DHIS2 identity rather than an external subject. Unmapped success events do
+not mutate local namesakes. Existing token failure isolation and session fixes
+are retained.
+
+Unit cases use real local OIDC-principal wrappers and a real listener/meter
+registry, with mocked authentication events and account services. H2 cases cover
+existing form/token paths, not a live external IdP/browser flow. Workflow syntax,
+changed-file formatting and checklist/evidence validators pass. The lifecycle
+suite is now explicitly required by the workflow, but no hosted CI, WAR or new
+deployment result is asserted. Distributed counter atomicity, complete selected
+policies and full rows 29/37 acceptance remain open. Overlapping executions are
+not added to earlier evidence inventories.

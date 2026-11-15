@@ -321,6 +321,13 @@
       "line": 1038,
       "symbol": "public void invalidateAllSessions()",
       "source_sha256": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9"
+    },
+    "oidceventaccount": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java",
+      "line": 158,
+      "symbol": "private static String localOidcUsername(Authentication auth)",
+      "source_sha256": "f8a9dc45a16b95d3bf3de8e7693ccefdb7c7db213d0a2b702d556cfd14e7f375"
     }
   },
   "rows": [
@@ -998,16 +1005,26 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Count failed authentication",
-      "observation": "The authentication provider and user service have lockout/failure handling.",
+      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. This does not make distributed cache counters atomic.",
       "gap_and_acceptance": "Fix the AFTA threshold, counting conditions and reset rules; test all login mechanisms and distributed counters.",
       "references": [
-        "factor"
+        "factor",
+        "oidceventaccount"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-15",
+          "scope": "Safe optional OIDC event details and resolved local-account routing for failure/success bookkeeping",
+          "trace": "afta-oidc-event-account-association.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "efea229e581e89fffa75332b7a9199727bd272ff"
+        }
+      ]
     },
     {
       "row": 30,
@@ -1192,11 +1209,12 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Bind user attributes to a subject",
-      "observation": "PAT authentication returns a fresh authentication object using current owner details. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
+      "observation": "PAT authentication returns a fresh authentication object using current owner details. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Completed OAuth login bookkeeping now uses the resolved DhisOidcUser username rather than an external subject. Unmapped OIDC success events do not update a local namesake; optional HTTP details no longer interrupt bookkeeping.",
       "gap_and_acceptance": "Map the full selected attribute list and every subject type; PAT evidence alone does not cover browser, SSO, jobs or all sessions.",
       "references": [
         "token",
-        "userdetails"
+        "userdetails",
+        "oidceventaccount"
       ],
       "source_key": "FIA_USB.1.1",
       "counted": true,
@@ -1210,6 +1228,13 @@
           "trace": "afta-token-owner-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Safe optional OIDC event details and resolved local-account routing for failure/success bookkeeping",
+          "trace": "afta-oidc-event-account-association.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "efea229e581e89fffa75332b7a9199727bd272ff"
         }
       ]
     },

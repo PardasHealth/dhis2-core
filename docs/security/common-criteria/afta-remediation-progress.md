@@ -4,6 +4,15 @@ Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 15 November follow-up: OIDC event account association
+
+Rows 29 and 37 have a lifecycle-listener fix: optional OIDC HTTP details no
+longer interrupt failed/successful-login bookkeeping, and completed OAuth events
+use their resolved local DHIS2 identity rather than an external subject name.
+Unmapped success events do not mutate a local namesake. See the [bounded event
+association trace](afta-oidc-event-account-association.md). Provider acceptance,
+distributed counter atomicity and full selected row definitions remain open.
+
 ## 15 November follow-up: global session invalidation
 
 Row 39 has a concrete revocation fix: global invalidation retains expired

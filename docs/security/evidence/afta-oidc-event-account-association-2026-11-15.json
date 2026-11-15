@@ -1,0 +1,119 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA rows 29 / FIA_AFL.1.1 and 37 / FIA_USB.1.1: optional OIDC event details and local-account association for bookkeeping; no full provider/counter/subject-binding closure",
+  "baseline_core_commit": "d8ba66f585ad016cdb9422d5a82964c4143d671e",
+  "implementation_commit": "efea229e581e89fffa75332b7a9199727bd272ff",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "24eda0bfc22848401a5cbda165edd1bebdfe63b3088ff160e0c1cd676f70728c",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisOidcUser.java": "43879bcaae6e7ca1b6624458ba4f49c1d07fb40d8a703fd7362d8a60a32f544b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "8cf6f7177005db66d195ad547730fb2f49940aa65ad718f999fa3275422857aa",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java": "f8a9dc45a16b95d3bf3de8e7693ccefdb7c7db213d0a2b702d556cfd14e7f375",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "ff248dbfda94062f498caf87176eb1df7668a0b1f9e179718203b9ce3e50fb2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "fb242df4345c19b0e8bb0d08bb455330ef279760551c4f5a2bcfee54989fefd2"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 81,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "f7ce43a325f95111cf7064d0756279dffd75873b10ff65063963763e75550aa0",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "87e2f8fb72acf7595629ca4f1b4ee0bcec38cd1549bea5201c3897abab551849",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "0023953269d58ecbbc8ad7dc1f2dd0e7691b707a605db40e6c0b0919249ac242",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "c2b9e0497dadbd4055fa55b61cb56c359a2ab9437a3b73b1f2cdee5ee6911b8d",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest.xml": "a6691b19115447f03471afbf9e28b2bd0f4e778ead06284242cc0f39b31c3003",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "271938d93a38b6b7ef694547d83b717f1daa750416c00d2273cec756ca65d385"
+  },
+  "baseline_regression": {
+    "tests": 19,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [
+      "oidcSuccessWithoutHttpDetailsUpdatesTheCanonicalLocalAccount",
+      "oidcSuccessWithUnexpectedDetailsStillUpdatesTheLocalAccount",
+      "oidcFailureWithoutHttpDetailsStillCountsAgainstTheKnownLocalAccount",
+      "completedOauthLoginUsesCanonicalLocalIdentityAndOidcMetric",
+      "completedOauthWithUnmappedPrincipalCannotMutateALocalNamesake",
+      "oidcSuccessWithoutLocalPrincipalDoesNotMutateAccountState",
+      "unmappedOidcFailureRetainsAttemptedNameWithoutCastingPrincipal",
+      "userInfoSuccessWithNonJwtPrincipalAndMissingDetailsDoesNotThrow"
+    ],
+    "scope": "New lifecycle suite with preceding production listener, real local DhisOidcUser wrapper and mocked authentication events/services. The original eleven cases pass. Null/cast exceptions are captured by assertDoesNotThrow as assertion failures. Patched source restored after baseline.",
+    "log_sha256": "e07f65810a65f6d7ecc7bc90161806e94b6f817daf5e71bc8dff5b379ae62e57"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, workspace JDK",
+    "maven": "3.9.11",
+    "profiles": [
+      "unit-test",
+      "integration-h2-test"
+    ],
+    "unit_boundary": "Real lifecycle listener and meter registry, real DhisOidcUser local principal wrapper, mocked authentication events/UserService/configuration. Assertions verify local-account lookup/counter method routing and no account service calls for unmapped success. Existing token filter/event and actual audit-message capture suites retained. No live OIDC protocol/IdP used.",
+    "web_boundary": "Real H2/Spring-security form-login and persisted-token regression fixtures. Does not establish an external OIDC browser flow.",
+    "dependency_provenance": "Existing workspace Maven cache retains unchanged sms-compression tag 74f6bbcabce84ae47df21c966ba00dba5a4217d6 source-build workaround from afta-token-failure-audit-2026-11-15.json; not claimed binary-identical to JitPack. No dependency declarations changed.",
+    "ci": "Lifecycle-listener suite added to unit selection and required successful-report checks. Workflow YAML/embedded Python parsed. No hosted CI run asserted.",
+    "command_working_directory": "dhis-2; select the supported JDK before invoking Maven"
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=AuthenticationListenerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=AuthenticationListenerTest,ApiTokenIpConstraintTest,AuthenticationAuditRecordTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=AuthenticationControllerTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "Changed-file Spotless checks, git diff --check, workflow YAML and embedded Python syntax checks"
+  ],
+  "not_established": [
+    "Atomic/distributed failure counter updates or complete selected counting/reset policy",
+    "Freshness of all OIDC attributes or username/UID changes racing with event processing",
+    "Live IdP protocol, browser, SSO, recovery or multi-node acceptance",
+    "Provider authentication/claims validation changes or new token/session policy",
+    "New WAR, deployment, hosted CI success or full AFTA closure"
+  ]
+}
