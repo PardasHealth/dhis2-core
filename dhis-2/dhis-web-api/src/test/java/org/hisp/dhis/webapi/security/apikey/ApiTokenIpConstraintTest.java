@@ -34,23 +34,33 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import jakarta.servlet.FilterChain;
+import java.util.ArrayList;
 import java.util.List;
 import org.hisp.dhis.security.apikey.ApiToken;
 import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.user.UserDetails;
+import org.hisp.dhis.webapi.security.config.AuthenticationProviderConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 class ApiTokenIpConstraintTest {
   private static final String ALLOWED = "198.51.100.10";
   private static final String OTHER = "203.0.113.20";
   private static final String VALID_TOKEN =
       "d2p_lyt5j9WqXaVzJsUhvGJ1w0Ea5GL4jkszazPSWo5HWLFC1QnPCi";
+  private List<ApplicationEvent> publishedEvents;
+  private ApiTokenAuthManager manager;
+  private DefaultAuthenticationEventPublisher publisher;
   private ApiToken token;
   private ApiTokenAuthenticationToken authentication;
   private Dhis2ApiTokenFilter filter;
@@ -64,14 +74,14 @@ class ApiTokenIpConstraintTest {
     token = new ApiToken();
     UserDetails user = mock(UserDetails.class);
     doReturn(List.of()).when(user).getAuthorities();
+    when(user.getUsername()).thenReturn("کاربر");
     authentication = new ApiTokenAuthenticationToken(token, user);
-    ApiTokenAuthManager manager = mock(ApiTokenAuthManager.class);
+    manager = mock(ApiTokenAuthManager.class);
+    publisher = spy(new AuthenticationProviderConfig().authenticationEventPublisher());
+    publishedEvents = new ArrayList<>();
+    publisher.setApplicationEventPublisher(event -> publishedEvents.add((ApplicationEvent) event));
     when(manager.authenticate(any())).thenReturn(authentication);
-    filter =
-        new Dhis2ApiTokenFilter(
-            manager,
-            (req, res, failure) -> res.setStatus(401),
-            mock(DefaultAuthenticationEventPublisher.class));
+    filter = new Dhis2ApiTokenFilter(manager, (req, res, failure) -> res.setStatus(401), publisher);
     chain = mock(FilterChain.class);
     request = new MockHttpServletRequest("GET", "/api/me");
     request.addHeader("Authorization", "ApiToken " + VALID_TOKEN);
@@ -135,12 +145,84 @@ class ApiTokenIpConstraintTest {
     assertDenied();
   }
 
+  @Test
+  void constraintFailurePublishesResolvedOwnerWithoutToken() throws Exception {
+    token.addMethodToAllowedList("POST");
+    Authentication failure = captureFailure();
+    assertEquals("کاربر", failure.getPrincipal());
+    assertFalse(failure instanceof ApiTokenAuthenticationToken);
+  }
+
+  @Test
+  void unknownTokenPublishesConnectionWithoutInventingIdentity() throws Exception {
+    when(manager.authenticate(any()))
+        .thenThrow(
+            new ApiTokenAuthenticationException(ApiTokenErrors.invalidToken("Invalid token")));
+    assertEquals("", captureFailure().getName());
+  }
+
+  @Test
+  void malformedTokenPublishesFailureAndClearsPreviousContext() throws Exception {
+    request.removeHeader("Authorization");
+    request.addHeader("Authorization", "ApiToken malformed secret");
+    SecurityContextHolder.getContext()
+        .setAuthentication(
+            UsernamePasswordAuthenticationToken.authenticated("previous", null, List.of()));
+    assertEquals("", captureFailure().getName());
+    verifyNoInteractions(manager);
+  }
+
+  @Test
+  void badChecksumPublishesFailureWithoutToken() throws Exception {
+    request.removeHeader("Authorization");
+    request.addHeader(
+        "Authorization", "ApiToken " + VALID_TOKEN.substring(0, VALID_TOKEN.length() - 1) + "x");
+    assertEquals("", captureFailure().getName());
+    verifyNoInteractions(manager);
+  }
+
+  @Test
+  void expiredTokenAlsoEmitsAnActualFailureEvent() throws Exception {
+    when(manager.authenticate(any())).thenThrow(new ApiTokenExpiredException("Expired token"));
+    assertEquals("", captureFailure().getName());
+  }
+
+  @Test
+  void absentTokenDoesNotPublishFailure() throws Exception {
+    request.removeHeader("Authorization");
+    filter.doFilter(request, response, chain);
+    verify(chain).doFilter(request, response);
+    verifyNoInteractions(manager);
+    assertTrue(publishedEvents.isEmpty());
+  }
+
+  private Authentication captureFailure() throws Exception {
+    request.setRemoteAddr(OTHER);
+    request.addHeader("X-Forwarded-For", ALLOWED);
+    assertDenied();
+    ArgumentCaptor<Authentication> captor = ArgumentCaptor.forClass(Authentication.class);
+    verify(publisher).publishAuthenticationFailure(any(), captor.capture());
+    verify(publisher, never()).publishAuthenticationSuccess(any());
+    Authentication failure = captor.getValue();
+    assertEquals(1, publishedEvents.size());
+    var emitted =
+        assertInstanceOf(ApiTokenAuthenticationFailureEvent.class, publishedEvents.get(0));
+    assertSame(failure, emitted.getAuthentication());
+    assertFalse(failure.isAuthenticated());
+    assertNull(failure.getCredentials());
+    assertEquals(OTHER, ((WebAuthenticationDetails) failure.getDetails()).getRemoteAddress());
+    assertFalse(failure.toString().contains(VALID_TOKEN));
+    return failure;
+  }
+
   private void assertAccepted() throws Exception {
     filter.doFilter(request, response, chain);
     assertEquals(200, response.getStatus());
     verify(chain).doFilter(request, response);
     assertSame(authentication, SecurityContextHolder.getContext().getAuthentication());
     assertTrue(authentication.isAuthenticated());
+    verify(publisher).publishAuthenticationSuccess(authentication);
+    verify(publisher, never()).publishAuthenticationFailure(any(), any());
   }
 
   private void assertDenied() throws Exception {

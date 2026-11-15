@@ -43,15 +43,14 @@ import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.security.apikey.IpAllowedList;
 import org.hisp.dhis.security.apikey.MethodAllowedList;
 import org.hisp.dhis.security.apikey.RefererAllowedList;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -66,8 +65,6 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
 
   private final ApiTokenAuthManager apiTokenAuthManager;
 
-  private final AuthenticationFailureHandler authenticationFailureHandler;
-
   private final AuthenticationEntryPoint authenticationEntryPoint;
 
   private final AuthenticationEventPublisher eventPublisher;
@@ -78,9 +75,6 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
       DefaultAuthenticationEventPublisher defaultAuthenticationEventPublisher) {
     this.authenticationEntryPoint = authenticationEntryPoint;
     this.apiTokenAuthManager = apiTokenAuthManager;
-    this.authenticationFailureHandler =
-        getAuthenticationFailureHandler(
-            authenticationEntryPoint, defaultAuthenticationEventPublisher);
 
     this.eventPublisher = defaultAuthenticationEventPublisher;
   }
@@ -94,7 +88,7 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
       tokenHash = apiTokenResolver.resolve(request);
     } catch (ApiTokenAuthenticationException e) {
       logger.debug("Sending to authentication entry point since we failed to resolve API token", e);
-      authenticationEntryPoint.commence(request, response, e);
+      authenticationFailed(request, response, e, "");
       return;
     }
 
@@ -104,11 +98,12 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
       return;
     }
 
+    String ownerName = "";
     try {
       ApiTokenAuthenticationToken authenticationToken =
           (ApiTokenAuthenticationToken)
               apiTokenAuthManager.authenticate(new ApiTokenAuthenticationToken(tokenHash));
-      authenticationToken.setDetails(new ApiTokenWebAuthenticationDetails(request));
+      ownerName = authenticationToken.getPrincipal().getUsername();
 
       setRequestDetails(request, authenticationToken);
       validateRequestRules(request, authenticationToken.getToken());
@@ -120,9 +115,8 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
 
       filterChain.doFilter(request, response);
     } catch (AuthenticationException e) {
-      SecurityContextHolder.clearContext();
       logger.debug("Failed to process authentication request", e);
-      authenticationFailureHandler.onAuthenticationFailure(request, response, e);
+      authenticationFailed(request, response, e, ownerName);
     }
   }
 
@@ -196,31 +190,20 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
     }
   }
 
-  /**
-   * Custom authentication failure handler needed for proper failure messaging with the
-   * AuthenticationLoggerListener
-   */
-  private AuthenticationFailureHandler getAuthenticationFailureHandler(
-      AuthenticationEntryPoint authenticationEntryPoint,
-      DefaultAuthenticationEventPublisher defaultAuthenticationEventPublisher) {
-    return (request, response, exception) -> {
-      defaultAuthenticationEventPublisher.publishAuthenticationFailure(
-          exception,
-          new AbstractAuthenticationToken(
-              (java.util.Collection<? extends org.springframework.security.core.GrantedAuthority>)
-                  null) {
-            @Override
-            public Object getCredentials() {
-              return null;
-            }
-
-            @Override
-            public Object getPrincipal() {
-              return null;
-            }
-          });
-
-      authenticationEntryPoint.commence(request, response, exception);
-    };
+  private void authenticationFailed(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      AuthenticationException exception,
+      String ownerName)
+      throws IOException, ServletException {
+    SecurityContextHolder.clearContext();
+    // Publish only the resolved name and servlet connection context. Never attach
+    // the submitted token, its hash or the full account object to a failure event.
+    var failure =
+        UsernamePasswordAuthenticationToken.unauthenticated(
+            ownerName == null ? "" : ownerName, null);
+    failure.setDetails(authenticationDetailsSource.buildDetails(request));
+    eventPublisher.publishAuthenticationFailure(exception, failure);
+    authenticationEntryPoint.commence(request, response, exception);
   }
 }

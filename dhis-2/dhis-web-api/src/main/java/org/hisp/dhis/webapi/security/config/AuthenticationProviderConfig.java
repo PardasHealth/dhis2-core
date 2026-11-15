@@ -37,6 +37,10 @@ import org.hisp.dhis.security.ldap.authentication.CustomLdapAuthenticationProvid
 import org.hisp.dhis.security.ldap.authentication.DhisBindAuthenticator;
 import org.hisp.dhis.security.spring2fa.TwoFactorWebAuthenticationDetailsSource;
 import org.hisp.dhis.user.UserStore;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationException;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationFailureEvent;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenConstraintsValidationFailedException;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -120,7 +124,11 @@ public class AuthenticationProviderConfig {
         new DefaultAuthenticationEventPublisher();
     defaultAuthenticationEventPublisher.setAdditionalExceptionMappings(
         Map.of(
-            OAuth2AuthenticationException.class, AuthenticationFailureBadCredentialsEvent.class));
+            OAuth2AuthenticationException.class, AuthenticationFailureBadCredentialsEvent.class,
+            ApiTokenAuthenticationException.class, ApiTokenAuthenticationFailureEvent.class,
+            ApiTokenConstraintsValidationFailedException.class,
+                ApiTokenAuthenticationFailureEvent.class,
+            ApiTokenExpiredException.class, ApiTokenAuthenticationFailureEvent.class));
     return defaultAuthenticationEventPublisher;
   }
 

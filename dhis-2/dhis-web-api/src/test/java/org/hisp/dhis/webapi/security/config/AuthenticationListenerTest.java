@@ -32,6 +32,8 @@ package org.hisp.dhis.webapi.security.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import io.micrometer.core.instrument.Counter;
@@ -42,12 +44,16 @@ import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.security.basic.HttpBasicWebAuthenticationDetails;
 import org.hisp.dhis.security.oidc.DhisOidcUser;
 import org.hisp.dhis.user.UserService;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationFailureEvent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
@@ -88,6 +94,24 @@ class AuthenticationListenerTest {
   @AfterEach
   void tearDown() {
     RequestContextHolder.resetRequestAttributes();
+  }
+
+  @Test
+  void tokenAuditFailureDoesNotIncrementPasswordFailureCount() {
+    var auth = UsernamePasswordAuthenticationToken.unauthenticated("pat-user", null);
+    listener.handleAuthenticationFailure(
+        new ApiTokenAuthenticationFailureEvent(
+            auth, new BadCredentialsException("Token rejected")));
+    verifyNoInteractions(userService);
+  }
+
+  @Test
+  void passwordFailureStillIncrementsFailureCount() {
+    var auth = UsernamePasswordAuthenticationToken.unauthenticated("password-user", null);
+    listener.handleAuthenticationFailure(
+        new AuthenticationFailureBadCredentialsEvent(
+            auth, new BadCredentialsException("Bad password")));
+    verify(userService).registerFailedLogin("password-user");
   }
 
   @Test

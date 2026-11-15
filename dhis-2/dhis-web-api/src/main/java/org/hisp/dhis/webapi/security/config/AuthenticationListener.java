@@ -40,6 +40,7 @@ import org.hisp.dhis.security.spring2fa.TwoFactorWebAuthenticationDetails;
 import org.hisp.dhis.user.SystemUser;
 import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserService;
+import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationFailureEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
@@ -88,6 +89,9 @@ public class AuthenticationListener {
 
   @EventListener
   public void handleAuthenticationFailure(AbstractAuthenticationFailureEvent event) {
+    // Token constraints/expiry are not incorrect password or MFA proofs. Keep
+    // attributable token audit events from changing the account's login counter.
+    if (event instanceof ApiTokenAuthenticationFailureEvent) return;
     Authentication auth = event.getAuthentication();
     String username = event.getAuthentication().getName();
 
