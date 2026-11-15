@@ -29,9 +29,11 @@
  */
 package org.hisp.dhis.webapi.security.config;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -39,10 +41,12 @@ import static org.mockito.Mockito.when;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
 import org.hisp.dhis.security.basic.HttpBasicWebAuthenticationDetails;
 import org.hisp.dhis.security.oidc.DhisOidcUser;
+import org.hisp.dhis.user.UserDetails;
 import org.hisp.dhis.user.UserService;
 import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationFailureEvent;
 import org.junit.jupiter.api.AfterEach;
@@ -57,8 +61,9 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -155,10 +160,7 @@ class AuthenticationListenerTest {
     OAuth2LoginAuthenticationToken auth = mock(OAuth2LoginAuthenticationToken.class);
     when(auth.getName()).thenReturn("oidcuser");
 
-    DhisOidcUser principal = mock(DhisOidcUser.class);
-    UserDetails springUserDetails = mock(UserDetails.class);
-    when(principal.getUser()).thenReturn(springUserDetails);
-    when(springUserDetails.getUsername()).thenReturn("oidcuser");
+    DhisOidcUser principal = oidcPrincipal("oidcuser");
     when(auth.getPrincipal()).thenReturn(principal);
 
     WebAuthenticationDetails details = mock(WebAuthenticationDetails.class);
@@ -235,6 +237,110 @@ class AuthenticationListenerTest {
     listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth));
 
     assertEquals(1.0, counterValue("form"));
+  }
+
+  @Test
+  void oidcSuccessWithoutHttpDetailsUpdatesTheCanonicalLocalAccount() {
+    var auth = oidcLogin("external-subject", "local-user");
+    assertDoesNotThrow(
+        () -> listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth)));
+    verify(userService).getUserByUsername("local-user");
+    verify(userService).registerSuccessfulLogin("local-user");
+    verify(userService, never()).registerSuccessfulLogin("external-subject");
+  }
+
+  @Test
+  void oidcSuccessWithUnexpectedDetailsStillUpdatesTheLocalAccount() {
+    var auth = oidcLogin("external-subject", "local-user");
+    when(auth.getDetails()).thenReturn("non-http-details");
+    assertDoesNotThrow(
+        () -> listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth)));
+    verify(userService).registerSuccessfulLogin("local-user");
+  }
+
+  @Test
+  void oidcFailureWithoutHttpDetailsStillCountsAgainstTheKnownLocalAccount() {
+    var auth = oidcLogin("external-subject", "local-user");
+    assertDoesNotThrow(
+        () ->
+            listener.handleAuthenticationFailure(
+                new AuthenticationFailureBadCredentialsEvent(
+                    auth, new BadCredentialsException("Denied"))));
+    verify(userService).registerFailedLogin("local-user");
+    verify(userService, never()).registerFailedLogin("external-subject");
+  }
+
+  @Test
+  void completedOauthLoginUsesCanonicalLocalIdentityAndOidcMetric() {
+    var auth = mock(OAuth2AuthenticationToken.class);
+    when(auth.getName()).thenReturn("external-subject");
+    var principal = oidcPrincipal("local-user");
+    when(auth.getPrincipal()).thenReturn(principal);
+    listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth));
+    verify(userService).registerSuccessfulLogin("local-user");
+    verify(userService, never()).getUserByUsername("external-subject");
+    assertEquals(1.0, counterValue("oidc"));
+    assertEquals(0.0, counterValue("form"));
+  }
+
+  @Test
+  void completedOauthWithUnmappedPrincipalCannotMutateALocalNamesake() {
+    var auth = mock(OAuth2AuthenticationToken.class);
+    when(auth.getName()).thenReturn("local-account-namesake");
+    listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth));
+    verifyNoInteractions(userService);
+    assertEquals(1.0, counterValue("oidc"));
+  }
+
+  @Test
+  void oidcSuccessWithoutLocalPrincipalDoesNotMutateAccountState() {
+    var auth = mock(OAuth2LoginAuthenticationToken.class);
+    when(auth.getName()).thenReturn("local-account-namesake");
+    assertDoesNotThrow(
+        () -> listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth)));
+    verifyNoInteractions(userService);
+  }
+
+  @Test
+  void unmappedOidcFailureRetainsAttemptedNameWithoutCastingPrincipal() {
+    var auth = mock(OAuth2LoginAuthenticationToken.class);
+    when(auth.getName()).thenReturn("attempted-user");
+    assertDoesNotThrow(
+        () ->
+            listener.handleAuthenticationFailure(
+                new AuthenticationFailureBadCredentialsEvent(
+                    auth, new BadCredentialsException("Denied"))));
+    verify(userService).registerFailedLogin("attempted-user");
+  }
+
+  @Test
+  void userInfoSuccessWithNonJwtPrincipalAndMissingDetailsDoesNotThrow() {
+    var auth = mock(OidcUserInfoAuthenticationToken.class);
+    when(auth.getName()).thenReturn("userinfo-user");
+    var principal =
+        UsernamePasswordAuthenticationToken.authenticated(
+            "userinfo-user", null, java.util.List.of());
+    when(auth.getPrincipal()).thenReturn(principal);
+    assertDoesNotThrow(
+        () -> listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth)));
+    verify(userService).registerSuccessfulLogin("userinfo-user");
+    assertEquals(1.0, counterValue("oidc"));
+  }
+
+  private OAuth2LoginAuthenticationToken oidcLogin(String externalName, String localName) {
+    var auth = mock(OAuth2LoginAuthenticationToken.class);
+    when(auth.getName()).thenReturn(externalName);
+    var principal = oidcPrincipal(localName);
+    when(auth.getPrincipal()).thenReturn(principal);
+    return auth;
+  }
+
+  private DhisOidcUser oidcPrincipal(String username) {
+    return new DhisOidcUser(
+        UserDetails.empty().username(username).build(),
+        Map.of("sub", "external-subject"),
+        "sub",
+        null);
   }
 
   private double counterValue(String method) {

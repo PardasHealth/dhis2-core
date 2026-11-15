@@ -48,9 +48,9 @@ import org.springframework.security.authentication.event.AbstractAuthenticationF
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -104,19 +104,10 @@ public class AuthenticationListener {
       log.debug(String.format("Login attempt failed for remote IP: %s", authDetails.getIp()));
     }
 
-    if (OAuth2LoginAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-      OAuth2LoginAuthenticationToken authenticationToken = (OAuth2LoginAuthenticationToken) auth;
-      DhisOidcUser principal = (DhisOidcUser) authenticationToken.getPrincipal();
-
-      if (principal != null) {
-        username = principal.getUser().getUsername();
-      }
-
-      WebAuthenticationDetails tokenDetails =
-          (WebAuthenticationDetails) authenticationToken.getDetails();
-      String remoteAddress = tokenDetails.getRemoteAddress();
-
-      log.debug(String.format("OIDC login attempt failed for remote IP: %s", remoteAddress));
+    if (isOidcLogin(auth)) {
+      String localUsername = localOidcUsername(auth);
+      if (localUsername != null) username = localUsername;
+      logOidcAddress(auth.getDetails(), "failed");
     }
 
     userService.registerFailedLogin(username);
@@ -143,29 +134,39 @@ public class AuthenticationListener {
       log.debug(String.format("Login attempt succeeded for remote IP: %s", authDetails.getIp()));
     }
 
-    if (OidcUserInfoAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-      OidcUserInfoAuthenticationToken oidcUserInfoAuthenticationToken =
-          (OidcUserInfoAuthenticationToken) auth;
-      JwtAuthenticationToken principal =
-          (JwtAuthenticationToken) oidcUserInfoAuthenticationToken.getPrincipal();
-      WebAuthenticationDetails principalDetails = (WebAuthenticationDetails) principal.getDetails();
-      String remoteAddress = principalDetails.getRemoteAddress();
-      log.debug(String.format("OIDC login attempt succeeded for remote IP: %s", remoteAddress));
+    if (auth instanceof OidcUserInfoAuthenticationToken userInfo
+        && userInfo.getPrincipal() instanceof Authentication principal) {
+      logOidcAddress(principal.getDetails(), "succeeded");
     }
 
-    if (OAuth2LoginAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-      OAuth2LoginAuthenticationToken authenticationToken = (OAuth2LoginAuthenticationToken) auth;
-      DhisOidcUser principal = (DhisOidcUser) authenticationToken.getPrincipal();
-      username = principal.getUser().getUsername();
-
-      WebAuthenticationDetails tokenDetails =
-          (WebAuthenticationDetails) authenticationToken.getDetails();
-      String remoteAddress = tokenDetails.getRemoteAddress();
-
-      log.debug(String.format("OIDC login attempt succeeded for remote IP: %s", remoteAddress));
+    if (isOidcLogin(auth)) {
+      // External subjects are not local usernames. Without a resolved DHIS2
+      // principal, do not mutate a coincidentally named local account.
+      username = localOidcUsername(auth);
+      if (username == null) return;
+      logOidcAddress(auth.getDetails(), "succeeded");
     }
 
     registerSuccessfulLogin(username);
+  }
+
+  private static boolean isOidcLogin(Authentication auth) {
+    return auth instanceof OAuth2LoginAuthenticationToken
+        || auth instanceof OAuth2AuthenticationToken;
+  }
+
+  private static String localOidcUsername(Authentication auth) {
+    if (auth.getPrincipal() instanceof DhisOidcUser principal) {
+      String username = principal.getUsername();
+      if (username != null && !username.isBlank()) return username;
+    }
+    return null;
+  }
+
+  private static void logOidcAddress(Object details, String outcome) {
+    if (details instanceof WebAuthenticationDetails webDetails) {
+      log.debug("OIDC login attempt {} for remote IP: {}", outcome, webDetails.getRemoteAddress());
+    }
   }
 
   /**
@@ -176,8 +177,7 @@ public class AuthenticationListener {
    * authenticate via the same endpoint and details type.
    */
   private static String resolveAuthMethod(Authentication auth) {
-    if (OAuth2LoginAuthenticationToken.class.isAssignableFrom(auth.getClass())
-        || OidcUserInfoAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+    if (isOidcLogin(auth) || auth instanceof OidcUserInfoAuthenticationToken) {
       return LOGIN_METHOD_OIDC;
     }
     if (ApiTokenAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
