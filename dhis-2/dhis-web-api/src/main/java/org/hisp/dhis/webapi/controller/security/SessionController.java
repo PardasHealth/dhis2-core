@@ -101,11 +101,7 @@ public class SessionController {
   @DeleteMapping
   @RequiresAuthority(anyOf = ALL)
   public void invalidateAllSessions() {
-    for (SessionInformation session : userService.listAllSessions()) {
-      if (!session.isExpired()) {
-        session.expireNow();
-      }
-    }
+    userService.invalidateAllSessions();
   }
 
   private static UserSessionInfo toUserSessionInfo(

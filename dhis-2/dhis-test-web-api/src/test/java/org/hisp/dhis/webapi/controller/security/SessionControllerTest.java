@@ -62,6 +62,7 @@ class SessionControllerTest extends H2ControllerIntegrationTestBase {
   @AfterEach
   void tearDown() {
     sessionRegistry.removeSessionInformation(SESSION_ID);
+    sessionRegistry.removeSessionInformation(SESSION_ID + "-other");
   }
 
   @Test
@@ -98,5 +99,27 @@ class SessionControllerTest extends H2ControllerIntegrationTestBase {
     SessionInformation expired = sessionRegistry.getSessionInformation(SESSION_ID);
     assertNotNull(expired);
     assertTrue(expired.isExpired());
+  }
+
+  @Test
+  void deleteAllExpiresSessionsForEveryRegisteredUser() {
+    var admin = userService.createUserDetails(getAdminUser());
+    var other = UserDetails.empty().username("other-session-user").build();
+    sessionRegistry.registerNewSession(SESSION_ID, admin);
+    sessionRegistry.registerNewSession(SESSION_ID + "-other", other);
+    assertEquals(HttpStatus.OK, DELETE("/api/sessions").status());
+    assertNotNull(sessionRegistry.getSessionInformation(SESSION_ID));
+    assertNotNull(sessionRegistry.getSessionInformation(SESSION_ID + "-other"));
+    assertTrue(sessionRegistry.getSessionInformation(SESSION_ID).isExpired());
+    assertTrue(sessionRegistry.getSessionInformation(SESSION_ID + "-other").isExpired());
+  }
+
+  @Test
+  void ordinaryUserCannotInvalidateOtherSessions() {
+    var admin = userService.createUserDetails(getAdminUser());
+    sessionRegistry.registerNewSession(SESSION_ID, admin);
+    switchToNewUser("session-observer");
+    assertEquals(HttpStatus.FORBIDDEN, DELETE("/api/sessions").status());
+    assertFalse(sessionRegistry.getSessionInformation(SESSION_ID).isExpired());
   }
 }

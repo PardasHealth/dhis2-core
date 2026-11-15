@@ -30,12 +30,23 @@
 package org.hisp.dhis.user;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
+import java.util.Date;
+import java.util.List;
 import org.hisp.dhis.attribute.AttributeService;
 import org.hisp.dhis.cache.Cache;
 import org.hisp.dhis.cache.CacheProvider;
@@ -50,7 +61,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -143,6 +163,68 @@ class UserSessionInvalidationTest {
     assertDoesNotThrow(() -> userService.invalidateUserSessions("unknown"));
     assertDoesNotThrow(() -> userService.invalidateUserSessions(null));
     verifyNoInteractions(userStore);
+  }
+
+  @Test
+  void invalidateAllSessionsRetainsExpiredMarkersForEveryUser() {
+    sessionRegistry.registerNewSession("session1", fullPrincipal("alice"));
+    sessionRegistry.registerNewSession("session2", fullPrincipal("bob"));
+    userService.invalidateAllSessions();
+    assertNotNull(sessionRegistry.getSessionInformation("session1"));
+    assertNotNull(sessionRegistry.getSessionInformation("session2"));
+    assertTrue(sessionRegistry.getSessionInformation("session1").isExpired());
+    assertTrue(sessionRegistry.getSessionInformation("session2").isExpired());
+    verifyNoInteractions(userStore);
+  }
+
+  @Test
+  void invalidatedSessionIsRejectedByTheRealSessionFilter() throws Exception {
+    var principal = fullPrincipal("alice");
+    var session = new MockHttpSession();
+    sessionRegistry.registerNewSession(session.getId(), principal);
+    var request = new MockHttpServletRequest("GET", "/api/me");
+    request.setSession(session);
+    var response = new MockHttpServletResponse();
+    var chain = mock(FilterChain.class);
+    var filter =
+        new ConcurrentSessionFilter(sessionRegistry, event -> event.getResponse().setStatus(401));
+    try {
+      SecurityContextHolder.getContext()
+          .setAuthentication(
+              UsernamePasswordAuthenticationToken.authenticated(principal, null, List.of()));
+      userService.invalidateAllSessions();
+      filter.doFilter(request, response, chain);
+      assertEquals(401, response.getStatus());
+      assertTrue(session.isInvalid());
+      assertNull(SecurityContextHolder.getContext().getAuthentication());
+      verifyNoInteractions(chain);
+    } finally {
+      SecurityContextHolder.clearContext();
+    }
+  }
+
+  @Test
+  void repeatedGlobalInvalidationAndEmptyRegistryAreSafe() {
+    assertDoesNotThrow(userService::invalidateAllSessions);
+    sessionRegistry.registerNewSession("session1", fullPrincipal("alice"));
+    userService.invalidateAllSessions();
+    assertDoesNotThrow(userService::invalidateAllSessions);
+    assertNotNull(sessionRegistry.getSessionInformation("session1"));
+    assertTrue(sessionRegistry.getSessionInformation("session1").isExpired());
+  }
+
+  @Test
+  void globalInvalidationRetainsExpirationInUsernameLookupFallback() {
+    var registry = mock(SessionRegistry.class);
+    when(registry.getAllPrincipals()).thenThrow(new UnsupportedOperationException());
+    when(userStore.getAllUsernames()).thenReturn(List.of("alice"));
+    var session = new SessionInformation(fullPrincipal("alice"), "fallback-session", new Date());
+    when(registry.getAllSessions(any(), eq(true))).thenReturn(List.of(session));
+    ReflectionTestUtils.setField(userService, "sessionRegistry", registry);
+    userService.invalidateAllSessions();
+    assertTrue(session.isExpired());
+    verify(registry, never()).removeSessionInformation(any());
+    verify(userStore).getAllUsernames();
   }
 
   /** A principal as it is registered at login, carrying more than just the username. */

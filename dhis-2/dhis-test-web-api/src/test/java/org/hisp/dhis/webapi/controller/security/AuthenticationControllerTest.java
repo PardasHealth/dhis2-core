@@ -431,8 +431,14 @@ class AuthenticationControllerTest extends AuthenticationApiTestBase {
     HttpResponse response = POST("/auth/login", "{'username':'admin','password':'district'}");
     assertNotNull(response);
 
-    assertEquals(1, sessionRegistry.getAllPrincipals().size());
-    UserDetails actual = (UserDetails) sessionRegistry.getAllPrincipals().get(0);
+    // Revoked sessions retain expiration markers until the next request or
+    // lifecycle cleanup. Only nonexpired sessions establish a current login.
+    var activePrincipals =
+        sessionRegistry.getAllPrincipals().stream()
+            .filter(principal -> !sessionRegistry.getAllSessions(principal, false).isEmpty())
+            .toList();
+    assertEquals(1, activePrincipals.size());
+    UserDetails actual = (UserDetails) activePrincipals.get(0);
 
     assertNotNull(actual);
     assertEquals("admin", actual.getUsername());

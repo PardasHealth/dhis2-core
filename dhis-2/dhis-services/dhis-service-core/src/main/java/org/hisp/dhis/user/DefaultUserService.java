@@ -1038,7 +1038,9 @@ public class DefaultUserService implements UserService {
   public void invalidateAllSessions() {
     for (Object principal : getAllSessionPrincipals()) {
       for (SessionInformation session : sessionRegistry.getAllSessions(principal, true)) {
-        sessionRegistry.removeSessionInformation(session.getSessionId());
+        // Keep the expiration marker until the session filter has rejected the
+        // next request. Removing only the registry entry leaves the HTTP session valid.
+        session.expireNow();
       }
     }
   }
