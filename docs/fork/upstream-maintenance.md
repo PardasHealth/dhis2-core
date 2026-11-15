@@ -23,7 +23,10 @@ OTP utility, Artemis configuration, configuration key catalog, Hibernate encrypt
 configuration, QR controller, authentication event logger, audit-review controller
 and API-token request filter. The November 15 follow-ups also change authentication
 request details, publisher configuration and lifecycle listener, global user-service
-session invalidation and the sessions controller. A dedicated token-failure event
+session invalidation and the sessions controller. Atomic failure counters add an
+optional `Cache.update` contract and local/Redis/disabled-cache implementations;
+custom counter-cache adapters must implement atomic update, with Redis scripting
+permission required for the Redis implementation. A dedicated token-failure event
 is added alongside the internal replay/broker-TLS classes and the additive
 fork-specific repeatable migration.
 
@@ -31,7 +34,8 @@ The [selected AFTA code trace](../security/common-criteria/afta-code-traceabilit
 records these follow-ups by checklist row, method, implementation commit, test and
 dated evidence. On an upstream merge, preserve mapped token-failure events and
 password-counter isolation, servlet address provenance, expired session markers
-for next-request revocation, and canonical local OIDC bookkeeping. Retain their
+for next-request revocation, canonical local OIDC bookkeeping, and atomic
+login/recovery/MFA-disable increments with their existing thresholds and expiry. Retain their
 negative tests even if upstream replaces the implementing code.
 
 POMs, public endpoints, bundled app selections and existing user-table columns

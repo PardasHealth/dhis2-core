@@ -1,0 +1,195 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA rows 29/30 / FIA_AFL.1.1/1.2: per-key atomic failure increments for local and Redis caches, preserving existing predicates/expiry; not full deployed lockout policy closure",
+  "baseline_core_commit": "b5db3042fd323e1f69fa837abd164df25657b3f0",
+  "implementation_commit": "bc6b67654b1065fc047a8c7d377ae95533bf054a",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "f4a8687ab9167a85bbc059861769203047c803269094b64f8d7a89fcd146946a",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/Cache.java": "20607043f944d23826477f6cb4bd55362cf39f8e20aa26a962f2179093930794",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/LocalCache.java": "11bc60cf1bf93a001bc529c103a2fd2e5f7d1a78f4899cfd039a2a2884a08683",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/NoOpCache.java": "c939ee7bfdc49041f28ebd69bb9204bbf1b33d6b7878faad7986d3db7c7f74a6",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/cache/AtomicCacheUpdateTest.java": "d8a43f64bdda10ad787c2337b4e133674d73f786ba62b64b859363463e368c0a",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserFailureCounterConcurrencyTest.java": "596356c385a7965f4eb325060d9f6af19c9ad809e54327ba088ed3f5f94a573c",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserSessionInvalidationTest.java": "be77ee80676613b96e909d842d8fe2994618c61da10226d25007f6b4020398c5",
+    "dhis-2/dhis-support/dhis-support-system/src/main/java/org/hisp/dhis/cache/RedisCache.java": "e1bfe3cf1fa732702a522f805389ba1faf81d289dbad89bcfaa2e9e5b1eec97a",
+    "dhis-2/dhis-support/dhis-support-system/src/test/java/org/hisp/dhis/cache/RedisCacheTest.java": "c1d1f48f81b14cca67a8b25217e75929cfc6c544e9c554679aaaadba7d7c8df0",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/cache/RedisAtomicCacheUpdateTest.java": "92ceb3cc0bb0332978ddd48af4ab436dab4ccae222ff70bb5650e5ce9173ef92",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/TwoFactorControllerTest.java": "f687a61002f3ba0249cb5111237630d8c51b4e3aafd3fae59e301215b6ce85fc",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/UserTwoFactorAuditControllerTest.java": "01ba62d40cd23ad2b86532d2964b0bd7d952c71f8e0d4449a855f15dca4199fe",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "fb242df4345c19b0e8bb0d08bb455330ef279760551c4f5a2bcfee54989fefd2"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.cache.AtomicCacheUpdateTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.cache.RedisCacheTest",
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "aggregation": "Sum of 11 nested JUnit suite reports; enclosing suite has zero cases and is excluded from the sum."
+    },
+    {
+      "class": "org.hisp.dhis.user.UserFailureCounterConcurrencyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.user.UserSessionInvalidationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.cache.RedisAtomicCacheUpdateTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 132,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.cache.AtomicCacheUpdateTest.xml": "93815687352e209eef1c521b9b037feea6f8c98363bf531f215a50814f13aa32",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$PutWithTtlTests.xml": "3d76c024b879bec461c3e29b346e794c960b1ddc30e9dcaf0fed7ad8e5e6616a",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$CacheTypeTests.xml": "abd09035adfc9426a0a208cbfd60d547a6a2bbd3dbfdaaec0a715ca724636513",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$GetAllTests.xml": "9f110bee812abdbb3442b34599748bdd01735817b56fb4cd807d611f0e1b15c7",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$KeysTests.xml": "192baf9c026d1ae08d65b7b18747e7b4feac9801e52bdcb81a9191999ac48f3b",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$GetIfPresentTests.xml": "d9e99f07813a26755fba58c3f773ed21e98f5eefb58a8776711a0b3c3ce27463",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$InvalidateTests.xml": "2b8c04e619afef903c7319f232aba8128c13ada38f357c4bbfff9dac92fe77e5",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$GetWithMappingFunctionTests.xml": "3085e6e4fa3a70942222fe2bf52a3a241f59bac237beceb687c5bff4444d59b4",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$InvalidateAllTests.xml": "990dfe3cbc272d21fc3741ef50611fdc3adab45ca088e5b1fa34fa02edc09003",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$PutTests.xml": "affb3d8267f01a28ae8c090e5c6938b5efa551561331877a1544ef2891f08ef3",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$PutIfAbsentTests.xml": "bea67c3e494e6e7262c53dc0432ed3d03e6ac6ff2a9edaa0754abc8487559845",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest$GetTests.xml": "8a1f562010d4654a80ed86e1f9688a3fc92ef94b7db452d9db80e00fd6db4afa",
+    "dhis-2/dhis-support/dhis-support-system/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisCacheTest.xml": "f578277f8543fc4aedbec389dff6167552d1042fa7640d20f94906fdf6cdf7f5",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.user.UserFailureCounterConcurrencyTest.xml": "d1e8e5802371aa5f2c117a794f4b5d374b12c8a652bb14312a3991a756c04e90",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.user.UserSessionInvalidationTest.xml": "5756cd7bcd58d9c8a2b3be5c9a79a0157e2e99637ec0adf9ce201c65f73e44fa",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "2f1eaa73fa422a9eff5942f8941183d3c8b2292892db564e0900f5f93baaffd2",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.cache.RedisAtomicCacheUpdateTest.xml": "983fd5b21c6f1963b254baf0c191a4a197557d657bf5fcef1d52dc1921231e4c",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.TwoFactorControllerTest.xml": "b0cb32730f32dafe10c16c2b82e4b554cec5f7438a9a89684fb6a965c0cb713f",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest.xml": "70100c41b3171fbe571facbdcaf632b3b4919cd103b8354b0d4f8dafb44ac382",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "88c0e71ce44675ee64d1f422dde6b8586b9f05191adeb26eff67a32d66232e81",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest.xml": "3c92da5c08a066d22d3b09eacacd6632da898408955b608eb20166c807c4c91d",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "79486f6a33ef5a0bcfb67210d09968395e5c7779b4c5184ef7c80c14a2016fb0"
+  },
+  "baseline_regression": {
+    "tests": 5,
+    "failures": 3,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [
+      "concurrentLoginFailuresBothCount",
+      "concurrentRecoveryFailuresBothCount",
+      "concurrentMfaDisableFailuresBothCount"
+    ],
+    "scope": "Preceding DefaultUserService, new cache implementations present but unused by its get/put paths. A barrier around real cache reads forces both failure calls to read the same previous value. Each counter records one instead of two. Serial threshold/reset and disabled-setting cases pass. Patched service restored afterward.",
+    "log_sha256": "2c3ae78b8d66aaedaed03aa8aed00af43813aea11e7f930a073c9589d8c536db"
+  },
+  "setup_followups": [
+    {
+      "stage": "Initial script API compilation",
+      "outcome": "Corrected the typed script-result serializer; byte-array argument serialization and Long results now use compatible serializers."
+    },
+    {
+      "stage": "Initial Redis fixture in system module",
+      "outcome": "BeforeAll failed because runtime Lettuce was absent; no Redis fixture cases executed. Moved the fixture to the web-test module with existing client dependencies.",
+      "log_sha256": "11899e2b9e8ce11f489c358fbc93360b3baa6f7dee6b5c8c03bc17e813aea703"
+    },
+    {
+      "stage": "Initial H2-profile selection",
+      "outcome": "All 56 H2 API cases passed, but the untagged Redis fixture was not selected. A dedicated unit-profile invocation executed all six Redis cases and was added to CI."
+    }
+  ],
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, workspace JDK",
+    "maven": "3.9.11",
+    "command_working_directory": "dhis-2, with the supported JDK selected",
+    "profiles": [
+      "unit-test",
+      "integration-h2-test"
+    ],
+    "redis_image": "redis:7.4-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe",
+    "redis_boundary": "Disposable real Redis server via Testcontainers; multiple cache instances and threads using the existing Lettuce factory/template. Deterministic compare-and-set conflict and concurrent reset, 200 increments, JDK serialization, expiry, eternal entries and mapper failure. Not a multi-process/cluster/failover deployment.",
+    "local_boundary": "800 concurrent local-cache increments; real local caches under service calls with mocks for unrelated dependencies/settings. Service baseline hooks only align scheduling of legacy reads.",
+    "web_boundary": "56 real H2/Spring-security form/token/MFA API cases; six Redis cases run independently under the unit Maven profile. No live external IdP/browser acceptance.",
+    "dependency_provenance": "Existing workspace cache retains the unchanged sms-compression source-build workaround recorded in afta-token-failure-audit-2026-11-15.json. No Maven dependency declaration or version changes; existing web-test Lettuce/Testcontainers dependencies used.",
+    "ci": "New API cache and service concurrency classes required in unit reports. Dedicated Redis invocation plus successful nonempty report required. No hosted CI result asserted."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=UserFailureCounterConcurrencyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=AtomicCacheUpdateTest,RedisCacheTest,UserFailureCounterConcurrencyTest,UserSessionInvalidationTest,AuthenticationListenerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=RedisAtomicCacheUpdateTest,AuthenticationControllerTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Punit-test -Dtest=RedisAtomicCacheUpdateTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "operational_requirements": [
+    "Redis scripting permission for EVAL/EVALSHA; no non-atomic fallback on ACL/outage/contention errors",
+    "Custom cache adapters used for counters must implement atomic update; default implementation explicitly unsupported",
+    "Configured disabled caching does not retain counters; cache TTL/eviction/reset policy still applies"
+  ],
+  "not_established": [
+    "Exact selected AFTA thresholds/counting/reset and provider policy",
+    "Multi-process application, Redis cluster/failover, persistence or operational alert acceptance",
+    "Full lockout guarantees under expiry/eviction/disabled caching or in-flight authentication",
+    "New WAR packaging, live deployment, hosted CI success or full row closure"
+  ]
+}

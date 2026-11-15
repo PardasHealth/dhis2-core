@@ -488,3 +488,33 @@ suite is now explicitly required by the workflow, but no hosted CI, WAR or new
 deployment result is asserted. Distributed counter atomicity, complete selected
 policies and full rows 29/37 acceptance remain open. Overlapping executions are
 not added to earlier evidence inventories.
+
+## 15 November 2026: atomic failure counters
+
+The [atomic-counter trace](common-criteria/afta-atomic-failure-counters.md) and
+[dated evidence](evidence/afta-atomic-failure-counters-2026-11-15.json) record **132
+passing checks**: 70 unit/cache, 56 H2 API and six real Redis cases, with no final
+failures/errors/skips. The existing Redis-cache suite's 35 cases are aggregated
+from eleven nested JUnit reports; the enclosing zero-case report adds nothing.
+Three of five service assertions fail against the preceding get/put counter code,
+each reproducing two simultaneous failures recorded as one. Threshold/reset and
+disabled-setting cases pass before and after the correction.
+
+The new cache operation uses local entry processing or Redis serialized-byte
+compare-and-set with configured write expiry and bounded conflict retries.
+Login/recovery/MFA-disable counters use checked addition without changing the
+existing thresholds or feature flag. Real Redis tests cover a deterministic
+conflict, concurrent increments and reset, JDK serialization, expiry, eternal
+entries and failed mapper preservation. Multiple cache instances use one
+Lettuce factory against a disposable digest-pinned Redis server; this is not
+full application cluster/failover acceptance.
+
+An initial script-result serializer compile issue and missing runtime Lettuce
+in the lower-level fixture were corrected. The real Redis fixture now uses the
+application test module's existing client dependencies. Because the H2 profile
+does not select untagged fixtures, a dedicated unit-profile invocation executes
+its six cases and CI requires the resulting report. No production dependency or
+Maven declaration changed. Redis scripting permission and custom cache-adapter
+support are new operational compatibility requirements. Full provider/reset and
+failure/alert policies, deployed acceptance, WAR packaging and hosted CI success
+remain unverified. Earlier overlapping inventories are not added to this run.

@@ -117,7 +117,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
       "line": 647,
       "symbol": "public void setLastLogin(",
-      "source_sha256": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9"
+      "source_sha256": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb"
     },
     "factor": {
       "repository": "core",
@@ -318,9 +318,9 @@
     "globalsessions": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
-      "line": 1038,
+      "line": 1037,
       "symbol": "public void invalidateAllSessions()",
-      "source_sha256": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9"
+      "source_sha256": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb"
     },
     "oidceventaccount": {
       "repository": "core",
@@ -328,6 +328,34 @@
       "line": 158,
       "symbol": "private static String localOidcUsername(Authentication auth)",
       "source_sha256": "f8a9dc45a16b95d3bf3de8e7693ccefdb7c7db213d0a2b702d556cfd14e7f375"
+    },
+    "failurecounter": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
+      "line": 1243,
+      "symbol": "public void registerFailedLogin(String username)",
+      "source_sha256": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb"
+    },
+    "cacheupdate": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/Cache.java",
+      "line": 83,
+      "symbol": "default V update(String key,",
+      "source_sha256": "20607043f944d23826477f6cb4bd55362cf39f8e20aa26a962f2179093930794"
+    },
+    "localupdate": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/LocalCache.java",
+      "line": 111,
+      "symbol": "public V update(String key,",
+      "source_sha256": "11bc60cf1bf93a001bc529c103a2fd2e5f7d1a78f4899cfd039a2a2884a08683"
+    },
+    "redisupdate": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-system/src/main/java/org/hisp/dhis/cache/RedisCache.java",
+      "line": 157,
+      "symbol": "public V update(String key,",
+      "source_sha256": "e1bfe3cf1fa732702a522f805389ba1faf81d289dbad89bcfaa2e9e5b1eec97a"
     }
   },
   "rows": [
@@ -1005,11 +1033,15 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Count failed authentication",
-      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. This does not make distributed cache counters atomic.",
+      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open.",
       "gap_and_acceptance": "Fix the AFTA threshold, counting conditions and reset rules; test all login mechanisms and distributed counters.",
       "references": [
         "factor",
-        "oidceventaccount"
+        "oidceventaccount",
+        "failurecounter",
+        "cacheupdate",
+        "localupdate",
+        "redisupdate"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
@@ -1023,6 +1055,13 @@
           "trace": "afta-oidc-event-account-association.md",
           "full_requirement_closed": false,
           "implementation_commit": "efea229e581e89fffa75332b7a9199727bd272ff"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Atomic local/Redis failure increments with existing thresholds/expiry, deterministic race and reset verification",
+          "trace": "afta-atomic-failure-counters.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "bc6b67654b1065fc047a8c7d377ae95533bf054a"
         }
       ]
     },
@@ -1033,17 +1072,30 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Act after failed authentication",
-      "observation": "Provider lockout checks and user account state restrict selected authentication attempts.",
+      "observation": "Provider lockout checks and user account state restrict selected authentication attempts. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open.",
       "gap_and_acceptance": "Verify block duration, reset/unlock authorization and counter races across providers/nodes; preserve authorized recovery.",
       "references": [
         "factor",
-        "token"
+        "token",
+        "failurecounter",
+        "cacheupdate",
+        "localupdate",
+        "redisupdate"
       ],
       "source_key": "FIA_AFL.1.2",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-15",
+          "scope": "Atomic local/Redis failure increments with existing thresholds/expiry, deterministic race and reset verification",
+          "trace": "afta-atomic-failure-counters.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "bc6b67654b1065fc047a8c7d377ae95533bf054a"
+        }
+      ]
     },
     {
       "row": 31,

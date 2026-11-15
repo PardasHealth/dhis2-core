@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: 15 November remediation
 
 Updated: **15 November 2026**. Branch: `work`. Reviewed code snapshot:
-`a0958140b2`. Subsequent documentation-only commits do not change that code.
+`bc6b67654b`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the four recent implementation fixes to selected checklist
+This guide traces the five recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -24,10 +24,11 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 2: `FAU_GEN.1.2` | Use the servlet-resolved audit address instead of client-supplied forwarding headers | `5d426cda14` | [Address-source trace](afta-authentication-address-source.md), [88-case record](../evidence/afta-authentication-address-source-2026-11-15.json) |
 | 39: `FIA_USB.1.3` | Preserve session-expiration markers for next-request revocation; share the corrected service with the admin endpoint | `7af7d5a659` | [Global revocation trace](afta-global-session-invalidation.md), [31-case record](../evidence/afta-global-session-invalidation-2026-11-15.json) |
 | 29 and 37: `FIA_AFL.1.1`, `FIA_USB.1.1` | Handle optional OIDC event details and associate bookkeeping with the resolved local account | `efea229e58` | [OIDC account-association trace](afta-oidc-event-account-association.md), [81-case record](../evidence/afta-oidc-event-account-association-2026-11-15.json) |
+| 29–30: `FIA_AFL.1.1`, `FIA_AFL.1.2` | Commit concurrent failure increments atomically in local and Redis caches, retaining existing thresholds/expiry | `bc6b67654b` | [Atomic-counter trace](afta-atomic-failure-counters.md), [132-case record](../evidence/afta-atomic-failure-counters-2026-11-15.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
-to obtain a unique pass total. The latest batch has 52 unit checks plus 29 H2 API
-checks. Earlier records retain their original source hashes and outcomes; the
+to obtain a unique pass total. The latest batch has 70 unit/cache checks, 56 H2 API checks and six
+standalone checks against a real Redis server. Earlier records retain their original source hashes and outcomes; the
 [generated register](afta-requirement-traceability.md) identifies sources changed
 since each historical record. A previous test result is not silently upgraded to
 proof for a later source version.
@@ -80,7 +81,7 @@ may identify the proxy. This code does not establish an IP-based lockout policy.
 
 | Code | Owning symbols and invariant |
 | --- | --- |
-| [DefaultUserService](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java#L1038) | `invalidateAllSessions`: call `SessionInformation.expireNow()` and retain the registry marker so an existing HTTP session cannot escape revocation merely because its registry entry disappeared. |
+| [DefaultUserService](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java#L1037) | `invalidateAllSessions`: call `SessionInformation.expireNow()` and retain the registry marker so an existing HTTP session cannot escape revocation merely because its registry entry disappeared. |
 | [SessionController](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/SessionController.java#L103) | `invalidateAllSessions`: the existing `DELETE /api/sessions` endpoint delegates to the corrected service, retaining its `ALL` authority requirement. The endpoint previously had its own expiration loop; the defect was in the service path. |
 
 [UserSessionInvalidationTest](../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserSessionInvalidationTest.java)
@@ -121,13 +122,51 @@ audit/token units and real H2 form/token API checks.
 
 These are not live IdP protocol or browser tests. Provider acceptance/claims
 validation is unchanged. Complete attribute freshness, username/UID races,
-selected failure/reset rules and atomic/distributed counters remain open.
+selected failure/reset rules and deployment acceptance remain open. The next
+section records the separate atomic key-update improvement.
+
+## 5. Atomic failure counters
+
+| Code | Owning symbols and invariant |
+| --- | --- |
+| [Cache](../../../dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/Cache.java#L83) | `update`: side-effect-free value transformation may retry; unsupported custom adapters fail explicitly instead of falling back to a non-atomic read/write. |
+| [LocalCache](../../../dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/LocalCache.java#L111) | `update`: entry processor serializes updates to the same key using cache2k's atomic entry operation. |
+| [RedisCache](../../../dhis-2/dhis-support/dhis-support-system/src/main/java/org/hisp/dhis/cache/RedisCache.java#L157) | `update`, `UPDATE_IF_UNCHANGED`: compare original serialized bytes and atomically write the new value/expiry on the server; retry conflicts, with an explicit bounded failure. |
+| [DefaultUserService](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java#L1243) | `registerFailedLogin`, `registerRecoveryAttempt`, `registerFailed2FADisableAttempt`: use atomic updates and checked integer addition, preserving existing predicates, feature flags and resets. |
+| [NoOpCache](../../../dhis-2/dhis-api/src/main/java/org/hisp/dhis/cache/NoOpCache.java#L82) | `update`: preserve explicitly disabled-cache semantics; this path is not counter-enforcement evidence. |
+
+[UserFailureCounterConcurrencyTest](../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserFailureCounterConcurrencyTest.java)
+reproduces three lost-count assertions against the preceding service: two concurrent
+failures were counted as one. Its serial threshold/reset and disabled-setting
+cases pass before and after the change.
+[AtomicCacheUpdateTest](../../../dhis-2/dhis-api/src/test/java/org/hisp/dhis/cache/AtomicCacheUpdateTest.java)
+checks concurrent local updates, mapper failure preservation and default/disabled
+behavior.
+[RedisAtomicCacheUpdateTest](../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/cache/RedisAtomicCacheUpdateTest.java)
+uses a disposable digest-pinned Redis container and existing application client
+dependencies. It tests deterministic conflict retries, 200 concurrent increments,
+a racing reset, serialization, expiry and mapper failure. It runs in a dedicated
+unit-profile invocation because the H2 profile does not select untagged fixtures.
+
+The 132-case execution combines 70 unit/cache checks, 56 H2 API checks and six
+real Redis checks. The existing Redis-cache suite contributes 35 cases aggregated
+from eleven nested JUnit reports; the enclosing zero-case report is not counted
+again. Source hashes and all report hashes are preserved in the dated evidence.
+
+Redis scripting permissions (`EVAL`/`EVALSHA`) are required. Custom counter-cache
+adapters must implement the new atomic operation; no unsafe fallback is provided.
+Full provider/reset policy, expiry/eviction behavior, cluster/failover and deployed
+operational acceptance remain open. Multiple cache instances against one Redis
+server are not a full multi-process application deployment.
 
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
 now explicitly selects `AuthenticationListenerTest` and
 `UserSessionInvalidationTest` and requires their successful, nonempty reports.
+The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
+`UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
+report.
 Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.

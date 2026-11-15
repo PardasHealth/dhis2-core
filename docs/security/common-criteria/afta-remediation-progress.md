@@ -4,14 +4,22 @@ Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 15 November follow-up: atomic failure counters
+
+Rows 29 and 30 have a concurrent-counting fix. Login, recovery and MFA-disable
+failures now use atomic local/Redis cache updates rather than a separate read
+and write. The configured thresholds, feature flag and cache expiry remain.
+See the [counter implementation, compatibility and Redis permission requirements](afta-atomic-failure-counters.md).
+Complete provider/reset policy and deployed cluster/failover acceptance remain open.
+
 ## 15 November follow-up: OIDC event account association
 
 Rows 29 and 37 have a lifecycle-listener fix: optional OIDC HTTP details no
 longer interrupt failed/successful-login bookkeeping, and completed OAuth events
 use their resolved local DHIS2 identity rather than an external subject name.
 Unmapped success events do not mutate a local namesake. See the [bounded event
-association trace](afta-oidc-event-account-association.md). Provider acceptance,
-distributed counter atomicity and full selected row definitions remain open.
+association trace](afta-oidc-event-account-association.md). Provider acceptance and full selected row definitions remain open; the later
+atomic-counter follow-up addresses the separate per-key update race.
 
 ## 15 November follow-up: global session invalidation
 

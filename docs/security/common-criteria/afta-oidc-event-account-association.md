@@ -58,3 +58,10 @@ and full requirement acceptance are also still open. No full row is closed and
 checklist percentages remain unchanged. Other OAuth integrations need an explicit
 local account mapping to receive local success-bookkeeping updates; an external
 subject alone is insufficient.
+
+## Subsequent atomic-counter follow-up
+
+The [atomic failure-counter change](afta-atomic-failure-counters.md) separately
+adds local/Redis key-update atomicity. The OIDC test inventory above remains
+historical and is not rewritten; broader provider/reset rules, deployed failover
+and full AFTA acceptance remain open.
