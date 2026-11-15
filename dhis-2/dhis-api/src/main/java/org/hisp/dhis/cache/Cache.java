@@ -31,6 +31,7 @@ package org.hisp.dhis.cache;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 public interface Cache<V> {
@@ -69,6 +70,19 @@ public interface Cache<V> {
    * @throws IllegalArgumentException if the specified mappingFunction is null
    */
   V get(String key, Function<String, V> mappingFunction);
+
+  /**
+   * Atomically replaces a value using the current value, or the configured default when absent. The
+   * function must be side-effect free: distributed implementations may retry it on conflict. A
+   * successful update uses the same configured expiry as {@link #put(String, Object)}.
+   *
+   * @return the committed value, which must not be null
+   * @throws IllegalArgumentException if the function is null
+   * @throws RuntimeException if the function fails, returns null, or the update cannot commit
+   */
+  default V update(String key, UnaryOperator<V> updateFunction) {
+    throw new UnsupportedOperationException("Atomic update is not supported by this cache");
+  }
 
   /**
    * Returns a collection of all the values in the cache

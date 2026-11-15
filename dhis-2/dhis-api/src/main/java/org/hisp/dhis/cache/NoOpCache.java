@@ -34,6 +34,7 @@ import static org.springframework.util.Assert.hasText;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
@@ -75,6 +76,15 @@ public class NoOpCache<V> implements Cache<V> {
       throw new IllegalArgumentException("MappingFunction cannot be null");
     }
     return Optional.ofNullable(mappingFunction.apply(key)).orElse(defaultValue);
+  }
+
+  @Override
+  public V update(String key, UnaryOperator<V> updateFunction) {
+    if (updateFunction == null)
+      throw new IllegalArgumentException("Update function cannot be null");
+    V value = updateFunction.apply(defaultValue);
+    if (value == null) throw new IllegalArgumentException(VALUE_CANNOT_BE_NULL);
+    return value;
   }
 
   @Override

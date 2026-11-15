@@ -819,9 +819,8 @@ public class DefaultUserService implements UserService {
 
   @Override
   public void registerFailed2FADisableAttempt(String username) {
-    Integer attempts = twoFaDisableFailedAttemptCache.get(username).orElse(0);
-    attempts++;
-    twoFaDisableFailedAttemptCache.put(username, attempts);
+    twoFaDisableFailedAttemptCache.update(
+        username, attempts -> Math.addExact(attempts == null ? 0 : attempts, 1));
   }
 
   @Override
@@ -1227,9 +1226,8 @@ public class DefaultUserService implements UserService {
       return;
     }
 
-    Integer attempts = userAccountRecoverAttemptCache.get(username).orElse(0);
-
-    userAccountRecoverAttemptCache.put(username, ++attempts);
+    userAccountRecoverAttemptCache.update(
+        username, attempts -> Math.addExact(attempts == null ? 0 : attempts, 1));
   }
 
   @Override
@@ -1247,11 +1245,8 @@ public class DefaultUserService implements UserService {
       return;
     }
 
-    Integer attempts = userFailedLoginAttemptCache.get(username).orElse(0);
-
-    attempts++;
-
-    userFailedLoginAttemptCache.put(username, attempts);
+    userFailedLoginAttemptCache.update(
+        username, attempts -> Math.addExact(attempts == null ? 0 : attempts, 1));
   }
 
   @Override

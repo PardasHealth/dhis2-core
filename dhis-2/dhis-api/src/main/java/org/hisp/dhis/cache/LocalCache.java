@@ -35,6 +35,7 @@ import static org.springframework.util.Assert.hasText;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import org.cache2k.Cache2kBuilder;
 
@@ -104,6 +105,20 @@ public class LocalCache<V> implements Cache<V> {
     }
 
     return Optional.ofNullable(value).orElse(defaultValue);
+  }
+
+  @Override
+  public V update(String key, UnaryOperator<V> updateFunction) {
+    if (updateFunction == null)
+      throw new IllegalArgumentException("Update function cannot be null");
+    return cache2kInstance.invoke(
+        key,
+        entry -> {
+          V value = updateFunction.apply(entry.exists() ? entry.getValue() : defaultValue);
+          if (value == null) throw new IllegalArgumentException(VALUE_CANNOT_BE_NULL);
+          entry.setValue(value);
+          return value;
+        });
   }
 
   @Override

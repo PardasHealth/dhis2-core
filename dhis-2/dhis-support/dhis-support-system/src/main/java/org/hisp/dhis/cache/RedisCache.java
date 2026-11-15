@@ -34,13 +34,20 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.util.Assert.hasText;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import org.hisp.dhis.common.collection.CollectionUtils;
+import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * A redis backed implementation of {@link Cache}. This implementation uses a shared redis cache
@@ -50,6 +57,25 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class RedisCache<V> implements Cache<V> {
   private static final String VALUE_CANNOT_BE_NULL = "Value cannot be null";
+
+  private static final int MAX_UPDATE_ATTEMPTS = 64;
+  private static final DefaultRedisScript<Long> UPDATE_IF_UNCHANGED =
+      new DefaultRedisScript<>(
+          """
+          local current = redis.call('GET', KEYS[1])
+          if ARGV[1] == 'absent' then
+            if current then return 0 end
+          elseif current ~= ARGV[2] then
+            return 0
+          end
+          if ARGV[4] == '-1' then
+            redis.call('SET', KEYS[1], ARGV[3])
+          else
+            redis.call('SET', KEYS[1], ARGV[3], 'EX', ARGV[4])
+          end
+          return 1
+          """,
+          Long.class);
 
   private final RedisTemplate<String, V> redisTemplate;
 
@@ -124,6 +150,44 @@ public class RedisCache<V> implements Cache<V> {
     }
 
     return Optional.ofNullable(value).orElse(defaultValue);
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public V update(String key, UnaryOperator<V> updateFunction) {
+    if (updateFunction == null)
+      throw new IllegalArgumentException("Update function cannot be null");
+    String redisKey = generateKey(key);
+    var keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
+    var valueSerializer = (RedisSerializer<V>) redisTemplate.getValueSerializer();
+    byte[] rawKey = keySerializer.serialize(redisKey);
+    var bytes = RedisSerializer.byteArray();
+    byte[] ttl =
+        Long.toString(expiryEnabled ? expiryInSeconds : -1).getBytes(StandardCharsets.UTF_8);
+    for (int attempt = 0; attempt < MAX_UPDATE_ATTEMPTS; attempt++) {
+      byte[] previous =
+          redisTemplate.execute(
+              (RedisCallback<byte[]>) connection -> connection.stringCommands().get(rawKey));
+      V current = previous == null ? defaultValue : valueSerializer.deserialize(previous);
+      V updated = updateFunction.apply(current == null ? defaultValue : current);
+      if (updated == null) throw new IllegalArgumentException(VALUE_CANNOT_BE_NULL);
+      byte[] encoded = valueSerializer.serialize(updated);
+      if (encoded == null) throw new IllegalStateException("Cache serializer returned no value");
+      Long committed =
+          redisTemplate.execute(
+              UPDATE_IF_UNCHANGED,
+              bytes,
+              new GenericToStringSerializer<>(Long.class),
+              List.of(redisKey),
+              (previous == null ? "absent" : "present").getBytes(StandardCharsets.UTF_8),
+              previous == null ? new byte[0] : previous,
+              encoded,
+              ttl);
+      if (committed == null)
+        throw new IllegalStateException("Redis cache update returned no result");
+      if (committed == 1) return updated;
+    }
+    throw new ConcurrencyFailureException("Cache update could not commit after repeated conflicts");
   }
 
   @Override
