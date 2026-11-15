@@ -47,11 +47,14 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
 import org.hisp.dhis.security.apikey.ApiTokenAuthenticationToken;
+import org.hisp.dhis.security.basic.HttpBasicWebAuthenticationDetails;
 import org.hisp.dhis.security.oidc.DhisOidcUser;
+import org.hisp.dhis.security.spring2fa.TwoFactorWebAuthenticationDetails;
 import org.hisp.dhis.user.UserDetails;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -99,6 +102,71 @@ class AuthenticationAuditRecordTest {
     String line = onlyMessage();
     assertTrue(line.contains("username: alice; ip: 192.0.2.7; exception: Bad credentials"));
     assertFalse(line.contains("not-logged-password"));
+  }
+
+  @Test
+  void passwordFailureCannotForgeAuditAddressWithForwardedHeader() {
+    var request = new MockHttpServletRequest();
+    request.setRemoteAddr("203.0.113.20");
+    request.addHeader("X-Forwarded-For", "198.51.100.10");
+    var auth = UsernamePasswordAuthenticationToken.unauthenticated("alice", null);
+    auth.setDetails(new TwoFactorWebAuthenticationDetails(request, "123456"));
+    listener.onApplicationEvent(
+        new AuthenticationFailureBadCredentialsEvent(auth, new BadCredentialsException("Denied")));
+    String line = onlyMessage();
+    assertTrue(line.contains("ip: 203.0.113.20"));
+    assertFalse(line.contains("198.51.100.10"));
+    assertFalse(line.contains("123456"));
+  }
+
+  @Test
+  void basicSuccessCannotForgeAuditAddressWithForwardedChain() {
+    var request = new MockHttpServletRequest();
+    request.setRemoteAddr("2001:db8::20");
+    request.addHeader("X-Forwarded-For", "198.51.100.10, 192.0.2.1");
+    var auth = UsernamePasswordAuthenticationToken.authenticated("alice", null, List.of());
+    auth.setDetails(new HttpBasicWebAuthenticationDetails(request));
+    listener.onApplicationEvent(new AuthenticationSuccessEvent(auth));
+    String line = onlyMessage();
+    assertTrue(line.contains("ip: 2001:db8::20"));
+    assertFalse(line.contains("198.51.100.10"));
+    assertFalse(line.contains("192.0.2.1"));
+  }
+
+  @Test
+  void emptyForwardedHeaderCannotEraseAvailableAuditAddress() {
+    var request = new MockHttpServletRequest();
+    request.setRemoteAddr("203.0.113.20");
+    request.addHeader("X-Forwarded-For", "");
+    var auth = UsernamePasswordAuthenticationToken.authenticated("alice", null, List.of());
+    auth.setDetails(new ForwardedIpAwareWebAuthenticationDetails(request));
+    listener.onApplicationEvent(new AuthenticationSuccessEvent(auth));
+    assertTrue(onlyMessage().contains("ip: 203.0.113.20"));
+  }
+
+  @Test
+  void servletResolvedClientAddressRemainsAvailableForTrustedProxyDeployments() {
+    var request = new MockHttpServletRequest();
+    request.setRemoteAddr("198.51.100.30");
+    request.addHeader("Forwarded", "for=192.0.2.99");
+    request.addHeader("X-Forwarded-For", "192.0.2.99");
+    var details = new TwoFactorWebAuthenticationDetails(request);
+    var auth = UsernamePasswordAuthenticationToken.authenticated("alice", null, List.of());
+    auth.setDetails(details);
+    listener.onApplicationEvent(new AuthenticationSuccessEvent(auth));
+    assertEquals(details.getRemoteAddress(), details.getIp());
+    assertTrue(onlyMessage().contains("ip: 198.51.100.30"));
+    assertFalse(onlyMessage().contains("192.0.2.99"));
+  }
+
+  @Test
+  void requestsWithoutForwardedHeadersRetainTheirConnectionAddress() {
+    var request = new MockHttpServletRequest();
+    request.setRemoteAddr("203.0.113.20");
+    var auth = UsernamePasswordAuthenticationToken.authenticated("alice", null, List.of());
+    auth.setDetails(new HttpBasicWebAuthenticationDetails(request));
+    listener.onApplicationEvent(new AuthenticationSuccessEvent(auth));
+    assertTrue(onlyMessage().contains("ip: 203.0.113.20"));
   }
 
   @Test

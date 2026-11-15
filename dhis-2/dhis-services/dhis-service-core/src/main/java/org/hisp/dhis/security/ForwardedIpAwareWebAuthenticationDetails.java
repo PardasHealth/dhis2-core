@@ -30,21 +30,19 @@
 package org.hisp.dhis.security;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.hisp.dhis.util.ObjectUtils;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 /**
  * @author Morten Svanæs <msvanaes@dhis2.org>
  */
 public class ForwardedIpAwareWebAuthenticationDetails extends WebAuthenticationDetails {
-  private static final String HEADER_FORWARDED_FOR = "X-Forwarded-For";
-
   private String ip;
 
   public ForwardedIpAwareWebAuthenticationDetails(HttpServletRequest request) {
     super(request);
-    this.ip =
-        ObjectUtils.firstNonNull(request.getHeader(HEADER_FORWARDED_FOR), request.getRemoteAddr());
+    // Forwarded headers are client input until a trusted container/proxy
+    // integration validates them and resolves the servlet remote address.
+    this.ip = getRemoteAddress();
   }
 
   public ForwardedIpAwareWebAuthenticationDetails(
