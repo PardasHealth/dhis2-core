@@ -117,7 +117,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
       "line": 647,
       "symbol": "public void setLastLogin(",
-      "source_sha256": "02559682d88dd6c5c2afeeecd3401696a70cd18629a74776a68d8ea7ab40d4e0"
+      "source_sha256": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9"
     },
     "factor": {
       "repository": "core",
@@ -166,7 +166,7 @@
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/SessionController.java",
       "line": 65,
       "symbol": "class SessionController",
-      "source_sha256": "ff4fca7ebccf4120ddcec0cc8bb6a3d05710e7808f7747e9272417d34e705ef6"
+      "source_sha256": "3fe381a5ca6f560ae951fedb639065138d96009132e9623ad672b462e921f34f"
     },
     "auditfailure": {
       "repository": "core",
@@ -314,6 +314,13 @@
       "line": 41,
       "symbol": "public ForwardedIpAwareWebAuthenticationDetails(HttpServletRequest request)",
       "source_sha256": "d6f70c1a772ed8e3768877225a7cce252e9b05845d5f8c0b1d607175713531ba"
+    },
+    "globalsessions": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java",
+      "line": 1038,
+      "symbol": "public void invalidateAllSessions()",
+      "source_sha256": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9"
     }
   },
   "rows": [
@@ -1240,11 +1247,12 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Changes to subject attributes",
-      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
+      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Global invalidation now retains expired registry markers so the session filter rejects an existing HTTP session on its next request; the existing admin endpoint delegates to the corrected service and retains its authority gate. Complete cross-provider/node revocation timing remains open.",
       "gap_and_acceptance": "Demonstrate the selected update/revocation timing for browser/SSO subjects, background jobs and multiple nodes.",
       "references": [
         "token",
-        "sessions"
+        "sessions",
+        "globalsessions"
       ],
       "source_key": "FIA_USB.1.3",
       "counted": true,
@@ -1258,6 +1266,13 @@
           "trace": "afta-token-owner-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Global session invalidation retains expired markers for next-request enforcement; shared admin API path and authorization regressions",
+          "trace": "afta-global-session-invalidation.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "7af7d5a659a465147b347b1fd4d73adf1e8a355f"
         }
       ]
     },

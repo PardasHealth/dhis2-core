@@ -442,3 +442,28 @@ coverage. Counts overlap earlier records and are not added to them. The existing
 workspace JDK/source-built SMS dependency conditions remain. No WAR packaging,
 hosted CI or new deployment acceptance is claimed. Checklist dispositions remain
 unchanged.
+
+## 15 November 2026: global session invalidation
+
+The [global revocation trace](common-criteria/afta-global-session-invalidation.md)
+and [dated evidence](evidence/afta-global-session-invalidation-2026-11-15.json)
+record **31 passing checks**: ten core session/role-revocation units and 21 H2
+session/authentication API cases, with no final failures/errors/skips. Four new
+core assertions fail against the preceding global-invalidation service, including
+an existing HTTP session reaching the chain with status 200 because its registry
+entry was removed rather than marked expired. The patched real-filter fixture
+invalidates that session and clears authentication on its next request.
+
+The initial combined H2 run had one legacy fixture assertion failure: the login
+session test counted retained expired principals as active logins. It now still
+requires exactly one active admin principal, filtering by nonexpired sessions.
+The final 21-case rerun passes. Session-controller positive/negative tests retain
+the existing superuser authority boundary. The workflow now includes the core
+invalidation suite and requires its successful report; YAML/embedded Python and
+changed-file formatting checks pass. No hosted CI result is asserted.
+
+The username-based unsupported-enumeration fallback is tested with a mocked
+registry, not an external Redis deployment. Complete selected timing, concurrent
+new/in-flight requests, all provider/browser paths, Redis/cross-node acceptance
+and full AFTA row 39 closure remain open. No new WAR or deployment is claimed.
+These overlapping suite counts are not added to earlier evidence inventories.

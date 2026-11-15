@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA row 39 / FIA_USB.1.3: corrected existing global session-revocation mechanism; no full subject-attribute/session-policy closure",
+  "baseline_core_commit": "651c4382fd",
+  "implementation_commit": "7af7d5a659a465147b347b1fd4d73adf1e8a355f",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "4950d881d295b7bd78512ae03e6d63f4bd77ebcdc0066d0fbdd8472eac0547a1",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "5a93676df46ee21acef70ba724364ce631cf21b0d0843a7e923f6b0ffd10bfd9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserRoleSessionInvalidationListenerTest.java": "7ce9ca3e948eb6d7dc08e6663e39eaa257a39aa97a3e9a5061083db3eebfc85d",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/user/UserSessionInvalidationTest.java": "be77ee80676613b96e909d842d8fe2994618c61da10226d25007f6b4020398c5",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/UserRoleSessionInvalidationControllerTest.java": "991a3952d1b3fca8d9adbb561cd47887461f31891af90b9cf2139a18e056c92a",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/SessionControllerTest.java": "341f5460ab3c97c7ef2bd241c4445c0b7f47194d044b44d5bfb515b2ecb2f1f2",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/SessionController.java": "3fe381a5ca6f560ae951fedb639065138d96009132e9623ad672b462e921f34f",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/DhisWebApiWebSecurityConfig.java": "8f7f5d63dce2f6bdc10a559e2966cd2bb1580a1437163e10aeacdb23b268318a"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.user.UserSessionInvalidationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.user.UserRoleSessionInvalidationListenerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.SessionControllerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserRoleSessionInvalidationControllerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.user.UserSessionInvalidationTest.xml": "d8ed74ac19c50500c653a5123ab14605efa376f8a074fdf9328c3dfea78bfbdb",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.user.UserRoleSessionInvalidationListenerTest.xml": "b9bc941a5f559d48b7c5637d1061db884ca2c566aaad5d830b317b8cc5eb6364",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.SessionControllerTest.xml": "0130d8257c6b38181230af1746b41798f550467e613956eab5b52f5c912207dc",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.UserRoleSessionInvalidationControllerTest.xml": "baeac9598db14c021b6768f378e80b859e0ad82439570c64cd98bda534c08609",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "90181a3b0892535ac3a0f1c3bf418ba01da79a3ad61c2fb50bbabafa02205826"
+  },
+  "baseline_regression": {
+    "tests": 7,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [
+      "invalidateAllSessionsRetainsExpiredMarkersForEveryUser",
+      "invalidatedSessionIsRejectedByTheRealSessionFilter",
+      "repeatedGlobalInvalidationAndEmptyRegistryAreSafe",
+      "globalInvalidationRetainsExpirationInUsernameLookupFallback"
+    ],
+    "scope": "Preceding DefaultUserService with new tests: registry removal leaves a MockHttpSession usable by the real ConcurrentSessionFilter; test expiration handler returns 401 when invoked. The original path reaches the chain with 200. Patched service restored after baseline.",
+    "log_sha256": "1da7ee30d062b7ba7a5afa9487589860249e786d6566cb8c6e0400db2af4b9d4"
+  },
+  "initial_h2_run": {
+    "tests": 21,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "failed_case": "AuthenticationControllerTest.testSessionGetsCreated",
+    "reason": "Legacy test counted all registry principals after cleanup and expected removal. Correct revocation retains expired markers; the fixture assertion is now exactly one active principal with username admin. Four session API cases and one role-revocation case passed in this initial run.",
+    "log_sha256": "f5e6fa9711dd3c043ee0246bd7449894c469271fe6cb9a3ff57c26019de45dc1"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, workspace JDK",
+    "maven": "3.9.11",
+    "profiles": [
+      "unit-test",
+      "integration-h2-test"
+    ],
+    "unit_boundary": "Real in-memory SessionRegistry and ConcurrentSessionFilter with a test 401 expiration strategy, MockHttpSession/request/response and mocked terminal chain. Username-enumeration fallback uses a mocked registry, not Redis.",
+    "web_boundary": "Real H2/Spring-security API tests with the non-Redis session registry. Ordinary-user denial and admin global expiration checked. Production expiration redirect retained. No browser or deployed cookie replay claim.",
+    "dependency_provenance": "Existing local cache retains unchanged sms-compression tag 74f6bbcabce84ae47df21c966ba00dba5a4217d6 source-build workaround documented in afta-token-failure-audit-2026-11-15.json; not asserted binary-identical to JitPack. First web invocation populated missing dependencies; final invocation offline. No dependency declarations changed.",
+    "ci": "Workflow now selects UserSessionInvalidationTest and requires its successful nonempty report. YAML and embedded Python parsed; hosted run not claimed."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=UserSessionInvalidationTest,UserRoleSessionInvalidationListenerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=SessionControllerTest,UserRoleSessionInvalidationControllerTest,AuthenticationControllerTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "Changed-file Spotless checks, git diff --check, workflow YAML and embedded Python syntax checks"
+  ],
+  "not_established": [
+    "Complete selected revocation timing for all providers/subjects",
+    "Atomic revocation of concurrent/new logins or in-flight requests",
+    "Real Redis persistence, orphaned-session discovery, cross-node/failover or browser acceptance",
+    "New WAR packaging, production deployment or hosted CI success",
+    "Full AFTA row closure"
+  ]
+}

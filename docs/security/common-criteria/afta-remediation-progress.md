@@ -4,6 +4,15 @@ Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 15 November follow-up: global session invalidation
+
+Row 39 has a concrete revocation fix: global invalidation retains expired
+session markers so the session filter can reject an existing session's next
+request. The admin sessions API now uses the shared corrected service and retains
+its existing authority requirement. See the [implementation and deployment limits](afta-global-session-invalidation.md).
+The row remains partial; full selected revocation timing and cross-node/provider
+acceptance are not established.
+
 ## 15 November follow-up: authentication address provenance
 
 Row 2 has a further audit-field fix: password/MFA and HTTP Basic request details
