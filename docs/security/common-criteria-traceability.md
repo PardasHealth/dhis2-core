@@ -8,6 +8,15 @@ Protection Profile (PP), or completed Security Target (ST). See the
 [review and remaining gaps](common-criteria-review.md) and
 [execution evidence](common-criteria-verification.md) before interpreting coverage.
 
+## Selected AFTA implementation trace
+
+For the user-selected checklist, use the [consolidated code/test/evidence guide](common-criteria/afta-code-traceability.md)
+and [complete row-by-row register](common-criteria/afta-requirement-traceability.md).
+The November 15 follow-ups trace token-failure events, servlet audit addresses,
+global session revocation and OIDC event account association to exact methods,
+regressions and dated execution records. These selected-row fixes do not replace
+the broader standard-component review below or establish full AFTA closure.
+
 ## Look up a standard component ID
 
 Use the [component-ID → code index](common-criteria-component-code-index.md) or

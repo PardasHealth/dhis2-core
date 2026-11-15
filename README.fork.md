@@ -5,6 +5,7 @@ The original [README](README.md) describes the upstream project.
 
 Fork-specific security work:
 
+- [Selected AFTA code, test and evidence traceability](docs/security/common-criteria/afta-code-traceability.md)
 - [Selected AFTA remediation progress](docs/security/common-criteria/afta-remediation-progress.md)
 
 - [Web review guide: scope, evidence, gaps and solutions](docs/security/common-criteria/README.md)

@@ -18,11 +18,22 @@ these are test-isolation changes, not relaxed successful-login expectations.
 Maven POMs, bundled app versions, dependency declarations, repository identity,
 existing branches and remote URLs are unchanged.
 
-Existing upstream production edits affect eleven classes: the PAT manager, audit
-scheduler, two-factor provider, OTP utility, Artemis configuration, configuration
-key catalog, Hibernate encryption configuration the two-factor QR controller, authentication event logger, audit-review controller
-and API-token request filter. The replay and broker-TLS follow-ups add three small internal classes
-and one additive fork-specific repeatable migration.
+Production edits include the PAT manager, audit scheduler, two-factor provider,
+OTP utility, Artemis configuration, configuration key catalog, Hibernate encryption
+configuration, QR controller, authentication event logger, audit-review controller
+and API-token request filter. The November 15 follow-ups also change authentication
+request details, publisher configuration and lifecycle listener, global user-service
+session invalidation and the sessions controller. A dedicated token-failure event
+is added alongside the internal replay/broker-TLS classes and the additive
+fork-specific repeatable migration.
+
+The [selected AFTA code trace](../security/common-criteria/afta-code-traceability.md)
+records these follow-ups by checklist row, method, implementation commit, test and
+dated evidence. On an upstream merge, preserve mapped token-failure events and
+password-counter isolation, servlet address provenance, expired session markers
+for next-request revocation, and canonical local OIDC bookkeeping. Retain their
+negative tests even if upstream replaces the implementing code.
+
 POMs, public endpoints, bundled app selections and existing user-table columns
 are unchanged:
 

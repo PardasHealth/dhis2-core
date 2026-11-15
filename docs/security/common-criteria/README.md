@@ -1,7 +1,7 @@
 # DHIS2 web-application Common Criteria review guide
 
 Review baseline: `07d4f3f7ea`, DHIS2 `2.44-SNAPSHOT`, plus the recorded security
-patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-09.
+patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-15.
 
 The engineering package documents web scope, component dispositions, code/test
 traces, known findings and proposed solutions. **It is not a claim that the full
@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Where is the recent requirements-to-code trace? | [Methods, regression cases, implementation commits and evidence](afta-code-traceability.md) |
 | Which AFTA gaps have implementation changes? | [Remediation progress](afta-remediation-progress.md), [login replay protection and upgrade notes](afta-login-replay-protection.md) |
 | How are API tokens bound to their owner? | [PAT owner UID validation, regressions and evidence](afta-token-owner-binding.md) |
 | How do token IP constraints handle forwarding headers? | [Servlet-address enforcement, proxy compatibility and evidence](afta-token-ip-constraints.md) |
@@ -50,7 +51,7 @@ rejects disabled enrolled second factors. Login replay reservation is also imple
 other additions are focused tests, fork CI and documentation. No change to
 dependencies or app selection is implied by this review package.
 
-The dated test inventory contains **262 passes, four existing skips, 31 classes**
+The original November 3–4 test inventory contains **262 passes, four existing skips, 31 classes**
 (266 total cases). The web extension adds 51 passes/one skip to the original
 evidence; this is not one full-suite invocation. A production build and selected
 browser/API checks were recorded. The Interpretations bundle error, broader
