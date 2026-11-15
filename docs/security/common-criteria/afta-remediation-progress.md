@@ -1,8 +1,17 @@
 # AFTA remediation implementation progress
 
-Updated: **13 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
+
+## 15 November follow-up: API-token failure audit events
+
+Rows 1–3 now have explicit application-event mappings for invalid, expired and
+constraint-rejected API tokens. Resolver failures join the same audit path;
+resolved owner names and servlet connection details are retained without the
+token secret or full account object. Token rejections do not increment password
+failure counters. See the [implementation and verification boundary](afta-token-failure-audit.md).
+The selected rows remain partial.
 
 ## Latest follow-up: authentication audit records
 

@@ -290,9 +290,23 @@
     "tokenip": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
-      "line": 186,
+      "line": 180,
       "symbol": "private void validateIp(",
-      "source_sha256": "6a1d2b41f35f87dfbdfe2e24fb3da67b6d3b415dceef9162ba46ba439ab52c43"
+      "source_sha256": "739c72b91974e385578a9d75476fcf4a9b42474b5f5b70271f43412295c25163"
+    },
+    "tokenfailure": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
+      "line": 193,
+      "symbol": "private void authenticationFailed(",
+      "source_sha256": "739c72b91974e385578a9d75476fcf4a9b42474b5f5b70271f43412295c25163"
+    },
+    "tokenfailureevents": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java",
+      "line": 122,
+      "symbol": "public DefaultAuthenticationEventPublisher authenticationEventPublisher(",
+      "source_sha256": "4dfbb59ed44cc203f15e81d35b263281fbc7cea1e5d7269d6046b9bba1fc0965"
     }
   },
   "rows": [
@@ -303,11 +317,13 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit events",
-      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome.",
+      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters.",
       "gap_and_acceptance": "Select the AFTA event list, including audit start/stop and security actions; exercise every required event.",
       "references": [
         "auditgen",
-        "authlog"
+        "authlog",
+        "tokenfailure",
+        "tokenfailureevents"
       ],
       "source_key": "FAU_GEN.1.1",
       "counted": true,
@@ -321,6 +337,13 @@
           "trace": "afta-authentication-audit-records.md",
           "full_requirement_closed": false,
           "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "API-token failure event mappings, identity/servlet connection fields and password-counter isolation",
+          "trace": "afta-token-failure-audit.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
         }
       ]
     },
@@ -331,11 +354,13 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit record fields",
-      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls.",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters.",
       "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
       "references": [
         "auditquery",
-        "authlog"
+        "authlog",
+        "tokenfailure",
+        "tokenfailureevents"
       ],
       "source_key": "FAU_GEN.1.2",
       "counted": true,
@@ -349,6 +374,13 @@
           "trace": "afta-authentication-audit-records.md",
           "full_requirement_closed": false,
           "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "API-token failure event mappings, identity/servlet connection fields and password-counter isolation",
+          "trace": "afta-token-failure-audit.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
         }
       ]
     },
@@ -359,11 +391,13 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Link events to users",
-      "observation": "Selected authentication events and audit data carry user identity. Known local OIDC/PAT identity is resolved independently of details. Attempted names remain available when no local OIDC identity is known; token keys and credentials are not serialized.",
+      "observation": "Selected authentication events and audit data carry user identity. Known local OIDC/PAT identity is resolved independently of details. Attempted names remain available when no local OIDC identity is known; token keys and credentials are not serialized. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters.",
       "gap_and_acceptance": "Demonstrate attribution for every required event, including failed authentication, jobs and service accounts.",
       "references": [
         "authlog",
-        "auditgen"
+        "auditgen",
+        "tokenfailure",
+        "tokenfailureevents"
       ],
       "source_key": "FAU_GEN.2.1",
       "counted": true,
@@ -377,6 +411,13 @@
           "trace": "afta-authentication-audit-records.md",
           "full_requirement_closed": false,
           "implementation_commit": "8dd8a28bf27272e56db522a640b55ee74113d425"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "API-token failure event mappings, identity/servlet connection fields and password-counter isolation",
+          "trace": "afta-token-failure-audit.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
         }
       ]
     },

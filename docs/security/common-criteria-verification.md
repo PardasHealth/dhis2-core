@@ -404,3 +404,23 @@ record 174 passing combined audit, token, review and authentication/API checks. 
 WAR/listener/token-manager byte identity and PDF checks pass. Required-event
 policy, durable storage and deployed acceptance remain open; percentages do
 not change for this improvement within already partial items.
+
+## 15 November 2026: API-token failure audit events
+
+The [token failure audit trace](common-criteria/afta-token-failure-audit.md) and
+[dated evidence](evidence/afta-token-failure-audit-2026-11-15.json) record 62 passing
+checks across five token/filter, authentication-listener and audit-message suites,
+with no failures/errors/skips. The new filter/listener cases produce six assertion
+failures among 24 cases against the preceding production code. Patched production
+files were restored and the final 62-case rerun passed. The actual configured
+Spring publisher emits the new token failure events; token failures retain safe
+identity/connection fields and do not count as failed password/MFA proofs.
+
+The initial host runtime could not compile Java release 17, so a workspace JDK
+was provisioned. JitPack denied the existing SMS dependency; its unchanged 0.3.2
+upstream source tag was built/tested into the local cache using the same documented
+source-build workaround. No dependency declarations changed. Evidence records
+these conditions rather than asserting a cold release build. No WAR, hosted CI,
+production deployment or complete AFTA requirement closure is claimed. Checklist
+statuses and totals are unchanged; prior suite counts are not summed with these
+overlapping executions.

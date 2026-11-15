@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA rows 1–3: API-token failure event generation and available identity/connection fields; no full requirement closure",
+  "baseline_core_commit": "23e90e8b42",
+  "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "6046860a5dcfb470cae890ba3be9bb268f753121dd3fd4f1b82506aa4606dc22",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthenticationFailureEvent.java": "bb1864ffb9b6d40bfcc8d2e24997bb202670e8377877cbb1696de0560f85abda",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java": "739c72b91974e385578a9d75476fcf4a9b42474b5f5b70271f43412295c25163",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java": "dbf2e82f76bcef5e27f4b99ea833cdc2e6c6d7f0dd3f6692a3730971053d6755",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java": "4dfbb59ed44cc203f15e81d35b263281fbc7cea1e5d7269d6046b9bba1fc0965",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "ff248dbfda94062f498caf87176eb1df7668a0b1f9e179718203b9ce3e50fb2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "c33451f817ecb3b11f00d21c2aac9c02a17d3c06860e7d899398025a3c1915f1"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 62,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "ffe132c58a502459a455f06e56e1b6fa4ea4f942b2a975d792418cfed168a9c3",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest.xml": "4d6db6bc1e88b1b85c43fb18f921ef4ae2c3b5facaa02d31265d94a60e079afd",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest.xml": "7ba6a4cba94b53845ede21dc6861b2285f14aba00130dc6d38637f31a7088e13",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "e79631e37c8e576f41f8852dc8114e62bdcb2545e214c95ac128144ea257dc54",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "c175ebf241e31b536a5462cac157f7306135289c657773303177f3d5fcbbce49"
+  },
+  "baseline_regression": {
+    "tests": 24,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New filter and listener tests with the preceding production filter, publisher config and listener; new event type available for the counter-side-effect compatibility case",
+    "failed_cases": [
+      "badChecksumPublishesFailureWithoutToken",
+      "constraintFailurePublishesResolvedOwnerWithoutToken",
+      "expiredTokenAlsoEmitsAnActualFailureEvent",
+      "malformedTokenPublishesFailureAndClearsPreviousContext",
+      "unknownTokenPublishesConnectionWithoutInventingIdentity",
+      "tokenAuditFailureDoesNotIncrementPasswordFailureCount"
+    ],
+    "log_sha256": "8a820979888e6245ea24a079655e2db906d29e950d67c0c7bda889882ba17ff3"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, extracted into workspace from Debian JDK/JRE packages",
+    "maven": "3.9.11",
+    "profile": "unit-test",
+    "dependency_provenance": "JitPack blocked sms-compression 0.3.2. Unchanged upstream tag 74f6bbcabce84ae47df21c966ba00dba5a4217d6 compiled/tested using a temporary Maven descriptor matching build.gradle, installed only in local cache; not asserted binary-identical to JitPack. No repository dependency changes.",
+    "test_boundary": "Real filter/resolver and production-configured event publisher; mocked account/token manager, HTTP entry point and filter chain. Real listener unit tests and existing emitted-message capture suite.",
+    "runtime_preparation": "Initial host Java 21 runtime lacks ct.sym; initial compilation failed before any Java test execution. Workspace JDK resolved this without changing project compiler settings."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenIpConstraintTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,AuthenticationListenerTest,AuthenticationAuditRecordTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "Baseline: same reactor/profile with -Dtest=ApiTokenIpConstraintTest,AuthenticationListenerTest, preceding production files temporarily restored; exit 1 with six assertion failures; patched files restored and final 62-case run exits 0."
+  ],
+  "not_established": [
+    "Complete AFTA event inventory or full item acceptance",
+    "Durable audit collection, retention or storage-full policy",
+    "Deployed browser/collector/database acceptance",
+    "Token-specific rate limiting or account lockout policy",
+    "New WAR packaging or hosted CI execution"
+  ]
+}
