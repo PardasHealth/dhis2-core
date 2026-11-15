@@ -92,7 +92,12 @@ public class TwoFactorAuthService {
    */
   @Transactional
   public void enrollTOTP2FA(@Nonnull String username) throws ConflictException {
-    User user = userService.getUserByUsername(username);
+    enrollTOTP2FA(userService.getUserByUsername(username));
+  }
+
+  /** Continue enrollment for an already resolved account without another username lookup. */
+  @Transactional
+  public void enrollTOTP2FA(@Nonnull User user) throws ConflictException {
     if (user == null) {
       throw new ConflictException(ErrorCode.E6201);
     }
@@ -115,7 +120,12 @@ public class TwoFactorAuthService {
    */
   @Transactional
   public void enrollEmail2FA(@Nonnull String username) throws ConflictException {
-    User user = userService.getUserByUsername(username);
+    enrollEmail2FA(userService.getUserByUsername(username));
+  }
+
+  /** Continue enrollment for an already resolved account without another username lookup. */
+  @Transactional
+  public void enrollEmail2FA(@Nonnull User user) throws ConflictException {
     if (user == null) {
       throw new ConflictException(ErrorCode.E6201);
     }
@@ -149,7 +159,13 @@ public class TwoFactorAuthService {
   @Transactional
   public void enable2FA(@Nonnull String username, @Nonnull String code, UserDetails currentUser)
       throws ConflictException, ForbiddenException {
-    User user = userService.getUserByUsername(username);
+    enable2FA(userService.getUserByUsername(username), code, currentUser);
+  }
+
+  /** Verify and update the same resolved account, retaining its immutable identity. */
+  @Transactional
+  public void enable2FA(@Nonnull User user, @Nonnull String code, UserDetails currentUser)
+      throws ConflictException, ForbiddenException {
     if (user == null) {
       throw new ConflictException(ErrorCode.E6201);
     }
@@ -178,12 +194,19 @@ public class TwoFactorAuthService {
   @Transactional
   public void disable2FA(@Nonnull String username, @Nonnull String code)
       throws ConflictException, ForbiddenException {
-    if (userService.is2FADisableEndpointLocked(username)) {
-      throw new ConflictException(ErrorCode.E3042);
-    }
-    User user = userService.getUserByUsername(username);
+    disable2FA(userService.getUserByUsername(username), code);
+  }
+
+  /** Disable the resolved target; never redirect a verified proof through a mutable name. */
+  @Transactional
+  public void disable2FA(@Nonnull User user, @Nonnull String code)
+      throws ConflictException, ForbiddenException {
     if (user == null) {
       throw new ConflictException(ErrorCode.E6201);
+    }
+    String username = user.getUsername();
+    if (userService.is2FADisableEndpointLocked(username)) {
+      throw new ConflictException(ErrorCode.E3042);
     }
     if (!user.isTwoFactorEnabled()) {
       throw new ConflictException(ErrorCode.E3031);
@@ -198,16 +221,15 @@ public class TwoFactorAuthService {
     }
 
     if (isInvalid2FACode(user, code)) {
-      userService.registerFailed2FADisableAttempt(CurrentUserUtil.getCurrentUsername());
+      userService.registerFailed2FADisableAttempt(user.getUsername());
       throw new ForbiddenException(ErrorCode.E3023);
     }
 
-    reset2FA(user.getUsername(), CurrentUserUtil.getCurrentUserDetails());
+    reset2FA(user, CurrentUserUtil.getCurrentUserDetails());
     userService.registerSuccess2FADisable(user.getUsername());
   }
 
-  private void reset2FA(@Nonnull String username, @Nonnull UserDetails actingUser) {
-    User user = userService.getUserByUsername(username);
+  private void reset2FA(@Nonnull User user, @Nonnull UserDetails actingUser) {
     user.setSecret(null);
     user.setTwoFactorType(null);
     userService.updateUser(user, actingUser);
@@ -235,7 +257,7 @@ public class TwoFactorAuthService {
         || !userService.canCurrentUserCanModify(currentUser, user, errors)) {
       throw new ForbiddenException(ErrorCode.E3021);
     }
-    reset2FA(user.getUsername(), currentUser);
+    reset2FA(user, currentUser);
   }
 
   /**

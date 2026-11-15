@@ -166,7 +166,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify atomic cache updates against disposable Redis
         working-directory: dhis-2
@@ -178,7 +178,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
-            -Dtest=TwoFactorReplayServiceTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,TwoFactorQrStabilityTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
+            -Dtest=CurrentUserIdentityBindingTest,MeControllerTest,TwoFactorReplayServiceTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,TwoFactorLoginPolicyTest,TwoFactorQrStabilityTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest,AuthenticationControllerTest,LoginConfigCorsTest,SessionControllerTest,UserRoleSessionInvalidationControllerTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify required authentication and web reports actually executed
         working-directory: dhis-2
@@ -191,6 +191,10 @@ jobs:
               "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
               "org.hisp.dhis.security.AuthenticationAuditRecordTest",
               "org.hisp.dhis.cache.AtomicCacheUpdateTest",
+              "org.hisp.dhis.webapi.mvc.CurrentUserIdentityResolverTest",
+              "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+              "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
+              "org.hisp.dhis.webapi.controller.MeControllerTest",
               "org.hisp.dhis.cache.RedisAtomicCacheUpdateTest",
               "org.hisp.dhis.user.UserFailureCounterConcurrencyTest",
               "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",

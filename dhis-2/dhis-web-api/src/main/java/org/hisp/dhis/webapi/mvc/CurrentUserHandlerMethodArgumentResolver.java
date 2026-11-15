@@ -36,6 +36,7 @@ import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserDetails;
 import org.hisp.dhis.user.UserService;
 import org.springframework.core.MethodParameter;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -83,7 +84,13 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
     }
 
     if (type == User.class) {
-      return userService.getUserByUsername(CurrentUserUtil.getCurrentUsername());
+      UserDetails principal = CurrentUserUtil.getCurrentUserDetails();
+      String uid = principal.getUid();
+      User user = uid == null || uid.isBlank() ? null : userService.getUser(uid);
+      if (user == null && parameter.getParameterAnnotation(CurrentUser.class).required()) {
+        throw new AccessDeniedException("The authenticated user no longer exists");
+      }
+      return user;
     }
 
     throw new UnsupportedOperationException("Not supported @CurrentUser type: " + type);
