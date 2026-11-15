@@ -424,3 +424,21 @@ these conditions rather than asserting a cold release build. No WAR, hosted CI,
 production deployment or complete AFTA requirement closure is claimed. Checklist
 statuses and totals are unchanged; prior suite counts are not summed with these
 overlapping executions.
+
+## 15 November 2026: authentication audit address source
+
+The [address-source trace](common-criteria/afta-authentication-address-source.md)
+and [dated evidence](evidence/afta-authentication-address-source-2026-11-15.json)
+record 88 passing checks across six authentication/audit/token suites, with no
+failures/errors/skips. Four new audit-address assertions fail against the preceding
+HTTP-request detail constructor (20 audit cases total). The patched constructor
+uses the servlet-resolved address rather than raw forwarding headers. Existing
+explicit-value/session constructors and the earlier token-failure audit events
+are preserved.
+
+The tests establish request-constructor/message behavior in controlled fixtures;
+they do not verify production proxy ingress, collector trust or complete AFTA
+coverage. Counts overlap earlier records and are not added to them. The existing
+workspace JDK/source-built SMS dependency conditions remain. No WAR packaging,
+hosted CI or new deployment acceptance is claimed. Checklist dispositions remain
+unchanged.

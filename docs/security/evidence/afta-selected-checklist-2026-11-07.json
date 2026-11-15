@@ -307,6 +307,13 @@
       "line": 122,
       "symbol": "public DefaultAuthenticationEventPublisher authenticationEventPublisher(",
       "source_sha256": "4dfbb59ed44cc203f15e81d35b263281fbc7cea1e5d7269d6046b9bba1fc0965"
+    },
+    "authaddress": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/ForwardedIpAwareWebAuthenticationDetails.java",
+      "line": 41,
+      "symbol": "public ForwardedIpAwareWebAuthenticationDetails(HttpServletRequest request)",
+      "source_sha256": "d6f70c1a772ed8e3768877225a7cce252e9b05845d5f8c0b1d607175713531ba"
     }
   },
   "rows": [
@@ -354,13 +361,14 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit record fields",
-      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters.",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. HTTP-request authentication details for password/MFA and Basic now retain the servlet-resolved address rather than raw forwarding headers; explicit session/detail values still depend on a trusted source.",
       "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
       "references": [
         "auditquery",
         "authlog",
         "tokenfailure",
-        "tokenfailureevents"
+        "tokenfailureevents",
+        "authaddress"
       ],
       "source_key": "FAU_GEN.1.2",
       "counted": true,
@@ -381,6 +389,13 @@
           "trace": "afta-token-failure-audit.md",
           "full_requirement_closed": false,
           "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Servlet-resolved address rather than client-supplied forwarding headers for request authentication audit fields",
+          "trace": "afta-authentication-address-source.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "5d426cda14764fdda0c6eab833699c7cbef0772d"
         }
       ]
     },

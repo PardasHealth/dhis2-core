@@ -90,3 +90,11 @@ collector/parser behavior and deployed acceptance remain open. Switch-user's
 existing two-message behavior is retained; no exactly-once delivery is claimed.
 
 Implementation commit: `8dd8a28bf27272e56db522a640b55ee74113d425`.
+
+## 15 November address-source follow-up
+
+The [authentication address-source fix](afta-authentication-address-source.md)
+changes HTTP-request detail construction to use the servlet-resolved address.
+Raw forwarding headers no longer supply that constructor's audit field. The
+historical execution counts above remain unchanged; explicit-value/session
+details and production proxy trust still require the stated deployment controls.

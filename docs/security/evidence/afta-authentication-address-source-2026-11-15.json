@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA row 2 / FAU_GEN.1.2: address provenance in HTTP-request authentication details and emitted audit fields",
+  "baseline_core_commit": "75ca40bba1",
+  "implementation_commit": "5d426cda14764fdda0c6eab833699c7cbef0772d",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/ForwardedIpAwareWebAuthenticationDetails.java": "d6f70c1a772ed8e3768877225a7cce252e9b05845d5f8c0b1d607175713531ba",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "8cf6f7177005db66d195ad547730fb2f49940aa65ad718f999fa3275422857aa",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "6a50d80f4194dbba7c081f1474aab7eb255fd543edc104783edbad194d9bb10f",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "ff248dbfda94062f498caf87176eb1df7668a0b1f9e179718203b9ce3e50fb2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "c33451f817ecb3b11f00d21c2aac9c02a17d3c06860e7d899398025a3c1915f1"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "3da6576b6503baa33f06c8d97f3f1a94872d960b674815bac45245b30fdfd9f8",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "f90ce38a79d71c860134cda62c2fd6026c287fe61a96c6c696e66374d7683e4f",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "09a13a275525a8ea10cf77c690dee4751c1fd1a339265d5c672cfe39d1a21924",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest.xml": "efbd06a636979a604e351558f593294f93e0bc1e37f157f8fc543eef5e9f4a31",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest.xml": "447946eae682c9adf5bca67e5b92ef48b7c2dee7b6d18ecc00c713ba52e8bafe",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "6b56c27c7e0e364df349dbe774176de427cca7fc7d9f13785a783f0d1aa383a5"
+  },
+  "baseline_regression": {
+    "tests": 20,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [
+      "passwordFailureCannotForgeAuditAddressWithForwardedHeader",
+      "basicSuccessCannotForgeAuditAddressWithForwardedChain",
+      "emptyForwardedHeaderCannotEraseAvailableAuditAddress",
+      "servletResolvedClientAddressRemainsAvailableForTrustedProxyDeployments"
+    ],
+    "scope": "Real request detail constructors and captured audit messages with the preceding ForwardedIpAwareWebAuthenticationDetails constructor; patched implementation restored after baseline execution.",
+    "log_sha256": "18416f864ac94754914353a53a7c9b104af13090a8cde9b3d18e1579e385815a"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, workspace toolchain",
+    "maven": "3.9.11",
+    "profile": "unit-test",
+    "execution": "Offline Maven cache populated during preceding token-failure remediation; unchanged sms-compression upstream tag 74f6bbcabce84ae47df21c966ba00dba5a4217d6 source-build provenance from afta-token-failure-audit-2026-11-15.json applies. Not claimed binary-identical to JitPack.",
+    "test_boundary": "Real HTTP details and audit message generation; servlet-resolved address set by the mock request, not a verified proxy deployment. Other suites retain their mocked account/token/service boundaries.",
+    "formatting": "Module formatter applied. Unrelated pre-existing license-header-only edits restored; original changed-test header retained. git diff --check passes; full-module Spotless cleanliness is not asserted."
+  },
+  "commands": [
+    "Baseline: mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=AuthenticationAuditRecordTest -Dsurefire.failIfNoSpecifiedTests=false test (20 cases, four failures)",
+    "Final: mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=AuthenticationAuditRecordTest,TwoFactorAuthenticationPolicyTest,ApiTokenIpConstraintTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,AuthenticationListenerTest -Dsurefire.failIfNoSpecifiedTests=false test (88 passed)"
+  ],
+  "not_established": [
+    "Trusted container/proxy resolution or production ingress controls",
+    "Explicit-value/session detail provenance",
+    "Complete required audit event/field coverage",
+    "Protected collector, retention, trusted time or storage failure behavior",
+    "New WAR packaging, hosted CI or full checklist closure"
+  ]
+}

@@ -4,6 +4,15 @@ Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 15 November follow-up: authentication address provenance
+
+Row 2 has a further audit-field fix: password/MFA and HTTP Basic request details
+now use the servlet-resolved connection address instead of raw forwarding headers.
+This prevents direct request headers from supplying or erasing that audit field.
+See the [address-source trace and proxy compatibility conditions](afta-authentication-address-source.md).
+Explicit-value/session constructors and the earlier API-token event fix remain.
+The row stays partial pending the selected event policy and deployed evidence.
+
 ## 15 November follow-up: API-token failure audit events
 
 Rows 1–3 now have explicit application-event mappings for invalid, expired and
