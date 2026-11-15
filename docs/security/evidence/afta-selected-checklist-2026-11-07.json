@@ -276,9 +276,9 @@
     "qr": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java",
-      "line": 138,
+      "line": 142,
       "symbol": "public void generateQRCode(",
-      "source_sha256": "2aeb815a17a0155d34dc087cad19341bc5d7e7d47df889789cad3c1a6cf5b67a"
+      "source_sha256": "8cf37f1836c72d74e39d0884d0482e792ff2aed8a4d7bc6b33292acc33b2b920"
     },
     "auditweb": {
       "repository": "core",
@@ -356,6 +356,48 @@
       "line": 157,
       "symbol": "public V update(String key,",
       "source_sha256": "e1bfe3cf1fa732702a522f805389ba1faf81d289dbad89bcfaa2e9e5b1eec97a"
+    },
+    "currententity": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/mvc/CurrentUserHandlerMethodArgumentResolver.java",
+      "line": 70,
+      "symbol": "public Object resolveArgument(",
+      "source_sha256": "bcd49649fb16ebc0889bedecb901850cca6cef8bb34afae8f4932e11ad1138a3"
+    },
+    "mfaowner": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java",
+      "line": 78,
+      "symbol": "public WebMessage enrollTOTP2FA(",
+      "source_sha256": "8cf37f1836c72d74e39d0884d0482e792ff2aed8a4d7bc6b33292acc33b2b920"
+    },
+    "mfauidservice": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "line": 100,
+      "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
+      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+    },
+    "mfaresetuid": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "line": 232,
+      "symbol": "private void reset2FA(@Nonnull User user,",
+      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+    },
+    "mfafailureowner": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "line": 202,
+      "symbol": "public void disable2FA(@Nonnull User user,",
+      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+    },
+    "mfaownerdisable": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java",
+      "line": 198,
+      "symbol": "public WebMessage disable(",
+      "source_sha256": "8cf37f1836c72d74e39d0884d0482e792ff2aed8a4d7bc6b33292acc33b2b920"
     }
   },
   "rows": [
@@ -1033,7 +1075,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Count failed authentication",
-      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open.",
+      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open. MFA-disable failure counting now uses the same resolved target username as its lock check after a session username becomes stale.",
       "gap_and_acceptance": "Fix the AFTA threshold, counting conditions and reset rules; test all login mechanisms and distributed counters.",
       "references": [
         "factor",
@@ -1041,7 +1083,10 @@
         "failurecounter",
         "cacheupdate",
         "localupdate",
-        "redisupdate"
+        "redisupdate",
+        "currententity",
+        "mfaownerdisable",
+        "mfafailureowner"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
@@ -1062,6 +1107,13 @@
           "trace": "afta-atomic-failure-counters.md",
           "full_requirement_closed": false,
           "implementation_commit": "bc6b67654b1065fc047a8c7d377ae95533bf054a"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Persisted current-user UID resolution, entity-bound self-MFA mutations/reset and target-aligned disable failure counting",
+          "trace": "afta-current-user-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
         }
       ]
     },
@@ -1261,12 +1313,16 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Bind user attributes to a subject",
-      "observation": "PAT authentication returns a fresh authentication object using current owner details. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Completed OAuth login bookkeeping now uses the resolved DhisOidcUser username rather than an external subject. Unmapped OIDC success events do not update a local namesake; optional HTTP details no longer interrupt bookkeeping.",
+      "observation": "PAT authentication returns a fresh authentication object using current owner details. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Completed OAuth login bookkeeping now uses the resolved DhisOidcUser username rather than an external subject. Unmapped OIDC success events do not update a local namesake; optional HTTP details no longer interrupt bookkeeping. Persisted current-user arguments now resolve by authenticated UID without username fallback. Self-MFA operations carry that entity through verification and reset; reused names cannot redirect the target. Required missing owners are denied, while String/UserDetails snapshot contracts remain unchanged.",
       "gap_and_acceptance": "Map the full selected attribute list and every subject type; PAT evidence alone does not cover browser, SSO, jobs or all sessions.",
       "references": [
         "token",
         "userdetails",
-        "oidceventaccount"
+        "oidceventaccount",
+        "currententity",
+        "mfaowner",
+        "mfauidservice",
+        "mfaresetuid"
       ],
       "source_key": "FIA_USB.1.1",
       "counted": true,
@@ -1287,6 +1343,13 @@
           "trace": "afta-oidc-event-account-association.md",
           "full_requirement_closed": false,
           "implementation_commit": "efea229e581e89fffa75332b7a9199727bd272ff"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Persisted current-user UID resolution, entity-bound self-MFA mutations/reset and target-aligned disable failure counting",
+          "trace": "afta-current-user-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
         }
       ]
     },
@@ -1297,10 +1360,14 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Initial subject-binding rules",
-      "observation": "PAT authentication validates owner existence and account state before binding the principal. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication.",
+      "observation": "PAT authentication validates owner existence and account state before binding the principal. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Persisted current-user arguments now resolve by authenticated UID without username fallback. Self-MFA operations carry that entity through verification and reset; reused names cannot redirect the target. Required missing owners are denied, while String/UserDetails snapshot contracts remain unchanged.",
       "gap_and_acceptance": "Verify the selected initial-association rules for every authentication/provider/session path.",
       "references": [
-        "token"
+        "token",
+        "currententity",
+        "mfaowner",
+        "mfauidservice",
+        "mfaresetuid"
       ],
       "source_key": "FIA_USB.1.2",
       "counted": true,
@@ -1314,6 +1381,13 @@
           "trace": "afta-token-owner-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "7cdefca5c4834e01c66a3d3f77b724d588aa9ab7"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Persisted current-user UID resolution, entity-bound self-MFA mutations/reset and target-aligned disable failure counting",
+          "trace": "afta-current-user-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
         }
       ]
     },
@@ -1324,12 +1398,16 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Changes to subject attributes",
-      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Global invalidation now retains expired registry markers so the session filter rejects an existing HTTP session on its next request; the existing admin endpoint delegates to the corrected service and retains its authority gate. Complete cross-provider/node revocation timing remains open.",
+      "observation": "PAT requests reload current persisted token/user state rather than reuse a process-local snapshot. The reloaded principal must have the same stable UID as the token owner; missing or different identities are rejected before authentication. Global invalidation now retains expired registry markers so the session filter rejects an existing HTTP session on its next request; the existing admin endpoint delegates to the corrected service and retains its authority gate. Complete cross-provider/node revocation timing remains open. Persisted current-user arguments now resolve by authenticated UID without username fallback. Self-MFA operations carry that entity through verification and reset; reused names cannot redirect the target. Required missing owners are denied, while String/UserDetails snapshot contracts remain unchanged.",
       "gap_and_acceptance": "Demonstrate the selected update/revocation timing for browser/SSO subjects, background jobs and multiple nodes.",
       "references": [
         "token",
         "sessions",
-        "globalsessions"
+        "globalsessions",
+        "currententity",
+        "mfaowner",
+        "mfauidservice",
+        "mfaresetuid"
       ],
       "source_key": "FIA_USB.1.3",
       "counted": true,
@@ -1350,6 +1428,13 @@
           "trace": "afta-global-session-invalidation.md",
           "full_requirement_closed": false,
           "implementation_commit": "7af7d5a659a465147b347b1fd4d73adf1e8a355f"
+        },
+        {
+          "date": "2026-11-15",
+          "scope": "Persisted current-user UID resolution, entity-bound self-MFA mutations/reset and target-aligned disable failure counting",
+          "trace": "afta-current-user-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
         }
       ]
     },

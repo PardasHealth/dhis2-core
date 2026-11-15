@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: 15 November remediation
 
 Updated: **15 November 2026**. Branch: `work`. Reviewed code snapshot:
-`bc6b67654b`. Subsequent documentation-only commits do not change that code.
+`11240d03e0`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the five recent implementation fixes to selected checklist
+This guide traces the six recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -25,10 +25,11 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 39: `FIA_USB.1.3` | Preserve session-expiration markers for next-request revocation; share the corrected service with the admin endpoint | `7af7d5a659` | [Global revocation trace](afta-global-session-invalidation.md), [31-case record](../evidence/afta-global-session-invalidation-2026-11-15.json) |
 | 29 and 37: `FIA_AFL.1.1`, `FIA_USB.1.1` | Handle optional OIDC event details and associate bookkeeping with the resolved local account | `efea229e58` | [OIDC account-association trace](afta-oidc-event-account-association.md), [81-case record](../evidence/afta-oidc-event-account-association-2026-11-15.json) |
 | 29–30: `FIA_AFL.1.1`, `FIA_AFL.1.2` | Commit concurrent failure increments atomically in local and Redis caches, retaining existing thresholds/expiry | `bc6b67654b` | [Atomic-counter trace](afta-atomic-failure-counters.md), [132-case record](../evidence/afta-atomic-failure-counters-2026-11-15.json) |
+| 29 and 37–39: `FIA_AFL.1.1`, `FIA_USB.1.1/.2/.3` | Bind persisted current-user/MFA targets to authenticated UID, not reusable names | `11240d03e0` | [Current-user/MFA UID trace](afta-current-user-uid-binding.md), [145-case record](../evidence/afta-current-user-uid-binding-2026-11-15.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
-to obtain a unique pass total. The latest batch has 70 unit/cache checks, 56 H2 API checks and six
-standalone checks against a real Redis server. Earlier records retain their original source hashes and outcomes; the
+to obtain a unique pass total. The latest batch has 42 unit checks and 103 H2 API checks; the preceding
+atomic-counter batch separately includes six real Redis checks. Earlier records retain their original source hashes and outcomes; the
 [generated register](afta-requirement-traceability.md) identifies sources changed
 since each historical record. A previous test result is not silently upgraded to
 proof for a later source version.
@@ -159,6 +160,30 @@ Full provider/reset policy, expiry/eviction behavior, cluster/failover and deplo
 operational acceptance remain open. Multiple cache instances against one Redis
 server are not a full multi-process application deployment.
 
+## 6. Persisted current-user and MFA target identity
+
+| Code | Owning symbols and invariant |
+| --- | --- |
+| [CurrentUserHandlerMethodArgumentResolver](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/mvc/CurrentUserHandlerMethodArgumentResolver.java#L70) | `resolveArgument`: resolve persisted `User` by authenticated UID. Never substitute a name owner. Required missing owners deny; optional owners return null. String/details snapshot contracts remain. |
+| [TwoFactorController](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java#L78) | Enrollment, enable/disable and QR handlers require the persisted account. Mutations use entity-based service overloads, with separate acting-user details for enable metadata. |
+| [TwoFactorAuthService](../../../dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java#L100) | Entity overloads and `reset2FA(User, UserDetails)` retain the resolved target through proof verification and mutation. Legacy name overloads remain wrappers. Failed-disable counting uses the target's name, matching its lock check. |
+
+[CurrentUserIdentityResolverTest](../../../dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/mvc/CurrentUserIdentityResolverTest.java)
+has five failing assertions in seven cases against the preceding resolver.
+[TwoFactorIdentityMutationTest](../../../dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java)
+has three failures against the preceding reset/counter service paths.
+[CurrentUserIdentityBindingTest](../../../dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/CurrentUserIdentityBindingTest.java)
+has six HTTP failures against the preceding three classes: an ordinary stale
+session receives a name-reuse account's profile UID/pending QR seed, or operates
+MFA on the wrong name. It then verifies the correct owner after the patch.
+
+The final batch passes 42 unit and 103 H2 API cases, including the existing profile,
+MFA/QR/audit and login/token suites. These controlled fixtures do not establish a
+live browser incident or universal session freshness. Same-UID factor/account
+races, every indirect username consumer, retained snapshot authorities and the
+complete selected policy remain open. See the dated evidence for exact classes,
+source/report hashes, baseline failures and conditions.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -166,8 +191,9 @@ now explicitly selects `AuthenticationListenerTest` and
 `UserSessionInvalidationTest` and requires their successful, nonempty reports.
 The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
-report.
-Existing session/authentication API cases remain selected. Workflow syntax and
+report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
+`TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
+`MeControllerTest` report. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

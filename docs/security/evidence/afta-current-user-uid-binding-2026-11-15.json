@@ -1,0 +1,193 @@
+{
+  "date": "2026-11-15",
+  "scope": "Selected AFTA rows 29 and 37–39: current-user entity UID binding, self-MFA target continuity and failed-disable counter identity; no full session/provider freshness claim",
+  "baseline_core_commit": "ed8604b8f5244ac8ff863a45657f4d2adcd7259c",
+  "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817",
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "b17d1c5e082444d7fc532ca6ba455ecb2e6235bf632adc036a863fb06c0f6569",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/user/CurrentUserUtil.java": "962c0d331292e98d19e9931b9887ee2ca3027458319e2698b42b86cd2d9578de",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/CurrentUserIdentityBindingTest.java": "3a5353beb195932809db76ef11315c3a261d475011110cfbe70fe86742f2f56f",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/MeControllerTest.java": "33931bd0f637d657d98fe5cd44f9c58bdc41dd8373da20b4877c06c73b701e36",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/TwoFactorControllerTest.java": "f687a61002f3ba0249cb5111237630d8c51b4e3aafd3fae59e301215b6ce85fc",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/UserTwoFactorAuditControllerTest.java": "01ba62d40cd23ad2b86532d2964b0bd7d952c71f8e0d4449a855f15dca4199fe",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorQrStabilityTest.java": "301f689b6d83795d152d75af6b6b21fd39ac1046e9792c15dd0d414a9e17add9",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/controller/security/TwoFactorController.java": "8cf37f1836c72d74e39d0884d0482e792ff2aed8a4d7bc6b33292acc33b2b920",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/mvc/CurrentUserHandlerMethodArgumentResolver.java": "bcd49649fb16ebc0889bedecb901850cca6cef8bb34afae8f4932e11ad1138a3",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/mvc/CurrentUserIdentityResolverTest.java": "e7b4f94ab12ee95812bf0abc17b9dff23ed7c2e62b86aae4bd85ba7dd1bed7eb",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "ff248dbfda94062f498caf87176eb1df7668a0b1f9e179718203b9ce3e50fb2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "fb242df4345c19b0e8bb0d08bb455330ef279760551c4f5a2bcfee54989fefd2"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.mvc.CurrentUserIdentityResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.MeControllerTest",
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "tests": 145,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "80845e4032e0e2884802987c40d855a10ce12ab859ef64ed83be4e4102555bf1",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.mvc.CurrentUserIdentityResolverTest.xml": "9d6fcb4b9fe8c3ec49d8ef5ac396c04ef3eed73b9c4b158eb6ffdade205723ac",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "29062d1725e3343a2c024e43973194beeaab647239d0668f16ec7ae247a67635",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "64f9644da05b3a6d46364968b1a65444f94b906c525ca02194f701841b15bd59",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest.xml": "0cdf3e05c22ac46d09c2f85b2a16b9f731d3cfca8de78d35bfe34e5c536df6d2",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.MeControllerTest.xml": "a92bcfc2ce9f2dbc5a31b891d12e969e9e2990c49f3afb4f5ad64523b260d09e",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.TwoFactorControllerTest.xml": "2f7b2a03ca47e26e35c90c46c20a3bf58ce5fadd2cead400effae970e19aaecb",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.UserTwoFactorAuditControllerTest.xml": "9716419b256055266faa5b60f3c0badd005d80c085753f3f54449e9e32f578f1",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest.xml": "31f2577deac672a491f29bae878dc7c933dc7240b705e7fc7a38f3661c452d75",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "129775e3baf673f071a1d1077467b478390d71f26182ccff5ff1e447ecd94ab3",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest.xml": "491d6ad032e3378ccca601c30f82a84200dcba9afff2614cede12f979e7013cf",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "58c4d90ac4fb5deba72fe74d7b09afc2a393c25418d3ed963f37813af0501505"
+  },
+  "baseline_regression": {
+    "tests": 16,
+    "failures": 14,
+    "errors": 0,
+    "skipped": 0,
+    "parts": [
+      {
+        "suite": "TwoFactorIdentityMutationTest",
+        "tests": 3,
+        "failures": 3,
+        "scope": "Preceding service: wrong rejected-proof counter name and repeated name lookups redirecting self/privileged reset to a different supplied account.",
+        "log_sha256": "da160e32b1818c8b60cab015fce4456d210fbf3234cc74c9f901124857d0be9c"
+      },
+      {
+        "suite": "CurrentUserIdentityResolverTest",
+        "tests": 7,
+        "failures": 5,
+        "scope": "Preceding resolver: renamed/deleted/missing-UID entity resolution follows a reused username or fails to resolve the same UID. Existing String/UserDetails snapshot cases pass.",
+        "log_sha256": "6c4650968dfbb1cdddf8a084de5b937958e9dd88acf8743d2ee3e0dc210d293c"
+      },
+      {
+        "suite": "CurrentUserIdentityBindingTest",
+        "tests": 6,
+        "failures": 6,
+        "scope": "Preceding three production classes, real H2/HTTP/security fixtures with a non-superuser snapshot, administrative rename/reuse and persistence-context flush/clear. Wrong /me UID and other-account pending QR seed are returned; enrollment/enable/disable and counter association fail the expected-owner assertions. Synthetic fixture data, not a deployed incident.",
+        "log_sha256": "ec8f25e6b79d641f16f26ef4012c5e4c3379202e19e7395ec4d8e26ae239b0f9"
+      }
+    ]
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2, workspace JDK",
+    "maven": "3.9.11",
+    "command_working_directory": "dhis-2 with the supported JDK selected",
+    "profiles": [
+      "unit-test",
+      "integration-h2-test"
+    ],
+    "unit_boundary": "Real argument resolver, real local principal in SecurityContextHolder and real MFA service, mocked account/dependency services. Subsequent-name-lookup fixtures model reassignment without nondeterministic concurrency. Existing listener/token filter units retained.",
+    "web_boundary": "Real H2/Spring-security endpoints with an ordinary non-superuser MockHttpSession. Setup temporarily uses admin context to create/reassign another account, then restores the original session snapshot. Fresh persistence context without refreshing that principal. Synthetic seeds only; no live browser, external IdP or real account used.",
+    "dependency_provenance": "Existing workspace Maven cache and unchanged sms-compression source-build workaround from afta-token-failure-audit-2026-11-15.json apply. No dependency version, POM or database schema changes.",
+    "ci": "New resolver, MFA mutation and H2 identity suites plus existing MeControllerTest are explicitly selected and required to produce successful nonempty reports. No hosted CI execution claimed."
+  },
+  "commands": [
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=CurrentUserIdentityResolverTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=CurrentUserIdentityBindingTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-web-api -am -Punit-test -Dtest=CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AuthenticationListenerTest,ApiTokenIpConstraintTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=CurrentUserIdentityBindingTest,MeControllerTest,TwoFactorControllerTest,UserTwoFactorAuditControllerTest,TwoFactorQrStabilityTest,AuthenticationControllerTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "compatibility": [
+    "Persisted @CurrentUser User requires a mapped local UID; no username fallback. Required missing-account entity arguments deny; optional entity arguments return null.",
+    "String and UserDetails argument contracts remain snapshots; this does not refresh all session permissions.",
+    "Existing username service overloads retained as wrappers; self-MFA HTTP paths use entity overloads and retain selected target objects through proof/reset.",
+    "No endpoint/request-body, credential format, threshold or privileged authorization policy change."
+  ],
+  "not_established": [
+    "Full application-wide session/permission/name freshness or every indirect username consumer",
+    "Atomic verification of concurrent factor/account changes on the same UID",
+    "Cross-purpose OTP single use, complete recovery or selected AFTA operations",
+    "Live browser, Redis session, external IdP, multi-node or deployment acceptance",
+    "New WAR packaging, hosted CI success or full requirement closure"
+  ]
+}

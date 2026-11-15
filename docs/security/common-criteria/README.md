@@ -11,6 +11,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 | Review question | Document |
 | --- | --- |
 | Where is the recent requirements-to-code trace? | [Methods, regression cases, implementation commits and evidence](afta-code-traceability.md) |
+| How are persisted current-user/MFA targets protected against name reuse? | [Authenticated UID routing, entity-bound mutations and HTTP regressions](afta-current-user-uid-binding.md) |
 | How are concurrent failure counters updated? | [Local/Redis atomicity, tests and required Redis permissions](afta-atomic-failure-counters.md) |
 | Which AFTA gaps have implementation changes? | [Remediation progress](afta-remediation-progress.md), [login replay protection and upgrade notes](afta-login-replay-protection.md) |
 | How are API tokens bound to their owner? | [PAT owner UID validation, regressions and evidence](afta-token-owner-binding.md) |

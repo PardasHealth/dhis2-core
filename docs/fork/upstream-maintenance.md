@@ -26,7 +26,11 @@ request details, publisher configuration and lifecycle listener, global user-ser
 session invalidation and the sessions controller. Atomic failure counters add an
 optional `Cache.update` contract and local/Redis/disabled-cache implementations;
 custom counter-cache adapters must implement atomic update, with Redis scripting
-permission required for the Redis implementation. A dedicated token-failure event
+permission required for the Redis implementation. Current-user entity resolution
+and self-MFA target mutations also bind to the authenticated UID; entity service
+overloads retain a selected target without another username lookup, and required
+missing owners deny. Existing String/UserDetails resolver snapshot contracts and
+legacy service name overloads are retained. A dedicated token-failure event
 is added alongside the internal replay/broker-TLS classes and the additive
 fork-specific repeatable migration.
 
@@ -35,7 +39,9 @@ records these follow-ups by checklist row, method, implementation commit, test a
 dated evidence. On an upstream merge, preserve mapped token-failure events and
 password-counter isolation, servlet address provenance, expired session markers
 for next-request revocation, canonical local OIDC bookkeeping, and atomic
-login/recovery/MFA-disable increments with their existing thresholds and expiry. Retain their
+login/recovery/MFA-disable increments with their existing thresholds and expiry.
+Preserve UID-based current-user entity selection, MFA entity overloads, selected
+reset targets and target-aligned failure-counter keys when integrating upstream. Retain their
 negative tests even if upstream replaces the implementing code.
 
 POMs, public endpoints, bundled app selections and existing user-table columns

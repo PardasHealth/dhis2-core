@@ -4,6 +4,16 @@ Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 15 November follow-up: current-user and MFA UID binding
+
+Rows 29 and 37–39 have a concrete name-reuse fix. Persisted current-user entity
+arguments now follow the authenticated UID, and self-MFA handlers pass that entity
+to the service without repeating name resolution. Reset retains its selected
+entity, and failed-disable counting uses the target's current name. Required
+missing owners are denied without a namesake fallback. See the
+[identity-routing trace and baseline HTTP reproduction](afta-current-user-uid-binding.md).
+Full session/provider attribute freshness and same-account races remain open.
+
 ## 15 November follow-up: atomic failure counters
 
 Rows 29 and 30 have a concurrent-counting fix. Login, recovery and MFA-disable

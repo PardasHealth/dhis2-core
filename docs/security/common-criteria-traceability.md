@@ -14,7 +14,7 @@ For the user-selected checklist, use the [consolidated code/test/evidence guide]
 and [complete row-by-row register](common-criteria/afta-requirement-traceability.md).
 The November 15 follow-ups trace token-failure events, servlet audit addresses,
 global session revocation, OIDC event account association and atomic failure
-counters to exact methods,
+counters and persisted current-user/MFA UID binding to exact methods,
 regressions and dated execution records. These selected-row fixes do not replace
 the broader standard-component review below or establish full AFTA closure.
 

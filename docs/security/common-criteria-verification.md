@@ -518,3 +518,28 @@ Maven declaration changed. Redis scripting permission and custom cache-adapter
 support are new operational compatibility requirements. Full provider/reset and
 failure/alert policies, deployed acceptance, WAR packaging and hosted CI success
 remain unverified. Earlier overlapping inventories are not added to this run.
+
+## 15 November 2026: current-user and MFA target UID binding
+
+The [current-user/MFA UID trace](common-criteria/afta-current-user-uid-binding.md)
+and [dated evidence](evidence/afta-current-user-uid-binding-2026-11-15.json) record
+**145 passing checks**: 42 unit and 103 H2 API cases, with no failures/errors/skips.
+Separate baselines reproduce three service mutation/counter failures, five of
+seven resolver failures, and six of six real HTTP failures. The two unchanged
+String/UserDetails resolver-contract cases pass before and after the patch.
+
+The HTTP baseline uses an ordinary session retaining a retired username while an
+administrator renames that account and assigns the old name to another account.
+It returns the other account's profile UID and pending QR seed in controlled
+fixtures. Patched entity resolution follows the authenticated UID; self-MFA
+mutations pass that resolved entity to service overloads, and reset does not
+repeat mutable-name lookup. Required missing persisted owners deny. Failed-disable
+counting uses the target name matched by that invocation's lock check.
+
+Existing profile, MFA/QR/audit, login and token suites pass. New reports plus the
+existing profile suite are required in CI; workflow syntax, changed-file formatting
+and AFTA evidence validation pass locally. No live external IdP/browser, Redis
+session or full multi-node acceptance, new WAR or hosted CI result is claimed.
+Snapshot permissions and other indirect name consumers, same-UID state races and
+complete AFTA operation definitions remain open. Earlier overlapping test counts
+are not added to this execution.
