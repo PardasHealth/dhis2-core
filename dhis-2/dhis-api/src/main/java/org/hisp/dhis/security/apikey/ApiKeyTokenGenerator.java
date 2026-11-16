@@ -157,14 +157,28 @@ public class ApiKeyTokenGenerator {
 
   private static boolean validateCrc32B62Checksum(char[] plaintextToken) {
     CodeAndChecksum codeAndChecksum = extractCodeAndChecksum(plaintextToken);
-    return CRC32Utils.isMatchingCRC32Base62Checksum(
-        codeAndChecksum.getCode(), codeAndChecksum.getChecksum());
+    try {
+      return CRC32Utils.isMatchingCRC32Base62Checksum(
+          codeAndChecksum.getCode(), codeAndChecksum.getChecksum());
+    } finally {
+      clearChecksumBuffers(codeAndChecksum);
+    }
   }
 
   private static boolean validateCrc32Checksum(char[] plaintextToken) {
     CodeAndChecksum codeAndChecksum = extractCodeAndChecksum(plaintextToken);
-    return CRC32Utils.isMatchingCRC32Checksum(
-        codeAndChecksum.getCode(), codeAndChecksum.getChecksum());
+    try {
+      return CRC32Utils.isMatchingCRC32Checksum(
+          codeAndChecksum.getCode(), codeAndChecksum.getChecksum());
+    } finally {
+      clearChecksumBuffers(codeAndChecksum);
+    }
+  }
+
+  private static void clearChecksumBuffers(CodeAndChecksum extracted) {
+    // These copies belong to validation; leave the caller's token untouched.
+    Arrays.fill(extracted.getCode(), '\0');
+    Arrays.fill(extracted.getChecksum(), '\0');
   }
 
   public static CodeAndChecksum extractCodeAndChecksum(char[] plaintextToken) {
