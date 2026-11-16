@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`90c44ffa76`. Subsequent documentation-only commits do not change that code.
+`38ffff2be6`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twelve recent implementation fixes to selected checklist
+This guide traces the thirteen recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -15,6 +15,25 @@ The primary list remains **78 entries: 43 partial, 10 gaps and 25 unresolved
 requirements/edition definitions; none fully closed**. Three explicitly optional
 entries and the original duplicated identifier retain their separate treatment.
 These code fixes do not select missing AFTA policies or establish certification.
+
+## How to read the row references
+
+**29 (`FIA_AFL.1.1`)** means **original checklist entry 29**, whose requirement ID
+is **`FIA_AFL.1.1`**. The number 29 is not a standards chapter, severity, test
+count or completion percentage. It locates the entry in the original numbered
+[checklist review](afta-selected-requirements-review.csv).
+
+| Part | Meaning |
+| --- | --- |
+| `29` | Original source-list entry number |
+| `FIA` | Identification and authentication class |
+| `AFL` | Authentication failures family |
+| First `.1` | Component 1: authentication failure handling |
+| Final `.1` | Element 1 within that component |
+
+Read an implementation row as: “This commit fixes the described behavior relevant
+to these source entries.” A listed entry remains partial until its complete
+selected definition and acceptance work are satisfied.
 
 ## Implementation summary
 
@@ -37,6 +56,7 @@ does not close every acceptance condition in those rows.
 | 1–3, 29–30 and 36: audit, `FIA_AFL.1.1/.2`, `FIA_UAU.5.2` | Map rejected MFA proofs to failure events and existing configured lockout; exclude successful challenge issuance | [51eb123a81](https://github.com/PardasHealth/dhis2-core/commit/51eb123a81) | [MFA failure-event trace](afta-mfa-failure-events.md), [execution record](../evidence/afta-mfa-failure-events-2026-11-16.json) |
 | 2: `FAU_GEN.1.2` | Retain success request context with copied factor details and cleared submitted OTP | [1114c5c925](https://github.com/PardasHealth/dhis2-core/commit/1114c5c925) | [Success context trace](afta-login-success-context.md), [execution record](../evidence/afta-login-success-context-2026-11-16.json) |
 | 29: `FIA_AFL.1.1`; 37: `FIA_USB.1.1`; 38: `FIA_USB.1.2`; 39: `FIA_USB.1.3` | Applied 16 November: mapped OIDC bookkeeping follows principal UID and retains its entity through success updates | [90c44ffa76](https://github.com/PardasHealth/dhis2-core/commit/90c44ffa76) | [Per-row UID trace](afta-oidc-event-uid-binding.md), [execution record](../evidence/afta-oidc-event-uid-binding-2026-11-16.json) |
+| 1: `FAU_GEN.1.1`; 29: `FIA_AFL.1.1` | Applied 16 November: token rejection catch excludes downstream failures, retaining their own handling/event attribution | [38ffff2be6](https://github.com/PardasHealth/dhis2-core/commit/38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26) | [Per-row boundary trace](afta-token-failure-boundary.md), [execution record](../evidence/afta-token-failure-boundary-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -49,7 +69,7 @@ proof for a later source version.
 
 | Code | Owning symbols and invariant |
 | --- | --- |
-| [Dhis2ApiTokenFilter](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java#L193) | `doFilterInternal`, `authenticationFailed`: resolver and manager/constraint failures clear the security context, publish a sanitized failure authentication and stop before the protected chain. Only an already resolved owner name is retained; credentials are null. |
+| [Dhis2ApiTokenFilter](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java#L197) | `doFilterInternal`, `authenticationFailed`: resolver and manager/constraint failures clear the security context, publish a sanitized failure authentication and stop before the protected chain. Only an already resolved owner name is retained; credentials are null. |
 | [AuthenticationProviderConfig](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java#L123) | `authenticationEventPublisher`: explicitly maps invalid, expired and constraint-rejected token exceptions to a real application event. |
 | [ApiTokenAuthenticationFailureEvent](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthenticationFailureEvent.java#L37) | Dedicated failure event distinguishes token rejection from a wrong password/MFA proof. |
 | [AuthenticationListener](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java#L91) | `handleAuthenticationFailure`: token audit failures do not increment password failure counters. |
@@ -262,6 +282,17 @@ the preceding listener and pass with the fix, covering both OIDC token stages.
 See the [per-row implementation and execution trace](afta-oidc-event-uid-binding.md).
 All four rows remain partial; same-account name races and full session/provider
 freshness remain open.
+
+## 13. Token-processing failure boundary
+
+**Selected source rows:** 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`). Applied
+**16 November 2026**. `Dhis2ApiTokenFilter.doFilterInternal` now limits its
+rejection catch to token processing. Success publication and downstream handling
+run afterward. Two downstream exception regressions fail against the preceding
+filter and pass with the fix, requiring exception identity, one success event,
+no filter-produced failure and no token entry-point invocation. See the
+[per-row code and execution trace](afta-token-failure-boundary.md). Both rows
+remain partial; surrounding handlers and full event/failure policy remain open.
 
 ## CI and maintaining the trace
 

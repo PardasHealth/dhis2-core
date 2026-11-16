@@ -290,16 +290,16 @@
     "tokenip": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
-      "line": 180,
+      "line": 184,
       "symbol": "private void validateIp(",
-      "source_sha256": "739c72b91974e385578a9d75476fcf4a9b42474b5f5b70271f43412295c25163"
+      "source_sha256": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28"
     },
     "tokenfailure": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
-      "line": 193,
+      "line": 197,
       "symbol": "private void authenticationFailed(",
-      "source_sha256": "739c72b91974e385578a9d75476fcf4a9b42474b5f5b70271f43412295c25163"
+      "source_sha256": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28"
     },
     "tokenfailureevents": {
       "repository": "core",
@@ -440,6 +440,13 @@
       "symbol": "private void registerSuccessfulLogin(User user, String username)",
       "line": 222,
       "source_sha256": "a903d7b8a3957037399b402bf2645190e3638473404b686184ea32dccaddd066"
+    },
+    "tokenfailureboundary": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java",
+      "symbol": "protected void doFilterInternal(",
+      "line": 83,
+      "source_sha256": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28"
     }
   },
   "rows": [
@@ -456,7 +463,8 @@
         "auditgen",
         "authlog",
         "tokenfailure",
-        "tokenfailureevents"
+        "tokenfailureevents",
+        "tokenfailureboundary"
       ],
       "source_key": "FAU_GEN.1.1",
       "counted": true,
@@ -484,6 +492,13 @@
           "trace": "afta-mfa-failure-events.md",
           "full_requirement_closed": false,
           "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Token-processing catch excludes downstream failures and success subscribers, avoiding filter-induced false token rejection and owner failure events",
+          "trace": "afta-token-failure-boundary.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26"
         }
       ]
     },
@@ -1159,7 +1174,8 @@
         "mfaownerdisable",
         "mfafailureowner",
         "tokenfailureevents",
-        "oidcentitybookkeeping"
+        "oidcentitybookkeeping",
+        "tokenfailureboundary"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
@@ -1201,6 +1217,13 @@
           "trace": "afta-oidc-event-uid-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Token-processing catch excludes downstream failures and success subscribers, avoiding filter-induced false token rejection and owner failure events",
+          "trace": "afta-token-failure-boundary.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26"
         }
       ]
     },

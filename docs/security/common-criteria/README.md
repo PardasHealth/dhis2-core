@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Can downstream failures be mistaken for token rejection? | [Token failure boundary and selected source rows](afta-token-failure-boundary.md) |
 | Which account receives mapped OIDC event bookkeeping? | [UID binding, selected source rows and regression evidence](afta-oidc-event-uid-binding.md) |
 | Does login success retain request context without an OTP? | [Sanitized success details and regression evidence](afta-login-success-context.md) |
 | Do rejected MFA proofs reach audit and account lockout? | [Failure-event mapping and HTTP regressions](afta-mfa-failure-events.md) |

@@ -4,6 +4,13 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: token failure boundary
+
+**Selected source rows: 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`).**
+The token filter now handles only its own token-processing exceptions as token
+rejections. Success publication and downstream processing run outside that catch.
+See the [per-row boundary trace](afta-token-failure-boundary.md). Both rows remain partial.
+
 ## 16 November follow-up: OIDC event UID binding
 
 **Selected source rows: 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`),

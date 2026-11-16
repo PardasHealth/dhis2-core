@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-16",
+  "scope": "Selected source rows 1 (FAU_GEN.1.1) and 29 (FIA_AFL.1.1): API-token failure catch excludes downstream handling and success subscribers; no full requirement closure",
+  "baseline_core_commit": "d223b75f9670bca5454f5e05b7441931fa875114",
+  "implementation_commit": "38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "c8150ce2a00f8c5751130d8034ef72eda860616103e18e18d175ac6a7f0c05bd",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "b59dcc931e8e2ed77f03eada1b873e135dfc4ee0e9de990002a58e0123d02495",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "8cf6f7177005db66d195ad547730fb2f49940aa65ad718f999fa3275422857aa",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/TwoFactorFailureEventTest.java": "3b18be2ca5a8a38ba76b41b43bb7335247d7a9a53e8212c18c2143ea3de11ac6",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "be9b3e43ee50dbd23837db71318d460c90ccab7ca0c67589cb2207d701741a97",
+    ".github/workflows/cc-audit-regression.yml": "3528d48562a39905cf3e1aa33628d16d2d67d3db1a08dc18a20bcb55dce5c0d0",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java": "0f32897bc443044a3027833e0ebf846e1c13dc19ee30f8b1d73c1d44391ea8ca",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java": "a903d7b8a3957037399b402bf2645190e3638473404b686184ea32dccaddd066",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "c268b4bd383c1b82c07c323728f28a24f373b53d482ebc883236adc30c436cdf",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "0ce3f4b436160656fd5d50e3ef7243e1cebd8b55e8c64f4e454e32378847a8e2",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "ebb8ddc6613e993e0b21ab6cdd0cdd2bb0de21cc5ac5668bacb17f7767426300",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest.xml": "6da412720661a81dc7106a49bdcb3bbe89fc1c836481ab846d77e5369f88258f",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "28f7697438bcfa204e7dfd3fe39aeffc11eda5865995d7eb49018a7374d18f64",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest.xml": "5fb36c4c7902abe8d760cfbf8a3537280d0eb81da02e9b618b601c74b6398145",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "7b1020eddfe7bfb5cbc64c952cf1c527e40930e7eb8c8cab4a79fa4be3722e44"
+  },
+  "selected_source_rows": [
+    {
+      "row": 1,
+      "requirement": "FAU_GEN.1.1"
+    },
+    {
+      "row": 29,
+      "requirement": "FIA_AFL.1.1"
+    }
+  ],
+  "baseline_regression": {
+    "tests": 15,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Preceding filter swallows downstream BadCredentialsException and LockedException and routes them through token failure handling. The two propagation assertions fail; thirteen existing token cases pass.",
+    "log_sha256": "4fcbec6c5f640778bc9e85ead1a6d4d8809688f7b54aa03038b93cb71108003f"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache; unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, as recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "unit_boundary": "Real token filter/resolver and configured event publisher, mocked token manager and downstream chain. Exact downstream exception propagation, one success event, no filter-induced failure/entry-point call and preserved local context asserted. Existing audit, listener and MFA publisher cases retained.",
+    "web_boundary": "Existing H2/Spring-security PAT and form-login regressions use synthetic credentials. The new downstream exception scenarios are filter units, not live endpoint or browser incidents.",
+    "ci": "Extended ApiTokenIpConstraintTest already explicitly selected and successful nonempty report required by unchanged fork workflow. No hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=ApiTokenIpConstraintTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Punit-test -Dtest=ApiTokenIpConstraintTest,AuthenticationListenerTest,AuthenticationAuditRecordTest,TwoFactorFailureEventTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest,AuthenticationControllerTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Full AFTA failure-handling/lockout policy or every required audit event",
+    "Production audit delivery, retention or full-storage acceptance",
+    "Full surrounding exception-handler behavior and every downstream failure source",
+    "Live browser, external IdP, full test suite, deployed cluster or hosted CI acceptance"
+  ]
+}

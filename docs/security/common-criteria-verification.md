@@ -590,3 +590,13 @@ failing baseline cases against the preceding listener and the final execution.
 Mapped OIDC events now retain the UID-resolved account for bookkeeping.
 These controlled fixtures do not establish live IdP/browser acceptance or complete
 session freshness; all four rows remain partial. Results overlap prior inventories.
+
+## 16 November: token failure boundary
+
+**Selected source rows: 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`).**
+The [boundary trace](common-criteria/afta-token-failure-boundary.md) and
+[dated record](evidence/afta-token-failure-boundary-2026-11-16.json) preserve
+two failing baseline cases among fifteen token-filter tests. The catch now
+excludes downstream handling and success publication. Exact final suites/hashes
+are in the evidence. Results overlap earlier inventories; surrounding handler
+acceptance, full event policy and complete row closure are not established.

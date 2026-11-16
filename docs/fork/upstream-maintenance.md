@@ -246,3 +246,11 @@ Preserve UID-based local account resolution and direct entity bookkeeping in
 `AuthenticationListener`; a principal's username can be stale or reassigned.
 Missing/deleted mapped owners must not fall back to a namesake. Keep the required
 `OidcEventIdentityTest` report. See the [per-row trace](../security/common-criteria/afta-oidc-event-uid-binding.md).
+
+## Token failure boundary (16 November)
+
+Selected source rows: 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`). Keep success
+publication and downstream invocation outside the token rejection catch.
+A downstream authentication exception must not be turned into a token rejection
+by this filter. Preserve both exception propagation cases in the required token
+suite. See the [per-row trace](../security/common-criteria/afta-token-failure-boundary.md).
