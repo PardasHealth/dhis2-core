@@ -91,10 +91,13 @@ def render(data):
           'An official evaluation may require dependencies or assurance work beyond this list. Those need explicit agreement rather than silent expansion here.\n\n',
           'Implementation follow-up: **16 November 2026**. See the [token failure-boundary fix](afta-token-failure-boundary.md), [OIDC event UID fix](afta-oidc-event-uid-binding.md), [login success context fix](afta-login-success-context.md), [MFA failure-event fix](afta-mfa-failure-events.md), [email login challenge UID fix](afta-login-email-challenge-uid.md), [email disable challenge target fix](afta-email-challenge-identity.md), [TOTP provisioning URI fix](afta-totp-provisioning-uri.md), [current-user and MFA UID-binding fix](afta-current-user-uid-binding.md), [atomic failure-counter fix](afta-atomic-failure-counters.md), [OIDC event account-association fix](afta-oidc-event-account-association.md), [global session invalidation fix](afta-global-session-invalidation.md), [authentication address-source fix](afta-authentication-address-source.md), [API-token failure audit fix](afta-token-failure-audit.md), [remediation progress record](afta-remediation-progress.md), [token IP constraints](afta-token-ip-constraints.md), [audit-review paging and filters](afta-audit-review-paging.md), [PAT owner binding](afta-token-owner-binding.md) and [external broker TLS](afta-external-broker-tls.md). Broker-path evidence moves row 47 from a gap to partial evidence; no complete item is closed.\n\n',
           '## Manager summary\n\n',
+          f'**Latest recorded work — {updated}: {len(changes)} implementation commits linked to {len(touched)}/78 primary entries '
+          f'({percent(len(touched), 78)}), plus {len(optional_touched)} optional entry.** '
+          'These bounded fixes are recorded in the change table below; linked entries still need their remaining acceptance work.\n\n',
           '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 43 of 78 (55.1%). '
           'All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, '
           'that 55.1% is certified, or that all development must be redone.\n\n',
-          '![AFTA selected checklist evidence and open work](charts/afta-selected-dashboard.png)\n\n',
+          f'![AFTA manager summary: latest implementation work and requirement status](charts/afta-selected-dashboard.png?v=progress-{timeline[-1][0]}-{len(changes)})\n\n',
           '| Result for primary work list | Count | Percentage | Meaning |\n| --- | ---: | ---: | --- |\n',
           '| Fully demonstrated fit | 0 | 0.0% | No item has complete agreed AFTA definition/operations and sufficient end-to-end evidence to close it. |\n']
     meanings = {P: 'Relevant implementation is identified, but full requirement coverage or acceptance is incomplete.',
@@ -222,34 +225,42 @@ def charts(counts, data):
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'svg.fonttype': 'none'})
     changes, timeline, touched, optional_touched = implementation_progress(data)
     updated = date.fromisoformat(timeline[-1][0]).strftime('%-d %B %Y')
-    fig, axes = plt.subplots(1, 2, figsize=(14, 7), facecolor='#F7F9FC')
-    fig.subplots_adjust(top=.71, bottom=.25, wspace=.4)
-    fig.text(.06, .92, 'AFTA selected-checklist review', fontsize=25, weight='bold', color='#172B46')
-    fig.text(.06, .86, 'Provisional evidence coverage and open work - not an approval score', fontsize=14, color='#43556C')
-    fig.text(.06, .81, f'78 unique primary entries | 3 optional entries reported separately | duplicate counted once | updated {updated}',
-             fontsize=10.5, color='#52637A')
+    fig, axes = plt.subplots(1, 3, figsize=(18, 7), facecolor='#F7F9FC')
+    fig.subplots_adjust(top=.72, bottom=.26, left=.04, right=.96, wspace=.3)
+    fig.text(.04, .93, 'AFTA manager summary — latest recorded work', fontsize=25, weight='bold', color='#172B46')
+    fig.text(.04, .86, f'{len(changes)} implementation commits | {len(touched)}/78 primary entries with linked fixes | updated {updated}',
+             fontsize=15, color='#2679A6', weight='bold')
+    fig.text(.04, .81, 'Implementation activity and requirement acceptance are separate measures. Optional entries reported separately.',
+             fontsize=11, color='#52637A')
     colors = ['#2679A6', '#C95747', '#B48528']
-    axes[0].pie([counts[s] for s in STATUSES], colors=colors, startangle=90, counterclock=False,
+    axes[0].pie([len(touched), 78-len(touched)], colors=['#2679A6', '#DCE3EC'], startangle=90,
+                counterclock=False, wedgeprops={'width': .28, 'edgecolor': '#F7F9FC', 'linewidth': 3})
+    axes[0].set_title('Implementation work recorded', fontsize=14, weight='bold', pad=16, color='#172B46')
+    axes[0].text(0, .08, f'{len(touched)}/78', ha='center', fontsize=32, weight='bold', color='#2679A6')
+    axes[0].text(0, -.20, f'{percent(len(touched), 78)} have linked fixes', ha='center', fontsize=12, color='#43556C')
+    axes[0].text(.5, -.08, f'{len(changes)} distinct implementation commits\n{78-len(touched)} primary entries without linked follow-ups\n{len(optional_touched)}/3 optional entries also have follow-ups',
+                 transform=axes[0].transAxes, ha='center', va='top', fontsize=11, color='#43556C', linespacing=1.7)
+    axes[1].pie([counts[status] for status in STATUSES], colors=colors, startangle=90, counterclock=False,
                 wedgeprops={'width': .28, 'edgecolor': '#F7F9FC', 'linewidth': 3})
-    axes[0].set_title('Where is implementation evidence?', fontsize=14, weight='bold', pad=16, color='#172B46')
-    axes[0].text(0, .08, percent(counts[P], 78), ha='center', fontsize=30, weight='bold', color=colors[0])
-    axes[0].text(0, -.20, 'partial evidence', ha='center', fontsize=12, color='#43556C')
+    axes[1].set_title('Requirement evidence status', fontsize=14, weight='bold', pad=16, color='#172B46')
+    axes[1].text(0, .08, percent(counts[P], 78), ha='center', fontsize=30, weight='bold', color=colors[0])
+    axes[1].text(0, -.20, 'partial evidence', ha='center', fontsize=12, color='#43556C')
     labels = [f'Partial evidence: {counts[P]}/78 ({percent(counts[P], 78)})',
-              f'Gaps / evidence not established: {counts[G]}/78 ({percent(counts[G], 78)})',
-              f'Need AFTA definition / edition: {counts[D]}/78 ({percent(counts[D], 78)})']
-    axes[0].legend(labels, loc='upper center', bbox_to_anchor=(.5, -.03), frameon=False, fontsize=10, labelspacing=.8)
-    axes[1].pie([78], colors=['#D08327'], startangle=90,
+              f'Gaps: {counts[G]}/78 ({percent(counts[G], 78)})',
+              f'Unresolved definitions: {counts[D]}/78 ({percent(counts[D], 78)})']
+    axes[1].legend(labels, loc='upper center', bbox_to_anchor=(.5, -.03), frameon=False, fontsize=11, labelspacing=.8)
+    axes[2].pie([78], colors=['#D08327'], startangle=90,
                 wedgeprops={'width': .28, 'edgecolor': '#F7F9FC', 'linewidth': 3})
-    axes[1].set_title('How much still needs closure?', fontsize=14, weight='bold', pad=16, color='#172B46')
-    axes[1].text(0, .08, '100%', ha='center', fontsize=32, weight='bold', color='#A65E12')
-    axes[1].text(0, -.20, 'further work / proof', ha='center', fontsize=12, color='#43556C')
-    axes[1].text(.5, -.08, '78/78 have open obligations\n0/78 fully demonstrated fit (0%)',
-                 transform=axes[1].transAxes, ha='center', va='top', fontsize=11, color='#43556C', linespacing=1.7)
-    fig.text(.06, .105, 'Partial evidence is not full compliance. Open obligations are not an estimate of development effort.',
-             fontsize=11, weight='bold', color='#172B46')
-    fig.text(.06, .035, 'Source: user-supplied AFTA identifier list and item-specific source assessment; exact AFTA document/version remains unprovided.\n'
-             'These figures use a different scope/unit from the earlier 199-component dashboard and must not be treated as a progress comparison.',
-             fontsize=10, color='#52637A', linespacing=1.5)
+    axes[2].set_title('Full requirement acceptance', fontsize=14, weight='bold', pad=16, color='#172B46')
+    axes[2].text(0, .08, '0/78', ha='center', fontsize=32, weight='bold', color='#A65E12')
+    axes[2].text(0, -.20, 'fully closed', ha='center', fontsize=12, color='#43556C')
+    axes[2].text(.5, -.08, '78/78 retain open acceptance work\nPolicies, definitions and deployment proof\nremain necessary for full closure',
+                 transform=axes[2].transAxes, ha='center', va='top', fontsize=11, color='#43556C', linespacing=1.7)
+    fig.text(.04, .105, 'Linked fixes show recorded code work, not a compliance percentage. Several commits may address the same source entry.',
+             fontsize=12, weight='bold', color='#172B46')
+    fig.text(.04, .035, 'Source: selected-checklist assessment and dated implementation follow-ups; exact AFTA document/version remains unprovided.\n'
+             'Primary scope: 78 unique entries; 3 optional entries separate; duplicate counted once. This is not an effort estimate or certification score.',
+             fontsize=11, color='#52637A', linespacing=1.5)
     folder = FOLDER / 'charts'
     for ext in ('png', 'svg', 'pdf'):
         fig.savefig(folder / f'afta-selected-dashboard.{ext}', dpi=180, facecolor=fig.get_facecolor())

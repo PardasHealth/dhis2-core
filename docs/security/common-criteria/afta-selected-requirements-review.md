@@ -8,9 +8,11 @@ Implementation follow-up: **16 November 2026**. See the [token failure-boundary 
 
 ## Manager summary
 
+**Latest recorded work — 16 November 2026: 24 implementation commits linked to 20/78 primary entries (25.6%), plus 1 optional entry.** These bounded fixes are recorded in the change table below; linked entries still need their remaining acceptance work.
+
 **Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 43 of 78 (55.1%). All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, that 55.1% is certified, or that all development must be redone.
 
-![AFTA selected checklist evidence and open work](charts/afta-selected-dashboard.png)
+![AFTA manager summary: latest implementation work and requirement status](charts/afta-selected-dashboard.png?v=progress-2026-11-16-24)
 
 | Result for primary work list | Count | Percentage | Meaning |
 | --- | ---: | ---: | --- |

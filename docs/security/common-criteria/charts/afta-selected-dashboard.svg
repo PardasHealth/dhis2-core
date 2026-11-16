@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1008pt" height="504pt" viewBox="0 0 1008 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1296pt" height="504pt" viewBox="0 0 1296 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-16T05:43:40.521557</dc:date>
+    <dc:date>2026-11-16T05:48:08.702393</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -22,176 +22,231 @@
  <g id="figure_1">
   <g id="patch_1">
    <path d="M 0 504
-L 1008 504
-L 1008 0
+L 1296 504
+L 1296 0
 L 0 0
 z
 " style="fill: #f7f9fc"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 259.383476 350.043477
-C 272.128206 354.298295 285.646694 355.732901 299.000565 354.247735
-C 312.354438 352.762563 325.227391 348.392789 336.725844 341.441731
-C 348.224296 334.490672 358.075898 325.122981 365.596803 313.988906
-C 373.117708 302.854831 378.129771 290.218107 380.285091 276.955899
-C 382.440411 263.69369 381.68793 250.120133 378.079879 237.17743
-C 374.471828 224.234725 368.093672 212.229434 359.388148 201.99491
-C 350.682623 191.760386 339.855943 183.539058 327.659617 177.901576
-C 315.46329 172.264093 302.186201 169.344 288.749996 169.344
-L 288.749997 195.31008
-C 298.424065 195.31008 307.983569 197.412547 316.764924 201.471535
-C 325.546279 205.530522 333.341488 211.449878 339.609466 218.818735
-C 345.877444 226.187593 350.469716 234.831402 353.067513 244.150149
-C 355.66531 253.468896 356.207096 263.241857 354.655265 272.790648
-C 353.103435 282.339437 349.49475 291.437879 344.079698 299.454412
-C 338.664646 307.470946 331.571493 314.215684 323.292607 319.220446
-C 315.013722 324.225208 305.745195 327.371445 296.130407 328.440769
-C 286.515619 329.510089 276.782309 328.477172 267.606103 325.413703
+    <path d="M 310.100793 260.774111
+C 310.603806 248.291942 308.579499 235.835869 304.149669 224.155366
+C 299.71984 212.474862 292.975155 201.808997 284.321434 192.79952
+C 275.667713 183.790044 265.282078 176.621357 253.789421 171.724791
+C 242.296764 166.828225 229.932295 164.304 217.439996 164.304
+L 217.439997 190.27008
+C 226.434452 190.27008 235.33687 192.087522 243.611583 195.613049
+C 251.886296 199.138577 259.363954 204.300032 265.594633 210.786855
+C 271.825312 217.273678 276.681485 224.953101 279.870962 233.363063
+C 283.060439 241.773026 284.51794 250.741398 284.155771 259.72856
 z
 " style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 204.967615 301.835227
-C 210.322969 313.121399 217.904035 323.209964 227.254658 331.49389
-C 236.60528 339.777816 247.534074 346.087564 259.383476 350.043477
-L 267.606103 325.413703
-C 259.074534 322.565446 251.205802 318.022428 244.473353 312.058001
-C 237.740905 306.093574 232.282538 298.829807 228.426683 290.703763
+    <path d="M 217.440001 164.304
+C 199.259679 164.304 181.474549 169.650206 166.307503 179.67442
+C 151.140456 189.698634 139.250872 203.965046 132.124791 220.690571
+C 124.99871 237.416092 122.945925 255.873603 126.223022 273.75613
+C 129.500115 291.638656 137.964613 308.168788 150.558566 321.28048
+C 163.152518 334.392171 179.328405 343.515408 197.064473 347.509903
+C 214.80054 351.504404 233.325744 350.196499 250.32464 343.749664
+C 267.323537 337.302834 282.057129 325.997352 292.683928 311.246244
+C 303.310728 296.495136 309.368742 278.939689 310.100793 260.774111
+L 284.155771 259.72856
+C 283.628694 272.807776 279.266924 285.447698 271.615628 296.068496
+C 263.964333 306.689293 253.356147 314.829241 241.116941 319.470958
+C 228.877736 324.112679 215.539589 325.054371 202.76962 322.17833
+C 189.999651 319.302294 178.353013 312.733563 169.285367 303.293145
+C 160.217721 293.852728 154.123283 281.951032 151.763776 269.075614
+C 149.404266 256.200194 150.882271 242.910786 156.013049 230.868411
+C 161.143828 218.826033 169.704328 208.554216 180.624602 201.336782
+C 191.544875 194.119348 204.350169 190.27008 217.440001 190.27008
 z
-" style="fill: #c95747; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
-   </g>
-   <g id="patch_4">
-    <path d="M 288.750001 169.344
-C 273.105324 169.344 257.712099 173.30292 244.00864 180.850843
-C 230.305183 188.398767 218.731993 199.293059 210.37045 212.515786
-C 202.008907 225.738514 197.127796 240.864594 196.183191 256.480729
-C 195.238592 272.096864 198.260861 287.701034 204.967615 301.835227
-L 228.426683 290.703763
-C 223.59782 280.527145 221.421786 269.292142 222.101898 258.048525
-C 222.782013 246.804908 226.296413 235.91413 232.316724 226.393766
-C 238.337035 216.873402 246.669732 209.029512 256.536221 203.595007
-C 266.402711 198.160502 277.485833 195.31008 288.750001 195.31008
-z
-" style="fill: #b48528; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+" style="fill: #dce3ec; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1"/>
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 30px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="288.75" y="254.66112" transform="rotate(-0 288.75 254.66112)">55.1%</text>
+    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="217.44" y="249.62112" transform="rotate(-0 217.44 249.62112)">20/78</text>
    </g>
    <g id="text_2">
-    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="288.75" y="280.6272" transform="rotate(-0 288.75 280.6272)">partial evidence</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="217.44" y="275.5872" transform="rotate(-0 217.44 275.5872)">25.6% have linked fixes</text>
    </g>
    <g id="text_3">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="288.75" y="130.16" transform="rotate(-0 288.75 130.16)">Where is implementation evidence?</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(117.731016 399.865481)">24 distinct implementation commits</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(95.987109 416.362216)">58 primary entries without linked follow-ups</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(105.821797 432.85895)">1/3 optional entries also have follow-ups</text>
    </g>
-   <g id="legend_1">
-    <g id="patch_5">
-     <path d="M 155.394531 401.553638
-L 175.394531 401.553638
-L 175.394531 394.553638
-L 155.394531 394.553638
-z
-" style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
-    </g>
-    <g id="text_4">
-     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="183.394531" y="401.553638" transform="rotate(-0 183.394531 401.553638)">Partial evidence: 43/78 (55.1%)</text>
-    </g>
-    <g id="patch_6">
-     <path d="M 155.394531 419.231763
-L 175.394531 419.231763
-L 175.394531 412.231763
-L 155.394531 412.231763
-z
-" style="fill: #c95747; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
-    </g>
-    <g id="text_5">
-     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="183.394531" y="419.231763" transform="rotate(-0 183.394531 419.231763)">Gaps / evidence not established: 10/78 (12.8%)</text>
-    </g>
-    <g id="patch_7">
-     <path d="M 155.394531 436.909888
-L 175.394531 436.909888
-L 175.394531 429.909888
-L 155.394531 429.909888
-z
-" style="fill: #b48528; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
-    </g>
-    <g id="text_6">
-     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="183.394531" y="436.909888" transform="rotate(-0 183.394531 436.909888)">Need AFTA definition / edition: 25/78 (32.1%)</text>
-    </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="217.44" y="125.12" transform="rotate(-0 217.44 125.12)">Implementation work recorded</text>
    </g>
   </g>
   <g id="axes_2">
-   <g id="patch_8">
-    <path d="M 837.186 262.08
-C 837.186 249.90202 834.787203 237.842456 830.126892 226.591469
-C 825.466581 215.340483 818.635387 205.116878 810.024254 196.505746
-C 801.413122 187.894613 791.189517 181.063419 779.938531 176.403108
-C 768.687544 171.742797 756.62798 169.344 744.45 169.344
-C 732.27202 169.344 720.212456 171.742797 708.961469 176.403108
-C 697.710483 181.063419 687.486878 187.894613 678.875746 196.505746
-C 670.264613 205.116878 663.433419 215.340483 658.773108 226.591469
-C 654.112797 237.842456 651.714 249.90202 651.714 262.08
-C 651.714 274.25798 654.112797 286.317544 658.773108 297.568531
-C 663.433419 308.819517 670.264613 319.043122 678.875746 327.654254
-C 687.486878 336.265387 697.710483 343.096581 708.961469 347.756892
-C 720.212456 352.417203 732.27202 354.816 744.45 354.816
-C 756.62798 354.816 768.687544 352.417203 779.938531 347.756892
-C 791.189517 343.096581 801.413122 336.265387 810.024254 327.654254
-C 818.635387 319.043122 825.466581 308.819517 830.126892 297.568531
-C 834.787203 286.317544 837.186 274.25798 837.186 262.08
-M 811.21992 262.08
-C 811.21992 270.848146 809.492787 279.531032 806.137362 287.631742
-C 802.781938 295.732452 797.863478 303.093448 791.663463 309.293463
-C 785.463448 315.493478 778.102452 320.411938 770.001742 323.767362
-C 761.901032 327.122787 753.218146 328.84992 744.45 328.84992
-C 735.681854 328.84992 726.998968 327.122787 718.898258 323.767362
-C 710.797548 320.411938 703.436552 315.493478 697.236537 309.293463
-C 691.036522 303.093448 686.118062 295.732452 682.762638 287.631742
-C 679.407213 279.531032 677.68008 270.848146 677.68008 262.08
-C 677.68008 253.311854 679.407213 244.628968 682.762638 236.528258
-C 686.118062 228.427548 691.036522 221.066552 697.236537 214.866537
-C 703.436552 208.666522 710.797548 203.748062 718.898258 200.392638
-C 726.998968 197.037213 735.681854 195.31008 744.45 195.31008
-C 753.218146 195.31008 761.901032 197.037213 770.001742 200.392638
-C 778.102452 203.748062 785.463448 208.666522 791.663463 214.866537
-C 797.863478 221.066552 802.781938 228.427548 806.137362 236.528258
-C 809.492787 244.628968 811.21992 253.311854 811.21992 262.08
+   <g id="patch_4">
+    <path d="M 618.633476 345.003477
+C 631.378206 349.258295 644.896694 350.692901 658.250565 349.207735
+C 671.604438 347.722563 684.477391 343.352789 695.975844 336.401731
+C 707.474296 329.450672 717.325898 320.082981 724.846803 308.948906
+C 732.367708 297.814831 737.379771 285.178107 739.535091 271.915899
+C 741.690411 258.65369 740.93793 245.080133 737.329879 232.13743
+C 733.721828 219.194725 727.343672 207.189434 718.638148 196.95491
+C 709.932623 186.720386 699.105943 178.499058 686.909617 172.861576
+C 674.71329 167.224093 661.436201 164.304 647.999996 164.304
+L 647.999997 190.27008
+C 657.674065 190.27008 667.233569 192.372547 676.014924 196.431535
+C 684.796279 200.490522 692.591488 206.409878 698.859466 213.778735
+C 705.127444 221.147593 709.719716 229.791402 712.317513 239.110149
+C 714.91531 248.428896 715.457096 258.201857 713.905265 267.750648
+C 712.353435 277.299437 708.74475 286.397879 703.329698 294.414412
+C 697.914646 302.430946 690.821493 309.175684 682.542607 314.180446
+C 674.263722 319.185208 664.995195 322.331445 655.380407 323.400769
+C 645.765619 324.470089 636.032309 323.437172 626.856103 320.373703
 z
-" style="fill: #d08327; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+" style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 564.217615 296.795227
+C 569.572969 308.081399 577.154035 318.169964 586.504658 326.45389
+C 595.85528 334.737816 606.784074 341.047564 618.633476 345.003477
+L 626.856103 320.373703
+C 618.324534 317.525446 610.455802 312.982428 603.723353 307.018001
+C 596.990905 301.053574 591.532538 293.789807 587.676683 285.663763
+z
+" style="fill: #c95747; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 648.000001 164.304
+C 632.355324 164.304 616.962099 168.26292 603.25864 175.810843
+C 589.555183 183.358767 577.981993 194.253059 569.62045 207.475786
+C 561.258907 220.698514 556.377796 235.824594 555.433191 251.440729
+C 554.488592 267.056864 557.510861 282.661034 564.217615 296.795227
+L 587.676683 285.663763
+C 582.84782 275.487145 580.671786 264.252142 581.351898 253.008525
+C 582.032013 241.764908 585.546413 230.87413 591.566724 221.353766
+C 597.587035 211.833402 605.919732 203.989512 615.786221 198.555007
+C 625.652711 193.120502 636.735833 190.27008 648.000001 190.27008
+z
+" style="fill: #b48528; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_3"/>
    <g id="matplotlib.axis_4"/>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 30px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="648" y="249.62112" transform="rotate(-0 648 249.62112)">55.1%</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="648" y="275.5872" transform="rotate(-0 648 275.5872)">partial evidence</text>
+   </g>
    <g id="text_7">
-    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #a65e12" x="744.45" y="254.66112" transform="rotate(-0 744.45 254.66112)">100%</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="648" y="125.12" transform="rotate(-0 648 125.12)">Requirement evidence status</text>
    </g>
-   <g id="text_8">
-    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="744.45" y="280.6272" transform="rotate(-0 744.45 280.6272)">further work / proof</text>
-   </g>
-   <g id="text_9">
-    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(665.958125 404.905481)">78/78 have open obligations</text>
-    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(655.967891 421.402216)">0/78 fully demonstrated fit (0%)</text>
-   </g>
-   <g id="text_10">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="744.45" y="130.16" transform="rotate(-0 744.45 130.16)">How much still needs closure?</text>
+   <g id="legend_1">
+    <g id="patch_7">
+     <path d="M 528.213437 398.173481
+L 550.213437 398.173481
+L 550.213437 390.473481
+L 528.213437 390.473481
+z
+" style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="559.013437" y="398.173481" transform="rotate(-0 559.013437 398.173481)">Partial evidence: 43/78 (55.1%)</text>
+    </g>
+    <g id="patch_8">
+     <path d="M 528.213437 417.619419
+L 550.213437 417.619419
+L 550.213437 409.919419
+L 528.213437 409.919419
+z
+" style="fill: #c95747; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="559.013437" y="417.619419" transform="rotate(-0 559.013437 417.619419)">Gaps: 10/78 (12.8%)</text>
+    </g>
+    <g id="patch_9">
+     <path d="M 528.213437 437.065356
+L 550.213437 437.065356
+L 550.213437 429.365356
+L 528.213437 429.365356
+z
+" style="fill: #b48528; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="559.013437" y="437.065356" transform="rotate(-0 559.013437 437.065356)">Unresolved definitions: 25/78 (32.1%)</text>
+    </g>
    </g>
   </g>
-  <g id="text_11">
-   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="60.48" y="40.32" transform="rotate(-0 60.48 40.32)">AFTA selected-checklist review</text>
-  </g>
-  <g id="text_12">
-   <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #43556c" x="60.48" y="70.56" transform="rotate(-0 60.48 70.56)">Provisional evidence coverage and open work - not an approval score</text>
-  </g>
-  <g id="text_13">
-   <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #52637a" x="60.48" y="95.76" transform="rotate(-0 60.48 95.76)">78 unique primary entries | 3 optional entries reported separately | duplicate counted once | updated 16 November 2026</text>
-  </g>
-  <g id="text_14">
-   <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="60.48" y="451.08" transform="rotate(-0 60.48 451.08)">Partial evidence is not full compliance. Open obligations are not an estimate of development effort.</text>
+  <g id="axes_3">
+   <g id="patch_10">
+    <path d="M 1171.296 257.04
+C 1171.296 244.86202 1168.897203 232.802456 1164.236892 221.551469
+C 1159.576581 210.300483 1152.745387 200.076878 1144.134254 191.465746
+C 1135.523122 182.854613 1125.299517 176.023419 1114.048531 171.363108
+C 1102.797544 166.702797 1090.73798 164.304 1078.56 164.304
+C 1066.38202 164.304 1054.322456 166.702797 1043.071469 171.363108
+C 1031.820483 176.023419 1021.596878 182.854613 1012.985746 191.465746
+C 1004.374613 200.076878 997.543419 210.300483 992.883108 221.551469
+C 988.222797 232.802456 985.824 244.86202 985.824 257.04
+C 985.824 269.21798 988.222797 281.277544 992.883108 292.528531
+C 997.543419 303.779517 1004.374613 314.003122 1012.985746 322.614254
+C 1021.596878 331.225387 1031.820483 338.056581 1043.071469 342.716892
+C 1054.322456 347.377203 1066.38202 349.776 1078.56 349.776
+C 1090.73798 349.776 1102.797544 347.377203 1114.048531 342.716892
+C 1125.299517 338.056581 1135.523122 331.225387 1144.134254 322.614254
+C 1152.745387 314.003122 1159.576581 303.779517 1164.236892 292.528531
+C 1168.897203 281.277544 1171.296 269.21798 1171.296 257.04
+M 1145.32992 257.04
+C 1145.32992 265.808146 1143.602787 274.491032 1140.247362 282.591742
+C 1136.891938 290.692452 1131.973478 298.053448 1125.773463 304.253463
+C 1119.573448 310.453478 1112.212452 315.371938 1104.111742 318.727362
+C 1096.011032 322.082787 1087.328146 323.80992 1078.56 323.80992
+C 1069.791854 323.80992 1061.108968 322.082787 1053.008258 318.727362
+C 1044.907548 315.371938 1037.546552 310.453478 1031.346537 304.253463
+C 1025.146522 298.053448 1020.228062 290.692452 1016.872638 282.591742
+C 1013.517213 274.491032 1011.79008 265.808146 1011.79008 257.04
+C 1011.79008 248.271854 1013.517213 239.588968 1016.872638 231.488258
+C 1020.228062 223.387548 1025.146522 216.026552 1031.346537 209.826537
+C 1037.546552 203.626522 1044.907548 198.708062 1053.008258 195.352638
+C 1061.108968 191.997213 1069.791854 190.27008 1078.56 190.27008
+C 1087.328146 190.27008 1096.011032 191.997213 1104.111742 195.352638
+C 1112.212452 198.708062 1119.573448 203.626522 1125.773463 209.826537
+C 1131.973478 216.026552 1136.891938 223.387548 1140.247362 231.488258
+C 1143.602787 239.588968 1145.32992 248.271854 1145.32992 257.04
+z
+" style="fill: #d08327; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_5"/>
+   <g id="matplotlib.axis_6"/>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #a65e12" x="1078.56" y="249.62112" transform="rotate(-0 1078.56 249.62112)">0/78</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="1078.56" y="275.5872" transform="rotate(-0 1078.56 275.5872)">fully closed</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(980.904922 399.865481)">78/78 retain open acceptance work</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(963.18375 416.362216)">Policies, definitions and deployment proof</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(988.58 432.85895)">remain necessary for full closure</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="1078.56" y="125.12" transform="rotate(-0 1078.56 125.12)">Full requirement acceptance</text>
+   </g>
   </g>
   <g id="text_15">
-   <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(60.48 472.882656)">Source: user-supplied AFTA identifier list and item-specific source assessment; exact AFTA document/version remains unprovided.</text>
-   <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(60.48 486.36)">These figures use a different scope/unit from the earlier 199-component dashboard and must not be treated as a progress comparison.</text>
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="51.84" y="35.28" transform="rotate(-0 51.84 35.28)">AFTA manager summary — latest recorded work</text>
+  </g>
+  <g id="text_16">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #2679a6" x="51.84" y="70.56" transform="rotate(-0 51.84 70.56)">24 implementation commits | 20/78 primary entries with linked fixes | updated 16 November 2026</text>
+  </g>
+  <g id="text_17">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #52637a" x="51.84" y="95.76" transform="rotate(-0 51.84 95.76)">Implementation activity and requirement acceptance are separate measures. Optional entries reported separately.</text>
+  </g>
+  <g id="text_18">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="51.84" y="451.08" transform="rotate(-0 51.84 451.08)">Linked fixes show recorded code work, not a compliance percentage. Several commits may address the same source entry.</text>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(51.84 471.534922)">Source: selected-checklist assessment and dated implementation follow-ups; exact AFTA document/version remains unprovided.</text>
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #52637a" transform="translate(51.84 486.36)">Primary scope: 78 unique entries; 3 optional entries separate; duplicate counted once. This is not an effort estimate or certification score.</text>
   </g>
  </g>
 </svg>
