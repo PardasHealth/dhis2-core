@@ -230,3 +230,11 @@ Spring's default exception mappings do not cover this subclass automatically.
 Keep successful `TwoFactorCodeSentException` issuance separate from rejected-proof
 counting. Preserve the required publisher report and both-factor HTTP threshold
 cases. See the [failure-event trace](../security/common-criteria/afta-mfa-failure-events.md).
+
+## Login success details (16 November)
+
+Preserve the parent request details when replacing the provider success token,
+and copy factor details with the OTP cleared. Reusing the incoming factor object
+would retain the submitted code; dropping details loses audit context. Keep the
+three `ProviderManager` result/event cases in the required policy suite. See the
+[success-context trace](../security/common-criteria/afta-login-success-context.md).

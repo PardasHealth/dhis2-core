@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Does login success retain request context without an OTP? | [Sanitized success details and regression evidence](afta-login-success-context.md) |
 | Do rejected MFA proofs reach audit and account lockout? | [Failure-event mapping and HTTP regressions](afta-mfa-failure-events.md) |
 | How is an email login challenge bound to the principal? | [Authenticated UID routing and regression evidence](afta-login-email-challenge-uid.md) |
 | How is the email disable challenge bound to its selected account? | [Target continuity and regression evidence](afta-email-challenge-identity.md) |

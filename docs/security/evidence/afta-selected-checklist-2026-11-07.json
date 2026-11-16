@@ -124,7 +124,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "line": 71,
       "symbol": "class TwoFactorAuthenticationProvider",
-      "source_sha256": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b"
+      "source_sha256": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
     },
     "security": {
       "repository": "core",
@@ -424,8 +424,15 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "symbol": "private void sendEmail2FACode(UserDetails userDetails)",
-      "line": 213,
-      "source_sha256": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b"
+      "line": 225,
+      "source_sha256": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
+    },
+    "loginsuccesscontext": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
+      "symbol": "Object completedDetails = result.getDetails();",
+      "line": 131,
+      "source_sha256": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
     }
   },
   "rows": [
@@ -480,14 +487,15 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit record fields",
-      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. HTTP-request authentication details for password/MFA and Basic now retain the servlet-resolved address rather than raw forwarding headers; explicit session/detail values still depend on a trusted source.",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. HTTP-request authentication details for password/MFA and Basic now retain the servlet-resolved address rather than raw forwarding headers; explicit session/detail values still depend on a trusted source. The replacement password/MFA success token now retains request address/session context in copied factor details with the submitted OTP cleared.",
       "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
       "references": [
         "auditquery",
         "authlog",
         "tokenfailure",
         "tokenfailureevents",
-        "authaddress"
+        "authaddress",
+        "loginsuccesscontext"
       ],
       "source_key": "FAU_GEN.1.2",
       "counted": true,
@@ -522,6 +530,13 @@
           "trace": "afta-mfa-failure-events.md",
           "full_requirement_closed": false,
           "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Replacement login success token retains connection context with copied factor details and cleared submitted OTP; actual ProviderManager success-event regressions",
+          "trace": "afta-login-success-context.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "1114c5c925156520e83acad1b0697a4d445cddf0"
         }
       ]
     },

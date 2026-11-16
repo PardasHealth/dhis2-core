@@ -4,6 +4,13 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: login success connection context
+
+The replacement success token now retains request address/session context, using
+a copied factor-details object with the submitted OTP cleared. The incoming
+request object remains unchanged. See the [success-context trace](afta-login-success-context.md).
+This supports row 2; full audit content and deployment acceptance remain open.
+
 ## 16 November follow-up: rejected MFA proof events
 
 The publisher explicitly maps the custom MFA rejection exception to a credential

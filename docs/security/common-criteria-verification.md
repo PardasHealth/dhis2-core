@@ -570,3 +570,13 @@ custom exception mapping enables the existing failure listeners. Successful
 challenge issuance remains excluded. Final suite counts/hashes are in the evidence;
 these overlap earlier inventories and do not establish full selected policy or
 production audit delivery. No hosted CI execution is claimed.
+
+## 16 November: sanitized login success details
+
+The [success-context trace](common-criteria/afta-login-success-context.md) and
+[dated evidence](evidence/afta-login-success-context-2026-11-16.json) preserve three
+failing baseline cases among 24 provider-policy tests. The replacement success
+token now retains address/session fields while clearing the submitted OTP in a
+copy. Final suite counts and source/report hashes are recorded in the evidence.
+Results overlap earlier inventories; production audit delivery and full clause
+closure are not established. No hosted CI execution is claimed.

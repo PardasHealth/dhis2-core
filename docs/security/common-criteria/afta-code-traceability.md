@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`51eb123a81`. Subsequent documentation-only commits do not change that code.
+`1114c5c925`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the ten recent implementation fixes to selected checklist
+This guide traces the eleven recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -30,6 +30,7 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 37–39: `FIA_USB.1.1/.2/.3` | Retain selected account during email disable challenge validation, delivery and persistence | `a9152350ac` | [Email challenge trace](afta-email-challenge-identity.md), [execution record](../evidence/afta-email-challenge-identity-2026-11-16.json) |
 | 36–39: `FIA_UAU.5.2`, `FIA_USB.1.1/.2/.3` | Issue login email challenges by principal UID, rejecting missing/deleted owners without name fallback | `a107b60400` | [Login challenge UID trace](afta-login-email-challenge-uid.md), [execution record](../evidence/afta-login-email-challenge-uid-2026-11-16.json) |
 | 1–3, 29–30 and 36: audit, `FIA_AFL.1.1/.2`, `FIA_UAU.5.2` | Map rejected MFA proofs to failure events and existing configured lockout; exclude successful challenge issuance | `51eb123a81` | [MFA failure-event trace](afta-mfa-failure-events.md), [execution record](../evidence/afta-mfa-failure-events-2026-11-16.json) |
+| 2: `FAU_GEN.1.2` | Retain success request context with copied factor details and cleared submitted OTP | `1114c5c925` | [Success context trace](afta-login-success-context.md), [execution record](../evidence/afta-login-success-context-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -230,6 +231,16 @@ in three cases. H2 baseline: two threshold failures in twelve cases. See the
 The final batch passes 76 unit and 46 H2 API cases.
 Threshold/expiry and the lockout setting remain; full selected failure policy,
 audit delivery/retention and deployed acceptance remain open.
+
+## 11. Sanitized login success connection context
+
+`TwoFactorAuthenticationProvider.authenticate` retains the parent's details in
+its replacement token. Factor details are copied with address/session fields and
+a null code. Real `ProviderManager` success-event cases cover password-only,
+TOTP and email; all three fail against the preceding provider because details
+are null. They also require the incoming request's supplied code to remain
+unchanged. See the [execution trace](afta-login-success-context.md). Full event
+content policy, other providers and deployed acceptance remain open.
 
 ## CI and maintaining the trace
 
