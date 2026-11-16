@@ -29,11 +29,12 @@
  */
 package org.hisp.dhis.common;
 
+import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
@@ -76,12 +77,11 @@ public class HashUtils {
   }
 
   public static String hashSHA256(@Nonnull String str) {
-    return hashSHA256(str.getBytes(StandardCharsets.UTF_8));
+    return hashOwnedBytes(Hashing.sha256(), str.getBytes(StandardCharsets.UTF_8));
   }
 
   public static String hashSHA256(@Nonnull char[] chars) {
-    byte[] bytes = extractBytesFromChar(chars);
-    return hashSHA256(bytes);
+    return hashChars(Hashing.sha256(), chars);
   }
 
   /**
@@ -95,28 +95,31 @@ public class HashUtils {
   }
 
   public static String hashSHA512(@Nonnull String str) {
-    return hashSHA512(str.getBytes(StandardCharsets.UTF_8));
+    return hashOwnedBytes(Hashing.sha512(), str.getBytes(StandardCharsets.UTF_8));
   }
 
   public static String hashSHA512(@Nonnull char[] chars) {
-    byte[] bytes = extractBytesFromChar(chars);
-
-    return hashSHA512(bytes);
+    return hashChars(Hashing.sha512(), chars);
   }
 
-  /**
-   * Creates a byte array from a char array.
-   *
-   * @param chars the char array
-   * @return the byte array
-   */
-  private static byte[] extractBytesFromChar(char[] chars) {
-    Charset charset = StandardCharsets.UTF_8;
-    CharBuffer charBuffer = CharBuffer.wrap(chars);
-    ByteBuffer byteBuffer = charset.encode(charBuffer);
-    byte[] bytes = new byte[byteBuffer.remaining()];
-    byteBuffer.get(bytes);
-    return bytes;
+  private static String hashOwnedBytes(HashFunction function, byte[] bytes) {
+    try {
+      return function.hashBytes(bytes).toString();
+    } finally {
+      Arrays.fill(bytes, (byte) 0);
+    }
+  }
+
+  private static String hashChars(HashFunction function, char[] chars) {
+    ByteBuffer encoded = StandardCharsets.UTF_8.encode(CharBuffer.wrap(chars));
+    try {
+      // Hash only the encoded range, without allocating a second plaintext byte array.
+      return function.hashBytes(encoded).toString();
+    } finally {
+      if (encoded.hasArray()) {
+        Arrays.fill(encoded.array(), (byte) 0);
+      }
+    }
   }
 
   /**

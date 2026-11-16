@@ -33,6 +33,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.zip.CRC32;
 import javax.annotation.Nonnull;
 
@@ -56,9 +57,13 @@ public class CRC32Utils {
     ByteBuffer byteBuffer = charset.encode(charBuffer);
     byte[] bytes = byteBuffer.array();
 
-    CRC32 crc = new CRC32();
-    crc.update(bytes, 0, bytes.length);
-    return crc.getValue();
+    try {
+      CRC32 crc = new CRC32();
+      crc.update(bytes, 0, bytes.length);
+      return crc.getValue();
+    } finally {
+      Arrays.fill(bytes, (byte) 0);
+    }
   }
 
   /**
