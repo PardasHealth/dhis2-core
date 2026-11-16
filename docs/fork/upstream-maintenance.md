@@ -214,3 +214,11 @@ merges; reintroducing a username lookup can redirect the selected challenge.
 The public name-based method remains a compatibility wrapper resolving once.
 Preserve `TwoFactorEmailChallengeIdentityTest` and its required CI report. See the
 [regression trace](../security/common-criteria/afta-email-challenge-identity.md).
+
+## Login email challenge UID (16 November)
+
+Preserve the provider call to `sendEmail2FACodeByUid(userDetails.getUid())` and
+the service's missing-UID/no-name-fallback behavior when merging upstream.
+Keep the existing public username method for callers that still require it.
+The provider policy assertion and UID challenge tests are already selected and
+required by fork CI. See the [login UID trace](../security/common-criteria/afta-login-email-challenge-uid.md).

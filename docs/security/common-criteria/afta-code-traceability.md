@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`a9152350ac`. Subsequent documentation-only commits do not change that code.
+`a107b60400`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the eight recent implementation fixes to selected checklist
+This guide traces the nine recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -28,6 +28,7 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 29 and 37–39: `FIA_AFL.1.1`, `FIA_USB.1.1/.2/.3` | Bind persisted current-user/MFA targets to authenticated UID, not reusable names | `11240d03e0` | [Current-user/MFA UID trace](afta-current-user-uid-binding.md), [145-case record](../evidence/afta-current-user-uid-binding-2026-11-15.json) |
 | 35–36: `FIA_UAU.5.1/.2` | Encode TOTP provisioning label/query values to contain URI delimiters | `410acbc03e` | [Provisioning URI trace](afta-totp-provisioning-uri.md), [execution record](../evidence/afta-totp-provisioning-uri-2026-11-16.json) |
 | 37–39: `FIA_USB.1.1/.2/.3` | Retain selected account during email disable challenge validation, delivery and persistence | `a9152350ac` | [Email challenge trace](afta-email-challenge-identity.md), [execution record](../evidence/afta-email-challenge-identity-2026-11-16.json) |
+| 36–39: `FIA_UAU.5.2`, `FIA_USB.1.1/.2/.3` | Issue login email challenges by principal UID, rejecting missing/deleted owners without name fallback | `a107b60400` | [Login challenge UID trace](afta-login-email-challenge-uid.md), [execution record](../evidence/afta-login-email-challenge-uid-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -204,6 +205,17 @@ Two deterministic name-reassignment tests fail against the preceding service and
 pass with the fix. They check original challenge/recipient, namesake isolation and
 original verified-email enforcement. See the [code and execution trace](afta-email-challenge-identity.md).
 Other initial username callers and same-account races remain open.
+
+## 9. Email login challenge principal UID
+
+`TwoFactorAuthenticationProvider.sendEmail2FACode(UserDetails)` calls
+`TwoFactorAuthService.sendEmail2FACodeByUid(String)`. Missing/blank/deleted UIDs
+fail without a username fallback; the entity helper retains recipient and update
+identity. The provider contract assertion fails with the preceding provider and
+the additive service helper available. Three new service cases cover renamed
+owners, deleted owners and missing UIDs. See the [execution trace and limitations](afta-login-email-challenge-uid.md).
+The latest batch passes 33 unit checks and 33 H2 login/MFA cases.
+Password/factor-state locking during issuance and other caller contracts remain open.
 
 ## CI and maintaining the trace
 

@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-16",
+  "scope": "Supporting selected AFTA rows 36–39: login email challenge principal UID routing; no full requirement closure",
+  "baseline_core_commit": "7668a4a8c0c5c23f89d1b92f5c3c0c219fb0c428",
+  "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "580213e87f4fed6c9eab6dd41a9cf0185176972a19a50a7f3d5daf87acb54161",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/TwoFactorControllerTest.java": "f687a61002f3ba0249cb5111237630d8c51b4e3aafd3fae59e301215b6ce85fc",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "93f73de5fdb6ccb099833f357ae7f9d04b372ef26c13c19681127fe32136909b",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/CurrentUserIdentityBindingTest.java": "3a5353beb195932809db76ef11315c3a261d475011110cfbe70fe86742f2f56f",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b",
+    ".github/workflows/cc-audit-regression.yml": "830956f5b82cdf63b22423c307a264b5a2b4da14f607dd418a47eeebf64559c6",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "bf7f0daf3765bb16d4bc13c46cc0e3de81e71c833ec72befb28724a30aa923b1",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "8cd989600b56bdf121e77113cf31407fabbfedfae77013f12c12ebd8ad083682",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "a5f9b91d94f035590460334274c9cd1f03673a807b8280abf2e1a3fcbe32d35d",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "94d40f9bca11c0566a2b0059c44ab95712510d0ddd9b2787008ec42a94dac1fb",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.TwoFactorControllerTest.xml": "708fc8601ebd8debf4cc0a95bd036616c6d2608562bce574073d63c9a2d15f35",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest.xml": "982eb469ac5ada9b6d20139beb1192fa057b8f916007c9ebd46bcb5281853319",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest.xml": "1cfd59f30d94406d8dc69cd6347fe74239eb2710fe136425917ef8c83a2b54ac"
+  },
+  "baseline_regression": {
+    "tests": 26,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Preceding provider retained with additive UID service method and new tests available: 21 provider policy cases (one failure: old name-based challenge call) plus five passing challenge identity cases. This is a provider contract baseline, not a full pre-patch service or deployment.",
+    "log_sha256": "8cb1b03b507cfdde5d7192818f56fe47d810c10cb9a62e97908bea00b4803c8d"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache; unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, as recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "boundary": "Real MFA challenge generation and email formatting with mocked lookup/settings/delivery boundaries; sequential name results model reassignment. Existing H2/Spring-security MFA fixtures use synthetic accounts. No real email, concurrent exploit, live browser or deployed incident.",
+    "ci": "Both extended suites already explicitly selected and successful nonempty reports required by unchanged workflow. No hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorAuthenticationPolicyTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Punit-test -Dtest=TwoFactorEmailChallengeIdentityTest,TwoFactorProvisioningUriTest,TwoFactorIdentityMutationTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorControllerTest,TwoFactorLoginPolicyTest,CurrentUserIdentityBindingTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Full AFTA identity/provider rules and initial username lookup contracts of other callers",
+    "Same-UID factor changes and delivery/persistence failure coordination",
+    "Cross-purpose replay, concurrent enrollment and deployed multi-node acceptance",
+    "Full test suite, production packaging or hosted CI success"
+  ]
+}

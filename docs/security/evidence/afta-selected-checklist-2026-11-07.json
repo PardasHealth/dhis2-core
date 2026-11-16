@@ -124,7 +124,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
       "line": 71,
       "symbol": "class TwoFactorAuthenticationProvider",
-      "source_sha256": "d04d077df3b6ec1fbd76cf13f5a52a71ad3189d45b04dffe69b7de7c1ef23d8b"
+      "source_sha256": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b"
     },
     "security": {
       "repository": "core",
@@ -376,21 +376,21 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 100,
       "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
-      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
+      "source_sha256": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
     },
     "mfaresetuid": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 232,
       "symbol": "private void reset2FA(@Nonnull User user,",
-      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
+      "source_sha256": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
     },
     "mfafailureowner": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 202,
       "symbol": "public void disable2FA(@Nonnull User user,",
-      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
+      "source_sha256": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
     },
     "mfaownerdisable": {
       "repository": "core",
@@ -410,8 +410,22 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "symbol": "private void sendEmail2FACode(User user)",
-      "line": 274,
-      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
+      "line": 283,
+      "source_sha256": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
+    },
+    "loginemailuid": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "symbol": "public void sendEmail2FACodeByUid(",
+      "line": 275,
+      "source_sha256": "8421af6ba8609e58611923a95b5379032897389894c8e7ed38c2c6c9c6e16797"
+    },
+    "loginemailprovider": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java",
+      "symbol": "private void sendEmail2FACode(UserDetails userDetails)",
+      "line": 213,
+      "source_sha256": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b"
     }
   },
   "rows": [
@@ -1283,7 +1297,9 @@
         "token",
         "replay",
         "qr",
-        "provisioninguri"
+        "provisioninguri",
+        "loginemailuid",
+        "loginemailprovider"
       ],
       "source_key": "FIA_UAU.5.2",
       "counted": true,
@@ -1335,6 +1351,13 @@
           "trace": "afta-totp-provisioning-uri.md",
           "full_requirement_closed": false,
           "implementation_commit": "410acbc03e1161d9fff73f7368fdbcb60599e786"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Issue email login challenge using authenticated principal UID; deleted/missing owners have no username fallback",
+          "trace": "afta-login-email-challenge-uid.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
         }
       ]
     },
@@ -1355,7 +1378,9 @@
         "mfaowner",
         "mfauidservice",
         "mfaresetuid",
-        "emailchallengetarget"
+        "emailchallengetarget",
+        "loginemailuid",
+        "loginemailprovider"
       ],
       "source_key": "FIA_USB.1.1",
       "counted": true,
@@ -1390,6 +1415,13 @@
           "trace": "afta-email-challenge-identity.md",
           "full_requirement_closed": false,
           "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Issue email login challenge using authenticated principal UID; deleted/missing owners have no username fallback",
+          "trace": "afta-login-email-challenge-uid.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
         }
       ]
     },
@@ -1408,7 +1440,9 @@
         "mfaowner",
         "mfauidservice",
         "mfaresetuid",
-        "emailchallengetarget"
+        "emailchallengetarget",
+        "loginemailuid",
+        "loginemailprovider"
       ],
       "source_key": "FIA_USB.1.2",
       "counted": true,
@@ -1436,6 +1470,13 @@
           "trace": "afta-email-challenge-identity.md",
           "full_requirement_closed": false,
           "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Issue email login challenge using authenticated principal UID; deleted/missing owners have no username fallback",
+          "trace": "afta-login-email-challenge-uid.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
         }
       ]
     },
@@ -1456,7 +1497,9 @@
         "mfaowner",
         "mfauidservice",
         "mfaresetuid",
-        "emailchallengetarget"
+        "emailchallengetarget",
+        "loginemailuid",
+        "loginemailprovider"
       ],
       "source_key": "FIA_USB.1.3",
       "counted": true,
@@ -1491,6 +1534,13 @@
           "trace": "afta-email-challenge-identity.md",
           "full_requirement_closed": false,
           "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Issue email login challenge using authenticated principal UID; deleted/missing owners have no username fallback",
+          "trace": "afta-login-email-challenge-uid.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
         }
       ]
     },

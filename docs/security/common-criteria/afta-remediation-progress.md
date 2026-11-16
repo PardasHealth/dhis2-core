@@ -4,6 +4,14 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: email login challenge UID
+
+The login provider now routes email challenge issuance by the principal UID.
+Missing/deleted owners fail without a mutable-name fallback, while the existing
+entity helper retains the selected recipient and secret update. See the
+[login UID trace and regression scope](afta-login-email-challenge-uid.md).
+Rows 36–39 remain partial; issuance state races and full policy remain open.
+
 ## 16 November follow-up: email disable challenge identity
 
 The empty-code email MFA disable branch now retains its selected account through

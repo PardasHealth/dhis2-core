@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| How is an email login challenge bound to the principal? | [Authenticated UID routing and regression evidence](afta-login-email-challenge-uid.md) |
 | How is the email disable challenge bound to its selected account? | [Target continuity and regression evidence](afta-email-challenge-identity.md) |
 | How are TOTP provisioning values escaped? | [URI component encoding and regression evidence](afta-totp-provisioning-uri.md) |
 | Where is the recent requirements-to-code trace? | [Methods, regression cases, implementation commits and evidence](afta-code-traceability.md) |

@@ -551,3 +551,12 @@ The [email challenge trace](common-criteria/afta-email-challenge-identity.md) an
 failing baseline cases, then 30 unit and 32 H2 API passes with the selected-account
 helper. The new suite is required by fork CI; no hosted run or full clause closure
 is asserted. These overlap previous execution inventories and are not additive.
+
+## 16 November: login email challenge UID
+
+The [login challenge UID trace](common-criteria/afta-login-email-challenge-uid.md)
+and [dated evidence](evidence/afta-login-email-challenge-uid-2026-11-16.json) bind
+the login provider to UID-based issuance. The baseline keeps the preceding provider
+with the additive service helper available: one of 26 cases fails on the old name
+call. Final unit and H2 counts are recorded in the evidence; no hosted run, live
+concurrent exploit or complete clause closure is asserted. Results overlap prior inventories.
