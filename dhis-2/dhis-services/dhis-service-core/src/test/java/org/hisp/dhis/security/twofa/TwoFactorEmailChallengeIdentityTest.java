@@ -110,6 +110,46 @@ class TwoFactorEmailChallengeIdentityTest {
     verifyNoInteractions(sender);
   }
 
+  @Test
+  void loginChallengeUsesUidDespiteAReusedUsername() throws Exception {
+    var selected = account("Owner123456", "owner@example.invalid");
+    selected.setUsername("renamed-owner");
+    var namesake = account("Other123456", "other@example.invalid");
+    when(users.getUser("Owner123456")).thenReturn(selected);
+    lenient().when(users.getUserByUsername(anyString())).thenReturn(namesake);
+
+    factors.sendEmail2FACodeByUid("Owner123456");
+
+    assertNotEquals("old-challenge", selected.getSecret());
+    assertEquals("old-challenge", namesake.getSecret());
+    verify(users, never()).getUserByUsername(anyString());
+    verify(sender).sendMessage(any(), any(), isNull(), isNull(), eq(Set.of(selected)), eq(true));
+    verify(users).updateUser(eq(selected), any(SystemUser.class));
+  }
+
+  @Test
+  void deletedLoginOwnerHasNoNameFallback() {
+    var namesake = account("Other123456", "other@example.invalid");
+    lenient().when(users.getUserByUsername(anyString())).thenReturn(namesake);
+
+    var result =
+        assertThrows(ConflictException.class, () -> factors.sendEmail2FACodeByUid("Deleted1234"));
+
+    assertEquals(ErrorCode.E6201, result.getCode());
+    assertEquals("old-challenge", namesake.getSecret());
+    verify(users, never()).getUserByUsername(anyString());
+    verifyNoInteractions(sender);
+  }
+
+  @Test
+  void missingLoginUidCannotIssueAChallenge() {
+    for (String uid : new String[] {null, "", " "}) {
+      var result = assertThrows(ConflictException.class, () -> factors.sendEmail2FACodeByUid(uid));
+      assertEquals(ErrorCode.E6201, result.getCode());
+    }
+    verifyNoInteractions(users, sender);
+  }
+
   private User account(String uid, String email) {
     var user = new User();
     user.setUid(uid);

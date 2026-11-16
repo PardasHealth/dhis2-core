@@ -270,6 +270,15 @@ public class TwoFactorAuthService {
     sendEmail2FACode(userService.getUserByUsername(username));
   }
 
+  /** Issue a login challenge for the immutable identity carried by the authenticated principal. */
+  @Transactional
+  public void sendEmail2FACodeByUid(String uid) throws ConflictException {
+    if (uid == null || uid.isBlank()) {
+      throw new ConflictException(ErrorCode.E6201);
+    }
+    sendEmail2FACode(userService.getUser(uid));
+  }
+
   /** Retain the selected account through challenge validation, delivery and persistence. */
   private void sendEmail2FACode(User user) throws ConflictException {
     if (user == null) {

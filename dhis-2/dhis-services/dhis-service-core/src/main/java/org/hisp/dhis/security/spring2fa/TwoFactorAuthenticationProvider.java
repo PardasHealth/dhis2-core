@@ -212,7 +212,7 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
 
   private void sendEmail2FACode(UserDetails userDetails) {
     try {
-      twoFactorAuthService.sendEmail2FACode(userDetails.getUsername());
+      twoFactorAuthService.sendEmail2FACodeByUid(userDetails.getUid());
     } catch (ConflictException e) {
       throw new TwoFactorAuthenticationException(
           ErrorCode.E3049.getMessage(), TwoFactorType.EMAIL_ENABLED);

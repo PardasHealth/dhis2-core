@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -166,7 +167,8 @@ class TwoFactorAuthenticationPolicyTest {
     when(configuration.isEnabled(ConfigurationKey.EMAIL_2FA_ENABLED)).thenReturn(true);
     assertThrows(
         TwoFactorCodeSentException.class, () -> provider.authenticate(login(PASSWORD, null)));
-    verify(twoFactorService).sendEmail2FACode("alice");
+    verify(twoFactorService).sendEmail2FACodeByUid("Owner123456");
+    verify(twoFactorService, never()).sendEmail2FACode(anyString());
   }
 
   @Test
@@ -276,6 +278,7 @@ class TwoFactorAuthenticationPolicyTest {
       Set<String> restrictions) {
     var user =
         UserDetailsImpl.builder()
+            .uid("Owner123456")
             .username("alice")
             .password(encoder.encode(PASSWORD))
             .enabled(true)
