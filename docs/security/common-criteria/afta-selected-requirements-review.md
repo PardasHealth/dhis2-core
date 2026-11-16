@@ -24,6 +24,45 @@ The primary denominator is **78 unique entries not explicitly marked optional**,
 
 Do not compare these percentages directly with the earlier 199-component chart: this report counts selected **element/iteration identifiers**, while the earlier report counts broader components. Neither measures effort, time, cost or certification probability. No arbitrary half-credit or estimated compliance percentage is assigned to partial evidence.
 
+## Implementation progress — updated 16 November 2026
+
+![AFTA recorded implementation progress](charts/afta-implementation-progress.png)
+
+**24 distinct implementation commits** are linked to **20/78 primary entries (25.6%)**, plus **1/3 optional entries**. The other **58 primary entries** have no item-specific implementation follow-up linked in this assessment. A linked follow-up means a bounded code change and dated execution record exist; it is not full implementation, a completed requirement, an effort percentage, or proof that unlinked entries lack code. **Full closure remains 0/78**, so the requirement-status chart above stays unchanged.
+
+The timeline uses recorded follow-up dates and cumulative distinct commits/primary entries. Several changes can address one entry, and one change can address several entries. Test counts from overlapping executions are not added. See [implementation progress and open work](afta-remediation-progress.md) and [methods, regression tests and exact source hashes](afta-code-traceability.md).
+
+### Applied changes and selected source rows
+
+Source row numbers identify entries in the original numbered checklist. For example, **29 (`FIA_AFL.1.1`)** means source entry 29, authentication failure handling element 1; 29 is not a completion count or standards chapter. Changes sharing a date are listed by commit ID.
+
+| Recorded date | Selected source rows / requirement IDs | Implementation commit | Detailed change trace |
+| --- | --- | --- | --- |
+| 2026-11-09 | 36 (`FIA_UAU.5.2`) | [85c6310a5b](https://github.com/PardasHealth/dhis2-core/commit/85c6310a5bca76251f9981266570b0ab8046a85d) | [Change and evidence](afta-login-replay-protection.md) |
+| 2026-11-09 | 36 (`FIA_UAU.5.2`) | [d62f105528](https://github.com/PardasHealth/dhis2-core/commit/d62f10552816e93a19f8e4bb37e6f87a12bca44d) | [Change and evidence](afta-remediation-progress.md) |
+| 2026-11-11 | 13 (`FCS_COP.1.1(1)`), 14 (`FCS_COP.1.1(2)`), 65 (`FCS_COP.1.1(3)`), 66 (`FCS_COP.1.1(4)`) [optional] | [27a7c8ddf6](https://github.com/PardasHealth/dhis2-core/commit/27a7c8ddf6099e5c724194a30a416d9d91344e87) | [Change and evidence](afta-explicit-encryption-key.md) |
+| 2026-11-11 | 36 (`FIA_UAU.5.2`) | [685579cd43](https://github.com/PardasHealth/dhis2-core/commit/685579cd43e53b86fcaecd1570a9d74ece54b16c) | [Change and evidence](afta-factor-state-freshness.md) |
+| 2026-11-11 | 36 (`FIA_UAU.5.2`) | [6dcdde2c3e](https://github.com/PardasHealth/dhis2-core/commit/6dcdde2c3eeb3cb5c9949e7c81cee187b9116319) | [Change and evidence](afta-account-state-freshness.md) |
+| 2026-11-11 | 47 (`FPT_ITT.1.1`) | [a3f6a77f45](https://github.com/PardasHealth/dhis2-core/commit/a3f6a77f45260ebd11c44b574739e8418d928dd2) | [Change and evidence](afta-external-broker-tls.md) |
+| 2026-11-11 | 36 (`FIA_UAU.5.2`) | [bb1acc0c8d](https://github.com/PardasHealth/dhis2-core/commit/bb1acc0c8d7ab63502aa641d01feb7c8fa8012a6) | [Change and evidence](afta-pending-qr-stability.md) |
+| 2026-11-12 | 37 (`FIA_USB.1.1`), 38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`) | [7cdefca5c4](https://github.com/PardasHealth/dhis2-core/commit/7cdefca5c4834e01c66a3d3f77b724d588aa9ab7) | [Change and evidence](afta-token-owner-binding.md) |
+| 2026-11-13 | 1 (`FAU_GEN.1.1`), 2 (`FAU_GEN.1.2`), 3 (`FAU_GEN.2.1`) | [8dd8a28bf2](https://github.com/PardasHealth/dhis2-core/commit/8dd8a28bf27272e56db522a640b55ee74113d425) | [Change and evidence](afta-authentication-audit-records.md) |
+| 2026-11-13 | 16 (`FDP_ACF.1.1`), 17 (`FDP_ACF.1.2`), 19 (`FDP_ACF.1.4`) | [e703588430](https://github.com/PardasHealth/dhis2-core/commit/e7035884301d1ade648bf5424f560c539df128e2) | [Change and evidence](afta-token-ip-constraints.md) |
+| 2026-11-13 | 4 (`FAU_SAR.1.1`), 5 (`FAU_SAR.1.2`), 7 (`FAU_SAR.3.1`) | [efc1529382](https://github.com/PardasHealth/dhis2-core/commit/efc15293821dcd9469160173abf8fcae3a02a05a) | [Change and evidence](afta-audit-review-paging.md) |
+| 2026-11-15 | 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`), 38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`) | [11240d03e0](https://github.com/PardasHealth/dhis2-core/commit/11240d03e0ca019e9580c0fad71ed62244a01817) | [Change and evidence](afta-current-user-uid-binding.md) |
+| 2026-11-15 | 2 (`FAU_GEN.1.2`) | [5d426cda14](https://github.com/PardasHealth/dhis2-core/commit/5d426cda14764fdda0c6eab833699c7cbef0772d) | [Change and evidence](afta-authentication-address-source.md) |
+| 2026-11-15 | 1 (`FAU_GEN.1.1`), 2 (`FAU_GEN.1.2`), 3 (`FAU_GEN.2.1`) | [760ade1f11](https://github.com/PardasHealth/dhis2-core/commit/760ade1f11d6bc7982f93307f7638e2e50dcfbcd) | [Change and evidence](afta-token-failure-audit.md) |
+| 2026-11-15 | 39 (`FIA_USB.1.3`) | [7af7d5a659](https://github.com/PardasHealth/dhis2-core/commit/7af7d5a659a465147b347b1fd4d73adf1e8a355f) | [Change and evidence](afta-global-session-invalidation.md) |
+| 2026-11-15 | 29 (`FIA_AFL.1.1`), 30 (`FIA_AFL.1.2`) | [bc6b67654b](https://github.com/PardasHealth/dhis2-core/commit/bc6b67654b1065fc047a8c7d377ae95533bf054a) | [Change and evidence](afta-atomic-failure-counters.md) |
+| 2026-11-15 | 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`) | [efea229e58](https://github.com/PardasHealth/dhis2-core/commit/efea229e581e89fffa75332b7a9199727bd272ff) | [Change and evidence](afta-oidc-event-account-association.md) |
+| 2026-11-16 | 2 (`FAU_GEN.1.2`) | [1114c5c925](https://github.com/PardasHealth/dhis2-core/commit/1114c5c925156520e83acad1b0697a4d445cddf0) | [Change and evidence](afta-login-success-context.md) |
+| 2026-11-16 | 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`) | [38ffff2be6](https://github.com/PardasHealth/dhis2-core/commit/38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26) | [Change and evidence](afta-token-failure-boundary.md) |
+| 2026-11-16 | 35 (`FIA_UAU.5.1`), 36 (`FIA_UAU.5.2`) | [410acbc03e](https://github.com/PardasHealth/dhis2-core/commit/410acbc03e1161d9fff73f7368fdbcb60599e786) | [Change and evidence](afta-totp-provisioning-uri.md) |
+| 2026-11-16 | 1 (`FAU_GEN.1.1`), 2 (`FAU_GEN.1.2`), 3 (`FAU_GEN.2.1`), 29 (`FIA_AFL.1.1`), 30 (`FIA_AFL.1.2`), 36 (`FIA_UAU.5.2`) | [51eb123a81](https://github.com/PardasHealth/dhis2-core/commit/51eb123a81f5e639b46f5f03231cf84231206795) | [Change and evidence](afta-mfa-failure-events.md) |
+| 2026-11-16 | 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`), 38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`) | [90c44ffa76](https://github.com/PardasHealth/dhis2-core/commit/90c44ffa766e6b413f0e08a94a08fa5d961abcfd) | [Change and evidence](afta-oidc-event-uid-binding.md) |
+| 2026-11-16 | 36 (`FIA_UAU.5.2`), 37 (`FIA_USB.1.1`), 38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`) | [a107b60400](https://github.com/PardasHealth/dhis2-core/commit/a107b60400fef98502c125452811ab33cdeac31c) | [Change and evidence](afta-login-email-challenge-uid.md) |
+| 2026-11-16 | 37 (`FIA_USB.1.1`), 38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`) | [a9152350ac](https://github.com/PardasHealth/dhis2-core/commit/a9152350ac51ecfeca5a00e9c26606678dd214b1) | [Change and evidence](afta-email-challenge-identity.md) |
+
 ## What needs management attention
 
 1. **Confirm the AFTA checklist version and exact requirements.** Resolve extensions, crypto iterations, edition changes and the duplicated certificate identifier. This unblocks 25 primary items from a valid fit decision.
@@ -138,6 +177,6 @@ This review reuses the recorded source analysis and targeted tests; it is not a 
 
 See [core verification](../common-criteria-verification.md), [gap solutions](web-gap-solutions.md), [MFA/encryption findings](crypto-and-two-factor-gaps.md) and [platform evidence](https://github.com/PardasHealth/dhis2-platform/blob/main/docs/validation.md).
 
-Downloads: [CSV](afta-selected-requirements-review.csv), [PNG chart](charts/afta-selected-dashboard.png), [SVG chart](charts/afta-selected-dashboard.svg), [printable chart PDF](charts/afta-selected-dashboard.pdf).
+Downloads: [CSV](afta-selected-requirements-review.csv), [PNG chart](charts/afta-selected-dashboard.png), [SVG chart](charts/afta-selected-dashboard.svg), [printable chart PDF](charts/afta-selected-dashboard.pdf). Implementation progress: [PNG](charts/afta-implementation-progress.png), [SVG](charts/afta-implementation-progress.svg), [PDF](charts/afta-implementation-progress.pdf).
 
 Edit the item-specific assessment JSON and regenerate with `python3 docs/security/tools/render_afta_selected_review.py` (Matplotlib required). Use `--check` to validate the data and generated text without Matplotlib. When definitions arrive, review each affected row, add exact code/test/evaluator evidence and revise counts; do not change statuses merely to improve a percentage.

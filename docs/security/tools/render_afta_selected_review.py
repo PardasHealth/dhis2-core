@@ -10,6 +10,7 @@ import hashlib
 import io
 import json
 import os
+from datetime import date
 from collections import Counter
 from pathlib import Path
 
@@ -27,9 +28,39 @@ def percent(n, total):
     return f'{100*n/total:.1f}%'
 
 
+def implementation_progress(data):
+    """Count linked, distinct implementation commits without treating rows as closed."""
+    commits = {}
+    for row in data['rows']:
+        followups = list(row.get('implementation_followups', []))
+        if row.get('implementation_followup'):
+            followups.append(row['implementation_followup'])
+        for followup in followups:
+            commit = followup['implementation_commit']
+            entry = commits.setdefault(commit, {
+                'date': followup['date'], 'rows': {}, 'traces': set()})
+            assert entry['date'] == followup['date'], commit
+            entry['rows'][row['row']] = row
+            entry['traces'].add(followup['trace'])
+    ordered = sorted(commits.items(), key=lambda item: (item[1]['date'], item[0]))
+    primary = set()
+    optional = set()
+    timeline = []
+    for day in sorted({entry['date'] for entry in commits.values()}):
+        todays = [entry for entry in commits.values() if entry['date'] == day]
+        for entry in todays:
+            for row in entry['rows'].values():
+                if row['counted']:
+                    (optional if row['optional'] else primary).add(row['row'])
+        timeline.append((day, sum(entry['date'] <= day for entry in commits.values()), len(primary)))
+    return ordered, timeline, primary, optional
+
+
 def render(data):
     rows = data['rows']
     refs = data['references']
+    changes, timeline, touched, optional_touched = implementation_progress(data)
+    updated = date.fromisoformat(timeline[-1][0]).strftime('%-d %B %Y')
     assert [r['row'] for r in rows] == list(range(1, 83))
     unique = [r for r in rows if r['counted']]
     assert len(unique) == len({r['key'] for r in rows}) == 81
@@ -79,6 +110,25 @@ def render(data):
            'Do not compare these percentages directly with the earlier 199-component chart: this report counts selected **element/iteration identifiers**, '
            'while the earlier report counts broader components. Neither measures effort, time, cost or certification probability. '
            'No arbitrary half-credit or estimated compliance percentage is assigned to partial evidence.\n\n',
+           f'## Implementation progress — updated {updated}\n\n',
+           '![AFTA recorded implementation progress](charts/afta-implementation-progress.png)\n\n',
+           f'**{len(changes)} distinct implementation commits** are linked to **{len(touched)}/78 primary entries '
+           f'({percent(len(touched), 78)})**, plus **{len(optional_touched)}/3 optional entries**. '
+           f'The other **{78-len(touched)} primary entries** have no item-specific implementation follow-up linked in this assessment. '
+           'A linked follow-up means a bounded code change and dated execution record exist; it is not full implementation, '
+           'a completed requirement, an effort percentage, or proof that unlinked entries lack code. '
+           '**Full closure remains 0/78**, so the requirement-status chart above stays unchanged.\n\n',
+           'The timeline uses recorded follow-up dates and cumulative distinct commits/primary entries. '
+           'Several changes can address one entry, and one change can address several entries. '
+           'Test counts from overlapping executions are not added. See '
+           '[implementation progress and open work](afta-remediation-progress.md) and '
+           '[methods, regression tests and exact source hashes](afta-code-traceability.md).\n\n',
+           '### Applied changes and selected source rows\n\n',
+           'Source row numbers identify entries in the original numbered checklist. For example, '
+           '**29 (`FIA_AFL.1.1`)** means source entry 29, authentication failure handling element 1; '
+           '29 is not a completion count or standards chapter. Changes sharing a date are listed by commit ID.\n\n',
+           '| Recorded date | Selected source rows / requirement IDs | Implementation commit | Detailed change trace |\n',
+           '| --- | --- | --- | --- |\n',
            '## What needs management attention\n\n',
            '1. **Confirm the AFTA checklist version and exact requirements.** Resolve extensions, crypto iterations, edition changes and the duplicated certificate identifier. '
            'This unblocks 25 primary items from a valid fit decision.\n',
@@ -110,6 +160,17 @@ def render(data):
            '[assessment data](../evidence/afta-selected-checklist-2026-11-07.json).\n\n',
            '| Source row / requirement | Result | Existing evidence or boundary | Gap and acceptance work | Code references |\n',
            '| --- | --- | --- | --- | --- |\n']
+    progress_table = []
+    for commit, change in changes:
+        affected = ', '.join(
+            f'{row["row"]} (`{row["key"]}`)' + (' [optional]' if row['optional'] else '')
+            for row in sorted(change['rows'].values(), key=lambda row: row['row']))
+        traces = '<br>'.join(f'[Change and evidence]({trace})' for trace in sorted(change['traces']))
+        progress_table.append(
+            f'| {change["date"]} | {affected} | '
+            f'[{commit[:10]}](https://github.com/PardasHealth/dhis2-core/commit/{commit}) | {traces} |\n')
+    marker = md.index('## What needs management attention\n\n')
+    md[marker:marker] = progress_table + ['\n']
     def link(key):
         r = refs[key]
         target = (f'../../../{r["path"]}#L{r["line"]}' if r['repository'] == 'core' else
@@ -135,7 +196,9 @@ def render(data):
            '[MFA/encryption findings](crypto-and-two-factor-gaps.md) and '
            '[platform evidence](https://github.com/PardasHealth/dhis2-platform/blob/main/docs/validation.md).\n\n',
            'Downloads: [CSV](afta-selected-requirements-review.csv), [PNG chart](charts/afta-selected-dashboard.png), '
-           '[SVG chart](charts/afta-selected-dashboard.svg), [printable chart PDF](charts/afta-selected-dashboard.pdf).\n\n',
+           '[SVG chart](charts/afta-selected-dashboard.svg), [printable chart PDF](charts/afta-selected-dashboard.pdf). '
+           'Implementation progress: [PNG](charts/afta-implementation-progress.png), [SVG](charts/afta-implementation-progress.svg), '
+           '[PDF](charts/afta-implementation-progress.pdf).\n\n',
            'Edit the item-specific assessment JSON and regenerate with '
            '`python3 docs/security/tools/render_afta_selected_review.py` (Matplotlib required). '
            'Use `--check` to validate the data and generated text without Matplotlib. '
@@ -151,17 +214,19 @@ def render(data):
             FOLDER / 'afta-selected-requirements-review.csv': stream.getvalue()}, counts
 
 
-def charts(counts):
+def charts(counts, data):
     os.environ.setdefault('MPLCONFIGDIR', '/tmp/dhis2-afta-matplotlib')
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'svg.fonttype': 'none'})
+    changes, timeline, touched, optional_touched = implementation_progress(data)
+    updated = date.fromisoformat(timeline[-1][0]).strftime('%-d %B %Y')
     fig, axes = plt.subplots(1, 2, figsize=(14, 7), facecolor='#F7F9FC')
     fig.subplots_adjust(top=.71, bottom=.25, wspace=.4)
     fig.text(.06, .92, 'AFTA selected-checklist review', fontsize=25, weight='bold', color='#172B46')
     fig.text(.06, .86, 'Provisional evidence coverage and open work - not an approval score', fontsize=14, color='#43556C')
-    fig.text(.06, .81, '78 unique primary entries | 3 optional entries reported separately | duplicate counted once | updated 11 November 2026',
+    fig.text(.06, .81, f'78 unique primary entries | 3 optional entries reported separately | duplicate counted once | updated {updated}',
              fontsize=10.5, color='#52637A')
     colors = ['#2679A6', '#C95747', '#B48528']
     axes[0].pie([counts[s] for s in STATUSES], colors=colors, startangle=90, counterclock=False,
@@ -193,6 +258,43 @@ def charts(counts):
             path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines()) + '\n')
     plt.close(fig)
 
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6.8), facecolor='#F7F9FC')
+    fig.subplots_adjust(top=.74, bottom=.25, left=.18, right=.95, wspace=.55)
+    fig.text(.06, .92, 'AFTA recorded implementation progress', fontsize=24, weight='bold', color='#172B46')
+    fig.text(.06, .85, f'Updated {updated} | {len(changes)} distinct linked implementation commits | 0/78 requirements closed',
+             fontsize=12, color='#43556C')
+    for ax in axes:
+        ax.set_facecolor('#F7F9FC')
+        ax.spines[['top', 'right']].set_visible(False)
+        ax.tick_params(colors='#43556C')
+    values = [len(touched), 78-len(touched)]
+    axes[0].barh(['Linked code follow-ups', 'No linked follow-up'], values, color=['#2679A6', '#AAB6C5'])
+    axes[0].set_xlim(0, 84)
+    axes[0].invert_yaxis()
+    axes[0].set_xlabel('Unique primary checklist entries (78 total)')
+    axes[0].set_title('Entries with recorded implementation work', fontsize=13, weight='bold', pad=15)
+    for i, value in enumerate(values):
+        axes[0].text(value+1, i, f'{value}/78 ({percent(value, 78)})', va='center', fontsize=10)
+    labels = [date.fromisoformat(day).strftime('%-d %b') for day, _, _ in timeline]
+    axes[1].plot(range(len(labels)), [count for _, count, _ in timeline], color='#2679A6', marker='o', linewidth=2.5)
+    axes[1].set_xticks(range(len(labels)), labels, rotation=25)
+    axes[1].set_ylim(0, len(changes)+4)
+    axes[1].set_ylabel('Cumulative distinct linked commits')
+    axes[1].set_title('Recorded changes over time', fontsize=13, weight='bold', pad=15)
+    axes[1].grid(axis='y', alpha=.2)
+    for i, (_, count, _) in enumerate(timeline):
+        axes[1].annotate(str(count), (i, count), xytext=(0, 9), textcoords='offset points', ha='center')
+    fig.text(.06, .10, f'{len(optional_touched)}/3 optional entries also have linked follow-ups. Row counts overlap across commits.', fontsize=11, color='#43556C')
+    fig.text(.06, .035, 'Implementation activity is not full requirement closure or an estimate of effort. Source: linked follow-ups in the selected-checklist assessment.\n'
+             'Full acceptance, deployment policies and unresolved AFTA definitions remain open; test totals are not added across executions.',
+             fontsize=10, color='#52637A', linespacing=1.5)
+    for ext in ('png', 'svg', 'pdf'):
+        path = folder / f'afta-implementation-progress.{ext}'
+        fig.savefig(path, dpi=180, facecolor=fig.get_facecolor())
+        if ext == 'svg':
+            path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines()) + '\n')
+    plt.close(fig)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -206,7 +308,7 @@ def main():
         else:
             path.write_text(content)
     if not args.check:
-        charts(counts)
+        charts(counts, data)
     print('Validated 82 source rows, 81 unique items, 78 primary and 3 optional; 43 partial, 10 gaps, 25 unresolved primary items.')
 
 
