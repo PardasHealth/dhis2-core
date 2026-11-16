@@ -4,6 +4,13 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: email disable challenge identity
+
+The empty-code email MFA disable branch now retains its selected account through
+verified-email checks, challenge generation, delivery and persistence, avoiding
+a repeated mutable-name lookup. See the [target-continuity trace](afta-email-challenge-identity.md).
+Rows 37–39 remain partial; other caller and same-account race limits remain open.
+
 ## 16 November follow-up: TOTP provisioning URI
 
 The provisioning generator now percent-encodes issuer, account and secret values

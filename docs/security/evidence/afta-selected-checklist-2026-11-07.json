@@ -376,21 +376,21 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 100,
       "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
-      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
     },
     "mfaresetuid": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 232,
       "symbol": "private void reset2FA(@Nonnull User user,",
-      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
     },
     "mfafailureowner": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 202,
       "symbol": "public void disable2FA(@Nonnull User user,",
-      "source_sha256": "0767a4a7ab23cd3215155e2a0271085a96026a2bfb8b5be1d4b240a8011ffea5"
+      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
     },
     "mfaownerdisable": {
       "repository": "core",
@@ -405,6 +405,13 @@
       "symbol": "public static String generateTOTP2FAURL(",
       "line": 107,
       "source_sha256": "3654ca44a196ea387b8cf3beb50b297106f5210e0f576aaf4027ff5fad302474"
+    },
+    "emailchallengetarget": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "symbol": "private void sendEmail2FACode(User user)",
+      "line": 274,
+      "source_sha256": "d641db80f2624af5edd7e6578f507f56ac226f8fad4ff9da7945d502cc7f8cd3"
     }
   },
   "rows": [
@@ -1347,7 +1354,8 @@
         "currententity",
         "mfaowner",
         "mfauidservice",
-        "mfaresetuid"
+        "mfaresetuid",
+        "emailchallengetarget"
       ],
       "source_key": "FIA_USB.1.1",
       "counted": true,
@@ -1375,6 +1383,13 @@
           "trace": "afta-current-user-uid-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Retain selected User through empty-code email disable challenge validation, delivery and persistence; no second mutable-name lookup",
+          "trace": "afta-email-challenge-identity.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
         }
       ]
     },
@@ -1392,7 +1407,8 @@
         "currententity",
         "mfaowner",
         "mfauidservice",
-        "mfaresetuid"
+        "mfaresetuid",
+        "emailchallengetarget"
       ],
       "source_key": "FIA_USB.1.2",
       "counted": true,
@@ -1413,6 +1429,13 @@
           "trace": "afta-current-user-uid-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Retain selected User through empty-code email disable challenge validation, delivery and persistence; no second mutable-name lookup",
+          "trace": "afta-email-challenge-identity.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
         }
       ]
     },
@@ -1432,7 +1455,8 @@
         "currententity",
         "mfaowner",
         "mfauidservice",
-        "mfaresetuid"
+        "mfaresetuid",
+        "emailchallengetarget"
       ],
       "source_key": "FIA_USB.1.3",
       "counted": true,
@@ -1460,6 +1484,13 @@
           "trace": "afta-current-user-uid-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Retain selected User through empty-code email disable challenge validation, delivery and persistence; no second mutable-name lookup",
+          "trace": "afta-email-challenge-identity.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "a9152350ac51ecfeca5a00e9c26606678dd214b1"
         }
       ]
     },

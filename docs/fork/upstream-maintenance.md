@@ -206,3 +206,11 @@ and restores logger configuration after each case. Existing INFO level, event
 labels and duplicate exclusions remain; review log consumers for escaped values.
 No migration, dependency or frontend change is introduced. See the
 [trace and limitations](../security/common-criteria/afta-authentication-audit-records.md).
+
+## Email disable challenge continuity (16 November)
+
+Keep `disable2FA(User, String)` on the entity-based challenge helper during future
+merges; reintroducing a username lookup can redirect the selected challenge.
+The public name-based method remains a compatibility wrapper resolving once.
+Preserve `TwoFactorEmailChallengeIdentityTest` and its required CI report. See the
+[regression trace](../security/common-criteria/afta-email-challenge-identity.md).

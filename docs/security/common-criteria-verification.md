@@ -543,3 +543,11 @@ session or full multi-node acceptance, new WAR or hosted CI result is claimed.
 Snapshot permissions and other indirect name consumers, same-UID state races and
 complete AFTA operation definitions remain open. Earlier overlapping test counts
 are not added to this execution.
+
+## 16 November: email MFA disable challenge target
+
+The [email challenge trace](common-criteria/afta-email-challenge-identity.md) and
+[dated evidence](evidence/afta-email-challenge-identity-2026-11-16.json) record two
+failing baseline cases, then 30 unit and 32 H2 API passes with the selected-account
+helper. The new suite is required by fork CI; no hosted run or full clause closure
+is asserted. These overlap previous execution inventories and are not additive.
