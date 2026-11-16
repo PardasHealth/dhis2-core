@@ -1,8 +1,15 @@
 # AFTA remediation implementation progress
 
-Updated: **15 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
+
+## 16 November follow-up: TOTP provisioning URI
+
+The provisioning generator now percent-encodes issuer, account and secret values
+to keep URI delimiters inside their data components. See the
+[code, parser regressions and execution evidence](afta-totp-provisioning-uri.md).
+This supports rows 35–36 without closing the full mechanism requirements.
 
 ## 15 November follow-up: current-user and MFA UID binding
 

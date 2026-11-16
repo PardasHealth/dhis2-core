@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-16",
+  "scope": "Supporting selected AFTA rows 35–36: TOTP provisioning URI component encoding; no full requirement closure",
+  "baseline_core_commit": "1e8185d9dfc9fed3cdaab89c95b2cd301b3a376e",
+  "implementation_commit": "410acbc03e1161d9fff73f7368fdbcb60599e786",
+  "source_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "6a50d80f4194dbba7c081f1474aab7eb255fd543edc104783edbad194d9bb10f",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/TwoFactorControllerTest.java": "f687a61002f3ba0249cb5111237630d8c51b4e3aafd3fae59e301215b6ce85fc",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorQrStabilityTest.java": "301f689b6d83795d152d75af6b6b21fd39ac1046e9792c15dd0d414a9e17add9",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/CurrentUserIdentityBindingTest.java": "3a5353beb195932809db76ef11315c3a261d475011110cfbe70fe86742f2f56f",
+    ".github/workflows/cc-audit-regression.yml": "f12f1f70d4d7cd21c2c91783291ce27d5e30d8dc8c0e6ea806f8b6a19eda633c",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "3654ca44a196ea387b8cf3beb50b297106f5210e0f576aaf4027ff5fad302474"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "30dd7881a489f95cbe9ad6cff7f5449c2ae665fd2f90a010c82a7d0a1e17c267",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "307872adea4c8a8a3cb2ca14b8685227403d8d454d8720742fba1c38a2333d91",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "7111b51a290b14f330f25ac6eeee3971760d7aa6ea1ab8601bcd260bf592d4f8",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.TwoFactorControllerTest.xml": "fa2325653194cbc01d4b43a2f569cb438d62227945250b8974f032562afb2b32",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.TwoFactorQrStabilityTest.xml": "ea64f71e4411f8a95c80301e011832131bc930dfd301026ff1bc360524faccdd",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest.xml": "4892ef374e83b5d2a1bf384e1775a8ecd1d62fa4cf7d88be547e815300d66f8c"
+  },
+  "baseline_regression": {
+    "tests": 4,
+    "failures": 0,
+    "errors": 3,
+    "skipped": 0,
+    "scope": "New URI parser tests against preceding unchanged production utility; ordinary input passes, delimiter and Unicode inputs error parsing malformed URIs.",
+    "log_sha256": "1f0199bb4cf5808a8efb99c90b7aa585c38695a52a833244cefc6e3ce9ce3d61"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache; unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, as recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "boundary": "Real URI parsing units and existing H2/Spring-security provisioning/identity fixtures with synthetic account data. No phone scanner, live browser or deployed incident.",
+    "ci": "New suite explicitly selected and successful nonempty report required; workflow YAML and embedded Python validated locally. No hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorProvisioningUriTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Punit-test -Dtest=TwoFactorProvisioningUriTest,TwoFactorIdentityMutationTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorControllerTest,TwoFactorQrStabilityTest,CurrentUserIdentityBindingTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Full AFTA mechanism combination/acceptance rules",
+    "Authenticator scanner interoperability and complete browser recovery flow",
+    "Cross-purpose replay, concurrent enrollment and deployed multi-node acceptance",
+    "Full test suite, production packaging or hosted CI success"
+  ]
+}

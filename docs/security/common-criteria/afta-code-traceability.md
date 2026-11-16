@@ -1,9 +1,9 @@
-# AFTA requirements-to-code traceability: 15 November remediation
+# AFTA requirements-to-code traceability: recent remediation
 
-Updated: **15 November 2026**. Branch: `work`. Reviewed code snapshot:
-`11240d03e0`. Subsequent documentation-only commits do not change that code.
+Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
+`410acbc03e`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the six recent implementation fixes to selected checklist
+This guide traces the seven recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -26,9 +26,10 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 29 and 37: `FIA_AFL.1.1`, `FIA_USB.1.1` | Handle optional OIDC event details and associate bookkeeping with the resolved local account | `efea229e58` | [OIDC account-association trace](afta-oidc-event-account-association.md), [81-case record](../evidence/afta-oidc-event-account-association-2026-11-15.json) |
 | 29–30: `FIA_AFL.1.1`, `FIA_AFL.1.2` | Commit concurrent failure increments atomically in local and Redis caches, retaining existing thresholds/expiry | `bc6b67654b` | [Atomic-counter trace](afta-atomic-failure-counters.md), [132-case record](../evidence/afta-atomic-failure-counters-2026-11-15.json) |
 | 29 and 37–39: `FIA_AFL.1.1`, `FIA_USB.1.1/.2/.3` | Bind persisted current-user/MFA targets to authenticated UID, not reusable names | `11240d03e0` | [Current-user/MFA UID trace](afta-current-user-uid-binding.md), [145-case record](../evidence/afta-current-user-uid-binding-2026-11-15.json) |
+| 35–36: `FIA_UAU.5.1/.2` | Encode TOTP provisioning label/query values to contain URI delimiters | `410acbc03e` | [Provisioning URI trace](afta-totp-provisioning-uri.md), [execution record](../evidence/afta-totp-provisioning-uri-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
-to obtain a unique pass total. The latest batch has 42 unit checks and 103 H2 API checks; the preceding
+to obtain a unique pass total. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
 atomic-counter batch separately includes six real Redis checks. Earlier records retain their original source hashes and outcomes; the
 [generated register](afta-requirement-traceability.md) identifies sources changed
 since each historical record. A previous test result is not silently upgraded to
@@ -184,6 +185,15 @@ races, every indirect username consumer, retained snapshot authorities and the
 complete selected policy remain open. See the dated evidence for exact classes,
 source/report hashes, baseline failures and conditions.
 
+## 7. TOTP provisioning URI data boundaries
+
+`TwoFactorAuthUtils.generateTOTP2FAURL` encodes issuer, account and secret values
+with `encodeProvisioningComponent`. The four parser cases cover ordinary input,
+reserved delimiters in each label component, plus signs and Unicode account names.
+The preceding utility errors in three of four cases; the patched utility passes
+all four. See the [implementation and dated execution trace](afta-totp-provisioning-uri.md).
+Scanner interoperability and the complete selected mechanism rules remain open.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -193,7 +203,7 @@ The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
 report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
 `TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
-`MeControllerTest` report. Existing session/authentication API cases remain selected. Workflow syntax and
+`MeControllerTest` report. `TwoFactorProvisioningUriTest` is also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

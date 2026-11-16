@@ -398,6 +398,13 @@
       "line": 198,
       "symbol": "public WebMessage disable(",
       "source_sha256": "8cf37f1836c72d74e39d0884d0482e792ff2aed8a4d7bc6b33292acc33b2b920"
+    },
+    "provisioninguri": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
+      "symbol": "public static String generateTOTP2FAURL(",
+      "line": 107,
+      "source_sha256": "3654ca44a196ea387b8cf3beb50b297106f5210e0f576aaf4027ff5fad302474"
     }
   },
   "rows": [
@@ -1237,13 +1244,23 @@
       "references": [
         "security",
         "factor",
-        "token"
+        "token",
+        "provisioninguri"
       ],
       "source_key": "FIA_UAU.5.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-16",
+          "scope": "Percent-encoded TOTP provisioning label and query components; parser regressions, not full mechanism acceptance",
+          "trace": "afta-totp-provisioning-uri.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "410acbc03e1161d9fff73f7368fdbcb60599e786"
+        }
+      ]
     },
     {
       "row": 36,
@@ -1258,7 +1275,8 @@
         "factor",
         "token",
         "replay",
-        "qr"
+        "qr",
+        "provisioninguri"
       ],
       "source_key": "FIA_UAU.5.2",
       "counted": true,
@@ -1303,6 +1321,13 @@
           "trace": "afta-pending-qr-stability.md",
           "full_requirement_closed": false,
           "implementation_commit": "bb1acc0c8d7ab63502aa641d01feb7c8fa8012a6"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Percent-encoded TOTP provisioning label and query components; parser regressions, not full mechanism acceptance",
+          "trace": "afta-totp-provisioning-uri.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "410acbc03e1161d9fff73f7368fdbcb60599e786"
         }
       ]
     },
