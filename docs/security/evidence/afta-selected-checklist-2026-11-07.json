@@ -461,6 +461,20 @@
       "symbol": "private static void clearChecksumBuffers(CodeAndChecksum extracted)",
       "line": 178,
       "source_sha256": "92d8680d13a0ef0ab7b3b33e62ecb3f6cfd08f3b8e751d62e14e76794f255abb"
+    },
+    "hashencodedbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/HashUtils.java",
+      "symbol": "private static String hashChars(HashFunction function, char[] chars)",
+      "line": 113,
+      "source_sha256": "251c11086d3ea310a0dbf5a9cde62040f27655dc25201e73580f061b199d164c"
+    },
+    "crcencodedbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/CRC32Utils.java",
+      "symbol": "public static long generateCRC32Checksum(",
+      "line": 54,
+      "source_sha256": "165b33bea5b7b6cf0ea451d4c6f4c33ec1b7c3b5a2a4903d7a8c8397ec2090a4"
     }
   },
   "rows": [
@@ -1009,12 +1023,14 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established. The private token checksum validators also clear their extracted code/checksum arrays after valid, rejected or throwing validation outcomes, retaining caller input; six lifecycle cases cover both token versions.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established. The private token checksum validators also clear their extracted code/checksum arrays after valid, rejected or throwing validation outcomes, retaining caller input; six lifecycle cases cover both token versions. SHA-256/SHA-512 string/character helpers and CRC calculation also clear their own UTF-8 byte storage after processing, retaining caller inputs; ownership and real digest compatibility cases accompany the lifecycle checks.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. No full implementation trace is established.",
       "references": [
         "crypto",
         "tokenbuffer",
-        "tokenchecksumcopies"
+        "tokenchecksumcopies",
+        "hashencodedbuffer",
+        "crcencodedbuffer"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1035,6 +1051,13 @@
           "trace": "afta-token-checksum-buffers.md",
           "full_requirement_closed": false,
           "implementation_commit": "f9ab1c6c86eb6cb22f866a479e42bb37b347e1bf"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Best-effort cleanup of helper-owned UTF-8 hash/CRC buffers after processing; preserve caller-owned inputs and digest/token compatibility; complete residual-resource guarantee remains Gap",
+          "trace": "afta-hash-crc-buffer-hygiene.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "469ad5a9d024e9a6f7cd6002b51101274e7cb30f"
         }
       ]
     },

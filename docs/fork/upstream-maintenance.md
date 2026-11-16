@@ -270,3 +270,11 @@ validation-owned code/checksum arrays in both CRC paths; do not erase the
 caller-owned token or change public extraction/generation ownership. Preserve
 `ApiTokenChecksumBufferTest` and its required CI report. See the
 [bounded checksum-copy trace](../security/common-criteria/afta-token-checksum-buffers.md).
+
+## Hash/CRC owned encoding storage (16 November)
+
+Selected source row: 20 (`FDP_RIP.2.1`), still Gap. Preserve owned encoding-buffer
+cleanup after SHA-256/SHA-512 and CRC processing, including failures. Do not erase
+caller-owned byte/character input. Keep the existing CRC input range and token
+format during merges; retain standard digest vectors and both required buffer
+reports. See the [hash/CRC ownership trace](../security/common-criteria/afta-hash-crc-buffer-hygiene.md).

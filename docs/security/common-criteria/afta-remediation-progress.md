@@ -4,6 +4,15 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November gap follow-up: hash/CRC encoding storage
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** SHA-256/SHA-512 string/character
+helpers and CRC processing now clear their own encoded plaintext storage. Caller
+byte/character inputs retain their ownership contract. Real digest vectors and
+token checks retain compatibility coverage; see the [UTF-8 buffer trace](afta-hash-crc-buffer-hygiene.md).
+This is best-effort buffer hygiene; row 20 stays Gap. The commit count rises for
+an already linked row, without increasing the distinct primary-entry count.
+
 ## 16 November gap follow-up: validator-owned token copies
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** Both token checksum validators

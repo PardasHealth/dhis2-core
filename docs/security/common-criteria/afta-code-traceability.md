@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`f9ab1c6c86`. Subsequent documentation-only commits do not change that code.
+`469ad5a9d0`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the fifteen recent implementation fixes to selected checklist
+This guide traces the sixteen recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -59,6 +59,7 @@ does not close every acceptance condition in those rows.
 | 1: `FAU_GEN.1.1`; 29: `FIA_AFL.1.1` | Applied 16 November: token rejection catch excludes downstream failures, retaining their own handling/event attribution | [38ffff2be6](https://github.com/PardasHealth/dhis2-core/commit/38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26) | [Per-row boundary trace](afta-token-failure-boundary.md), [execution record](../evidence/afta-token-failure-boundary-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 16 November: best-effort clearing of resolver-owned raw-token array on processing success/failure; full residual-data guarantee remains Gap | [20342bc346](https://github.com/PardasHealth/dhis2-core/commit/20342bc3467840a006afdf4596a024ea96e04458) | [Bounded buffer-hygiene trace](afta-token-secret-buffer.md), [execution record](../evidence/afta-token-secret-buffer-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 16 November: both checksum validators clear their extracted arrays while retaining caller input; full residual-data guarantee remains Gap | [f9ab1c6c86](https://github.com/PardasHealth/dhis2-core/commit/f9ab1c6c86eb6cb22f866a479e42bb37b347e1bf) | [Checksum-copy trace](afta-token-checksum-buffers.md), [execution record](../evidence/afta-token-checksum-buffers-2026-11-16.json) |
+| 20: `FDP_RIP.2.1` | Applied 16 November: hash/CRC helpers clear owned UTF-8 storage, preserve caller inputs and retain digest/token formats; full residual-data guarantee remains Gap | [469ad5a9d0](https://github.com/PardasHealth/dhis2-core/commit/469ad5a9d024e9a6f7cd6002b51101274e7cb30f) | [Hash/CRC buffer trace](afta-hash-crc-buffer-hygiene.md), [execution record](../evidence/afta-hash-crc-buffer-hygiene-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -319,6 +320,17 @@ keep their ownership contract. See the [bounded trace](afta-token-checksum-buffe
 Row 20 remains **Gap**: byte/string/runtime copies and complete protected-resource
 acceptance remain unproven. This adds a commit, not another distinct source row.
 
+## 16. Gap row 20: hash/CRC encoding storage
+
+**Selected source row:** 20 (`FDP_RIP.2.1`). Applied **16 November 2026**.
+`HashUtils.hashOwnedBytes` and `hashChars` clear their own SHA-256/SHA-512 UTF-8
+storage; character hashing avoids a second plaintext byte array. CRC calculation
+clears its owned encoding array while preserving its existing byte range. Caller
+inputs are retained. The 22 new cases have ten baseline lifetime failures and
+twelve passing ownership/vector controls. See the [code and compatibility trace](afta-hash-crc-buffer-hygiene.md).
+Row 20 remains **Gap**: physical JVM erasure and full protected-resource acceptance
+remain unproven. This adds a commit to the same linked entry.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -328,7 +340,7 @@ The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
 report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
 `TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
-`MeControllerTest` report. The buffer suites `ApiTokenSecretBufferTest` and `ApiTokenChecksumBufferTest` are also required. The publisher suite `TwoFactorFailureEventTest` and mapped-identity suite `OidcEventIdentityTest` are also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
+`MeControllerTest` report. The buffer suites `ApiTokenSecretBufferTest`, `ApiTokenChecksumBufferTest`, `HashSecretBufferTest` and `CrcSecretBufferTest` are also required. The publisher suite `TwoFactorFailureEventTest` and mapped-identity suite `OidcEventIdentityTest` are also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

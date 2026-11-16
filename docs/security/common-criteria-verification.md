@@ -620,3 +620,14 @@ baseline failures for both token versions and final compatibility/regression
 executions. The private validator clears its own extracted arrays and preserves
 caller input. This is observable Java-array hygiene, not a JVM physical-erasure
 or complete residual-resource guarantee. Execution counts overlap prior records.
+
+## 16 November: gap-row 20 hash/CRC buffers
+
+**Selected source row: 20 (`FDP_RIP.2.1`), still Gap.** The
+[UTF-8 buffer trace](common-criteria/afta-hash-crc-buffer-hygiene.md) and
+[dated evidence](evidence/afta-hash-crc-buffer-hygiene-2026-11-16.json) record ten
+baseline lifetime failures among 22 new cases, with twelve ownership/vector
+controls passing. SHA and CRC helpers now clear their owned encoding storage.
+Real digest/token regressions and caller-ownership assertions retain compatibility
+coverage. This does not prove physical JVM erasure or full resource protection;
+counts overlap earlier executions and no complete requirement is closed.

@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Are hash/CRC encoding buffers cleared? | [Row 20: owned UTF-8 buffers and compatibility checks](afta-hash-crc-buffer-hygiene.md) |
 | Are token-validator copies cleared too? | [Row 20: checksum-buffer cleanup and caller ownership](afta-token-checksum-buffers.md) |
 | What residual-data gap work has started? | [Row 20: token buffer cleanup and remaining resource scope](afta-token-secret-buffer.md) |
 | Can downstream failures be mistaken for token rejection? | [Token failure boundary and selected source rows](afta-token-failure-boundary.md) |
