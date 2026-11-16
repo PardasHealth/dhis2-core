@@ -213,7 +213,7 @@ public class TwoFactorAuthService {
     }
     if (TwoFactorType.EMAIL_ENABLED.equals(user.getTwoFactorType())
         && Strings.isNullOrEmpty(code)) {
-      sendEmail2FACode(user.getUsername());
+      sendEmail2FACode(user);
       throw new ConflictException(ErrorCode.E3051);
     }
     if (Strings.isNullOrEmpty(code)) {
@@ -267,7 +267,11 @@ public class TwoFactorAuthService {
    */
   @Transactional
   public void sendEmail2FACode(@Nonnull String username) throws ConflictException {
-    User user = userService.getUserByUsername(username);
+    sendEmail2FACode(userService.getUserByUsername(username));
+  }
+
+  /** Retain the selected account through challenge validation, delivery and persistence. */
+  private void sendEmail2FACode(User user) throws ConflictException {
     if (user == null) {
       throw new ConflictException(ErrorCode.E6201);
     }
