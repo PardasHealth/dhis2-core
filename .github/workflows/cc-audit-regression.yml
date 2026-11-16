@@ -166,7 +166,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=TwoFactorProvisioningUriTest,CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify atomic cache updates against disposable Redis
         working-directory: dhis-2
@@ -193,6 +193,7 @@ jobs:
               "org.hisp.dhis.cache.AtomicCacheUpdateTest",
               "org.hisp.dhis.webapi.mvc.CurrentUserIdentityResolverTest",
               "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+              "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
               "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
               "org.hisp.dhis.webapi.controller.MeControllerTest",
               "org.hisp.dhis.cache.RedisAtomicCacheUpdateTest",

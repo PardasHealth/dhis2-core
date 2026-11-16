@@ -38,6 +38,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
@@ -108,8 +109,15 @@ public class TwoFactorAuthUtils {
     String normalizedAppname = StringUtils.stripToEmpty(appName);
     // replace possible non-ASCII characters into 'X's
     normalizedAppname = normalizedAppname.replaceAll("[^\\p{ASCII}]", "X");
-    String app = ("DHIS2_" + normalizedAppname).replace(" ", "%20");
-    return String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s", app, username, secret, app);
+    String app = encodeProvisioningComponent("DHIS2_" + normalizedAppname);
+    return String.format(
+        "otpauth://totp/%s:%s?secret=%s&issuer=%s",
+        app, encodeProvisioningComponent(username), encodeProvisioningComponent(secret), app);
+  }
+
+  private static String encodeProvisioningComponent(String value) {
+    // Form encoding escapes label/query delimiters; URI spaces must use %20 rather than '+'.
+    return URLEncoder.encode(value, StandardCharsets.UTF_8).replace("+", "%20");
   }
 
   /**
