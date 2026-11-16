@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`a107b60400`. Subsequent documentation-only commits do not change that code.
+`51eb123a81`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the nine recent implementation fixes to selected checklist
+This guide traces the ten recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -29,6 +29,7 @@ These code fixes do not select missing AFTA policies or establish certification.
 | 35–36: `FIA_UAU.5.1/.2` | Encode TOTP provisioning label/query values to contain URI delimiters | `410acbc03e` | [Provisioning URI trace](afta-totp-provisioning-uri.md), [execution record](../evidence/afta-totp-provisioning-uri-2026-11-16.json) |
 | 37–39: `FIA_USB.1.1/.2/.3` | Retain selected account during email disable challenge validation, delivery and persistence | `a9152350ac` | [Email challenge trace](afta-email-challenge-identity.md), [execution record](../evidence/afta-email-challenge-identity-2026-11-16.json) |
 | 36–39: `FIA_UAU.5.2`, `FIA_USB.1.1/.2/.3` | Issue login email challenges by principal UID, rejecting missing/deleted owners without name fallback | `a107b60400` | [Login challenge UID trace](afta-login-email-challenge-uid.md), [execution record](../evidence/afta-login-email-challenge-uid-2026-11-16.json) |
+| 1–3, 29–30 and 36: audit, `FIA_AFL.1.1/.2`, `FIA_UAU.5.2` | Map rejected MFA proofs to failure events and existing configured lockout; exclude successful challenge issuance | `51eb123a81` | [MFA failure-event trace](afta-mfa-failure-events.md), [execution record](../evidence/afta-mfa-failure-events-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -42,7 +43,7 @@ proof for a later source version.
 | Code | Owning symbols and invariant |
 | --- | --- |
 | [Dhis2ApiTokenFilter](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java#L193) | `doFilterInternal`, `authenticationFailed`: resolver and manager/constraint failures clear the security context, publish a sanitized failure authentication and stop before the protected chain. Only an already resolved owner name is retained; credentials are null. |
-| [AuthenticationProviderConfig](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java#L122) | `authenticationEventPublisher`: explicitly maps invalid, expired and constraint-rejected token exceptions to a real application event. |
+| [AuthenticationProviderConfig](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java#L123) | `authenticationEventPublisher`: explicitly maps invalid, expired and constraint-rejected token exceptions to a real application event. |
 | [ApiTokenAuthenticationFailureEvent](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthenticationFailureEvent.java#L37) | Dedicated failure event distinguishes token rejection from a wrong password/MFA proof. |
 | [AuthenticationListener](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java#L91) | `handleAuthenticationFailure`: token audit failures do not increment password failure counters. |
 
@@ -217,6 +218,19 @@ owners, deleted owners and missing UIDs. See the [execution trace and limitation
 The latest batch passes 33 unit checks and 33 H2 login/MFA cases.
 Password/factor-state locking during issuance and other caller contracts remain open.
 
+## 10. Rejected MFA proof events and configured lockout
+
+`AuthenticationProviderConfig.authenticationEventPublisher` maps the exact
+`TwoFactorAuthenticationException` class to `AuthenticationFailureBadCredentialsEvent`.
+Spring's exact-class lookup does not inherit its superclass mapping. Existing
+audit and account-counter listeners now receive the rejection. The distinct
+`TwoFactorCodeSentException` remains unmapped. Publisher baseline: two failures
+in three cases. H2 baseline: two threshold failures in twelve cases. See the
+[full execution trace](afta-mfa-failure-events.md) for final source/report hashes.
+The final batch passes 76 unit and 46 H2 API cases.
+Threshold/expiry and the lockout setting remain; full selected failure policy,
+audit delivery/retention and deployed acceptance remain open.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -226,7 +240,7 @@ The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
 report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
 `TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
-`MeControllerTest` report. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
+`MeControllerTest` report. The publisher suite `TwoFactorFailureEventTest` is also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

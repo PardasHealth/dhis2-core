@@ -4,6 +4,14 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: rejected MFA proof events
+
+The publisher explicitly maps the custom MFA rejection exception to a credential
+failure event, enabling existing audit and atomic account-counter listeners.
+Successful email challenge issuance remains separate. See the
+[publisher and HTTP lockout trace](afta-mfa-failure-events.md).
+Selected rows 1–3, 29–30 and 36 remain partial; complete failure policy is open.
+
 ## 16 November follow-up: email login challenge UID
 
 The login provider now routes email challenge issuance by the principal UID.

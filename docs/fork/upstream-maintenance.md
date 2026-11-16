@@ -222,3 +222,11 @@ the service's missing-UID/no-name-fallback behavior when merging upstream.
 Keep the existing public username method for callers that still require it.
 The provider policy assertion and UID challenge tests are already selected and
 required by fork CI. See the [login UID trace](../security/common-criteria/afta-login-email-challenge-uid.md).
+
+## Rejected MFA proof events (16 November)
+
+Preserve the exact `TwoFactorAuthenticationException` mapping in the publisher.
+Spring's default exception mappings do not cover this subclass automatically.
+Keep successful `TwoFactorCodeSentException` issuance separate from rejected-proof
+counting. Preserve the required publisher report and both-factor HTTP threshold
+cases. See the [failure-event trace](../security/common-criteria/afta-mfa-failure-events.md).

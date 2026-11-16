@@ -304,9 +304,9 @@
     "tokenfailureevents": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java",
-      "line": 122,
+      "line": 123,
       "symbol": "public DefaultAuthenticationEventPublisher authenticationEventPublisher(",
-      "source_sha256": "4dfbb59ed44cc203f15e81d35b263281fbc7cea1e5d7269d6046b9bba1fc0965"
+      "source_sha256": "0f32897bc443044a3027833e0ebf846e1c13dc19ee30f8b1d73c1d44391ea8ca"
     },
     "authaddress": {
       "repository": "core",
@@ -436,7 +436,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit events",
-      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters.",
+      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. Rejected MFA proofs now have an explicit failure-event mapping; configured account lockout counts these failures. Successful email challenge issuance remains excluded from credential-failure events.",
       "gap_and_acceptance": "Select the AFTA event list, including audit start/stop and security actions; exercise every required event.",
       "references": [
         "auditgen",
@@ -463,6 +463,13 @@
           "trace": "afta-token-failure-audit.md",
           "full_requirement_closed": false,
           "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },
@@ -508,6 +515,13 @@
           "trace": "afta-authentication-address-source.md",
           "full_requirement_closed": false,
           "implementation_commit": "5d426cda14764fdda0c6eab833699c7cbef0772d"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },
@@ -545,6 +559,13 @@
           "trace": "afta-token-failure-audit.md",
           "full_requirement_closed": false,
           "implementation_commit": "760ade1f11d6bc7982f93307f7638e2e50dcfbcd"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },
@@ -1103,7 +1124,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Count failed authentication",
-      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open. MFA-disable failure counting now uses the same resolved target username as its lock check after a session username becomes stale.",
+      "observation": "The authentication provider and user service have lockout/failure handling. OIDC failure bookkeeping now tolerates missing/non-HTTP details and uses a known resolved local username when available; unmapped failures retain the attempted name. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open. MFA-disable failure counting now uses the same resolved target username as its lock check after a session username becomes stale. Rejected MFA proofs now have an explicit failure-event mapping; configured account lockout counts these failures. Successful email challenge issuance remains excluded from credential-failure events.",
       "gap_and_acceptance": "Fix the AFTA threshold, counting conditions and reset rules; test all login mechanisms and distributed counters.",
       "references": [
         "factor",
@@ -1114,7 +1135,8 @@
         "redisupdate",
         "currententity",
         "mfaownerdisable",
-        "mfafailureowner"
+        "mfafailureowner",
+        "tokenfailureevents"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
@@ -1142,6 +1164,13 @@
           "trace": "afta-current-user-uid-binding.md",
           "full_requirement_closed": false,
           "implementation_commit": "11240d03e0ca019e9580c0fad71ed62244a01817"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },
@@ -1152,7 +1181,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Act after failed authentication",
-      "observation": "Provider lockout checks and user account state restrict selected authentication attempts. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open.",
+      "observation": "Provider lockout checks and user account state restrict selected authentication attempts. Successful login, recovery and MFA-disable failure-counter updates now commit atomically per key in local and Redis caches, retaining existing thresholds and expiry. Redis conflicts retry with a bounded explicit failure; full deployed counting/reset policy remains open. Rejected MFA proofs now have an explicit failure-event mapping; configured account lockout counts these failures. Successful email challenge issuance remains excluded from credential-failure events.",
       "gap_and_acceptance": "Verify block duration, reset/unlock authorization and counter races across providers/nodes; preserve authorized recovery.",
       "references": [
         "factor",
@@ -1160,7 +1189,8 @@
         "failurecounter",
         "cacheupdate",
         "localupdate",
-        "redisupdate"
+        "redisupdate",
+        "tokenfailureevents"
       ],
       "source_key": "FIA_AFL.1.2",
       "counted": true,
@@ -1174,6 +1204,13 @@
           "trace": "afta-atomic-failure-counters.md",
           "full_requirement_closed": false,
           "implementation_commit": "bc6b67654b1065fc047a8c7d377ae95533bf054a"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },
@@ -1299,7 +1336,8 @@
         "qr",
         "provisioninguri",
         "loginemailuid",
-        "loginemailprovider"
+        "loginemailprovider",
+        "tokenfailureevents"
       ],
       "source_key": "FIA_UAU.5.2",
       "counted": true,
@@ -1358,6 +1396,13 @@
           "trace": "afta-login-email-challenge-uid.md",
           "full_requirement_closed": false,
           "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Explicit custom MFA rejection failure-event mapping reaches existing audit/account-counter listeners; configured lockout HTTP regressions; email challenge issuance excluded",
+          "trace": "afta-mfa-failure-events.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
         }
       ]
     },

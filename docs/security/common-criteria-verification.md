@@ -560,3 +560,13 @@ the login provider to UID-based issuance. The baseline keeps the preceding provi
 with the additive service helper available: one of 26 cases fails on the old name
 call. Final unit and H2 counts are recorded in the evidence; no hosted run, live
 concurrent exploit or complete clause closure is asserted. Results overlap prior inventories.
+
+## 16 November: rejected MFA proof events
+
+The [MFA failure-event trace](common-criteria/afta-mfa-failure-events.md) and
+[dated execution evidence](evidence/afta-mfa-failure-events-2026-11-16.json) record
+two publisher baseline failures and two H2 lockout baseline failures. An exact
+custom exception mapping enables the existing failure listeners. Successful
+challenge issuance remains excluded. Final suite counts/hashes are in the evidence;
+these overlap earlier inventories and do not establish full selected policy or
+production audit delivery. No hosted CI execution is claimed.

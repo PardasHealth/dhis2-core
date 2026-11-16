@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-16",
+  "scope": "Selected AFTA rows 1–3, 29–30 and 36: rejected MFA proof failure-event mapping and configured account lockout; no full requirement closure",
+  "baseline_core_commit": "c3a5431f0596b5a3b630ff9f6cc993ad17505ba1",
+  "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/TwoFactorFailureEventTest.java": "3b18be2ca5a8a38ba76b41b43bb7335247d7a9a53e8212c18c2143ea3de11ac6",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "fb242df4345c19b0e8bb0d08bb455330ef279760551c4f5a2bcfee54989fefd2",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "8cf6f7177005db66d195ad547730fb2f49940aa65ad718f999fa3275422857aa",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "ff248dbfda94062f498caf87176eb1df7668a0b1f9e179718203b9ce3e50fb2b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "580213e87f4fed6c9eab6dd41a9cf0185176972a19a50a7f3d5daf87acb54161",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "37f1be60af74452e8b945ca87ae658aa4da2cc9320f9472ab3f9bb833bbd0fc8",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/TwoFactorControllerTest.java": "f687a61002f3ba0249cb5111237630d8c51b4e3aafd3fae59e301215b6ce85fc",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    ".github/workflows/cc-audit-regression.yml": "cfcca0dfea6df5c148ce335b818f9cdada489774f8ffd484cfbc69a82f3dd9dc",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java": "0f32897bc443044a3027833e0ebf846e1c13dc19ee30f8b1d73c1d44391ea8ca",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java": "f8a9dc45a16b95d3bf3de8e7693ccefdb7c7db213d0a2b702d556cfd14e7f375",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "4b7203736997c8c8f4683f396b9d2da201c5455d318ee69543e9228e23de5f3b"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.TwoFactorControllerTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest.xml": "f32b063747d7a14bdfbabbc2b803511d3eb6f23c683e1c20e3aea60b93c8d2a4",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "cc0dd64734fd31c70aa323e9c989d98d89f688873825466d43f306e697760b5d",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "85d523366a29d92628eb43531ff924e3e94eb6b583cc85ca28ed5ca88ae6f065",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "1c80403a8a912e7a444d49a789b05b2f6c396a9ba7ed22b7b9e7fe810b3d1eb0",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "f471dd1b99bb3abd1efca16645850026e1480f007957dbbdca6d88f5ba1a7b0b",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest.xml": "e1457155c65c670ac534c428117874200e32fecb04e10d26a8350c0bd367bf7e",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.TwoFactorControllerTest.xml": "4e8e3c6dab32346939d3a22edca6f827ade8bda1f48a760da0ac8e65cd4e3ff5",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "3f4dcc7d6e33de2904cc7aae4d0884da7f0ff901a1495e011a646024ee6923b6"
+  },
+  "baseline_regression": {
+    "tests": 15,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "parts": [
+      {
+        "suite": "TwoFactorFailureEventTest",
+        "tests": 3,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "scope": "Preceding publisher: email/TOTP rejection publishes no event; issuance-exclusion case passes.",
+        "log_sha256": "d87c9fe85f674976bdb0612bd40f51a8fbfacec74f34cd61f0b841b95b2b3cf6"
+      },
+      {
+        "suite": "TwoFactorLoginPolicyTest",
+        "tests": 12,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "scope": "Preceding publisher: repeated HTTP rejected proofs do not lock the account at the configured threshold for either factor. Other ten cases, including successful-issuance exclusion, pass.",
+        "log_sha256": "04435600b3822204cae9fff95218e0e4989178eaf6df1aa500484ca8e94bac0e"
+      }
+    ]
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache; unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, as recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "unit_boundary": "Real configured publisher and real failure listener with mocked counter dependency. Existing audit logger, listener, PAT failure and MFA policy suites retained.",
+    "web_boundary": "Real H2/Spring-security HTTP login with synthetic accounts and fake email sender. Lock setting explicitly enabled/restored and counters reset. Actual threshold/next-request denial and issuance exclusion asserted.",
+    "ci": "New publisher suite explicitly selected and successful nonempty report required. Existing H2 policy suite extended. YAML and embedded Python validated locally; no hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=TwoFactorFailureEventTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorLoginPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=TwoFactorFailureEventTest,AuthenticationListenerTest,AuthenticationAuditRecordTest,ApiTokenIpConstraintTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=TwoFactorLoginPolicyTest,TwoFactorControllerTest,AuthenticationControllerTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Full AFTA failure-handling/lockout policy or every required audit event",
+    "Production audit delivery, retention or full-storage acceptance",
+    "Dedicated challenge-issuance rate limiting or policy distinctions among MFA rejection causes",
+    "Live browser, external IdP, full test suite, deployed cluster or hosted CI acceptance"
+  ]
+}
