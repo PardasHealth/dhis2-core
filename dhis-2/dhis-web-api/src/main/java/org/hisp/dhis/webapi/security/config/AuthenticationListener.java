@@ -105,8 +105,11 @@ public class AuthenticationListener {
     }
 
     if (isOidcLogin(auth)) {
-      String localUsername = localOidcUsername(auth);
-      if (localUsername != null) username = localUsername;
+      if (auth.getPrincipal() instanceof DhisOidcUser) {
+        User owner = localOidcUser(auth);
+        if (owner == null) return;
+        username = owner.getUsername();
+      }
       logOidcAddress(auth.getDetails(), "failed");
     }
 
@@ -142,9 +145,11 @@ public class AuthenticationListener {
     if (isOidcLogin(auth)) {
       // External subjects are not local usernames. Without a resolved DHIS2
       // principal, do not mutate a coincidentally named local account.
-      username = localOidcUsername(auth);
-      if (username == null) return;
+      User owner = localOidcUser(auth);
+      if (owner == null) return;
       logOidcAddress(auth.getDetails(), "succeeded");
+      registerSuccessfulLogin(owner, owner.getUsername());
+      return;
     }
 
     registerSuccessfulLogin(username);
@@ -155,12 +160,14 @@ public class AuthenticationListener {
         || auth instanceof OAuth2AuthenticationToken;
   }
 
-  private static String localOidcUsername(Authentication auth) {
-    if (auth.getPrincipal() instanceof DhisOidcUser principal) {
-      String username = principal.getUsername();
-      if (username != null && !username.isBlank()) return username;
-    }
-    return null;
+  private User localOidcUser(Authentication auth) {
+    if (!(auth.getPrincipal() instanceof DhisOidcUser principal)) return null;
+    String uid = principal.getUid();
+    if (uid == null || uid.isBlank()) return null;
+    User owner = userService.getUser(uid);
+    return owner != null && owner.getUsername() != null && !owner.getUsername().isBlank()
+        ? owner
+        : null;
   }
 
   private static void logOidcAddress(Object details, String outcome) {
@@ -209,8 +216,10 @@ public class AuthenticationListener {
   }
 
   private void registerSuccessfulLogin(String username) {
-    User user = userService.getUserByUsername(username);
+    registerSuccessfulLogin(userService.getUserByUsername(username), username);
+  }
 
+  private void registerSuccessfulLogin(User user, String username) {
     boolean readOnly = config.isReadOnlyMode();
 
     if (Objects.nonNull(user) && !readOnly) {

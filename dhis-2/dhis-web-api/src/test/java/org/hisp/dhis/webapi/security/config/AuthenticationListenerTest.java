@@ -244,7 +244,7 @@ class AuthenticationListenerTest {
     var auth = oidcLogin("external-subject", "local-user");
     assertDoesNotThrow(
         () -> listener.handleAuthenticationSuccess(new AuthenticationSuccessEvent(auth)));
-    verify(userService).getUserByUsername("local-user");
+    verify(userService).getUser("Oidc1234567");
     verify(userService).registerSuccessfulLogin("local-user");
     verify(userService, never()).registerSuccessfulLogin("external-subject");
   }
@@ -336,8 +336,12 @@ class AuthenticationListenerTest {
   }
 
   private DhisOidcUser oidcPrincipal(String username) {
+    var owner = new org.hisp.dhis.user.User();
+    owner.setUid("Oidc1234567");
+    owner.setUsername(username);
+    lenient().when(userService.getUser("Oidc1234567")).thenReturn(owner);
     return new DhisOidcUser(
-        UserDetails.empty().username(username).build(),
+        UserDetails.empty().uid("Oidc1234567").username(username).build(),
         Map.of("sub", "external-subject"),
         "sub",
         null);
