@@ -35,6 +35,7 @@ import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.security.AuthenticationLoggerListener;
 import org.hisp.dhis.security.ldap.authentication.CustomLdapAuthenticationProvider;
 import org.hisp.dhis.security.ldap.authentication.DhisBindAuthenticator;
+import org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationException;
 import org.hisp.dhis.security.spring2fa.TwoFactorWebAuthenticationDetailsSource;
 import org.hisp.dhis.user.UserStore;
 import org.hisp.dhis.webapi.security.apikey.ApiTokenAuthenticationException;
@@ -125,6 +126,7 @@ public class AuthenticationProviderConfig {
     defaultAuthenticationEventPublisher.setAdditionalExceptionMappings(
         Map.of(
             OAuth2AuthenticationException.class, AuthenticationFailureBadCredentialsEvent.class,
+            TwoFactorAuthenticationException.class, AuthenticationFailureBadCredentialsEvent.class,
             ApiTokenAuthenticationException.class, ApiTokenAuthenticationFailureEvent.class,
             ApiTokenConstraintsValidationFailedException.class,
                 ApiTokenAuthenticationFailureEvent.class,

@@ -31,9 +31,12 @@ package org.hisp.dhis.webapi.controller.security;
 
 import static org.hisp.dhis.external.conf.ConfigurationKey.EMAIL_2FA_ENABLED;
 import static org.hisp.dhis.external.conf.ConfigurationKey.TOTP_2FA_ENABLED;
+import static org.hisp.dhis.user.UserConstants.LOGIN_MAX_FAILED_ATTEMPTS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.hisp.dhis.http.HttpStatus;
@@ -71,6 +74,7 @@ class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
   }
 
   @Autowired private DhisConfigurationProvider config;
+  @Autowired private org.hisp.dhis.setting.SystemSettingsService settingsService;
   @Autowired private MessageSender emailMessageSender;
   private String originalEmail;
   private String originalTotp;
@@ -142,6 +146,49 @@ class TwoFactorLoginPolicyTest extends AuthenticationApiTestBase {
     String replacement = userService.getUserByUsername("admin").getSecret().split("\\|")[0];
     clearSecurityContext();
     assertEquals("SUCCESS", login(replacement).getLoginStatus());
+  }
+
+  @ParameterizedTest
+  @EnumSource(
+      value = TwoFactorType.class,
+      names = {"TOTP_ENABLED", "EMAIL_ENABLED"})
+  void rejectedProofsReachConfiguredAccountLockout(TwoFactorType type) {
+    prepare(type, true);
+    boolean original = settingsService.getCurrentSettings().getLockMultipleFailedLogins();
+    settingsService.put("keyLockMultipleFailedLogins", true);
+    settingsService.clearCurrentSettings();
+    userService.registerSuccessfulLogin("admin");
+    try {
+      for (int i = 0; i < LOGIN_MAX_FAILED_ATTEMPTS; i++) {
+        assertFalse(userService.isLocked("admin"));
+        assertDenied(type, login("invalid"));
+      }
+      assertTrue(userService.isLocked("admin"));
+      assertEquals("ACCOUNT_LOCKED", login("invalid").getLoginStatus());
+    } finally {
+      userService.registerSuccessfulLogin("admin");
+      settingsService.put("keyLockMultipleFailedLogins", original);
+      settingsService.clearCurrentSettings();
+    }
+  }
+
+  @Test
+  void issuedEmailChallengesDoNotCountAsRejectedProofs() {
+    prepare(TwoFactorType.EMAIL_ENABLED, true);
+    boolean original = settingsService.getCurrentSettings().getLockMultipleFailedLogins();
+    settingsService.put("keyLockMultipleFailedLogins", true);
+    settingsService.clearCurrentSettings();
+    userService.registerSuccessfulLogin("admin");
+    try {
+      for (int i = 0; i < LOGIN_MAX_FAILED_ATTEMPTS + 1; i++) {
+        assertEquals("EMAIL_TWO_FACTOR_CODE_SENT", login(null).getLoginStatus());
+      }
+      assertFalse(userService.isLocked("admin"));
+    } finally {
+      userService.registerSuccessfulLogin("admin");
+      settingsService.put("keyLockMultipleFailedLogins", original);
+      settingsService.clearCurrentSettings();
+    }
   }
 
   private String prepare(TwoFactorType type, boolean enabled) {
