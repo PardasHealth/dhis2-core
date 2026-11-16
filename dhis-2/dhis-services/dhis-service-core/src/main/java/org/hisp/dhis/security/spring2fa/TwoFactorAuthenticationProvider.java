@@ -126,8 +126,20 @@ public class TwoFactorAuthenticationProvider extends DaoAuthenticationProvider {
       authorities.add(
           FactorGrantedAuthority.fromAuthority(FactorGrantedAuthority.PASSWORD_AUTHORITY));
     }
-    return new UsernamePasswordAuthenticationToken(
-        userDetails, result.getCredentials(), authorities);
+    var completed =
+        new UsernamePasswordAuthenticationToken(userDetails, result.getCredentials(), authorities);
+    Object completedDetails = result.getDetails();
+    if (completedDetails instanceof TwoFactorWebAuthenticationDetails factorDetails) {
+      // Retain connection context for success events/session state, without retaining the OTP.
+      completedDetails =
+          new TwoFactorWebAuthenticationDetails(
+              factorDetails.getRemoteAddress(),
+              factorDetails.getSessionId(),
+              factorDetails.getIp(),
+              null);
+    }
+    completed.setDetails(completedDetails);
+    return completed;
   }
 
   private void checkLockout(String username, String ip) {

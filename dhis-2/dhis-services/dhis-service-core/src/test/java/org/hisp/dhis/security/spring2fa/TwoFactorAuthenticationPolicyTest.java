@@ -29,6 +29,9 @@
  */
 package org.hisp.dhis.security.spring2fa;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -268,6 +271,52 @@ class TwoFactorAuthenticationPolicyTest {
     assertThrows(
         org.springframework.dao.DataAccessResourceFailureException.class,
         () -> provider.authenticate(login(PASSWORD, "123456")));
+  }
+
+  @ParameterizedTest
+  @EnumSource(
+      value = TwoFactorType.class,
+      names = {"NOT_ENABLED", "TOTP_ENABLED", "EMAIL_ENABLED"})
+  void successResultAndEventRetainConnectionDetailsWithoutTheSubmittedProof(TwoFactorType type) {
+    boolean enrolled = type != TwoFactorType.NOT_ENABLED;
+    String secret =
+        type == TwoFactorType.EMAIL_ENABLED
+            ? "123456|" + (System.currentTimeMillis() + 60000)
+            : TOTP_SECRET;
+    givenUser(type, enrolled, secret, false, Set.of());
+    if (enrolled) {
+      when(configuration.isEnabled(
+              type == TwoFactorType.EMAIL_ENABLED
+                  ? ConfigurationKey.EMAIL_2FA_ENABLED
+                  : ConfigurationKey.TOTP_2FA_ENABLED))
+          .thenReturn(true);
+    }
+    String code = type == TwoFactorType.EMAIL_ENABLED ? "123456" : new Totp(TOTP_SECRET).now();
+    var request = new UsernamePasswordAuthenticationToken("alice", PASSWORD);
+    request.setDetails(
+        new TwoFactorWebAuthenticationDetails("192.0.2.10", "audit-session", "192.0.2.10", code));
+    var events = new java.util.ArrayList<Object>();
+    var publisher =
+        new org.springframework.security.authentication.DefaultAuthenticationEventPublisher();
+    publisher.setApplicationEventPublisher(events::add);
+    var manager = new org.springframework.security.authentication.ProviderManager(provider);
+    manager.setAuthenticationEventPublisher(publisher);
+
+    Authentication result = manager.authenticate(request);
+
+    assertTrue(result.isAuthenticated());
+    var details = assertInstanceOf(TwoFactorWebAuthenticationDetails.class, result.getDetails());
+    assertEquals("192.0.2.10", details.getRemoteAddress());
+    assertEquals("192.0.2.10", details.getIp());
+    assertEquals("audit-session", details.getSessionId());
+    assertNull(details.getCode());
+    assertEquals(1, events.size());
+    var event =
+        assertInstanceOf(
+            org.springframework.security.authentication.event.AuthenticationSuccessEvent.class,
+            events.get(0));
+    assertEquals(details, event.getAuthentication().getDetails());
+    assertEquals(code, ((TwoFactorWebAuthenticationDetails) request.getDetails()).getCode());
   }
 
   private void givenUser(
