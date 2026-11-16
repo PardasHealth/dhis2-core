@@ -33,6 +33,7 @@ import static org.hisp.dhis.security.apikey.ApiKeyTokenGenerator.isValidTokenChe
 
 import com.google.common.net.HttpHeaders;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.CheckForNull;
@@ -59,8 +60,13 @@ public final class ApiTokenResolver {
     char[] headerToken = extractTokenFromHeader(request);
 
     if (headerToken.length > 0) {
-      validateChecksum(headerToken);
-      return hashToken(headerToken);
+      try {
+        validateChecksum(headerToken);
+        return hashToken(headerToken);
+      } finally {
+        // Reduce raw-secret lifetime in this resolver-owned mutable buffer.
+        Arrays.fill(headerToken, '\0');
+      }
     }
 
     return null;

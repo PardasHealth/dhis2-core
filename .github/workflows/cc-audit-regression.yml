@@ -166,7 +166,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=OidcEventIdentityTest,TwoFactorFailureEventTest,TwoFactorEmailChallengeIdentityTest,TwoFactorProvisioningUriTest,CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=ApiTokenSecretBufferTest,OidcEventIdentityTest,TwoFactorFailureEventTest,TwoFactorEmailChallengeIdentityTest,TwoFactorProvisioningUriTest,CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify atomic cache updates against disposable Redis
         working-directory: dhis-2
@@ -197,6 +197,7 @@ jobs:
               "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
               "org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest",
               "org.hisp.dhis.webapi.security.config.OidcEventIdentityTest",
+              "org.hisp.dhis.webapi.security.apikey.ApiTokenSecretBufferTest",
               "org.hisp.dhis.webapi.controller.CurrentUserIdentityBindingTest",
               "org.hisp.dhis.webapi.controller.MeControllerTest",
               "org.hisp.dhis.cache.RedisAtomicCacheUpdateTest",
