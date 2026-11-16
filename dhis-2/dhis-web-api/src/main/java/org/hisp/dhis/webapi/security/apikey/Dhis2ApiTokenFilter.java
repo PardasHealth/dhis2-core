@@ -99,8 +99,9 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
     }
 
     String ownerName = "";
+    ApiTokenAuthenticationToken authenticationToken;
     try {
-      ApiTokenAuthenticationToken authenticationToken =
+      authenticationToken =
           (ApiTokenAuthenticationToken)
               apiTokenAuthManager.authenticate(new ApiTokenAuthenticationToken(tokenHash));
       ownerName = authenticationToken.getPrincipal().getUsername();
@@ -111,13 +112,16 @@ public class Dhis2ApiTokenFilter extends OncePerRequestFilter {
       authenticationToken.setAuthenticated(true);
       setSecurityContext(authenticationToken);
 
-      eventPublisher.publishAuthenticationSuccess(authenticationToken);
-
-      filterChain.doFilter(request, response);
     } catch (AuthenticationException e) {
       logger.debug("Failed to process authentication request", e);
       authenticationFailed(request, response, e, ownerName);
+      return;
     }
+
+    // Only token authentication belongs to the failure boundary above. Downstream
+    // failures must retain their own exception handling and audit attribution.
+    eventPublisher.publishAuthenticationSuccess(authenticationToken);
+    filterChain.doFilter(request, response);
   }
 
   private void setRequestDetails(

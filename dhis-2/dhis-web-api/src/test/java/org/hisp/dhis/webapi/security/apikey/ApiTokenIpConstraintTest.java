@@ -196,6 +196,38 @@ class ApiTokenIpConstraintTest {
     assertTrue(publishedEvents.isEmpty());
   }
 
+  @Test
+  void downstreamBadCredentialsIsNotReclassifiedAsTokenRejection() throws Exception {
+    assertDownstreamFailure(
+        new org.springframework.security.authentication.BadCredentialsException(
+            "Downstream failure"));
+  }
+
+  @Test
+  void downstreamAccountLockIsNotReclassifiedAsTokenRejection() throws Exception {
+    assertDownstreamFailure(
+        new org.springframework.security.authentication.LockedException("Downstream failure"));
+  }
+
+  private void assertDownstreamFailure(
+      org.springframework.security.core.AuthenticationException failure) throws Exception {
+    doThrow(failure).when(chain).doFilter(request, response);
+    assertSame(
+        failure,
+        assertThrows(
+            org.springframework.security.core.AuthenticationException.class,
+            () -> filter.doFilter(request, response, chain)));
+    verify(chain, times(1)).doFilter(request, response);
+    verify(publisher).publishAuthenticationSuccess(authentication);
+    verify(publisher, never()).publishAuthenticationFailure(any(), any());
+    assertEquals(1, publishedEvents.size());
+    assertInstanceOf(
+        org.springframework.security.authentication.event.AuthenticationSuccessEvent.class,
+        publishedEvents.get(0));
+    assertSame(authentication, SecurityContextHolder.getContext().getAuthentication());
+    assertEquals(200, response.getStatus());
+  }
+
   private Authentication captureFailure() throws Exception {
     request.setRemoteAddr(OTHER);
     request.addHeader("X-Forwarded-For", ALLOWED);
