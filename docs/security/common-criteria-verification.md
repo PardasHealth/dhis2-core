@@ -580,3 +580,13 @@ token now retains address/session fields while clearing the submitted OTP in a
 copy. Final suite counts and source/report hashes are recorded in the evidence.
 Results overlap earlier inventories; production audit delivery and full clause
 closure are not established. No hosted CI execution is claimed.
+
+## 16 November: OIDC event UID owner
+
+**Selected source rows: 29, 37, 38 and 39.** The
+[per-row UID trace](common-criteria/afta-oidc-event-uid-binding.md) and
+[dated evidence](evidence/afta-oidc-event-uid-binding-2026-11-16.json) record seven
+failing baseline cases against the preceding listener and the final execution.
+Mapped OIDC events now retain the UID-resolved account for bookkeeping.
+These controlled fixtures do not establish live IdP/browser acceptance or complete
+session freshness; all four rows remain partial. Results overlap prior inventories.

@@ -238,3 +238,11 @@ and copy factor details with the OTP cleared. Reusing the incoming factor object
 would retain the submitted code; dropping details loses audit context. Keep the
 three `ProviderManager` result/event cases in the required policy suite. See the
 [success-context trace](../security/common-criteria/afta-login-success-context.md).
+
+## Mapped OIDC event UID owner (16 November)
+
+Selected source rows: 29 (`FIA_AFL.1.1`), 37–39 (`FIA_USB.1.1/.2/.3`).
+Preserve UID-based local account resolution and direct entity bookkeeping in
+`AuthenticationListener`; a principal's username can be stale or reassigned.
+Missing/deleted mapped owners must not fall back to a namesake. Keep the required
+`OidcEventIdentityTest` report. See the [per-row trace](../security/common-criteria/afta-oidc-event-uid-binding.md).

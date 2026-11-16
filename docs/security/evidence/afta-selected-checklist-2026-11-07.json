@@ -325,9 +325,9 @@
     "oidceventaccount": {
       "repository": "core",
       "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java",
-      "line": 158,
-      "symbol": "private static String localOidcUsername(Authentication auth)",
-      "source_sha256": "f8a9dc45a16b95d3bf3de8e7693ccefdb7c7db213d0a2b702d556cfd14e7f375"
+      "line": 163,
+      "symbol": "private User localOidcUser(Authentication auth)",
+      "source_sha256": "a903d7b8a3957037399b402bf2645190e3638473404b686184ea32dccaddd066"
     },
     "failurecounter": {
       "repository": "core",
@@ -433,6 +433,13 @@
       "symbol": "Object completedDetails = result.getDetails();",
       "line": 131,
       "source_sha256": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
+    },
+    "oidcentitybookkeeping": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java",
+      "symbol": "private void registerSuccessfulLogin(User user, String username)",
+      "line": 222,
+      "source_sha256": "a903d7b8a3957037399b402bf2645190e3638473404b686184ea32dccaddd066"
     }
   },
   "rows": [
@@ -1151,7 +1158,8 @@
         "currententity",
         "mfaownerdisable",
         "mfafailureowner",
-        "tokenfailureevents"
+        "tokenfailureevents",
+        "oidcentitybookkeeping"
       ],
       "source_key": "FIA_AFL.1.1",
       "counted": true,
@@ -1186,6 +1194,13 @@
           "trace": "afta-mfa-failure-events.md",
           "full_requirement_closed": false,
           "implementation_commit": "51eb123a81f5e639b46f5f03231cf84231206795"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Mapped OIDC event bookkeeping resolves principal UID, retains selected entity and uses current owner name for counters; missing/deleted owners have no namesake fallback",
+          "trace": "afta-oidc-event-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd"
         }
       ]
     },
@@ -1440,7 +1455,8 @@
         "mfaresetuid",
         "emailchallengetarget",
         "loginemailuid",
-        "loginemailprovider"
+        "loginemailprovider",
+        "oidcentitybookkeeping"
       ],
       "source_key": "FIA_USB.1.1",
       "counted": true,
@@ -1482,6 +1498,13 @@
           "trace": "afta-login-email-challenge-uid.md",
           "full_requirement_closed": false,
           "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Mapped OIDC event bookkeeping resolves principal UID, retains selected entity and uses current owner name for counters; missing/deleted owners have no namesake fallback",
+          "trace": "afta-oidc-event-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd"
         }
       ]
     },
@@ -1502,7 +1525,9 @@
         "mfaresetuid",
         "emailchallengetarget",
         "loginemailuid",
-        "loginemailprovider"
+        "loginemailprovider",
+        "oidceventaccount",
+        "oidcentitybookkeeping"
       ],
       "source_key": "FIA_USB.1.2",
       "counted": true,
@@ -1537,6 +1562,13 @@
           "trace": "afta-login-email-challenge-uid.md",
           "full_requirement_closed": false,
           "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Mapped OIDC event bookkeeping resolves principal UID, retains selected entity and uses current owner name for counters; missing/deleted owners have no namesake fallback",
+          "trace": "afta-oidc-event-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd"
         }
       ]
     },
@@ -1559,7 +1591,9 @@
         "mfaresetuid",
         "emailchallengetarget",
         "loginemailuid",
-        "loginemailprovider"
+        "loginemailprovider",
+        "oidceventaccount",
+        "oidcentitybookkeeping"
       ],
       "source_key": "FIA_USB.1.3",
       "counted": true,
@@ -1601,6 +1635,13 @@
           "trace": "afta-login-email-challenge-uid.md",
           "full_requirement_closed": false,
           "implementation_commit": "a107b60400fef98502c125452811ab33cdeac31c"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Mapped OIDC event bookkeeping resolves principal UID, retains selected entity and uses current owner name for counters; missing/deleted owners have no namesake fallback",
+          "trace": "afta-oidc-event-uid-binding.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd"
         }
       ]
     },

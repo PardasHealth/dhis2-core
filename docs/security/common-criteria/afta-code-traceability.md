@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`1114c5c925`. Subsequent documentation-only commits do not change that code.
+`90c44ffa76`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the eleven recent implementation fixes to selected checklist
+This guide traces the twelve recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -18,19 +18,25 @@ These code fixes do not select missing AFTA policies or establish certification.
 
 ## Implementation summary
 
-| Selected source rows | Behavior corrected | Implementation commit | Detailed trace and execution evidence |
+**Selected source rows** identify the original checklist entries affected by each
+applied fix. Use the implementation commit for the code diff and the dated
+execution record for the exact tested source, tests and outcomes. A linked fix
+does not close every acceptance condition in those rows.
+
+| **Selected source rows** | Behavior corrected | Implementation commit | Detailed trace and execution evidence |
 | --- | --- | --- | --- |
-| 1–3: `FAU_GEN.1.1`, `FAU_GEN.1.2`, `FAU_GEN.2.1` | Emit token-failure events, retain available local identity/connection context, clear stale authentication, isolate password counters | `760ade1f11` | [Token failure audit trace](afta-token-failure-audit.md), [62-case record](../evidence/afta-token-failure-audit-2026-11-15.json) |
-| 2: `FAU_GEN.1.2` | Use the servlet-resolved audit address instead of client-supplied forwarding headers | `5d426cda14` | [Address-source trace](afta-authentication-address-source.md), [88-case record](../evidence/afta-authentication-address-source-2026-11-15.json) |
-| 39: `FIA_USB.1.3` | Preserve session-expiration markers for next-request revocation; share the corrected service with the admin endpoint | `7af7d5a659` | [Global revocation trace](afta-global-session-invalidation.md), [31-case record](../evidence/afta-global-session-invalidation-2026-11-15.json) |
-| 29 and 37: `FIA_AFL.1.1`, `FIA_USB.1.1` | Handle optional OIDC event details and associate bookkeeping with the resolved local account | `efea229e58` | [OIDC account-association trace](afta-oidc-event-account-association.md), [81-case record](../evidence/afta-oidc-event-account-association-2026-11-15.json) |
-| 29–30: `FIA_AFL.1.1`, `FIA_AFL.1.2` | Commit concurrent failure increments atomically in local and Redis caches, retaining existing thresholds/expiry | `bc6b67654b` | [Atomic-counter trace](afta-atomic-failure-counters.md), [132-case record](../evidence/afta-atomic-failure-counters-2026-11-15.json) |
-| 29 and 37–39: `FIA_AFL.1.1`, `FIA_USB.1.1/.2/.3` | Bind persisted current-user/MFA targets to authenticated UID, not reusable names | `11240d03e0` | [Current-user/MFA UID trace](afta-current-user-uid-binding.md), [145-case record](../evidence/afta-current-user-uid-binding-2026-11-15.json) |
-| 35–36: `FIA_UAU.5.1/.2` | Encode TOTP provisioning label/query values to contain URI delimiters | `410acbc03e` | [Provisioning URI trace](afta-totp-provisioning-uri.md), [execution record](../evidence/afta-totp-provisioning-uri-2026-11-16.json) |
-| 37–39: `FIA_USB.1.1/.2/.3` | Retain selected account during email disable challenge validation, delivery and persistence | `a9152350ac` | [Email challenge trace](afta-email-challenge-identity.md), [execution record](../evidence/afta-email-challenge-identity-2026-11-16.json) |
-| 36–39: `FIA_UAU.5.2`, `FIA_USB.1.1/.2/.3` | Issue login email challenges by principal UID, rejecting missing/deleted owners without name fallback | `a107b60400` | [Login challenge UID trace](afta-login-email-challenge-uid.md), [execution record](../evidence/afta-login-email-challenge-uid-2026-11-16.json) |
-| 1–3, 29–30 and 36: audit, `FIA_AFL.1.1/.2`, `FIA_UAU.5.2` | Map rejected MFA proofs to failure events and existing configured lockout; exclude successful challenge issuance | `51eb123a81` | [MFA failure-event trace](afta-mfa-failure-events.md), [execution record](../evidence/afta-mfa-failure-events-2026-11-16.json) |
-| 2: `FAU_GEN.1.2` | Retain success request context with copied factor details and cleared submitted OTP | `1114c5c925` | [Success context trace](afta-login-success-context.md), [execution record](../evidence/afta-login-success-context-2026-11-16.json) |
+| 1–3: `FAU_GEN.1.1`, `FAU_GEN.1.2`, `FAU_GEN.2.1` | Emit token-failure events, retain available local identity/connection context, clear stale authentication, isolate password counters | [760ade1f11](https://github.com/PardasHealth/dhis2-core/commit/760ade1f11) | [Token failure audit trace](afta-token-failure-audit.md), [62-case record](../evidence/afta-token-failure-audit-2026-11-15.json) |
+| 2: `FAU_GEN.1.2` | Use the servlet-resolved audit address instead of client-supplied forwarding headers | [5d426cda14](https://github.com/PardasHealth/dhis2-core/commit/5d426cda14) | [Address-source trace](afta-authentication-address-source.md), [88-case record](../evidence/afta-authentication-address-source-2026-11-15.json) |
+| 39: `FIA_USB.1.3` | Preserve session-expiration markers for next-request revocation; share the corrected service with the admin endpoint | [7af7d5a659](https://github.com/PardasHealth/dhis2-core/commit/7af7d5a659) | [Global revocation trace](afta-global-session-invalidation.md), [31-case record](../evidence/afta-global-session-invalidation-2026-11-15.json) |
+| 29 and 37: `FIA_AFL.1.1`, `FIA_USB.1.1` | Handle optional OIDC event details and associate bookkeeping with the resolved local account | [efea229e58](https://github.com/PardasHealth/dhis2-core/commit/efea229e58) | [OIDC account-association trace](afta-oidc-event-account-association.md), [81-case record](../evidence/afta-oidc-event-account-association-2026-11-15.json) |
+| 29–30: `FIA_AFL.1.1`, `FIA_AFL.1.2` | Commit concurrent failure increments atomically in local and Redis caches, retaining existing thresholds/expiry | [bc6b67654b](https://github.com/PardasHealth/dhis2-core/commit/bc6b67654b) | [Atomic-counter trace](afta-atomic-failure-counters.md), [132-case record](../evidence/afta-atomic-failure-counters-2026-11-15.json) |
+| 29 and 37–39: `FIA_AFL.1.1`, `FIA_USB.1.1/.2/.3` | Bind persisted current-user/MFA targets to authenticated UID, not reusable names | [11240d03e0](https://github.com/PardasHealth/dhis2-core/commit/11240d03e0) | [Current-user/MFA UID trace](afta-current-user-uid-binding.md), [145-case record](../evidence/afta-current-user-uid-binding-2026-11-15.json) |
+| 35–36: `FIA_UAU.5.1/.2` | Encode TOTP provisioning label/query values to contain URI delimiters | [410acbc03e](https://github.com/PardasHealth/dhis2-core/commit/410acbc03e) | [Provisioning URI trace](afta-totp-provisioning-uri.md), [execution record](../evidence/afta-totp-provisioning-uri-2026-11-16.json) |
+| 37–39: `FIA_USB.1.1/.2/.3` | Retain selected account during email disable challenge validation, delivery and persistence | [a9152350ac](https://github.com/PardasHealth/dhis2-core/commit/a9152350ac) | [Email challenge trace](afta-email-challenge-identity.md), [execution record](../evidence/afta-email-challenge-identity-2026-11-16.json) |
+| 36–39: `FIA_UAU.5.2`, `FIA_USB.1.1/.2/.3` | Issue login email challenges by principal UID, rejecting missing/deleted owners without name fallback | [a107b60400](https://github.com/PardasHealth/dhis2-core/commit/a107b60400) | [Login challenge UID trace](afta-login-email-challenge-uid.md), [execution record](../evidence/afta-login-email-challenge-uid-2026-11-16.json) |
+| 1–3, 29–30 and 36: audit, `FIA_AFL.1.1/.2`, `FIA_UAU.5.2` | Map rejected MFA proofs to failure events and existing configured lockout; exclude successful challenge issuance | [51eb123a81](https://github.com/PardasHealth/dhis2-core/commit/51eb123a81) | [MFA failure-event trace](afta-mfa-failure-events.md), [execution record](../evidence/afta-mfa-failure-events-2026-11-16.json) |
+| 2: `FAU_GEN.1.2` | Retain success request context with copied factor details and cleared submitted OTP | [1114c5c925](https://github.com/PardasHealth/dhis2-core/commit/1114c5c925) | [Success context trace](afta-login-success-context.md), [execution record](../evidence/afta-login-success-context-2026-11-16.json) |
+| 29: `FIA_AFL.1.1`; 37: `FIA_USB.1.1`; 38: `FIA_USB.1.2`; 39: `FIA_USB.1.3` | Applied 16 November: mapped OIDC bookkeeping follows principal UID and retains its entity through success updates | [90c44ffa76](https://github.com/PardasHealth/dhis2-core/commit/90c44ffa76) | [Per-row UID trace](afta-oidc-event-uid-binding.md), [execution record](../evidence/afta-oidc-event-uid-binding-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -111,10 +117,11 @@ new logins, real Redis persistence or cross-node/browser acceptance.
 
 ## 4. OIDC event bookkeeping
 
-[AuthenticationListener](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java#L158)
-uses `isOidcLogin`, `localOidcUsername` and `logOidcAddress` from its success/failure
-handlers. Login-stage and completed OAuth tokens obtain their local name from
-`DhisOidcUser`; optional HTTP details only affect debug address output. Unmapped
+[AuthenticationListener](../../../dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java#L163)
+uses `isOidcLogin`, `localOidcUser` and `logOidcAddress` from its success/failure
+handlers. Login-stage and completed OAuth tokens now resolve the mapped
+`DhisOidcUser` UID to its local account; section 12 records this later fix.
+Optional HTTP details only affect debug address output. Unmapped
 success events do not look up or reset a local namesake. Unmapped failures retain
 the attempted name. User-info address handling does not assume a JWT principal.
 
@@ -242,6 +249,20 @@ are null. They also require the incoming request's supplied code to remain
 unchanged. See the [execution trace](afta-login-success-context.md). Full event
 content policy, other providers and deployed acceptance remain open.
 
+## 12. Mapped OIDC event UID owner
+
+**Selected source rows:** 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`),
+38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`). Applied **16 November 2026**.
+
+`AuthenticationListener.localOidcUser` resolves the principal UID. Success
+bookkeeping retains that entity, avoiding another mutable-name lookup, and
+failure counting follows its current name. Missing/deleted mapped owners have
+no name fallback. Seven deterministic rename/reuse/deletion cases fail against
+the preceding listener and pass with the fix, covering both OIDC token stages.
+See the [per-row implementation and execution trace](afta-oidc-event-uid-binding.md).
+All four rows remain partial; same-account name races and full session/provider
+freshness remain open.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -251,7 +272,7 @@ The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
 report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
 `TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
-`MeControllerTest` report. The publisher suite `TwoFactorFailureEventTest` is also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
+`MeControllerTest` report. The publisher suite `TwoFactorFailureEventTest` and mapped-identity suite `OidcEventIdentityTest` are also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

@@ -4,6 +4,14 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November follow-up: OIDC event UID binding
+
+**Selected source rows: 29 (`FIA_AFL.1.1`), 37 (`FIA_USB.1.1`),
+38 (`FIA_USB.1.2`), 39 (`FIA_USB.1.3`).** The listener resolves mapped principals
+by UID and retains that entity for success bookkeeping; failures use its current
+name. Missing/deleted mapped owners have no name fallback. See the
+[per-row change trace](afta-oidc-event-uid-binding.md). All four rows remain partial.
+
 ## 16 November follow-up: login success connection context
 
 The replacement success token now retains request address/session context, using

@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-16",
+  "scope": "Selected source rows 29 (FIA_AFL.1.1), 37 (FIA_USB.1.1), 38 (FIA_USB.1.2), 39 (FIA_USB.1.3): mapped OIDC event UID-owner bookkeeping; no full requirement closure",
+  "baseline_core_commit": "119f5c82881ce09ad4d1f107e06247d18d5982bd",
+  "implementation_commit": "90c44ffa766e6b413f0e08a94a08fa5d961abcfd",
+  "source_sha256": {
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/OidcEventIdentityTest.java": "5594d117a80215cb11af67b6bb65601af4a22f190908d4d4a9c51b90c22e78a7",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/AuthenticationListenerTest.java": "b59dcc931e8e2ed77f03eada1b873e135dfc4ee0e9de990002a58e0123d02495",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/AuthenticationAuditRecordTest.java": "8cf6f7177005db66d195ad547730fb2f49940aa65ad718f999fa3275422857aa",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/config/TwoFactorFailureEventTest.java": "3b18be2ca5a8a38ba76b41b43bb7335247d7a9a53e8212c18c2143ea3de11ac6",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "ace1bf7cdfe5f96b51c8dc6a99caf1b63c6b16f6f2089cf36b050f6fd22cd5b8",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/AuthenticationControllerTest.java": "5c504362806e1bac6a33fa777c95d855597323127ce11ae620fa19246484f1c3",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/TwoFactorLoginPolicyTest.java": "37f1be60af74452e8b945ca87ae658aa4da2cc9320f9472ab3f9bb833bbd0fc8",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/controller/security/SessionControllerTest.java": "341f5460ab3c97c7ef2bd241c4445c0b7f47194d044b44d5bfb515b2ecb2f1f2",
+    ".github/workflows/cc-audit-regression.yml": "3528d48562a39905cf3e1aa33628d16d2d67d3db1a08dc18a20bcb55dce5c0d0",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationProviderConfig.java": "0f32897bc443044a3027833e0ebf846e1c13dc19ee30f8b1d73c1d44391ea8ca",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/config/AuthenticationListener.java": "a903d7b8a3957037399b402bf2645190e3638473404b686184ea32dccaddd066",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/AuthenticationLoggerListener.java": "d57aad478a9a52ff6b42d164291dc9f2e35f14ec6c2b4d4f541333e2b9a68585",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisOidcUser.java": "43879bcaae6e7ca1b6624458ba4f49c1d07fb40d8a703fd7362d8a60a32f544b",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/user/DefaultUserService.java": "f1f24aa1fae8a9066f319038742657d5e4d7ecc8ddff99197c2c3c1ec26fe7eb",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationProvider.java": "206f36f19ec16a502f95c8d3f5019dc865139a8ea454da81723f35f96af6c77b"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.webapi.security.config.OidcEventIdentityTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.AuthenticationListenerTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.AuthenticationAuditRecordTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.controller.security.SessionControllerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.OidcEventIdentityTest.xml": "d21ba331b7be4f210e4886b8b2a8936a3305c6d383fa04291c331d4217765382",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.AuthenticationListenerTest.xml": "52fe08f15718aa522c0b6c07970b4e27c0a1a94dcdb2dd774ebe92cc639ec3a2",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.AuthenticationAuditRecordTest.xml": "871affdc5f6faee84c5741973651c8b55b38b28998f2661b670682ba39e84205",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest.xml": "e74f2a469f7928d964eab7db4a23c7e6f4102689a7082e66674864e94a5484b2",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "d2a30332816779e05ac203c41cea05b48432ead41546f07ac2e2fdba817672d5",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.AuthenticationControllerTest.xml": "908321848c2687ee47d5cdd0cc37688df563f9b483236159c3b793d4d05ade9a",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.TwoFactorLoginPolicyTest.xml": "c1ef71fec7eb91bb9be7d02af3f309212ae1b27079de587786bc5e9d8c11c7c5",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.controller.security.SessionControllerTest.xml": "e8a04d7e758c5cdae394a8b3b943b754aefe8a7ec08517a352acedbba52c3047"
+  },
+  "selected_source_rows": [
+    {
+      "row": 29,
+      "requirement": "FIA_AFL.1.1"
+    },
+    {
+      "row": 37,
+      "requirement": "FIA_USB.1.1"
+    },
+    {
+      "row": 38,
+      "requirement": "FIA_USB.1.2"
+    },
+    {
+      "row": 39,
+      "requirement": "FIA_USB.1.3"
+    }
+  ],
+  "baseline_regression": {
+    "tests": 7,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Preceding listener, new deterministic tests: two OIDC token stages each cover renamed-owner success, failure attribution and deleted-owner isolation; missing mapped UID also must not fall back. All seven fail.",
+    "log_sha256": "4bd25474a32bf96e206705b96641dbfcb9910cc64978a35201cfa94687c0dd87"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache; unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, as recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "unit_boundary": "Real lifecycle listener and DhisOidcUser wrappers with mocked account lookup/update/counter boundaries. Name-reuse fixtures distinguish the UID owner and namesake. Existing listener, audit, MFA publisher and provider suites retained.",
+    "web_boundary": "Existing H2/Spring-security login, MFA and session regressions with synthetic fixtures. This is not a live OIDC IdP/browser exchange; UID-name scenarios are deterministic listener units.",
+    "ci": "New OidcEventIdentityTest explicitly selected and successful nonempty report required. Workflow YAML and embedded Python validated locally; no hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-web-api -am -Punit-test -Dtest=OidcEventIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Punit-test -Dtest=OidcEventIdentityTest,AuthenticationListenerTest,AuthenticationAuditRecordTest,TwoFactorFailureEventTest,TwoFactorAuthenticationPolicyTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=AuthenticationControllerTest,TwoFactorLoginPolicyTest,SessionControllerTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Full AFTA failure and user-binding policy or universal session freshness",
+    "Production audit delivery, retention or full-storage acceptance",
+    "Same-UID name/factor races after resolution, atomic name-keyed counters across account renames or every other provider",
+    "Live browser, external IdP, full test suite, deployed cluster or hosted CI acceptance"
+  ]
+}
