@@ -4,6 +4,15 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November gap follow-up: validator-owned token copies
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Both token checksum validators
+now clear their extracted code/checksum arrays after valid, rejected and throwing
+validation outcomes, retaining caller-owned input. See the
+[six-case lifecycle trace](afta-token-checksum-buffers.md). Row 20 stays Gap: this
+is best-effort buffer hygiene, not a JVM or full protected-resource erasure proof.
+This adds a commit to an already linked row rather than another covered entry.
+
 ## 16 November gap follow-up: resolver-owned raw-token buffer
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** The resolver overwrites its mutable

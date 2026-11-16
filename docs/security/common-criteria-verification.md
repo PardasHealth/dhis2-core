@@ -610,3 +610,13 @@ baseline failures and final unit/H2 suites. Overwriting the resolver-owned array
 is best-effort hygiene only: JVM physical erasure, immutable copies and all
 protected storage/resources remain unproven. Row 20 stays Gap. Final counts
 overlap previous inventories; no full closure or deployed memory acceptance is claimed.
+
+## 16 November: gap-row 20 checksum copies
+
+**Selected source row: 20 (`FDP_RIP.2.1`), still Gap.** The
+[checksum-copy trace](common-criteria/afta-token-checksum-buffers.md) and
+[dated evidence](evidence/afta-token-checksum-buffers-2026-11-16.json) record six
+baseline failures for both token versions and final compatibility/regression
+executions. The private validator clears its own extracted arrays and preserves
+caller input. This is observable Java-array hygiene, not a JVM physical-erasure
+or complete residual-resource guarantee. Execution counts overlap prior records.

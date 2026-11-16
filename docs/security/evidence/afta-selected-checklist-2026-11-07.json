@@ -454,6 +454,13 @@
       "symbol": "public String resolve(HttpServletRequest request)",
       "line": 59,
       "source_sha256": "52ceae609bb8bfcf3f8ce5a4928f10bcc7fa1182fd38bc35c70184f549cd702b"
+    },
+    "tokenchecksumcopies": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java",
+      "symbol": "private static void clearChecksumBuffers(CodeAndChecksum extracted)",
+      "line": 178,
+      "source_sha256": "92d8680d13a0ef0ab7b3b33e62ecb3f6cfd08f3b8e751d62e14e76794f255abb"
     }
   },
   "rows": [
@@ -1002,11 +1009,12 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established. The private token checksum validators also clear their extracted code/checksum arrays after valid, rejected or throwing validation outcomes, retaining caller input; six lifecycle cases cover both token versions.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. No full implementation trace is established.",
       "references": [
         "crypto",
-        "tokenbuffer"
+        "tokenbuffer",
+        "tokenchecksumcopies"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1020,6 +1028,13 @@
           "trace": "afta-token-secret-buffer.md",
           "full_requirement_closed": false,
           "implementation_commit": "20342bc3467840a006afdf4596a024ea96e04458"
+        },
+        {
+          "date": "2026-11-16",
+          "scope": "Best-effort clearing of validator-owned token-code/checksum copies for both versions after valid, rejected and throwing CRC outcomes; caller input unchanged and full residual-resource protection unestablished",
+          "trace": "afta-token-checksum-buffers.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "f9ab1c6c86eb6cb22f866a479e42bb37b347e1bf"
         }
       ]
     },

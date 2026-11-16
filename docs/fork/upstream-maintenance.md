@@ -262,3 +262,11 @@ of the resolver-owned raw-token array across success and checksum/hash failures.
 Do not claim Java immutable strings, JVM memory or storage resources are erased
 by this bounded cleanup. Keep the required `ApiTokenSecretBufferTest` report.
 See the [scope and limitations](../security/common-criteria/afta-token-secret-buffer.md).
+
+## Validator checksum copies (16 November)
+
+Selected source row: 20 (`FDP_RIP.2.1`), still Gap. Keep cleanup of private
+validation-owned code/checksum arrays in both CRC paths; do not erase the
+caller-owned token or change public extraction/generation ownership. Preserve
+`ApiTokenChecksumBufferTest` and its required CI report. See the
+[bounded checksum-copy trace](../security/common-criteria/afta-token-checksum-buffers.md).
