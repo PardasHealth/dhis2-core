@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **16 November 2026**. Branch: `work`. Reviewed code snapshot:
-`38ffff2be6`. Subsequent documentation-only commits do not change that code.
+`20342bc346`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the thirteen recent implementation fixes to selected checklist
+This guide traces the fourteen recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -57,6 +57,7 @@ does not close every acceptance condition in those rows.
 | 2: `FAU_GEN.1.2` | Retain success request context with copied factor details and cleared submitted OTP | [1114c5c925](https://github.com/PardasHealth/dhis2-core/commit/1114c5c925) | [Success context trace](afta-login-success-context.md), [execution record](../evidence/afta-login-success-context-2026-11-16.json) |
 | 29: `FIA_AFL.1.1`; 37: `FIA_USB.1.1`; 38: `FIA_USB.1.2`; 39: `FIA_USB.1.3` | Applied 16 November: mapped OIDC bookkeeping follows principal UID and retains its entity through success updates | [90c44ffa76](https://github.com/PardasHealth/dhis2-core/commit/90c44ffa76) | [Per-row UID trace](afta-oidc-event-uid-binding.md), [execution record](../evidence/afta-oidc-event-uid-binding-2026-11-16.json) |
 | 1: `FAU_GEN.1.1`; 29: `FIA_AFL.1.1` | Applied 16 November: token rejection catch excludes downstream failures, retaining their own handling/event attribution | [38ffff2be6](https://github.com/PardasHealth/dhis2-core/commit/38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26) | [Per-row boundary trace](afta-token-failure-boundary.md), [execution record](../evidence/afta-token-failure-boundary-2026-11-16.json) |
+| 20: `FDP_RIP.2.1` | Applied 16 November: best-effort clearing of resolver-owned raw-token array on processing success/failure; full residual-data guarantee remains Gap | [20342bc346](https://github.com/PardasHealth/dhis2-core/commit/20342bc3467840a006afdf4596a024ea96e04458) | [Bounded buffer-hygiene trace](afta-token-secret-buffer.md), [execution record](../evidence/afta-token-secret-buffer-2026-11-16.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -294,6 +295,18 @@ no filter-produced failure and no token entry-point invocation. See the
 [per-row code and execution trace](afta-token-failure-boundary.md). Both rows
 remain partial; surrounding handlers and full event/failure policy remain open.
 
+## 14. Gap row 20: resolver-owned raw-token array
+
+**Selected source row:** 20 (`FDP_RIP.2.1`). Applied **16 November 2026**.
+`ApiTokenResolver.resolve` overwrites its local raw-token character array in a
+`finally` block after checksum/hash processing. Four controlled lifecycle cases
+fail against the preceding resolver and pass with the change. They observe the
+same array supplied to the generator under success and three failure outcomes.
+See the [bounded trace and remaining resource boundary](afta-token-secret-buffer.md).
+This is best-effort mutable-buffer hygiene. Immutable header/runtime copies,
+physical JVM erasure and storage/replica/backup guarantees remain unproven;
+row 20 stays **Gap / evidence not established**.
+
 ## CI and maintaining the trace
 
 The [fork regression workflow](../../../.github/workflows/cc-audit-regression.yml)
@@ -303,7 +316,7 @@ The atomic-counter follow-up also requires `AtomicCacheUpdateTest`,
 `UserFailureCounterConcurrencyTest` and the dedicated `RedisAtomicCacheUpdateTest`
 report. The UID-binding follow-up also requires `CurrentUserIdentityResolverTest`,
 `TwoFactorIdentityMutationTest`, `CurrentUserIdentityBindingTest` and the existing
-`MeControllerTest` report. The publisher suite `TwoFactorFailureEventTest` and mapped-identity suite `OidcEventIdentityTest` are also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
+`MeControllerTest` report. The buffer suite `ApiTokenSecretBufferTest` is also required. The publisher suite `TwoFactorFailureEventTest` and mapped-identity suite `OidcEventIdentityTest` are also required. `TwoFactorProvisioningUriTest` and `TwoFactorEmailChallengeIdentityTest` are also selected and required. Existing session/authentication API cases remain selected. Workflow syntax and
 report definitions are checked locally; a committed workflow is not proof of a
 successful hosted run.
 

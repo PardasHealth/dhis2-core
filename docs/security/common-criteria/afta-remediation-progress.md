@@ -4,6 +4,16 @@ Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 16 November gap follow-up: resolver-owned raw-token buffer
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** The resolver overwrites its mutable
+raw-token array after checksum/hash processing on success and failure. See the
+[buffer lifecycle trace and four baseline cases](afta-token-secret-buffer.md).
+This is best-effort hygiene only; immutable request/runtime copies and the
+complete memory/file/media/replica/backup boundary remain unproven. Row 20 stays
+**Gap / evidence not established**. The progress chart records the bounded work
+without changing the full-requirement evidence/closure totals.
+
 ## 16 November follow-up: token failure boundary
 
 **Selected source rows: 1 (`FAU_GEN.1.1`), 29 (`FIA_AFL.1.1`).**

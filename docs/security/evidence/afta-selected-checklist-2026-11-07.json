@@ -447,6 +447,13 @@
       "symbol": "protected void doFilterInternal(",
       "line": 83,
       "source_sha256": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28"
+    },
+    "tokenbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolver.java",
+      "symbol": "public String resolve(HttpServletRequest request)",
+      "line": 59,
+      "source_sha256": "52ceae609bb8bfcf3f8ce5a4928f10bcc7fa1182fd38bc35c70184f549cd702b"
     }
   },
   "rows": [
@@ -995,16 +1002,26 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. No full implementation trace is established.",
       "references": [
-        "crypto"
+        "crypto",
+        "tokenbuffer"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Limited buffer-hygiene evidence; complete protected-resource guarantee not established",
+      "implementation_followups": [
+        {
+          "date": "2026-11-16",
+          "scope": "Best-effort overwrite of resolver-owned raw API-token character buffer after successful processing and checksum/hash failures; no full JVM/storage residual-information guarantee",
+          "trace": "afta-token-secret-buffer.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "20342bc3467840a006afdf4596a024ea96e04458"
+        }
+      ]
     },
     {
       "row": 21,

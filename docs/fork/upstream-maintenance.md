@@ -254,3 +254,11 @@ publication and downstream invocation outside the token rejection catch.
 A downstream authentication exception must not be turned into a token rejection
 by this filter. Preserve both exception propagation cases in the required token
 suite. See the [per-row trace](../security/common-criteria/afta-token-failure-boundary.md).
+
+## Resolver token-buffer cleanup (16 November)
+
+Selected source row: 20 (`FDP_RIP.2.1`), still Gap. Preserve the `finally` cleanup
+of the resolver-owned raw-token array across success and checksum/hash failures.
+Do not claim Java immutable strings, JVM memory or storage resources are erased
+by this bounded cleanup. Keep the required `ApiTokenSecretBufferTest` report.
+See the [scope and limitations](../security/common-criteria/afta-token-secret-buffer.md).

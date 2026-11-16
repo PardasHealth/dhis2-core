@@ -600,3 +600,13 @@ two failing baseline cases among fifteen token-filter tests. The catch now
 excludes downstream handling and success publication. Exact final suites/hashes
 are in the evidence. Results overlap earlier inventories; surrounding handler
 acceptance, full event policy and complete row closure are not established.
+
+## 16 November: gap-row 20 token-buffer hygiene
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** The
+[buffer-lifecycle trace](common-criteria/afta-token-secret-buffer.md) and
+[dated evidence](evidence/afta-token-secret-buffer-2026-11-16.json) record four
+baseline failures and final unit/H2 suites. Overwriting the resolver-owned array
+is best-effort hygiene only: JVM physical erasure, immutable copies and all
+protected storage/resources remain unproven. Row 20 stays Gap. Final counts
+overlap previous inventories; no full closure or deployed memory acceptance is claimed.
