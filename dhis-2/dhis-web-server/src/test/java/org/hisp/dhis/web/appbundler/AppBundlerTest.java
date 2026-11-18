@@ -86,7 +86,7 @@ class AppBundlerTest {
 
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("source archive"));
-    assertTrue(failure.getMessage().contains("manifest.webapp"));
+    assertTrue(failure.getMessage().contains("PARDAS_APP_BUNDLE_DIR"));
   }
 
   @Test
