@@ -4,6 +4,10 @@ Updated: **18 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 18 November gap follow-up: audit-record integrity
+
+**Selected source rows: 27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`).** Implemented opt-in keyed integrity tags for the consolidated `audit` table, verification before decoding, ERROR alerts and blocked reads/counts on tampering. See the [code, execution evidence and rollout conditions](afta-audit-record-integrity.md). Both rows move **Gap → Partial evidence**; default-off deployment, trusted legacy-history migration, other audit stores and remaining acceptance stay open. Current primary status: **45 partial, 8 gaps, 25 unresolved; 0 closed**. Linked implementation activity becomes **29 commits across 23/78 primary entries**, plus one optional entry.
+
 ## 18 November gap follow-up: generation-owned token storage
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** Token generation now clears its
@@ -303,10 +307,10 @@ mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
 | Wider single-use policy, G-14 | Login reservation is now implemented. Enrollment/disable/other purposes, broader account/session freshness, trusted clocks, restore and full deployed acceptance remain open. |
 | Production CSRF-aware login | Local development can use the explicitly selected localhost-only CSRF-off mode. The production client integration gap remains open. |
 | Audit protection, capacity and failure policy | Retention/grants, threshold/full-storage actions, persistence and recovery need the selected AFTA definitions and deployed evidence. |
-| Integrity/residual protection, reliable time, fault tolerance and access history | The selected guarantees still need implementation/environment designs and acceptance evidence as described per checklist row. |
+| Integrity/residual protection, reliable time, fault tolerance and access history | Audit-record integrity now has the bounded implementation above; the remaining selected guarantees need designs, deployment and acceptance evidence per checklist row. |
 | Extensions, iterations and edition mismatches | Exact AFTA document/version and clause definitions remain missing. No behavior or algorithm is assigned to an unknown extension/crypto iteration by guesswork. |
 
-The current checklist has **43/78 primary entries with partial evidence; 10 gaps;
+The current checklist has **45/78 primary entries with partial evidence; 8 gaps;
 25 needing definitions; none fully closed**. The external broker transport tests
 add partial evidence for one previously untraced item. They do not close the whole
 item. Earlier MFA fixes corrected subgaps within an already partial requirement.

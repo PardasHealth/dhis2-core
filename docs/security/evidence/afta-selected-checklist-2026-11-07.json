@@ -38,16 +38,16 @@
     "auditquery": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 116,
+      "line": 179,
       "symbol": "public List<Audit> query(",
-      "source_sha256": "70bbd9573e5f3dbf722c459d648e971b5cd53e8fe8de54a0a245c987fc93de24"
+      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
     },
     "auditdelete": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 94,
+      "line": 143,
       "symbol": "public void delete(AuditQuery",
-      "source_sha256": "70bbd9573e5f3dbf722c459d648e971b5cd53e8fe8de54a0a245c987fc93de24"
+      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
     },
     "auditselection": {
       "repository": "core",
@@ -489,6 +489,27 @@
       "symbol": "public static TokenWrapper generatePersonalAccessToken(",
       "line": 58,
       "source_sha256": "27a660d102f9f15f36f6788f26235d74d333e1e633c5b281918b2843b01c6bdc"
+    },
+    "auditintegrity": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/AuditIntegrityGuard.java",
+      "line": 82,
+      "symbol": "void verify(",
+      "source_sha256": "099a0832e1c877a74d116c4d5143c34a7c67a25b7664d26a1ab140082334e764"
+    },
+    "auditintegritywrite": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "line": 237,
+      "symbol": "private MapSqlParameterSource buildParameterSource(",
+      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+    },
+    "auditintegrityread": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "line": 293,
+      "symbol": "private StoredRecord verifyStoredRecord(",
+      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
     }
   },
   "rows": [
@@ -1201,36 +1222,56 @@
       "key": "FDP_SDI.2.1",
       "supplied_line": "27.\t\tFDP_SDI.2.1  صحت داده کاربری ذخیره شده 2 (الزام 10 کلاس حفاظت از داده)",
       "optional": false,
-      "status": "Gap / evidence not established",
+      "status": "Partial evidence",
       "topic": "Detect tampering with stored data",
-      "observation": "No complete user-data integrity monitoring scheme is established by the reviewed audit/repository boundaries.",
-      "gap_and_acceptance": "Define protected data and tampering scenarios; demonstrate detection of persistent unauthorized modification.",
+      "observation": "Opt-in HMAC-SHA256 authenticates the consolidated audit table records on query and count before decoding. Missing, malformed or mismatched tags emit an ERROR alert and block the read. PostgreSQL tamper-injection and configuration tests are recorded; legacy audit tables, deletion/rollback and deployment acceptance remain unproven.",
+      "gap_and_acceptance": "Complete agreed AFTA clauses and protected audit-store inventory; provision an independent key, establish trusted legacy-history migration, deploy all writers consistently, test external alert delivery/failure and recovery, deletion/rollback threats, key rotation and production performance. No automatic historical attestation or full requirement closure.",
       "references": [
-        "auditquery"
+        "auditquery",
+        "auditintegrity",
+        "auditintegritywrite",
+        "auditintegrityread"
       ],
       "source_key": "FDP_SDI.2.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Implemented and tested consolidated audit-record detection and alert/block response; full acceptance remains open",
+      "implementation_followup": {
+        "date": "2026-11-18",
+        "scope": "User-selected audit records first: opt-in authentication of consolidated audit table rows with ERROR alert and blocked query/count on tampering; legacy tables and full acceptance remain open",
+        "trace": "afta-audit-record-integrity.md",
+        "full_requirement_closed": false,
+        "implementation_commit": "399eaa924a9f7bd24963cc225db07b651738b96d"
+      }
     },
     {
       "row": 28,
       "key": "FDP_SDI.2.2",
       "supplied_line": "28.\t\tFDP_SDI.2.2  صحت داده کاربری ذخیره شده 3 (الزام 11 کلاس حفاظت از داده)",
       "optional": false,
-      "status": "Gap / evidence not established",
+      "status": "Partial evidence",
       "topic": "Respond to stored-data tampering",
-      "observation": "No complete selected tamper-response policy or end-to-end response evidence is established.",
-      "gap_and_acceptance": "Define alert, containment and recovery actions, then inject tampering and prove the intended response and failed-alert handling.",
+      "observation": "Opt-in HMAC-SHA256 authenticates the consolidated audit table records on query and count before decoding. Missing, malformed or mismatched tags emit an ERROR alert and block the read. PostgreSQL tamper-injection and configuration tests are recorded; legacy audit tables, deletion/rollback and deployment acceptance remain unproven.",
+      "gap_and_acceptance": "Complete agreed AFTA clauses and protected audit-store inventory; provision an independent key, establish trusted legacy-history migration, deploy all writers consistently, test external alert delivery/failure and recovery, deletion/rollback threats, key rotation and production performance. No automatic historical attestation or full requirement closure.",
       "references": [
-        "auditquery"
+        "auditquery",
+        "auditintegrity",
+        "auditintegritywrite",
+        "auditintegrityread"
       ],
       "source_key": "FDP_SDI.2.2",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Implemented and tested consolidated audit-record detection and alert/block response; full acceptance remains open",
+      "implementation_followup": {
+        "date": "2026-11-18",
+        "scope": "User-selected audit records first: opt-in authentication of consolidated audit table rows with ERROR alert and blocked query/count on tampering; legacy tables and full acceptance remain open",
+        "trace": "afta-audit-record-integrity.md",
+        "full_requirement_closed": false,
+        "implementation_commit": "399eaa924a9f7bd24963cc225db07b651738b96d"
+      }
     },
     {
       "row": 29,
@@ -2583,5 +2624,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-13"
+  "last_update_date": "2026-11-18"
 }

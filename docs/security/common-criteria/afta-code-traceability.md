@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **18 November 2026**. Branch: `work`. Reviewed code snapshot:
-`2493199a48`. Subsequent documentation-only commits do not change that code.
+`399eaa924a`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the seventeen recent implementation fixes to selected checklist
+This guide traces the eighteen recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -11,7 +11,7 @@ and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
 Source hashes in dated evidence identify the exact versions tested; links here
 show the methods in the reviewed code snapshot.
 
-The primary list remains **78 entries: 43 partial, 10 gaps and 25 unresolved
+The primary list remains **78 entries: 45 partial, 8 gaps and 25 unresolved
 requirements/edition definitions; none fully closed**. Three explicitly optional
 entries and the original duplicated identifier retain their separate treatment.
 These code fixes do not select missing AFTA policies or establish certification.
@@ -61,6 +61,8 @@ does not close every acceptance condition in those rows.
 | 20: `FDP_RIP.2.1` | Applied 16 November: both checksum validators clear their extracted arrays while retaining caller input; full residual-data guarantee remains Gap | [f9ab1c6c86](https://github.com/PardasHealth/dhis2-core/commit/f9ab1c6c86eb6cb22f866a479e42bb37b347e1bf) | [Checksum-copy trace](afta-token-checksum-buffers.md), [execution record](../evidence/afta-token-checksum-buffers-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 16 November: hash/CRC helpers clear owned UTF-8 storage, preserve caller inputs and retain digest/token formats; full residual-data guarantee remains Gap | [469ad5a9d0](https://github.com/PardasHealth/dhis2-core/commit/469ad5a9d024e9a6f7cd6002b51101274e7cb30f) | [Hash/CRC buffer trace](afta-hash-crc-buffer-hygiene.md), [execution record](../evidence/afta-hash-crc-buffer-hygiene-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 18 November: clear generation-owned components and unreturned plaintext on wrapper failure; retain successful caller output; full residual-data guarantee remains Gap | [2493199a48](https://github.com/PardasHealth/dhis2-core/commit/2493199a48ff5e85a5688177eccc33c8643edbd9) | [Generation ownership trace](afta-token-generation-buffer-hygiene.md), [execution record](../evidence/afta-token-generation-buffer-hygiene-2026-11-18.json) |
+
+| 27: `FDP_SDI.2.1`; 28: `FDP_SDI.2.2` | Applied 18 November: opt-in signed audit records; verify before decoding, ERROR alert and blocked query/count on tampering; both rows now Partial evidence | [399eaa924a](https://github.com/PardasHealth/dhis2-core/commit/399eaa924a9f7bd24963cc225db07b651738b96d) | [Audit integrity trace](afta-audit-record-integrity.md), [execution record](../evidence/afta-audit-record-integrity-2026-11-18.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -372,3 +374,7 @@ current assessment's source anchors/hashes after reviewing the diff, add a new
 execution record, and regenerate the register. Preserve historical hashes and
 failed/skipped results. A code link or passing subset never closes a complete
 AFTA row without its remaining acceptance work.
+
+## 18. Audit-record integrity and response
+
+**Selected source rows: 27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`).** The opt-in guard authenticates persisted record identity, metadata, JSONB attributes and compressed payload before decoding. A bad or absent tag emits `AUDIT_INTEGRITY_FAILURE` and blocks the matching query or count. See the [implementation, rollout and remaining acceptance](afta-audit-record-integrity.md). Both entries move from Gap to Partial evidence; full closure remains zero.

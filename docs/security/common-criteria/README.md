@@ -110,3 +110,7 @@ an open gap's status.
 - [11 November: stable pending TOTP QR reads](afta-pending-qr-stability.md).
 
 - [13 November: authentication audit record fields](afta-authentication-audit-records.md).
+
+## Audit-record integrity follow-up — 18 November 2026
+
+Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt-in audit integrity implementation and evidence](afta-audit-record-integrity.md). Preserve the fork repeatable migration, confidential independent signing-key configuration and pre-decode verification when integrating upstream changes. Defaults remain off; do not sign historical records without trusted provenance. Both rows have partial evidence, with rollout and full acceptance open.

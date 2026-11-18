@@ -84,19 +84,20 @@ def render(data):
     optional = [r for r in unique if r['optional']]
     assert len(primary) == 78 and len(optional) == 3
     counts = Counter(r['status'] for r in primary)
-    assert [counts[s] for s in STATUSES] == [43, 10, 25]
+    assert set(counts) <= set(STATUSES) and sum(counts.values()) == 78
+    inclusive = Counter(r["status"] for r in unique)
     md = ['# AFTA selected-checklist review and gap report\n\n',
           '**Date:** 7 November 2026. **Source identified by user:** AFTA; exact checklist title/version and full clause definitions not supplied.\n\n',
           '**Scope:** only the supplied 82 numbered entries. This is a separate, narrower work list; it does not replace or declare completion of the broader Common Criteria review. '
           'An official evaluation may require dependencies or assurance work beyond this list. Those need explicit agreement rather than silent expansion here.\n\n',
-          'Implementation follow-up: **18 November 2026**. See the [row 20 generation-ownership follow-up](afta-token-generation-buffer-hygiene.md), [row 20 hash/CRC buffer follow-up](afta-hash-crc-buffer-hygiene.md), [row 20 checksum-copy follow-up](afta-token-checksum-buffers.md), [row 20 token-buffer follow-up](afta-token-secret-buffer.md), [token failure-boundary fix](afta-token-failure-boundary.md), [OIDC event UID fix](afta-oidc-event-uid-binding.md), [login success context fix](afta-login-success-context.md), [MFA failure-event fix](afta-mfa-failure-events.md), [email login challenge UID fix](afta-login-email-challenge-uid.md), [email disable challenge target fix](afta-email-challenge-identity.md), [TOTP provisioning URI fix](afta-totp-provisioning-uri.md), [current-user and MFA UID-binding fix](afta-current-user-uid-binding.md), [atomic failure-counter fix](afta-atomic-failure-counters.md), [OIDC event account-association fix](afta-oidc-event-account-association.md), [global session invalidation fix](afta-global-session-invalidation.md), [authentication address-source fix](afta-authentication-address-source.md), [API-token failure audit fix](afta-token-failure-audit.md), [remediation progress record](afta-remediation-progress.md), [token IP constraints](afta-token-ip-constraints.md), [audit-review paging and filters](afta-audit-review-paging.md), [PAT owner binding](afta-token-owner-binding.md) and [external broker TLS](afta-external-broker-tls.md). Broker-path evidence moves row 47 from a gap to partial evidence; no complete item is closed.\n\n',
+          'Implementation follow-up: **18 November 2026**. See the [rows 27–28 audit-integrity control](afta-audit-record-integrity.md), [row 20 generation-ownership follow-up](afta-token-generation-buffer-hygiene.md), [row 20 hash/CRC buffer follow-up](afta-hash-crc-buffer-hygiene.md), [row 20 checksum-copy follow-up](afta-token-checksum-buffers.md), [row 20 token-buffer follow-up](afta-token-secret-buffer.md), [token failure-boundary fix](afta-token-failure-boundary.md), [OIDC event UID fix](afta-oidc-event-uid-binding.md), [login success context fix](afta-login-success-context.md), [MFA failure-event fix](afta-mfa-failure-events.md), [email login challenge UID fix](afta-login-email-challenge-uid.md), [email disable challenge target fix](afta-email-challenge-identity.md), [TOTP provisioning URI fix](afta-totp-provisioning-uri.md), [current-user and MFA UID-binding fix](afta-current-user-uid-binding.md), [atomic failure-counter fix](afta-atomic-failure-counters.md), [OIDC event account-association fix](afta-oidc-event-account-association.md), [global session invalidation fix](afta-global-session-invalidation.md), [authentication address-source fix](afta-authentication-address-source.md), [API-token failure audit fix](afta-token-failure-audit.md), [remediation progress record](afta-remediation-progress.md), [token IP constraints](afta-token-ip-constraints.md), [audit-review paging and filters](afta-audit-review-paging.md), [PAT owner binding](afta-token-owner-binding.md) and [external broker TLS](afta-external-broker-tls.md). Broker-path evidence moves row 47 from a gap to partial evidence; no complete item is closed.\n\n',
           '## Manager summary\n\n',
           f'**Latest recorded work — {updated}: {len(changes)} implementation commits linked to {len(touched)}/78 primary entries '
           f'({percent(len(touched), 78)}), plus {len(optional_touched)} optional entry.** '
           'These bounded fixes are recorded in the change table below; linked entries still need their remaining acceptance work.\n\n',
-          '**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: 43 of 78 (55.1%). '
+          f'**Demonstrated full fit: 0 of 78 (0%). Partial implementation evidence: {counts[P]} of 78 ({percent(counts[P], 78)}). '
           'All 78 still need some work, definition or proof (100%).** These figures describe this checklist review; they do not mean the application is 0% secure, '
-          'that 55.1% is certified, or that all development must be redone.\n\n',
+          'that partial evidence is certification, or that all development must be redone.\n\n',
           f'![AFTA manager summary: latest implementation work and requirement status](charts/afta-selected-dashboard.png?v=progress-{timeline[-1][0]}-{len(changes)})\n\n',
           '| Result for primary work list | Count | Percentage | Meaning |\n| --- | ---: | ---: | --- |\n',
           '| Fully demonstrated fit | 0 | 0.0% | No item has complete agreed AFTA definition/operations and sufficient end-to-end evidence to close it. |\n']
@@ -108,7 +109,7 @@ def render(data):
     md += ['| Still require work or evidence | 78 | 100.0% | Includes every partial, gap and unresolved item above; not an additional category. |\n\n',
            'The primary denominator is **78 unique entries not explicitly marked optional**, not an approved declaration that all 78 are mandatory. '
            'Three explicitly optional entries are shown separately: one has partial evidence and two need definitions. '
-           'Including optional items gives **81 unique entries: 44 partial (54.3%), 10 gaps (12.3%) and 27 unresolved (33.3%); 0 fully closed**. '
+           f'Including optional items gives **81 unique entries: {inclusive[P]} partial ({percent(inclusive[P], 81)}), {inclusive[G]} gaps ({percent(inclusive[G], 81)}) and {inclusive[D]} unresolved ({percent(inclusive[D], 81)}); 0 fully closed**. '
            'The source has 82 rows because rows 80 and 81 repeat the same identifier.\n\n',
            'Do not compare these percentages directly with the earlier 199-component chart: this report counts selected **element/iteration identifiers**, '
            'while the earlier report counts broader components. Neither measures effort, time, cost or certification probability. '
@@ -120,7 +121,7 @@ def render(data):
            f'The other **{78-len(touched)} primary entries** have no item-specific implementation follow-up linked in this assessment. '
            'A linked follow-up means a bounded code change and dated execution record exist; it is not full implementation, '
            'a completed requirement, an effort percentage, or proof that unlinked entries lack code. '
-           '**Full closure remains 0/78**, so the requirement-status chart above stays unchanged.\n\n',
+           '**Full closure remains 0/78**. Rows 27–28 move from Gap to Partial evidence for the tested audit-record scope; remaining acceptance is open.\n\n',
            'The timeline uses recorded follow-up dates and cumulative distinct commits/primary entries. '
            'Several changes can address one entry, and one change can address several entries. '
            'Test counts from overlapping executions are not added. See '
@@ -320,7 +321,7 @@ def main():
             path.write_text(content)
     if not args.check:
         charts(counts, data)
-    print('Validated 82 source rows, 81 unique items, 78 primary and 3 optional; 43 partial, 10 gaps, 25 unresolved primary items.')
+    print('Validated 82 source rows, 81 unique items, 78 primary and 3 optional; current primary statuses:', dict(counts))
 
 
 if __name__ == '__main__':

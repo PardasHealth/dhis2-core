@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-18",
+  "scope": "Opt-in integrity of consolidated PostgreSQL audit table: authenticate records before decoding, ERROR alert and block matching query/count; user selected audit records first; no full closure",
+  "baseline_core_commit": "0db635cf82ad6011a7d165b33d77089df48f27c3",
+  "implementation_commit": "399eaa924a9f7bd24963cc225db07b651738b96d",
+  "selected_source_rows": [
+    {
+      "row": 27,
+      "requirement": "FDP_SDI.2.1",
+      "status": "Partial evidence / remaining acceptance open"
+    },
+    {
+      "row": 28,
+      "requirement": "FDP_SDI.2.2",
+      "status": "Partial evidence / remaining acceptance open"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "a00201f820199b29435a3cce93d58ddee2b9e6590f3afc52d729cc5836da46d7",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java": "e8b426692b8ba36365394645337c6e29de512f566a439bf27e0430e0db78e780",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/config/AuditIntegrityConfig.java": "45d6a5bcba4c7c8890ecef5c3e6b8b3889af2617d163e4253a1a6919eeb1cd5c",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/config/AuditIntegrityConfigTest.java": "d2a77e1175c25dd8e5cefd155c79b004377439c2a4b2f511bd1927be38333d1a",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/AuditIntegrityGuard.java": "099a0832e1c877a74d116c4d5143c34a7c67a25b7664d26a1ab140082334e764",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/AuditIntegrityViolationException.java": "5a132bb4ba70d3e4607d5a2284d150707ebb20a9f05fc4d19870bb24503e3a61",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/AuditIntegrityGuardTest.java": "bbd06c3815dc539c6d12656b3df23f4227b9c867fd31e4a0a4330ab4ba562b12",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/DefaultAuditServiceFailureTest.java": "c5f45d403f42bbf4d85175881532f4993f62c9d572947771702655b844e7e12c",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/JdbcAuditRepositoryCompressionTest.java": "555eab11c188f5648fd148a44f31f83d866d6b60c2fbe4828f4610934713265a",
+    "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_audit_integrity.sql": "8cd0010dc49afce4ecdd21ab09f330feb7ab6cfce958bd238ddd6c5e926f5f1a",
+    "dhis-2/dhis-support/dhis-support-external/src/main/java/org/hisp/dhis/external/conf/ConfigurationKey.java": "1c2c40c7fa012cfb095615e296d130e098e36121e2996de5ef6b579072c69de5",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditIntegrityPostgresTest.java": "539a5a284c5494796bafab17ede0b801d03a0823079f96155c06ac9f074c6b2a",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryFailureRecoveryTest.java": "bda85c8e5c780361f6cac370021091db315880f9ece659d2b22ddb2f837c5b11",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditRepositoryTest.java": "0c13f9c85e041233361227a833478b0c60a998b99f8fb9e68114a0001ca141d4",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.audit.AuditIntegrityGuardTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.config.AuditIntegrityConfigTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditIntegrityPostgresTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditRepositoryTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditIntegrityGuardTest.xml": "9666c768d52a1972d8c129edd1dd83392e421435151684c3c209fc74d55a3df9",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.config.AuditIntegrityConfigTest.xml": "c807c836aa33dccfd21a937d98237dfde88999aad3bfe775ff0a2347e766944c",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest.xml": "c4540e015f32b1f72a15ee64ff8e7a2d3a3b949c95a5b810200852302f3cc657",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.DefaultAuditServiceFailureTest.xml": "a995de784ad9c1c05ce5c1f7fb6b50a89b23da7af06acee90dcc8aaddb78a9f0",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AbstractAuditConsumerFailureTest.xml": "da805b2efad3f81ea9275ec5cea8d5690993c0181928d1450dc15c1e6465762e",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditIntegrityPostgresTest.xml": "7f7268a9d0a2a588ee393d384480ff2212a0fabbc4366591444f6a379181bdee",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditRepositoryTest.xml": "26ebd2fcbf51331110ace6e8d69c5b46f90eb28a2efee40f4fdc430eed6fa933",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest.xml": "bd7c702644ab60f8a8c08188a7e013f624dd625baa4d50b35545f45233b22829",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest.xml": "b09734c1b8213620256da1da6277f7a40dcdb3ae3e57fcf428f7818486577c13",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "6336c2b7438231a4b2429cbcb4a4a12cf099b54d5127d9629f5ccebfb2bd47c4"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-integrity-unit-final.log": "4e5520422674d830284813433041aa5293909db58d003eef34432f3f6dec7319",
+    "/tmp/afta-audit-integrity-postgres-final.log": "007efb8646ce516ff5972da273c895231d167653af5ef81a200f461ec54ccdaf",
+    "/tmp/afta-audit-integrity-h2-final.log": "f501745358a1a8acf7117f2f55c0d63b63622e189b35e7a07dc09d7fa7c9ba03",
+    "/tmp/afta-audit-integrity-storage-baseline.log": "9ed5418605b8f7687f7884d3902319445a89e84f01131279291bd67a0960569a"
+  },
+  "baseline": {
+    "conditions": "New guard/configuration/constructor/schema scaffold with old unsigned repository persistence. Integration-wiring red phase, not a complete original release.",
+    "tests": 21,
+    "failures": 19,
+    "errors": 0,
+    "skipped": 0,
+    "repository_sha256": "fa4534036ffce498e163df66aa5cb3d56bd2c59e6b13dd19c374d9ba2a5c755d",
+    "patch": "docs/security/evidence/baselines/afta-audit-integrity-repository-red-phase.patch",
+    "patch_sha256": "03ed142470e75dea167f120848df147e2d4f6dc2cffbcc8058c27ef2c65ea807"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=AuditIntegrityGuardTest,AuditIntegrityConfigTest,JdbcAuditRepositoryCompressionTest,DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=AuditIntegrityPostgresTest,AuditRepositoryTest,AuditRepositoryFailureRecoveryTest,AuditStorageDeliveryRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=ApiTokenAuthenticationTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "baseline_command": "In isolated implementation checkout apply recorded red-phase patch, then run PostgreSQL command selecting only AuditIntegrityPostgresTest; restore repository afterward. Never deploy red phase.",
+  "environment": {
+    "java": "OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "mode": "Offline cached dependencies; actual local Docker PostgreSQL/PostGIS and H2 tests",
+    "sms_compression_workaround": "Cached source build from tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6; unchanged from previous evidence",
+    "images": [
+      "postgres:16-alpine@sha256:81e77a4833487b8132fe4b00bedd39dc3f74b8641e387f19312a48f7de218c2e",
+      "imresamu/postgis:16-3.5-alpine@sha256:367f65cee655c1cc7ac2ed17b0c77ca516ab8634c53698eda4a799f23a575e89"
+    ]
+  },
+  "not_established": [
+    "legacy audit tables and other access paths",
+    "deleted or omitted rows, valid rollback/replay",
+    "periodic verification or external immutable anchor",
+    "trusted legacy-history signing/backfill",
+    "external alert delivery/failure response and recovery",
+    "key rotation and production performance/failover",
+    "live deployment or hosted CI success",
+    "full AFTA clauses, provider approval and evaluator acceptance"
+  ]
+}
