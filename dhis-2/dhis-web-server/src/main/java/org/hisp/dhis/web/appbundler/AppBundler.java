@@ -32,7 +32,6 @@ package org.hisp.dhis.web.appbundler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -43,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.UncheckedIOException;
@@ -293,21 +293,35 @@ public class AppBundler {
       etag = etag.replace("\"", ""); // Remove quotes from ETag
     }
 
-    // Download the file
-    try (InputStream in = connection.getInputStream();
-        FileOutputStream out = new FileOutputStream(outputPath.toFile())) {
-      byte[] buffer = new byte[8192];
-      int bytesRead;
-      while ((bytesRead = in.read(buffer)) != -1) {
-        out.write(buffer, 0, bytesRead);
+    // Never overwrite a working cached bundle until the replacement is complete and valid.
+    Path temporaryZip = Files.createTempFile(outputPath.getParent(), "app-download-", ".zip");
+    try {
+      try (InputStream in = connection.getInputStream()) {
+        Files.copy(in, temporaryZip, StandardCopyOption.REPLACE_EXISTING);
+      }
+      validateZip(temporaryZip);
+      Files.move(temporaryZip, outputPath, StandardCopyOption.REPLACE_EXISTING);
+      if (etag != null) {
+        Files.writeString(etagPath, etag);
+      } else {
+        Files.deleteIfExists(etagPath);
+      }
+      return etag;
+    } finally {
+      Files.deleteIfExists(temporaryZip);
+      connection.disconnect();
+    }
+  }
+
+  private static void validateZip(Path zipPath) throws IOException {
+    if (!Files.isRegularFile(zipPath) || Files.size(zipPath) == 0) {
+      throw new IOException("Downloaded app ZIP is missing or empty: " + zipPath);
+    }
+    try (ZipFile zip = new ZipFile(zipPath.toFile())) {
+      if (!zip.entries().hasMoreElements()) {
+        throw new IOException("Downloaded app ZIP has no entries: " + zipPath);
       }
     }
-
-    // Save the ETag for future comparisons
-    if (etag != null) {
-      Files.writeString(etagPath, etag);
-    }
-    return etag;
   }
 
   private void writeBundleFile(Path targetArtifactDir) throws IOException {
