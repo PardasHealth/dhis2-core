@@ -51,6 +51,26 @@ was built from the pinned commit or verify dependency provenance:
 record SHA-256 checksums and source commit identities in CI, and
 inspect the resulting WAR before deployment.
 
+## Frontend dependency audit
+
+The fork repositories currently declare these version ranges in their
+`package.json` files (inspect the pinned commits and lockfiles before
+treating these as release evidence):
+
+| App | `@dhis2/app-runtime` | `@dhis2/ui` |
+| --- | --- | --- |
+| Capture | `^3.17.4` | `^10.17.0` |
+| Dashboard | `^3.14.4` | `^10.7.4` |
+| Settings | `^3.13.1` | `^10.1.11` |
+
+These are semver ranges, not verified resolved versions or evidence that
+the applications use PardasHealth forked dependencies. For each pinned
+application commit, inspect its lockfile and build logs, record the
+resolved dependency versions and package origins, and retain the built
+ZIP's SHA-256 checksum. Reject artifacts that do not match the approved
+dependency provenance. The bundler's current manifest and asset checks
+do **not** enforce this provenance.
+
 Before promoting the updated WAR:
 
 1. Verify each fork source ref exists and review/pin its commit.
