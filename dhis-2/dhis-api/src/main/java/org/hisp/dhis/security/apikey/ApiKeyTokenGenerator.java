@@ -61,37 +61,56 @@ public class ApiKeyTokenGenerator {
 
     char[] plaintext = ApiKeyTokenGenerator.generatePatToken(type);
 
-    final ApiToken token =
-        ApiToken.builder()
-            .type(type)
-            .version(type.getVersion())
-            .attributes(attributes == null ? new ArrayList<>() : attributes)
-            .expire(expire)
-            .key(ApiKeyTokenGenerator.hashToken(plaintext))
-            .code(code)
-            .build();
+    boolean transferred = false;
+    try {
+      final ApiToken token =
+          ApiToken.builder()
+              .type(type)
+              .version(type.getVersion())
+              .attributes(attributes == null ? new ArrayList<>() : attributes)
+              .expire(expire)
+              .key(ApiKeyTokenGenerator.hashToken(plaintext))
+              .code(code)
+              .build();
 
-    return new TokenWrapper(plaintext, token);
+      TokenWrapper wrapper = new TokenWrapper(plaintext, token);
+      transferred = true;
+      return wrapper;
+    } finally {
+      // A successful wrapper owns its plaintext; failed creation must not retain it.
+      if (!transferred) {
+        Arrays.fill(plaintext, '\0');
+      }
+    }
   }
 
   protected static char[] generatePatToken(ApiTokenType type) {
     char[] code = CodeGenerator.generateSecureRandomCode(type.getLength());
-    Preconditions.checkArgument(
-        code.length == type.getLength(), "Could not create new token, please try again");
+    char[] checksum = null;
+    try {
+      Preconditions.checkArgument(
+          code.length == type.getLength(), "Could not create new token, please try again");
 
-    char[] prefix = type.getPrefix().toCharArray();
-    char[] underscore = new char[] {'_'};
-    char[] checksum = generateChecksum(type, code);
+      char[] prefix = type.getPrefix().toCharArray();
+      char[] underscore = new char[] {'_'};
+      checksum = generateChecksum(type, code);
 
-    // Concatenate prefix, underscore, code, and checksum
-    char[] token = new char[prefix.length + underscore.length + code.length + checksum.length];
-    System.arraycopy(prefix, 0, token, 0, prefix.length);
-    System.arraycopy(underscore, 0, token, prefix.length, underscore.length);
-    System.arraycopy(code, 0, token, prefix.length + underscore.length, code.length);
-    System.arraycopy(
-        checksum, 0, token, prefix.length + underscore.length + code.length, checksum.length);
-
-    return token;
+      // The returned token owns independent copies of the temporary components.
+      char[] token = new char[prefix.length + underscore.length + code.length + checksum.length];
+      System.arraycopy(prefix, 0, token, 0, prefix.length);
+      System.arraycopy(underscore, 0, token, prefix.length, underscore.length);
+      System.arraycopy(code, 0, token, prefix.length + underscore.length, code.length);
+      System.arraycopy(
+          checksum, 0, token, prefix.length + underscore.length + code.length, checksum.length);
+      return token;
+    } finally {
+      if (code != null) {
+        Arrays.fill(code, '\0');
+      }
+      if (checksum != null) {
+        Arrays.fill(checksum, '\0');
+      }
+    }
   }
 
   private static char[] generateChecksum(ApiTokenType type, char[] code) {
