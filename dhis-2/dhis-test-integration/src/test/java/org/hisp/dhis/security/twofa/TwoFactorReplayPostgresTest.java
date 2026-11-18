@@ -85,6 +85,9 @@ class TwoFactorReplayPostgresTest {
     var data =
         new DriverManagerDataSource(
             DATABASE.getJdbcUrl(), DATABASE.getUsername(), DATABASE.getPassword());
+    // This isolated test runs Pardas repeatable migrations without the DHIS2 versioned schema.
+    // Supply the minimal pre-existing audit table expected by the audit integrity migration.
+    new JdbcTemplate(data).execute("create table audit (auditid bigint primary key)");
     var flyway =
         Flyway.configure()
             .dataSource(data)
@@ -92,7 +95,7 @@ class TwoFactorReplayPostgresTest {
             .table("replay_test_schema_history")
             .baselineOnMigrate(true)
             .load();
-    assertEquals(1, flyway.migrate().migrationsExecuted);
+    assertEquals(2, flyway.migrate().migrationsExecuted);
     assertEquals(0, flyway.migrate().migrationsExecuted);
     var mapping = new org.hibernate.cfg.Configuration().addAnnotatedClass(UsedTwoFactorCode.class);
     mapping.getProperties().put("hibernate.connection.datasource", data);
