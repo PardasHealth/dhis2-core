@@ -235,10 +235,16 @@ public class AppBundler {
       throw new IOException("Interrupted while downloading app bundles", e);
     } catch (ExecutionException e) {
       Throwable cause = e.getCause();
-      if (cause instanceof UncheckedIOException unchecked) {
-        throw unchecked.getCause();
+      while (cause != null) {
+        if (cause instanceof UncheckedIOException unchecked) {
+          throw unchecked.getCause();
+        }
+        if (cause.getCause() == null || cause.getCause() == cause) {
+          break;
+        }
+        cause = cause.getCause();
       }
-      throw new IOException("Failed to download required app bundles", cause);
+      throw new IOException("Failed to download required app bundles", e);
     } finally {
       customThreadPool.shutdown();
     }
