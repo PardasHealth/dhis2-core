@@ -61,7 +61,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-support/dhis-support-audit -am -Punit-test \
-            -Dtest=JdbcAuditRepositoryCompressionTest \
+            -Dtest=AuditIntegrityGuardTest,JdbcAuditRepositoryCompressionTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Verify explicit encryption-key startup policy
@@ -70,11 +70,11 @@ jobs:
           mvn -B -ntp -pl dhis-support/dhis-support-hibernate -am -Punit-test \
             -Dtest=HibernateEncryptionPolicyTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
-      - name: Execute audit write-failure propagation tests
+      - name: Verify audit integrity startup policy and write-failure propagation
         working-directory: dhis-2
         run: |
-          mvn -B -ntp -pl dhis-services/dhis-service-audit-consumer -am -Punit-test \
-            -Dtest=DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
+          mvn -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test \
+            -Dtest=AuditIntegrityConfigTest,DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Execute Artemis audit broker and external TLS tests
@@ -88,7 +88,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-test-integration -am -Pintegration-test \
-            -Dtest=AuditRepositoryTest,AuditRepositoryFailureRecoveryTest,AuditStorageDeliveryRecoveryTest \
+            -Dtest=AuditIntegrityPostgresTest,AuditRepositoryTest,AuditRepositoryFailureRecoveryTest,AuditStorageDeliveryRecoveryTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Verify PostgreSQL two-factor replay reservations
@@ -107,6 +107,9 @@ jobs:
 
           expected = {
               "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+              "org.hisp.dhis.audit.AuditIntegrityGuardTest",
+              "org.hisp.dhis.config.AuditIntegrityConfigTest",
+              "org.hisp.dhis.audit.AuditIntegrityPostgresTest",
               "org.hisp.dhis.config.HibernateEncryptionPolicyTest",
               "org.hisp.dhis.audit.AuditRepositoryTest",
               "org.hisp.dhis.audit.AuditRepositoryFailureRecoveryTest",

@@ -35,15 +35,21 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hisp.dhis.audit.AuditIntegrityGuard.StoredRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -58,23 +64,66 @@ public class JdbcAuditRepository implements AuditRepository {
   private final NamedParameterJdbcTemplate namedJdbcTemplate;
 
   private final SimpleJdbcInsert auditInsert;
+  private final AuditIntegrityGuard integrityGuard;
 
   private ObjectMapper jsonMapper;
 
   public JdbcAuditRepository(JdbcTemplate jdbcTemplate, ObjectMapper jsonMapper) {
+    this(jdbcTemplate, jsonMapper, new AuditIntegrityGuard(false, null));
+  }
+
+  @Autowired
+  public JdbcAuditRepository(
+      JdbcTemplate jdbcTemplate, ObjectMapper jsonMapper, AuditIntegrityGuard integrityGuard) {
+    this.integrityGuard = integrityGuard;
     this.jdbcTemplate = jdbcTemplate;
     this.namedJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
     this.jsonMapper = jsonMapper;
 
+    String[] columns =
+        integrityGuard.isEnabled()
+            ? new String[] {
+              "auditId",
+              "auditType",
+              "auditScope",
+              "createdAt",
+              "createdBy",
+              "klass",
+              "uid",
+              "code",
+              "data",
+              "attributes",
+              "integrityTag"
+            }
+            : new String[] {
+              "auditType",
+              "auditScope",
+              "createdAt",
+              "createdBy",
+              "klass",
+              "uid",
+              "code",
+              "data",
+              "attributes"
+            };
     this.auditInsert =
-        new SimpleJdbcInsert(jdbcTemplate)
-            .withTableName("audit")
-            .usingGeneratedKeyColumns("auditid");
+        new SimpleJdbcInsert(jdbcTemplate).withTableName("audit").usingColumns(columns);
+    if (integrityGuard.isEnabled()) {
+      if (!"UTF8".equals(jdbcTemplate.queryForObject("SHOW server_encoding", String.class))) {
+        throw new IllegalStateException("Audit integrity requires PostgreSQL UTF8 storage");
+      }
+    } else {
+      auditInsert.usingGeneratedKeyColumns("auditid");
+    }
   }
 
   @Override
   public long save(Audit audit) {
     MapSqlParameterSource parameterSource = buildParameterSource(audit);
+    if (integrityGuard.isEnabled()) {
+      auditInsert.execute(parameterSource);
+      return ((Number) parameterSource.getValue("auditId")).longValue();
+    }
     return auditInsert.executeAndReturnKey(parameterSource).longValue();
   }
 
@@ -108,15 +157,29 @@ public class JdbcAuditRepository implements AuditRepository {
   @Override
   public int count(AuditQuery query) {
     MapSqlParameterSource params = new MapSqlParameterSource();
+    String where = buildQuery(query, params);
+    if (integrityGuard.isEnabled()) {
+      // A count must not silently bypass integrity checks on its matching records.
+      int[] count = {0};
+      namedJdbcTemplate.query(
+          "SELECT * FROM audit" + where,
+          params,
+          (RowCallbackHandler)
+              rs -> {
+                verifyStoredRecord(rs);
+                count[0] = Math.incrementExact(count[0]);
+              });
+      return count[0];
+    }
     return namedJdbcTemplate.queryForObject(
-        "SELECT COUNT(*) FROM audit" + buildQuery(query, params), params, Integer.class);
+        "SELECT COUNT(*) FROM audit" + where, params, Integer.class);
   }
 
   @Override
   public List<Audit> query(AuditQuery query) {
     MapSqlParameterSource params = new MapSqlParameterSource();
     return namedJdbcTemplate.query(
-        "SELECT * FROM audit" + buildQuery(query, params), params, auditRowMapper);
+        "SELECT * FROM audit" + buildQuery(query, params), params, this::mapAuditRow);
   }
 
   private String buildQuery(AuditQuery query, MapSqlParameterSource params) {
@@ -173,10 +236,16 @@ public class JdbcAuditRepository implements AuditRepository {
 
   private MapSqlParameterSource buildParameterSource(Audit audit) {
     MapSqlParameterSource parameters = new MapSqlParameterSource();
-
-    parameters.addValue("auditType", audit.getAuditType());
-    parameters.addValue("auditScope", audit.getAuditScope());
-    parameters.addValue("createdAt", audit.getCreatedAt());
+    LocalDateTime createdAt = audit.getCreatedAt();
+    if (integrityGuard.isEnabled() && createdAt != null) {
+      // PostgreSQL timestamp storage has microsecond precision. Sign exactly what is stored.
+      createdAt = createdAt.truncatedTo(ChronoUnit.MICROS);
+    }
+    parameters.addValue(
+        "auditType", audit.getAuditType() == null ? null : audit.getAuditType().name());
+    parameters.addValue(
+        "auditScope", audit.getAuditScope() == null ? null : audit.getAuditScope().name());
+    parameters.addValue("createdAt", createdAt);
     parameters.addValue("createdBy", audit.getCreatedBy());
     parameters.addValue("klass", audit.getKlass());
     parameters.addValue("uid", audit.getUid());
@@ -184,40 +253,82 @@ public class JdbcAuditRepository implements AuditRepository {
     parameters.addValue("data", compress(audit.getData()));
 
     try {
-      parameters.addValue("attributes", jsonMapper.writeValueAsString(audit.getAttributes()));
+      String attributes = jsonMapper.writeValueAsString(audit.getAttributes());
+      if (integrityGuard.isEnabled()) {
+        // JSONB normalizes whitespace/key ordering and numeric notation. Authenticate its
+        // actual stored representation without parsing numbers through floating point.
+        attributes =
+            jdbcTemplate.queryForObject("SELECT CAST(? AS jsonb)::text", String.class, attributes);
+      }
+      parameters.addValue("attributes", attributes);
     } catch (JsonProcessingException e) {
       throw new IllegalStateException("Unable to serialize audit attributes", e);
     }
 
+    if (integrityGuard.isEnabled()) {
+      Long id =
+          jdbcTemplate.queryForObject(
+              "SELECT nextval(pg_get_serial_sequence('audit', 'auditid'))", Long.class);
+      if (id == null)
+        throw new IllegalStateException("Audit integrity requires an audit ID sequence");
+      parameters.addValue("auditId", id);
+      // Build from the parameter snapshot, never re-read mutable fields from the caller.
+      StoredRecord stored =
+          new StoredRecord(
+              id,
+              (String) parameters.getValue("auditType"),
+              (String) parameters.getValue("auditScope"),
+              (LocalDateTime) parameters.getValue("createdAt"),
+              (String) parameters.getValue("createdBy"),
+              (String) parameters.getValue("klass"),
+              (String) parameters.getValue("uid"),
+              (String) parameters.getValue("code"),
+              (String) parameters.getValue("attributes"),
+              (byte[]) parameters.getValue("data"));
+      parameters.addValue("integrityTag", integrityGuard.sign(stored));
+    }
     return parameters;
   }
 
-  private RowMapper<Audit> auditRowMapper =
-      (rs, rowNum) -> {
-        Timestamp createdAt = rs.getTimestamp("createdAt");
+  private StoredRecord verifyStoredRecord(ResultSet rs) throws SQLException {
+    Timestamp createdAt = rs.getTimestamp("createdAt");
+    StoredRecord stored =
+        new StoredRecord(
+            rs.getLong("auditId"),
+            rs.getString("auditType"),
+            rs.getString("auditScope"),
+            createdAt == null ? null : createdAt.toLocalDateTime(),
+            rs.getString("createdBy"),
+            rs.getString("klass"),
+            rs.getString("uid"),
+            rs.getString("code"),
+            rs.getString("attributes"),
+            rs.getBytes("data"));
+    if (integrityGuard.isEnabled()) integrityGuard.verify(stored, rs.getString("integrityTag"));
+    return stored;
+  }
 
-        Audit.AuditBuilder auditBuilder =
-            Audit.builder()
-                .id(rs.getLong("auditId"))
-                .auditType(AuditType.valueOf(rs.getString("auditType")))
-                .auditScope(AuditScope.valueOf(rs.getString("auditScope")))
-                .createdAt(createdAt == null ? null : createdAt.toLocalDateTime())
-                .createdBy(rs.getString("createdBy"))
-                .klass(rs.getString("klass"))
-                .uid(rs.getString("uid"))
-                .code(rs.getString("code"))
-                .data(decompress(rs.getBytes("data")));
-
-        try {
-          AuditAttributes attributes =
-              jsonMapper.readValue(rs.getString("attributes"), AuditAttributes.class);
-          auditBuilder.attributes(attributes);
-        } catch (JsonProcessingException e) {
-          throw new IllegalStateException("Unable to deserialize audit attributes", e);
-        }
-
-        return auditBuilder.build();
-      };
+  private Audit mapAuditRow(ResultSet rs, int rowNum) throws SQLException {
+    // Verify the stored bytes before enum conversion, decompression or payload deserialization.
+    StoredRecord stored = verifyStoredRecord(rs);
+    Audit.AuditBuilder auditBuilder =
+        Audit.builder()
+            .id(stored.id())
+            .auditType(AuditType.valueOf(stored.auditType()))
+            .auditScope(AuditScope.valueOf(stored.auditScope()))
+            .createdAt(stored.createdAt())
+            .createdBy(stored.createdBy())
+            .klass(stored.klass())
+            .uid(stored.uid())
+            .code(stored.code())
+            .data(decompress(stored.data()));
+    try {
+      auditBuilder.attributes(jsonMapper.readValue(stored.attributes(), AuditAttributes.class));
+    } catch (JsonProcessingException e) {
+      throw new IllegalStateException("Unable to deserialize audit attributes", e);
+    }
+    return auditBuilder.build();
+  }
 
   private static byte[] compress(String data) {
     if (StringUtils.isEmpty(data)) {

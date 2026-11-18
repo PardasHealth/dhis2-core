@@ -646,6 +646,14 @@ public enum ConfigurationKey {
   /** Save audits to database table "audit". (default: off). */
   AUDIT_DATABASE("audit.database", Constants.OFF, false),
 
+  /**
+   * Authenticate stored database audit records and fail closed on invalid reads. (default: off).
+   */
+  AUDIT_INTEGRITY_ENABLED("audit.integrity.enabled", Constants.OFF, false),
+
+  /** Independent Base64-encoded 32-byte audit authentication key. */
+  AUDIT_INTEGRITY_KEY("audit.integrity.key", "", true),
+
   /** Sets the audit matrix for metadata. (default: none). */
   AUDIT_METADATA_MATRIX("audit.metadata", "", false),
 
