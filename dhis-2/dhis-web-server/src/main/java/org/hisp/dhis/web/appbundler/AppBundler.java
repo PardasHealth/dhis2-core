@@ -128,17 +128,6 @@ public class AppBundler {
 
     List<AppGithubRepo> appRepoInfos = parseAppListUrls(appListFilePath);
 
-    // GitHub codeload ZIPs are repository snapshots, not deployable frontend artifacts.
-    // Reject known fork source URLs before any network fetch or WAR packaging occurs.
-    for (AppGithubRepo repoInfo : appRepoInfos) {
-      if ("PardasHealth".equals(repoInfo.owner())) {
-        throw new IOException(
-            "Cannot bundle PardasHealth source archive as a deployable DHIS2 app: "
-                + repoInfo.originalUrl()
-                + ". Supply an app ZIP containing a root-level manifest.webapp and built assets.");
-      }
-    }
-
     info("Found {} valid apps to bundle", appRepoInfos.size());
 
     // Download each app in parallel
@@ -327,6 +316,30 @@ public class AppBundler {
     }
   }
 
+  private static void validateDeployableAppZip(Path zipPath) throws IOException {
+    validateZip(zipPath);
+    try (ZipFile zip = new ZipFile(zipPath.toFile())) {
+      ZipEntry manifest = zip.getEntry("manifest.webapp");
+      if (manifest == null || manifest.isDirectory()) {
+        throw new IOException("Built app ZIP lacks root-level manifest.webapp: " + zipPath);
+      }
+      JsonNode metadata;
+      try (InputStream input = zip.getInputStream(manifest)) {
+        metadata = OBJECT_MAPPER.readTree(input);
+      }
+      if (metadata == null || !metadata.isObject()
+          || !metadata.hasNonNull("name") || !metadata.hasNonNull("version")) {
+        throw new IOException("Invalid app manifest.webapp in " + zipPath);
+      }
+      boolean hasAssets = zip.stream()
+          .anyMatch(entry -> !entry.isDirectory()
+              && (entry.getName().endsWith(".js") || entry.getName().endsWith(".html")));
+      if (!hasAssets) {
+        throw new IOException("Built app ZIP has no JavaScript or HTML assets: " + zipPath);
+      }
+    }
+  }
+
   private void writeBundleFile(Path targetArtifactDir) throws IOException {
     Path bundleInfoPath = targetArtifactDir.resolve(BUNDLE_INFO_FILE);
     OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValue(bundleInfoPath.toFile(), bundleInfo);
@@ -417,6 +430,21 @@ public class AppBundler {
       String zipName = repoInfo.repo() + ".zip";
       Path zipFilePath = targetDir.resolve(zipName);
       Path etagFile = etagsDir.resolve(repoInfo.repo() + ".etag");
+
+      if ("PardasHealth".equals(repoInfo.owner())) {
+        String builtBundleDir = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+        if (builtBundleDir == null || builtBundleDir.isBlank()) {
+          throw new IOException(
+              "Cannot bundle PardasHealth source archive as a deployable DHIS2 app: "
+                  + repoInfo.originalUrl()
+                  + ". Set PARDAS_APP_BUNDLE_DIR to a directory containing built app ZIPs.");
+        }
+        Path source = Paths.get(builtBundleDir).resolve(zipName);
+        validateDeployableAppZip(source);
+        Files.copy(source, zipFilePath, StandardCopyOption.REPLACE_EXISTING);
+        Files.deleteIfExists(etagFile);
+        return appBundleResultInfo;
+      }
 
       String etag = downloadIfChanged(repoInfo.codeloadUrl(), zipFilePath, etagFile);
       if (!Files.isRegularFile(zipFilePath) || Files.size(zipFilePath) == 0) {
