@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -85,6 +87,84 @@ class AppBundlerTest {
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("source archive"));
     assertTrue(failure.getMessage().contains("manifest.webapp"));
+  }
+
+  @Test
+  void testValidBuiltForkZipIsBundled() throws IOException {
+    Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
+    createAppZip(artifacts.resolve("capture-app.zip"), true, true);
+    new ObjectMapper().writeValue(
+        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+    System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
+    try {
+      AppBundler bundler =
+          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+      bundler.execute();
+      assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "capture-app.zip")));
+      assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "apps-bundle.json")));
+    } finally {
+      restoreBundleDirectory(previous);
+    }
+  }
+
+  @Test
+  void testBuiltForkZipWithoutManifestIsRejected() throws IOException {
+    Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
+    createAppZip(artifacts.resolve("capture-app.zip"), false, true);
+    new ObjectMapper().writeValue(
+        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+    System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
+    try {
+      AppBundler bundler =
+          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+      IOException failure = assertThrows(IOException.class, bundler::execute);
+      assertTrue(failure.getMessage().contains("manifest.webapp"));
+    } finally {
+      restoreBundleDirectory(previous);
+    }
+  }
+
+  @Test
+  void testBuiltForkZipWithoutAssetsIsRejected() throws IOException {
+    Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
+    createAppZip(artifacts.resolve("capture-app.zip"), true, false);
+    new ObjectMapper().writeValue(
+        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+    System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
+    try {
+      AppBundler bundler =
+          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+      IOException failure = assertThrows(IOException.class, bundler::execute);
+      assertTrue(failure.getMessage().contains("no JavaScript or HTML assets"));
+    } finally {
+      restoreBundleDirectory(previous);
+    }
+  }
+
+  private static void createAppZip(Path path, boolean manifest, boolean assets) throws IOException {
+    try (ZipOutputStream zip = new ZipOutputStream(Files.newOutputStream(path))) {
+      if (manifest) {
+        zip.putNextEntry(new ZipEntry("manifest.webapp"));
+        zip.write("{\"name\":\"Capture\",\"version\":\"1.0.0\"}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        zip.closeEntry();
+      }
+      if (assets) {
+        zip.putNextEntry(new ZipEntry("index.html"));
+        zip.write("<html></html>".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        zip.closeEntry();
+      }
+    }
+  }
+
+  private static void restoreBundleDirectory(String previous) {
+    if (previous == null) {
+      System.clearProperty("PARDAS_APP_BUNDLE_DIR");
+    } else {
+      System.setProperty("PARDAS_APP_BUNDLE_DIR", previous);
+    }
   }
 
   @Test
