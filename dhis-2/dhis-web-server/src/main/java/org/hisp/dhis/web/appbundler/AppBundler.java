@@ -278,9 +278,12 @@ public class AppBundler {
 
     int responseCode = connection.getResponseCode();
     if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
-      if (!Files.isRegularFile(outputPath) || Files.size(outputPath) == 0) {
-        throw new IOException("Server returned 304 but cached app ZIP is missing or empty: " + outputPath);
+      try {
+        validateZip(outputPath);
+      } catch (IOException e) {
+        throw new IOException("Server returned 304 but cached app ZIP is invalid: " + outputPath, e);
       }
+      connection.disconnect();
       return null;
     }
     if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -339,14 +342,8 @@ public class AppBundler {
         Path sourceZipPath = downloadDirPath.resolve(artifactId).resolve(app.getName() + ".zip");
         Path destZipPath = targetArtifactDir.resolve(app.getName() + ".zip");
 
-        if (Files.exists(sourceZipPath)) {
-          Files.copy(sourceZipPath, destZipPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-        } else {
-          error(
-              "Source zip file not found, skipping copy for app {}: {}",
-              app.getName(),
-              sourceZipPath);
-        }
+        validateZip(sourceZipPath);
+        Files.copy(sourceZipPath, destZipPath, StandardCopyOption.REPLACE_EXISTING);
       }
       info("Finished copying app bundles to build directory.");
 
