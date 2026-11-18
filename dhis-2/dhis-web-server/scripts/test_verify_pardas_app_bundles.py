@@ -53,6 +53,24 @@ class BundlePreflightTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "built JS or HTML"):
             preflight.inspect(self.archive)
 
+    def test_parent_traversal_entry_fails(self):
+        with zipfile.ZipFile(self.archive, "w") as output:
+            output.writestr("manifest.webapp", '{"name":"Capture","version":"1"}')
+            output.writestr("../evil.js", "alert(1)")
+        with self.assertRaisesRegex(ValueError, "unsafe ZIP entry path"):
+            preflight.inspect(self.archive)
+
+    def test_duplicate_entry_names_fail(self):
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
+            with zipfile.ZipFile(self.archive, "w") as output:
+                output.writestr("manifest.webapp", '{"name":"Capture","version":"1"}')
+                output.writestr("static/main.js", "one")
+                output.writestr("static/main.js", "two")
+        with self.assertRaisesRegex(ValueError, "duplicate ZIP entry"):
+            preflight.inspect(self.archive)
+
     def test_invalid_zip_fails(self):
         self.archive.write_text("not a ZIP", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "invalid app ZIP"):
