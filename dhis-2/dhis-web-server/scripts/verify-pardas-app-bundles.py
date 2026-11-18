@@ -31,7 +31,7 @@ def inspect(path: pathlib.Path) -> dict:
                 for name in entries
             ):
                 raise ValueError(f"{path}: unsafe ZIP entry path")
-            if "manifest.webapp" not in entries:
+            if "manifest.webapp" not in entries or archive.getinfo("manifest.webapp").is_dir():
                 raise ValueError(f"{path}: missing root-level manifest.webapp")
             manifest = json.loads(archive.read("manifest.webapp"))
             if not isinstance(manifest, dict) or not all(
