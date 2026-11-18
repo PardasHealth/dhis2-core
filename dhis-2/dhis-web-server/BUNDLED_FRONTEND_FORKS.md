@@ -44,6 +44,20 @@ For a standalone AppBundler invocation, pass
 `-DPARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips`.
 Do not set `skip.bundle.apps=true` when verifying the bundled WAR.
 
+Before running Maven, perform an offline artifact preflight from the
+`dhis-2/dhis-web-server` directory:
+
+```bash
+python3 scripts/verify-pardas-app-bundles.py \
+  /absolute/path/to/built-app-zips \
+  --output /absolute/path/to/app-artifact-inventory.json
+```
+
+This checks all three ZIPs and records their SHA-256 checksums and manifest
+identities. Retain the inventory as a build artifact. It does not verify
+that the archives were built from the pinned Git commits or from approved
+forked dependencies; that requires separate CI provenance checks.
+
 The local files are validated and copied into the existing bundling
 cache; other configured upstream apps continue to use their existing
 download mechanism. The bundler does not currently attest that a ZIP
