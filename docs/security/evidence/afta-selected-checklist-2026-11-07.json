@@ -180,7 +180,7 @@
       "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java",
       "line": 57,
       "symbol": "class AuditScheduler",
-      "source_sha256": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92"
+      "source_sha256": "54ba99851063ed697237b631a7565570e5d3d959d8ab572ca5076f18c1c6f3d8"
     },
     "broker": {
       "repository": "core",
@@ -2047,7 +2047,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Fault tolerance",
-      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee.",
+      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee. A concurrent-admission follow-up makes the optional audit buffer capacity and duplicate checks atomic with processing/requeue; overflow still publishes directly and failures propagate without evicting buffered records. Local concurrency/recovery tests do not establish full fault tolerance.",
       "gap_and_acceptance": "Define required degraded functions/fault classes; demonstrate service/data behavior under the chosen database, broker, disk and node failures.",
       "references": [
         "auditfailure",
@@ -2057,7 +2057,16 @@
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-18",
+          "scope": "Atomic 200-entry optional audit-buffer admission and deduplication coordinated with failed-publication requeue; direct overflow failure propagation retained; overall fault tolerance remains Gap",
+          "trace": "afta-audit-buffer-capacity.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "7318e85b9d628c29d25705c96d0414e5264b948c"
+        }
+      ]
     },
     {
       "row": 53,

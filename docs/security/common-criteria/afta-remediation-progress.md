@@ -4,9 +4,13 @@ Updated: **18 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 18 November gap follow-up: concurrent audit-buffer capacity
+
+**Selected source row: 52 (`FRU_FLT.1.1`).** Made optional audit-buffer capacity and duplicate admission atomic with processing/requeue. A pre-fix concurrent run reached 202 entries against the 200 limit; all 12 queue/scheduler cases pass after the fix. See the [code trace and evidence](afta-audit-buffer-capacity.md). Row 52 remains Gap. Activity now records **31 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 18 November gap follow-up: monotonic audit-buffer delays
 
-**Selected source row: 49 (`FPT_STM.1.1`).** Corrected expiry ordering and wall-clock-dependent elapsed time in the optional audit buffer. [Eight tests and code trace](afta-audit-monotonic-delay.md) cover queue expiry and scheduler retry compatibility. Row 49 remains Gap; current status totals stay **45 partial, 8 gaps, 25 unresolved; 0 closed**. Activity now records **30 implementation commits across 24/78 primary entries**, plus one optional entry.
+**Selected source row: 49 (`FPT_STM.1.1`).** Corrected expiry ordering and wall-clock-dependent elapsed time in the optional audit buffer. [Eight tests and code trace](afta-audit-monotonic-delay.md) cover queue expiry and scheduler retry compatibility. Row 49 remains Gap; current status totals stay **45 partial, 8 gaps, 25 unresolved; 0 closed**. At this follow-up, activity reached **30 implementation commits across 24/78 primary entries**, plus one optional entry.
 
 ## 18 November gap follow-up: audit-record integrity
 

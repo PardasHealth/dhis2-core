@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-18",
+  "scope": "Selected source row 52 FRU_FLT.1.1: atomic optional audit-buffer capacity and duplicate admission coordinated with retry processing; whole-application fault tolerance remains Gap",
+  "baseline_core_commit": "d0f131a5ba46a5699905a47c0d1bc7ec1d1a85f2",
+  "implementation_commit": "7318e85b9d628c29d25705c96d0414e5264b948c",
+  "selected_source_rows": [
+    {
+      "row": 52,
+      "requirement": "FRU_FLT.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "54ba99851063ed697237b631a7565570e5d3d959d8ab572ca5076f18c1c6f3d8",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "0c2a693f7340995a53b01471cc81a1e6102daafd0d9b00fd37ab258dbc645b6c",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/QueuedAudit.java": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/QueuedAuditTest.java": "ecd4932a95a6cd6deab1df32d40a0b4c6283e4e4a3df523167d43377f63633c4",
+    ".github/workflows/cc-audit-regression.yml": "9264b50bf1dd285d2a947e34d937e06116372664f3bd9b33316ecfea1a36e728"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.QueuedAuditTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.QueuedAuditTest.xml": "e29a131b09dfa02ba071ba37a9859d239307359978d67c6f1f3ff2a79cd4de4b",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditSchedulerTest.xml": "d6ba02cdb35b0c44d0ccc146733a0e95733c746776bbb66e21d5da3df2e1c367"
+  },
+  "baseline": {
+    "tests": 12,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "failure": "concurrentAdmissionRespectsCapacityAndPublishesEveryOverflowEvent expected 200 buffered entries, observed 202; other cases passed in this execution",
+    "log_sha256": "b66a84b1f57d314f96ba14e54755c9d07aaa0bd32d2a5bc0ca0b89c5f7230079",
+    "note": "Concurrent schedules vary; this records the observed pre-fix race, not a guarantee every old-code execution fails. An earlier less coordinated run passed."
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-capacity-final.log": "6682823c5ee5ae69a2c4a2ea58074ebd80b7435e74b01b3b92fd9944d8c0ffe6"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-support/dhis-support-artemis -am -Punit-test -Dtest=QueuedAuditTest,AuditSchedulerTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local concurrent unit tests; no live outage, deployment or hosted CI claim"
+  },
+  "not_established": [
+    "durability across JVM crash/restart",
+    "bounded broker latency or throughput under monitor contention",
+    "all database/broker/disk/node failure classes",
+    "exactly-once delivery or automatic retry of failed direct overflow publication",
+    "full AFTA fault classes, degraded functions and evaluator acceptance"
+  ]
+}
