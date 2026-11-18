@@ -1,0 +1,179 @@
+{
+  "date": "2026-11-18",
+  "scope": "Selected source row 20 (FDP_RIP.2.1): best-effort cleanup of generation-owned components and plaintext abandoned by failed wrapper creation; caller-owned successful outputs and wire compatibility retained; overall status remains Gap",
+  "baseline_core_commit": "c21977a7d12dc57a9d5a3895cd4f44e90f117391",
+  "implementation_commit": "2493199a48ff5e85a5688177eccc33c8643edbd9",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiTokenGenerationBufferTest.java": "86e9aebf1c7bdf5c514ce115f408b6b239e5a8fa9306f8eeb45bfad3cf0de951",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/common/HashSecretBufferTest.java": "ef067ca2d58d2d2048ea0d7c22e333e857d71a48ff55a09a0e87a53429bae958",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/common/CrcSecretBufferTest.java": "34f663c7cd44fc02908cdf9c7c45ae5e037f8fefe533a2892df3312eb66e1681",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/common/HashUtilsTest.java": "5cf2ce17265ec38ecc82bbe135452d02ed66453338999094bbe86977f5d95fe3",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/common/CRC32UtilsTest.java": "157888309e09cca8de6514635e294dacd5bc1e4c9fa3f4b6659b7a98d92d5814",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiKeyTokenGeneratorTest.java": "0631ab446bc2ba039651b26cf90e9a5d9d2e12ae71ceef6502c9ada068c6822e",
+    "dhis-2/dhis-api/src/test/java/org/hisp/dhis/security/apikey/ApiTokenChecksumBufferTest.java": "74dfa556caf0dc3807729d3510f3351be7f2ce1bbf151cf01f35b014aa62bc01",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenSecretBufferTest.java": "540cc6076653a447ed084c1f64719a062524a659eea22bc18780c0b4eedfd174",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolverTest.java": "bf619f6cc76c5df8d18d43dc6c6819023a066ba1f21319bbd08bdeace57c9d2b",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManagerTest.java": "5a62af7a7a745214846720d2737993d42b071f9d22a9b2d6ca8677bfdea94f18",
+    "dhis-2/dhis-web-api/src/test/java/org/hisp/dhis/webapi/security/apikey/ApiTokenIpConstraintTest.java": "c8150ce2a00f8c5751130d8034ef72eda860616103e18e18d175ac6a7f0c05bd",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenControllerTest.java": "464a7b10091d3104a855b0e0fd7a40466f33518e67069aa8d9f76b7fbaf98f0b",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenAuthenticationTest.java": "86d2b71acb3fc85277558e8e5e6b130a70b762cfcb8b338dbcb9971d84a8dd35",
+    "dhis-2/dhis-test-web-api/src/test/java/org/hisp/dhis/webapi/security/ApiTokenStateAuthenticationTest.java": "a8bd7b389075a67c45db5972dca0a867aaeb68f3e33ac538d8dabbc22219ef4f",
+    ".github/workflows/cc-audit-regression.yml": "63c87f6ef2a582b09bf5f0a935fa7a850125faa5d82d4a7a154bc6e66e72fc50",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java": "27a660d102f9f15f36f6788f26235d74d333e1e633c5b281918b2843b01c6bdc",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/HashUtils.java": "251c11086d3ea310a0dbf5a9cde62040f27655dc25201e73580f061b199d164c",
+    "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/CRC32Utils.java": "165b33bea5b7b6cf0ea451d4c6f4c33ec1b7c3b5a2a4903d7a8c8397ec2090a4",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenResolver.java": "52ceae609bb8bfcf3f8ce5a4928f10bcc7fa1182fd38bc35c70184f549cd702b",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/ApiTokenAuthManager.java": "be9b3e43ee50dbd23837db71318d460c90ccab7ca0c67589cb2207d701741a97",
+    "dhis-2/dhis-web-api/src/main/java/org/hisp/dhis/webapi/security/apikey/Dhis2ApiTokenFilter.java": "70ea08370f09ee2fad8b33441b67e6e9d1d7eab19ad408865a28b6bb8dfdad28"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.apikey.ApiTokenGenerationBufferTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.common.HashSecretBufferTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.common.CrcSecretBufferTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.common.HashUtilsTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.common.CRC32UtilsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.apikey.ApiKeyTokenGeneratorTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.apikey.ApiTokenChecksumBufferTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenSecretBufferTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenControllerTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.security.apikey.ApiTokenGenerationBufferTest.xml": "7ec99c4d793a54e46e76d6d623b190d63084840edc3690298240679981fb20e1",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.common.HashSecretBufferTest.xml": "b898f17c77c6ad73cbadacac2a231da341aa159a600f99069918337b135e6b0a",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.common.CrcSecretBufferTest.xml": "28e97835f49fe79151e1afdd573d5e021624effc61293497018c8b76d0665691",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.common.HashUtilsTest.xml": "437d3120feba2c385589c88e330b15801efd50da0d8df93af2f56541dba5e994",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.common.CRC32UtilsTest.xml": "fe69a682523ca55ba48f73f9746e75827fa84b0e93df1a3e09a87b98ad74d467",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.security.apikey.ApiKeyTokenGeneratorTest.xml": "e48b9779183ae0d8c9d11e272c4e7cf142a6ed2c01e508498b766cae1a74fb2f",
+    "dhis-2/dhis-api/target/surefire-reports/TEST-org.hisp.dhis.security.apikey.ApiTokenChecksumBufferTest.xml": "d77f0960f8dee3642b9e09920f018f4fc687ac329ec21677656bd1cbf913d672",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenSecretBufferTest.xml": "fe3aaf162bacc7c0069129d69a445bd12a7534a773263b218c7bcc4cb976e0a3",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenResolverTest.xml": "ad450dfd14391d3af7cc98e4966bb8b3878aaccb89441e4bf434b719afe9f228",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenAuthManagerTest.xml": "d43f8cbe4403a49a88e6d50575239faf3d4f44f9c79d57c7c690d2def3da11fd",
+    "dhis-2/dhis-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.apikey.ApiTokenIpConstraintTest.xml": "3e638d27f8308474fe76115528fb839938555a1c032d2d4bb25a34e898cb9e65",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenControllerTest.xml": "8c65889cfa7a2ce6a9692a3592a40c6e44bc52ab0589a6a69ece9542ab9ed25a",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenAuthenticationTest.xml": "58ccb748fad3b1858a3be98bf4840d306fd9f308c35ef20e8a2c1010d8799652",
+    "dhis-2/dhis-test-web-api/target/surefire-reports/TEST-org.hisp.dhis.webapi.security.ApiTokenStateAuthenticationTest.xml": "205066afe25b121982eed38c889cd141a8a46b7ba3826fe2cbc98c87f5223242"
+  },
+  "baseline_regression": {
+    "tests": 11,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Preceding generator: six component-lifetime cases fail across both versions on assembly, checksum error and invalid random-code length; two failed-wrapper plaintext cases fail for runtime exception/error. One successful-wrapper ownership and two real generation/checksum/digest controls pass.",
+    "log_sha256": "f7096faedd39ee3ba0b5168e2bc7de9786e82a6ef7830178c0d578c949d2a197"
+  },
+  "conditions": {
+    "java": "Debian OpenJDK 17.0.19+10-1~deb12u2",
+    "maven": "3.9.11",
+    "dependency_provenance": "Existing workspace cache and unchanged sms-compression source-build workaround at GitHub tag 0.3.2 commit 74f6bbcabce84ae47df21c966ba00dba5a4217d6, recorded in afta-token-failure-audit-2026-11-15.json. No POM or dependency changes.",
+    "unit_boundary": "Static random/generator mocks expose generation-owned arrays and inject component/hash failures. Successful output ownership is retained. Real token generation for both supported versions checks checksum and hash compatibility against JDK MessageDigest. Existing hash/CRC/validator/resolver/manager/filter checks retained. Observable Java array contents do not prove physical erasure.",
+    "web_boundary": "H2/Spring-security token creation/controller and authentication/state checks use synthetic accounts and credentials. No live browser, heap-dump or deployed residual-resource acceptance.",
+    "ci": "New ApiTokenGenerationBufferTest and existing ApiTokenControllerTest explicitly selected and successful nonempty reports required; workflow YAML and embedded Python validated locally. No hosted execution claimed."
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-api -am -Punit-test -Dtest=ApiTokenGenerationBufferTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Punit-test -Dtest=ApiTokenGenerationBufferTest,HashSecretBufferTest,CrcSecretBufferTest,HashUtilsTest,CRC32UtilsTest,ApiKeyTokenGeneratorTest,ApiTokenChecksumBufferTest,ApiTokenSecretBufferTest,ApiTokenResolverTest,ApiTokenAuthManagerTest,ApiTokenIpConstraintTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-web-api -am -Pintegration-h2-test -Dtest=ApiTokenControllerTest,ApiTokenAuthenticationTest,ApiTokenStateAuthenticationTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "not_established": [
+    "Complete protected-resource inventory and FDP_RIP.2.1 allocation/deallocation guarantee",
+    "Erasure of immutable/random/provider/runtime copies, caller-owned returned plaintext, heap dumps, swap or physical JVM memory",
+    "Process-interruption, file/media/replica/backup residual protection or platform acceptance",
+    "Provider certification, unspecified AFTA crypto iteration mapping, full protocol suite, live browser or hosted CI acceptance"
+  ]
+}

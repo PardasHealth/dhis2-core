@@ -1,8 +1,18 @@
 # AFTA remediation implementation progress
 
-Updated: **16 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **18 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
+
+## 18 November gap follow-up: generation-owned token storage
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Token generation now clears its
+random-code/checksum components after assembly or failure, and clears assembled
+plaintext when wrapper creation fails before ownership transfer. Successfully
+returned plaintext remains available to the caller. See the
+[generation ownership trace](afta-token-generation-buffer-hygiene.md).
+Row 20 stays Gap; full physical/runtime/storage residual protection is unproven.
+This adds another implementation commit to the same linked primary entry.
 
 ## 16 November gap follow-up: hash/CRC encoding storage
 

@@ -459,8 +459,8 @@
       "repository": "core",
       "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java",
       "symbol": "private static void clearChecksumBuffers(CodeAndChecksum extracted)",
-      "line": 178,
-      "source_sha256": "92d8680d13a0ef0ab7b3b33e62ecb3f6cfd08f3b8e751d62e14e76794f255abb"
+      "line": 197,
+      "source_sha256": "27a660d102f9f15f36f6788f26235d74d333e1e633c5b281918b2843b01c6bdc"
     },
     "hashencodedbuffer": {
       "repository": "core",
@@ -475,6 +475,20 @@
       "symbol": "public static long generateCRC32Checksum(",
       "line": 54,
       "source_sha256": "165b33bea5b7b6cf0ea451d4c6f4c33ec1b7c3b5a2a4903d7a8c8397ec2090a4"
+    },
+    "tokengenerationcomponents": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java",
+      "symbol": "protected static char[] generatePatToken(ApiTokenType type)",
+      "line": 87,
+      "source_sha256": "27a660d102f9f15f36f6788f26235d74d333e1e633c5b281918b2843b01c6bdc"
+    },
+    "tokengenerationownership": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/security/apikey/ApiKeyTokenGenerator.java",
+      "symbol": "public static TokenWrapper generatePersonalAccessToken(",
+      "line": 58,
+      "source_sha256": "27a660d102f9f15f36f6788f26235d74d333e1e633c5b281918b2843b01c6bdc"
     }
   },
   "rows": [
@@ -1023,14 +1037,16 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. A bounded best-effort follow-up overwrites the resolver-owned raw API-token char array after checksum/hash processing on success and failure; four controlled buffer-lifecycle cases cover this behavior. Immutable headers, runtime copies and physical erasure are not established. The private token checksum validators also clear their extracted code/checksum arrays after valid, rejected or throwing validation outcomes, retaining caller input; six lifecycle cases cover both token versions. SHA-256/SHA-512 string/character helpers and CRC calculation also clear their own UTF-8 byte storage after processing, retaining caller inputs; ownership and real digest compatibility cases accompany the lifecycle checks.",
-      "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. No full implementation trace is established.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven.",
+      "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
         "tokenbuffer",
         "tokenchecksumcopies",
         "hashencodedbuffer",
-        "crcencodedbuffer"
+        "crcencodedbuffer",
+        "tokengenerationcomponents",
+        "tokengenerationownership"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1058,6 +1074,13 @@
           "trace": "afta-hash-crc-buffer-hygiene.md",
           "full_requirement_closed": false,
           "implementation_commit": "469ad5a9d024e9a6f7cd6002b51101274e7cb30f"
+        },
+        {
+          "date": "2026-11-18",
+          "scope": "Best-effort clearing of generation-owned code/checksum components and plaintext not transferred to a successful wrapper; successful caller-owned output and wire compatibility retained; full residual-resource protection remains Gap",
+          "trace": "afta-token-generation-buffer-hygiene.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "2493199a48ff5e85a5688177eccc33c8643edbd9"
         }
       ]
     },

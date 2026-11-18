@@ -278,3 +278,11 @@ cleanup after SHA-256/SHA-512 and CRC processing, including failures. Do not era
 caller-owned byte/character input. Keep the existing CRC input range and token
 format during merges; retain standard digest vectors and both required buffer
 reports. See the [hash/CRC ownership trace](../security/common-criteria/afta-hash-crc-buffer-hygiene.md).
+
+## Generation ownership and failed outputs (18 November)
+
+Selected source row: 20 (`FDP_RIP.2.1`), still Gap. Preserve cleanup of generation
+components and assembled plaintext abandoned by failed wrapper creation. Do not
+clear successfully returned caller-owned tokens. Keep the generation lifecycle
+suite and token-controller report selected and required by CI. See the
+[ownership and compatibility trace](../security/common-criteria/afta-token-generation-buffer-hygiene.md).

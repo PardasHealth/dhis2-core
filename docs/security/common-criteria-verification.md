@@ -631,3 +631,14 @@ controls passing. SHA and CRC helpers now clear their owned encoding storage.
 Real digest/token regressions and caller-ownership assertions retain compatibility
 coverage. This does not prove physical JVM erasure or full resource protection;
 counts overlap earlier executions and no complete requirement is closed.
+
+## 18 November: gap-row 20 token generation ownership
+
+**Selected source row: 20 (`FDP_RIP.2.1`), still Gap.** The
+[generation trace](common-criteria/afta-token-generation-buffer-hygiene.md) and
+[dated evidence](evidence/afta-token-generation-buffer-hygiene-2026-11-18.json)
+record eight cleanup baseline failures among eleven new cases. Successful caller
+output remains retained; generation temporaries and unreturned plaintext are
+cleared. The final run includes token create/controller and authentication/state
+regressions. Counts overlap earlier inventories; JVM physical erasure and full
+protected-resource acceptance remain unproven.

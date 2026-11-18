@@ -1,7 +1,7 @@
 # DHIS2 web-application Common Criteria review guide
 
 Review baseline: `07d4f3f7ea`, DHIS2 `2.44-SNAPSHOT`, plus the recorded security
-patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-15.
+patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-18.
 
 The engineering package documents web scope, component dispositions, code/test
 traces, known findings and proposed solutions. **It is not a claim that the full
@@ -10,6 +10,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 
 | Review question | Document |
 | --- | --- |
+| Are token-generation buffers cleared without erasing returned tokens? | [Row 20: generation ownership and failed-wrapper cleanup](afta-token-generation-buffer-hygiene.md) |
 | Are hash/CRC encoding buffers cleared? | [Row 20: owned UTF-8 buffers and compatibility checks](afta-hash-crc-buffer-hygiene.md) |
 | Are token-validator copies cleared too? | [Row 20: checksum-buffer cleanup and caller ownership](afta-token-checksum-buffers.md) |
 | What residual-data gap work has started? | [Row 20: token buffer cleanup and remaining resource scope](afta-token-secret-buffer.md) |
