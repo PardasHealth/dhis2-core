@@ -278,6 +278,9 @@ public class AppBundler {
 
     int responseCode = connection.getResponseCode();
     if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+      if (!Files.isRegularFile(outputPath) || Files.size(outputPath) == 0) {
+        throw new IOException("Server returned 304 but cached app ZIP is missing or empty: " + outputPath);
+      }
       return null;
     }
     if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -402,7 +405,10 @@ public class AppBundler {
       Path etagFile = etagsDir.resolve(repoInfo.repo() + ".etag");
 
       String etag = downloadIfChanged(repoInfo.codeloadUrl(), zipFilePath, etagFile);
-      if (etag == null) { // Not modified or download failed ETag retrieval
+      if (!Files.isRegularFile(zipFilePath) || Files.size(zipFilePath) == 0) {
+        throw new IOException("Required app ZIP is missing or empty: " + zipFilePath);
+      }
+      if (etag == null) { // Not modified or no ETag returned
         if (Files.exists(etagFile)) {
           appBundleResultInfo.setEtag(Files.readString(etagFile, StandardCharsets.UTF_8));
           info("App {} is already up to date (ETag: {})", zipName, appBundleResultInfo.getEtag());
