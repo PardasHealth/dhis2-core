@@ -16,6 +16,34 @@ packaging step does not prove that the bundled frontend is executable,
 that its UI/App Runtime dependencies come from the PardasHealth forks,
 or that browser login and navigation work.
 
+## Bundling built PardasHealth apps
+
+Build Capture, Dashboard, and Settings separately from their pinned source
+commits, using the intended UI and App Runtime dependencies. Place their
+**deployable** archives in one directory with these exact filenames:
+
+- `capture-app.zip`
+- `dashboard-app.zip`
+- `settings-app.zip`
+
+Each ZIP must contain a root-level `manifest.webapp` with `name` and
+`version`, plus compiled JavaScript or HTML assets. A GitHub source
+archive is not acceptable.
+
+Run Maven with the Java system property
+`PARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips` available to
+the AppBundler JVM. For a standalone AppBundler invocation, pass
+`-DPARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips`.
+Verify how the Maven execution forwards this property before relying
+on it in CI.
+
+The local files are validated and copied into the existing bundling
+cache; other configured upstream apps continue to use their existing
+download mechanism. The bundler does not currently attest that a ZIP
+was built from the pinned commit or verify dependency provenance:
+record SHA-256 checksums and source commit identities in CI, and
+inspect the resulting WAR before deployment.
+
 Before promoting the updated WAR:
 
 1. Verify each fork source ref exists and review/pin its commit.
