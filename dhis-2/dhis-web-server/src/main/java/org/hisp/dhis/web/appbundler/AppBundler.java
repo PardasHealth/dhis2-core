@@ -382,11 +382,14 @@ public class AppBundler {
         if (codeloadUrl != null) {
           appInfos.add(new AppGithubRepo(owner, repo, ref, rawUrl, codeloadUrl));
         } else {
-          error("Skipping app due to failed conversion from URL: {}", rawUrl);
+          throw new IOException("Cannot convert required app URL: " + rawUrl);
         }
       } else {
-        error("Skipping app due to invalid GitHub URL format: {}", rawUrl);
+        throw new IOException("Invalid required app URL: " + rawUrl);
       }
+    }
+    if (appInfos.isEmpty()) {
+      throw new IOException("No application URLs configured in " + appListPath);
     }
     info("Successfully parsed {} app URLs out of {}", appInfos.size(), rawUrls.size());
     return appInfos;
