@@ -26,7 +26,7 @@ def inspect(path: pathlib.Path) -> dict:
             if len(entries) != len(set(entries)):
                 raise ValueError(f"{path}: duplicate ZIP entry names")
             if any(
-                name.startswith("/") or "\\\\" in name or
+                name.startswith("/") or chr(92) in name or
                 ".." in pathlib.PurePosixPath(name).parts
                 for name in entries
             ):
