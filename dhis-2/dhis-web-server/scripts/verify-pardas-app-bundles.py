@@ -23,6 +23,14 @@ def inspect(path: pathlib.Path) -> dict:
             if bad is not None:
                 raise ValueError(f"{path}: corrupt ZIP entry {bad}")
             entries = archive.namelist()
+            if len(entries) != len(set(entries)):
+                raise ValueError(f"{path}: duplicate ZIP entry names")
+            if any(
+                name.startswith("/") or "\\\\" in name or
+                ".." in pathlib.PurePosixPath(name).parts
+                for name in entries
+            ):
+                raise ValueError(f"{path}: unsafe ZIP entry path")
             if "manifest.webapp" not in entries:
                 raise ValueError(f"{path}: missing root-level manifest.webapp")
             manifest = json.loads(archive.read("manifest.webapp"))
