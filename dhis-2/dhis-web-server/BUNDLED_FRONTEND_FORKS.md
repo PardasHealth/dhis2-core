@@ -30,12 +30,18 @@ Each ZIP must contain a root-level `manifest.webapp` with `name` and
 `version`, plus compiled JavaScript or HTML assets. A GitHub source
 archive is not acceptable.
 
-Run Maven with the Java system property
-`PARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips` available to
-the AppBundler JVM. For a standalone AppBundler invocation, pass
+The `dhis-web-server/pom.xml` configuration forwards the Maven property
+`pardas.app.bundle.dir` into the AppBundler Java system property
+`PARDAS_APP_BUNDLE_DIR`. From the `dhis-2` Maven reactor, run:
+
+```bash
+mvn -pl dhis-web-server -am package \
+  -Dpardas.app.bundle.dir=/absolute/path/to/built-app-zips
+```
+
+For a standalone AppBundler invocation, pass
 `-DPARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips`.
-Verify how the Maven execution forwards this property before relying
-on it in CI.
+Do not set `skip.bundle.apps=true` when verifying the bundled WAR.
 
 The local files are validated and copied into the existing bundling
 cache; other configured upstream apps continue to use their existing
