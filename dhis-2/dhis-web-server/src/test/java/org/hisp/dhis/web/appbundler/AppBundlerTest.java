@@ -84,9 +84,15 @@ class AppBundlerTest {
     AppBundler bundler =
         new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
-    IOException failure = assertThrows(IOException.class, bundler::execute);
-    assertTrue(failure.getMessage().contains("source archive"));
-    assertTrue(failure.getMessage().contains("PARDAS_APP_BUNDLE_DIR"));
+    String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+    System.clearProperty("PARDAS_APP_BUNDLE_DIR");
+    try {
+      IOException failure = assertThrows(IOException.class, bundler::execute);
+      assertTrue(failure.getMessage().contains("source archive"));
+      assertTrue(failure.getMessage().contains("PARDAS_APP_BUNDLE_DIR"));
+    } finally {
+      restoreBundleDirectory(previous);
+    }
   }
 
   @Test
