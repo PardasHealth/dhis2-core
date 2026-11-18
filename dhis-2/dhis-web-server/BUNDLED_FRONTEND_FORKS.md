@@ -7,7 +7,7 @@ The Maven `dhis-web-server` module reads `apps-to-bundle.json` during
 to `target/classes/static/dhis-web-apps/` for inclusion in the WAR.
 
 Capture, Dashboard and Settings are redirected to the PardasHealth forks
-at `#master`. All other apps remain on their existing sources.
+at explicitly pinned commit SHAs (Capture `117c4b5e21dc5169c07250d25bc9e67e90eeb922`, Dashboard `2a865ad185dc1e1ad6376e0b48e9881207c49b24`, Settings `413654993aaa005f44635b88d5ba078508341000`). All other apps remain on their existing sources.
 
 **Important:** This source-archive bundling path is not the same as
 installing the deployable ZIP produced by `dhis2-platform`'s
