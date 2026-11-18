@@ -45,7 +45,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.regex.Matcher;
@@ -222,7 +222,8 @@ public class AppBundler {
   }
 
   private List<BundledAppInfo> downloadApps(
-      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath) {
+      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath)
+      throws IOException {
     ForkJoinPool customThreadPool = new ForkJoinPool(DOWNLOAD_POOL_SIZE);
     try {
       return customThreadPool
@@ -234,22 +235,24 @@ public class AppBundler {
                             try {
                               return downloadApp(repoInfo, artifactDirPath, etagDirPath);
                             } catch (IOException e) {
-                              // error is logged in downloadApp()
-                              return null;
+                              throw new UncheckedIOException(
+                                  "Failed to bundle required app: " + repoInfo.originalUrl(), e);
                             }
                           })
-                      .filter(Objects::nonNull)
                       .toList())
           .get();
-
-    } catch (InterruptedException | ExecutionException e) {
-      error("Error during parallel app download", e);
-      // Restore interrupt status
+    } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
+      throw new IOException("Interrupted while downloading app bundles", e);
+    } catch (ExecutionException e) {
+      Throwable cause = e.getCause();
+      if (cause instanceof UncheckedIOException unchecked) {
+        throw unchecked.getCause();
+      }
+      throw new IOException("Failed to download required app bundles", cause);
     } finally {
       customThreadPool.shutdown();
     }
-    throw new IllegalStateException("Failed to download apps");
   }
 
   /**
