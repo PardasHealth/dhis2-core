@@ -88,6 +88,29 @@ class AppBundlerTest {
   }
 
   @Test
+  void testInvalidRequiredAppUrlFailsBeforeDownload() throws IOException {
+    new ObjectMapper()
+        .writeValue(appListFile, Arrays.asList("https://example.com/not-a-github-app"));
+
+    AppBundler bundler =
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+
+    IOException failure = assertThrows(IOException.class, bundler::execute);
+    assertTrue(failure.getMessage().contains("Invalid required app URL"));
+  }
+
+  @Test
+  void testEmptyAppListFailsBeforeDownload() throws IOException {
+    new ObjectMapper().writeValue(appListFile, Arrays.asList());
+
+    AppBundler bundler =
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+
+    IOException failure = assertThrows(IOException.class, bundler::execute);
+    assertTrue(failure.getMessage().contains("No application URLs configured"));
+  }
+
+  @Test
   void testAppBundlerCreatesCorrectStructure() throws IOException {
     // Execute the app bundler so we install the apps to our temp directory
     AppBundler bundler =
