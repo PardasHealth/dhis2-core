@@ -24,6 +24,7 @@
     <jib.container.appRoot>/app</jib.container.appRoot>
     <spring-boot-maven-plugin.version>4.1.1</spring-boot-maven-plugin.version>
     <packaging.type>war</packaging.type>
+    <pardas.app.bundle.dir></pardas.app.bundle.dir>
   </properties>
 
   <dependencies>
@@ -216,6 +217,10 @@
                 <property>
                   <key>DEFAULT_BRANCH</key>
                   <value>master</value>
+                </property>
+                <property>
+                  <key>PARDAS_APP_BUNDLE_DIR</key>
+                  <value>${pardas.app.bundle.dir}</value>
                 </property>
               </systemProperties>
               <skip>${skip.bundle.apps}</skip>
