@@ -29,6 +29,7 @@
  */
 package org.hisp.dhis.web.appbundler;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,6 +69,22 @@ class AppBundlerTest {
     buildDir = tempDir.resolve("build").toString();
     downloadDir = tempDir.resolve("download").toString();
     artifactId = "dhis-web-apps";
+  }
+
+  @Test
+  void testForkSourceZipRejectedBeforeDownload() throws IOException {
+    new ObjectMapper()
+        .writeValue(
+            appListFile,
+            Arrays.asList(
+                "https://github.com/PardasHealth/capture-app#117c4b5e21dc5169c07250d25bc9e67e90eeb922"));
+
+    AppBundler bundler =
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+
+    IOException failure = assertThrows(IOException.class, bundler::execute);
+    assertTrue(failure.getMessage().contains("source archive"));
+    assertTrue(failure.getMessage().contains("manifest.webapp"));
   }
 
   @Test
