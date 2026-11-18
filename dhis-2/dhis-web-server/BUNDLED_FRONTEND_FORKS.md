@@ -44,6 +44,13 @@ For a standalone AppBundler invocation, pass
 `-DPARDAS_APP_BUNDLE_DIR=/absolute/path/to/built-app-zips`.
 Do not set `skip.bundle.apps=true` when verifying the bundled WAR.
 
+Run the preflight's offline regression suite from
+`dhis-2/dhis-web-server`:
+
+```bash
+python3 -m unittest discover -s scripts -p 'test_verify_pardas_app_bundles.py'
+```
+
 Before running Maven, perform an offline artifact preflight from the
 `dhis-2/dhis-web-server` directory:
 
