@@ -33,23 +33,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+import java.util.function.LongSupplier;
 
 /**
  * @author Luciano Fiandesio
  */
 public class QueuedAudit implements Delayed {
-  private final long origin;
+  private final long deadline;
 
-  private final long delay;
+  private final LongSupplier ticker;
 
   private final Audit audit;
 
   public QueuedAudit(Audit audit, long delay) {
-    checkNotNull(audit);
+    this(audit, delay, System::nanoTime);
+  }
 
-    this.origin = System.currentTimeMillis();
-    this.audit = audit;
-    this.delay = delay;
+  // A shared monotonic ticker permits deterministic elapsed-time tests.
+  QueuedAudit(Audit audit, long delay, LongSupplier ticker) {
+    this.audit = checkNotNull(audit);
+    this.ticker = checkNotNull(ticker);
+    this.deadline = ticker.getAsLong() + TimeUnit.MILLISECONDS.toNanos(delay);
   }
 
   public Audit getAuditItem() {
@@ -58,7 +62,7 @@ public class QueuedAudit implements Delayed {
 
   @Override
   public long getDelay(TimeUnit unit) {
-    return unit.convert(delay - (System.currentTimeMillis() - origin), TimeUnit.MILLISECONDS);
+    return unit.convert(deadline - ticker.getAsLong(), TimeUnit.NANOSECONDS);
   }
 
   @Override
@@ -68,11 +72,12 @@ public class QueuedAudit implements Delayed {
     }
 
     if (delayed instanceof QueuedAudit) {
-      long diff = delay - ((QueuedAudit) delayed).delay;
+      // Subtraction preserves ordering across nanoTime wraparound for normal queue lifetimes.
+      long diff = deadline - ((QueuedAudit) delayed).deadline;
       return ((diff == 0) ? 0 : ((diff < 0) ? -1 : 1));
     }
 
-    long d = (getDelay(TimeUnit.MILLISECONDS) - delayed.getDelay(TimeUnit.MILLISECONDS));
+    long d = getDelay(TimeUnit.NANOSECONDS) - delayed.getDelay(TimeUnit.NANOSECONDS);
 
     return ((d == 0) ? 0 : ((d < 0) ? -1 : 1));
   }
