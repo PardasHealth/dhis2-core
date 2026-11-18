@@ -128,14 +128,8 @@ public class AppBundler {
 
     List<AppGithubRepo> appRepoInfos = parseAppListUrls(appListFilePath);
 
-    info("Found {} valid apps to bundle", appRepoInfos.size());
-
-    // Download each app in parallel
-    List<BundledAppInfo> downloadedApps = downloadApps(appRepoInfos, artifactDirPath, etagsDirPath);
-
-    // A GitHub codeload archive contains repository sources, not a built DHIS2 app.
-    // In particular, pinned PardasHealth forks must not be packaged as runnable apps
-    // until the build pipeline provides their deployable ZIP artifacts.
+    // GitHub codeload ZIPs are repository snapshots, not deployable frontend artifacts.
+    // Reject known fork source URLs before any network fetch or WAR packaging occurs.
     for (AppGithubRepo repoInfo : appRepoInfos) {
       if ("PardasHealth".equals(repoInfo.owner())) {
         throw new IOException(
@@ -144,6 +138,11 @@ public class AppBundler {
                 + ". Supply an app ZIP containing a root-level manifest.webapp and built assets.");
       }
     }
+
+    info("Found {} valid apps to bundle", appRepoInfos.size());
+
+    // Download each app in parallel
+    List<BundledAppInfo> downloadedApps = downloadApps(appRepoInfos, artifactDirPath, etagsDirPath);
 
     downloadedApps.forEach(bundleInfo::addApp);
 
