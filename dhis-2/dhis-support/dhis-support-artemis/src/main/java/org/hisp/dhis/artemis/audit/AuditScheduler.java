@@ -75,14 +75,21 @@ public class AuditScheduler {
 
     final QueuedAudit postponed = new QueuedAudit(auditItem, DELAY);
 
-    if (delayed.size() >= MAX_SIZE) {
-      auditProducerSupplier.publish(auditItem);
-    } else {
-      if (!delayed.contains(postponed)) {
-        boolean wasAddedToQueue = delayed.offer(postponed);
-        log.debug("Audit queue accepted new audit item: {}", wasAddedToQueue);
+    // Share the processing monitor so a failed publication can reclaim its slot
+    // without concurrent admission exceeding the bound. Check/offer and duplicate
+    // detection must be one operation even though DelayQueue itself is thread-safe.
+    synchronized (this) {
+      if (delayed.size() < MAX_SIZE) {
+        if (!delayed.contains(postponed)) {
+          boolean wasAddedToQueue = delayed.offer(postponed);
+          log.debug("Audit queue accepted new audit item: {}", wasAddedToQueue);
+        }
+        return;
       }
     }
+    // Overflow does not occupy a buffer slot; preserve concurrent direct publication
+    // and propagate failures to the caller without evicting buffered events.
+    auditProducerSupplier.publish(auditItem);
   }
 
   @Scheduled(fixedDelay = 5_000)

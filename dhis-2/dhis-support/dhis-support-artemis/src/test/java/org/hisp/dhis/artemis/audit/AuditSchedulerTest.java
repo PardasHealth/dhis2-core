@@ -33,7 +33,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -108,5 +115,81 @@ class AuditSchedulerTest {
     scheduler.process();
     verify(producer).publish(event);
     assertTrue(queue.isEmpty());
+  }
+
+  @Test
+  void concurrentAdmissionRespectsCapacityAndPublishesEveryOverflowEvent() throws Exception {
+    List<Audit> events = new ArrayList<>();
+    for (int i = 0; i < 400; i++) events.add(Audit.builder().uid("event-" + i).build());
+    admitConcurrently(events);
+    assertEquals(200, queue.size());
+    for (Audit event : events) {
+      if (queue.stream().anyMatch(item -> item.getAuditItem() == event)) {
+        verify(producer, never()).publish(event);
+      } else {
+        verify(producer).publish(event);
+      }
+    }
+    verify(producer, times(200)).publish(any());
+  }
+
+  @Test
+  void concurrentWritersCompeteForTheLastBufferSlot() throws Exception {
+    for (int i = 0; i < 199; i++) {
+      scheduler.addAuditItem(Audit.builder().uid("existing-" + i).build());
+    }
+    List<Audit> events = new ArrayList<>();
+    for (int i = 0; i < 32; i++) events.add(Audit.builder().uid("contender-" + i).build());
+    admitConcurrently(events);
+    assertEquals(200, queue.size());
+    verify(producer, times(31)).publish(any());
+  }
+
+  @Test
+  void concurrentDuplicateAdmissionRetainsOnePendingEvent() throws Exception {
+    Audit event = Audit.builder().uid("same-event").build();
+    admitConcurrently(java.util.Collections.nCopies(64, event));
+    assertEquals(1, queue.size());
+    verifyNoInteractions(producer);
+  }
+
+  @Test
+  void overflowPublishFailurePropagatesWithoutEvictingBufferedEvents() {
+    for (int i = 0; i < 200; i++) {
+      scheduler.addAuditItem(Audit.builder().uid("buffered-" + i).build());
+    }
+    Audit overflow = Audit.builder().uid("overflow").build();
+    RuntimeException failure = new IllegalStateException("Broker unavailable");
+    doThrow(failure).when(producer).publish(overflow);
+    assertSame(
+        failure, assertThrows(RuntimeException.class, () -> scheduler.addAuditItem(overflow)));
+    assertEquals(200, queue.size());
+    assertFalse(queue.stream().anyMatch(item -> item.getAuditItem() == overflow));
+    verify(producer).publish(overflow);
+  }
+
+  private void admitConcurrently(List<Audit> events) throws Exception {
+    ExecutorService executor = Executors.newFixedThreadPool(32);
+    CountDownLatch start = new CountDownLatch(1);
+    CountDownLatch ready = new CountDownLatch(Math.min(32, events.size()));
+    List<Future<?>> futures = new ArrayList<>();
+    try {
+      for (Audit event : events) {
+        futures.add(
+            executor.submit(
+                () -> {
+                  ready.countDown();
+                  assertTrue(start.await(10, TimeUnit.SECONDS));
+                  scheduler.addAuditItem(event);
+                  return null;
+                }));
+      }
+      assertTrue(ready.await(10, TimeUnit.SECONDS));
+      start.countDown();
+      for (Future<?> future : futures) future.get(20, TimeUnit.SECONDS);
+    } finally {
+      executor.shutdownNow();
+      assertTrue(executor.awaitTermination(10, TimeUnit.SECONDS));
+    }
   }
 }
