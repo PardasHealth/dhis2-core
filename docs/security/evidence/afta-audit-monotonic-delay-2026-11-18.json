@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-18",
+  "scope": "Selected source row 49 FPT_STM.1.1: bounded monotonic elapsed-time and actual-deadline ordering repair for the optional in-memory audit buffer; overall trusted-time requirement remains Gap",
+  "baseline_core_commit": "dbfe18af0275fa47c71e7539e5b8e4e8aa57cb5e",
+  "implementation_commit": "b8898fc224ef730cbf45329812e3e96c96633e54",
+  "selected_source_rows": [
+    {
+      "row": 49,
+      "requirement": "FPT_STM.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/QueuedAudit.java": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "7bd1db99b12c85d6109b23892fa52df697da221e11cf119d6e3faf0f4cf1bc92",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/QueuedAuditTest.java": "ecd4932a95a6cd6deab1df32d40a0b4c6283e4e4a3df523167d43377f63633c4",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "d90500f1465291a4212f68cbbf24f7feb652fce350c73c858cd21bff0e533e63",
+    ".github/workflows/cc-audit-regression.yml": "9264b50bf1dd285d2a947e34d937e06116372664f3bd9b33316ecfea1a36e728"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.QueuedAuditTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.QueuedAuditTest.xml": "95d91e77a74d2b290b168c963240bcd53dda180355fbc7d7db6d6068088012dd",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditSchedulerTest.xml": "d9d1115e6849950711f22f5414fd6ac4ed027b032372973518425ed57aa198c2"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-monotonic.log": "84529c1c5747a1477a182fa0a4bebea3281ff747ad0d489bc5be5263fe604e77"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-support/dhis-support-artemis -am -Punit-test -Dtest=QueuedAuditTest,AuditSchedulerTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local unit checks with deterministic monotonic ticker; no live host-clock manipulation or hosted CI claim"
+  },
+  "not_established": [
+    "trusted UTC source, synchronization, clock permissions and allowed drift",
+    "session/token/audit timestamp behavior across rollback and skew",
+    "durability across JVM crash or node restart",
+    "all deployment failure classes or full AFTA acceptance"
+  ],
+  "baseline_execution": "No pre-fix execution claimed; previous source uses currentTimeMillis and compares configured delays rather than expiry."
+}

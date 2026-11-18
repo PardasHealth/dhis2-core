@@ -510,6 +510,13 @@
       "line": 293,
       "symbol": "private StoredRecord verifyStoredRecord(",
       "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+    },
+    "auditmonotonic": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/QueuedAudit.java",
+      "line": 64,
+      "symbol": "public long getDelay(",
+      "source_sha256": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a"
     }
   },
   "rows": [
@@ -1975,17 +1982,27 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Reliable time",
-      "observation": "The user service and audit repository consume application/JVM time. This is not evidence that the time source is reliable.",
+      "observation": "The user service and audit repository consume application/JVM time. This is not evidence that the time source is reliable. The optional in-memory audit buffer now measures elapsed time with System.nanoTime and orders entries by actual expiry, avoiding wall-clock adjustment delays and newer-entry head blocking. This bounded fix does not establish trusted UTC or complete clock policy.",
       "gap_and_acceptance": "Document clock authority, synchronization, access control and allowed drift; test rollback, skew and failure for audit/session/token behavior.",
       "references": [
         "user",
-        "auditquery"
+        "auditquery",
+        "auditmonotonic"
       ],
       "source_key": "FPT_STM.1.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Related boundary/reference only; not implementation coverage"
+      "reference_role": "Related boundary/reference only; not implementation coverage",
+      "implementation_followups": [
+        {
+          "date": "2026-11-18",
+          "scope": "Monotonic elapsed-time and actual-expiry ordering for optional audit buffer; trusted-time authority and deployment acceptance remain Gap",
+          "trace": "afta-audit-monotonic-delay.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "b8898fc224ef730cbf45329812e3e96c96633e54"
+        }
+      ]
     },
     {
       "row": 50,

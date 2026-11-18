@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **18 November 2026**. Branch: `work`. Reviewed code snapshot:
-`399eaa924a`. Subsequent documentation-only commits do not change that code.
+`b8898fc224`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the eighteen recent implementation fixes to selected checklist
+This guide traces the nineteen recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -63,6 +63,8 @@ does not close every acceptance condition in those rows.
 | 20: `FDP_RIP.2.1` | Applied 18 November: clear generation-owned components and unreturned plaintext on wrapper failure; retain successful caller output; full residual-data guarantee remains Gap | [2493199a48](https://github.com/PardasHealth/dhis2-core/commit/2493199a48ff5e85a5688177eccc33c8643edbd9) | [Generation ownership trace](afta-token-generation-buffer-hygiene.md), [execution record](../evidence/afta-token-generation-buffer-hygiene-2026-11-18.json) |
 
 | 27: `FDP_SDI.2.1`; 28: `FDP_SDI.2.2` | Applied 18 November: opt-in signed audit records; verify before decoding, ERROR alert and blocked query/count on tampering; both rows now Partial evidence | [399eaa924a](https://github.com/PardasHealth/dhis2-core/commit/399eaa924a9f7bd24963cc225db07b651738b96d) | [Audit integrity trace](afta-audit-record-integrity.md), [execution record](../evidence/afta-audit-record-integrity-2026-11-18.json) |
+
+| 49: `FPT_STM.1.1` | Applied 18 November: measure optional audit-buffer delays monotonically and order by actual expiry; trusted-time status remains Gap | [b8898fc224](https://github.com/PardasHealth/dhis2-core/commit/b8898fc224ef730cbf45329812e3e96c96633e54) | [Monotonic delay trace](afta-audit-monotonic-delay.md), [execution record](../evidence/afta-audit-monotonic-delay-2026-11-18.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -378,3 +380,7 @@ AFTA row without its remaining acceptance work.
 ## 18. Audit-record integrity and response
 
 **Selected source rows: 27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`).** The opt-in guard authenticates persisted record identity, metadata, JSONB attributes and compressed payload before decoding. A bad or absent tag emits `AUDIT_INTEGRITY_FAILURE` and blocks the matching query or count. See the [implementation, rollout and remaining acceptance](afta-audit-record-integrity.md). Both entries move from Gap to Partial evidence; full closure remains zero.
+
+## 19. Monotonic audit-buffer delays
+
+**Selected source row: 49 (`FPT_STM.1.1`).** Actual expiry ordering and monotonic elapsed time prevent wall-clock adjustment delays and head blocking by newer records. [Eight queue/scheduler checks and remaining acceptance](afta-audit-monotonic-delay.md) are recorded. Row 49 stays Gap.

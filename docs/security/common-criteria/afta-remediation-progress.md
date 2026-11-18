@@ -4,9 +4,13 @@ Updated: **18 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 18 November gap follow-up: monotonic audit-buffer delays
+
+**Selected source row: 49 (`FPT_STM.1.1`).** Corrected expiry ordering and wall-clock-dependent elapsed time in the optional audit buffer. [Eight tests and code trace](afta-audit-monotonic-delay.md) cover queue expiry and scheduler retry compatibility. Row 49 remains Gap; current status totals stay **45 partial, 8 gaps, 25 unresolved; 0 closed**. Activity now records **30 implementation commits across 24/78 primary entries**, plus one optional entry.
+
 ## 18 November gap follow-up: audit-record integrity
 
-**Selected source rows: 27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`).** Implemented opt-in keyed integrity tags for the consolidated `audit` table, verification before decoding, ERROR alerts and blocked reads/counts on tampering. See the [code, execution evidence and rollout conditions](afta-audit-record-integrity.md). Both rows move **Gap → Partial evidence**; default-off deployment, trusted legacy-history migration, other audit stores and remaining acceptance stay open. Current primary status: **45 partial, 8 gaps, 25 unresolved; 0 closed**. Linked implementation activity becomes **29 commits across 23/78 primary entries**, plus one optional entry.
+**Selected source rows: 27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`).** Implemented opt-in keyed integrity tags for the consolidated `audit` table, verification before decoding, ERROR alerts and blocked reads/counts on tampering. See the [code, execution evidence and rollout conditions](afta-audit-record-integrity.md). Both rows move **Gap → Partial evidence**; default-off deployment, trusted legacy-history migration, other audit stores and remaining acceptance stay open. Current primary status: **45 partial, 8 gaps, 25 unresolved; 0 closed**. At this follow-up, linked activity reached **29 commits across 23/78 primary entries**, plus one optional entry.
 
 ## 18 November gap follow-up: generation-owned token storage
 
