@@ -82,8 +82,7 @@ class AppBundlerTest {
                 "https://github.com/PardasHealth/capture-app#117c4b5e21dc5169c07250d25bc9e67e90eeb922"));
 
     AppBundler bundler =
-        new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
     System.clearProperty("PARDAS_APP_BUNDLE_DIR");
@@ -108,7 +107,7 @@ class AppBundlerTest {
     try {
       AppBundler bundler =
           new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+              downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       bundler.execute();
       assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "capture-app.zip")));
       assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "apps-bundle.json")));
@@ -129,7 +128,7 @@ class AppBundlerTest {
     try {
       AppBundler bundler =
           new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+              downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       IOException failure = assertThrows(IOException.class, bundler::execute);
       assertTrue(failure.getMessage().contains("manifest.webapp"));
     } finally {
@@ -149,7 +148,7 @@ class AppBundlerTest {
     try {
       AppBundler bundler =
           new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+              downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       IOException failure = assertThrows(IOException.class, bundler::execute);
       assertTrue(failure.getMessage().contains("no JavaScript or HTML assets"));
     } finally {
@@ -161,7 +160,9 @@ class AppBundlerTest {
     try (ZipOutputStream zip = new ZipOutputStream(Files.newOutputStream(path))) {
       if (manifest) {
         zip.putNextEntry(new ZipEntry("manifest.webapp"));
-        zip.write("{\"name\":\"Capture\",\"version\":\"1.0.0\"}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        zip.write(
+            "{\"name\":\"Capture\",\"version\":\"1.0.0\"}"
+                .getBytes(java.nio.charset.StandardCharsets.UTF_8));
         zip.closeEntry();
       }
       if (assets) {
