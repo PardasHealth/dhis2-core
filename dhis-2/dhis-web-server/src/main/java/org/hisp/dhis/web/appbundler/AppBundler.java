@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +46,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.regex.Matcher;
@@ -333,13 +333,19 @@ public class AppBundler {
       try (InputStream input = zip.getInputStream(manifest)) {
         metadata = OBJECT_MAPPER.readTree(input);
       }
-      if (metadata == null || !metadata.isObject()
-          || !metadata.hasNonNull("name") || !metadata.hasNonNull("version")) {
+      if (metadata == null
+          || !metadata.isObject()
+          || !metadata.hasNonNull("name")
+          || !metadata.hasNonNull("version")) {
         throw new IOException("Invalid app manifest.webapp in " + zipPath);
       }
-      boolean hasAssets = zip.stream()
-          .anyMatch(entry -> !entry.isDirectory()
-              && (entry.getName().endsWith(".js") || entry.getName().endsWith(".html")));
+      boolean hasAssets =
+          zip.stream()
+              .anyMatch(
+                  entry ->
+                      !entry.isDirectory()
+                          && (entry.getName().endsWith(".js")
+                              || entry.getName().endsWith(".html")));
       if (!hasAssets) {
         throw new IOException("Built app ZIP has no JavaScript or HTML assets: " + zipPath);
       }
