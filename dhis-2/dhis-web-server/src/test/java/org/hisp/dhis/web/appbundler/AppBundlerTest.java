@@ -82,7 +82,8 @@ class AppBundlerTest {
                 "https://github.com/PardasHealth/capture-app#117c4b5e21dc5169c07250d25bc9e67e90eeb922"));
 
     AppBundler bundler =
-        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
     System.clearProperty("PARDAS_APP_BUNDLE_DIR");
@@ -99,13 +100,15 @@ class AppBundlerTest {
   void testValidBuiltForkZipIsBundled() throws IOException {
     Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
     createAppZip(artifacts.resolve("capture-app.zip"), true, true);
-    new ObjectMapper().writeValue(
-        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    new ObjectMapper()
+        .writeValue(
+            appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
     String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
     System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
     try {
       AppBundler bundler =
-          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+          new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       bundler.execute();
       assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "capture-app.zip")));
       assertTrue(Files.isRegularFile(Path.of(buildDir, artifactId, "apps-bundle.json")));
@@ -118,13 +121,15 @@ class AppBundlerTest {
   void testBuiltForkZipWithoutManifestIsRejected() throws IOException {
     Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
     createAppZip(artifacts.resolve("capture-app.zip"), false, true);
-    new ObjectMapper().writeValue(
-        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    new ObjectMapper()
+        .writeValue(
+            appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
     String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
     System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
     try {
       AppBundler bundler =
-          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+          new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       IOException failure = assertThrows(IOException.class, bundler::execute);
       assertTrue(failure.getMessage().contains("manifest.webapp"));
     } finally {
@@ -136,13 +141,15 @@ class AppBundlerTest {
   void testBuiltForkZipWithoutAssetsIsRejected() throws IOException {
     Path artifacts = Files.createDirectory(tempDir.resolve("built-apps"));
     createAppZip(artifacts.resolve("capture-app.zip"), true, false);
-    new ObjectMapper().writeValue(
-        appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
+    new ObjectMapper()
+        .writeValue(
+            appListFile, Arrays.asList("https://github.com/PardasHealth/capture-app#abc123"));
     String previous = System.getProperty("PARDAS_APP_BUNDLE_DIR");
     System.setProperty("PARDAS_APP_BUNDLE_DIR", artifacts.toString());
     try {
       AppBundler bundler =
-          new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+          new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
       IOException failure = assertThrows(IOException.class, bundler::execute);
       assertTrue(failure.getMessage().contains("no JavaScript or HTML assets"));
     } finally {
@@ -179,7 +186,8 @@ class AppBundlerTest {
         .writeValue(appListFile, Arrays.asList("https://example.com/not-a-github-app"));
 
     AppBundler bundler =
-        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("Invalid required app URL"));
@@ -190,7 +198,8 @@ class AppBundlerTest {
     new ObjectMapper().writeValue(appListFile, Arrays.asList());
 
     AppBundler bundler =
-        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("No application URLs configured"));
@@ -200,7 +209,8 @@ class AppBundlerTest {
   void testAppBundlerCreatesCorrectStructure() throws IOException {
     // Execute the app bundler so we install the apps to our temp directory
     AppBundler bundler =
-        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(
+            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
     bundler.execute();
 
     Path buildDirPath = Path.of(buildDir).resolve(artifactId);
