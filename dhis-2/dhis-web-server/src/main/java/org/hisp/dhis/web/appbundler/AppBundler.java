@@ -211,8 +211,7 @@ public class AppBundler {
   }
 
   private List<BundledAppInfo> downloadApps(
-      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath)
-      throws IOException {
+      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath) throws IOException {
     ForkJoinPool customThreadPool = new ForkJoinPool(DOWNLOAD_POOL_SIZE);
     try {
       return customThreadPool
@@ -276,7 +275,8 @@ public class AppBundler {
       try {
         validateZip(outputPath);
       } catch (IOException e) {
-        throw new IOException("Server returned 304 but cached app ZIP is invalid: " + outputPath, e);
+        throw new IOException(
+            "Server returned 304 but cached app ZIP is invalid: " + outputPath, e);
       }
       connection.disconnect();
       return null;
