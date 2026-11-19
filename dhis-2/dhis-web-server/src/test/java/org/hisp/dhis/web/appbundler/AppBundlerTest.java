@@ -187,8 +187,7 @@ class AppBundlerTest {
         .writeValue(appListFile, Arrays.asList("https://example.com/not-a-github-app"));
 
     AppBundler bundler =
-        new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("Invalid required app URL"));
@@ -199,8 +198,7 @@ class AppBundlerTest {
     new ObjectMapper().writeValue(appListFile, Arrays.asList());
 
     AppBundler bundler =
-        new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
 
     IOException failure = assertThrows(IOException.class, bundler::execute);
     assertTrue(failure.getMessage().contains("No application URLs configured"));
@@ -210,8 +208,7 @@ class AppBundlerTest {
   void testAppBundlerCreatesCorrectStructure() throws IOException {
     // Execute the app bundler so we install the apps to our temp directory
     AppBundler bundler =
-        new AppBundler(
-            downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
+        new AppBundler(downloadDir, buildDir, artifactId, appListFile.getAbsolutePath(), "master");
     bundler.execute();
 
     Path buildDirPath = Path.of(buildDir).resolve(artifactId);
