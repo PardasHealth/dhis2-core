@@ -122,3 +122,5 @@ Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt
 - [Row 52: audit destination failures and retained-event recovery](afta-audit-destination-failure.md). Full fault-tolerance acceptance remains open.
 
 - [Rows 1/52: audit payload serialization failure boundary](afta-audit-payload-failure.md). Full acceptance remains open.
+
+- [Row 48: reject ambiguous audit-message JSON](afta-audit-message-validation.md). Full peer/schema/conflict-policy acceptance remains open.

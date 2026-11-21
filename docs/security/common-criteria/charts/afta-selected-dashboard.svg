@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-21T04:47:59.831431</dc:date>
+    <dc:date>2026-11-21T04:55:28.165472</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -30,52 +30,52 @@ z
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 301.222379 296.795238
-C 307.929139 282.661045 310.951408 267.056876 310.006809 251.44074
-C 309.062209 235.824604 304.181093 220.698497 295.819544 207.475769
-C 287.457996 194.253042 275.884806 183.35875 262.181346 175.810832
-C 248.477884 168.262914 233.084675 164.304 217.439996 164.304
+    <path d="M 297.75173 303.408006
+C 305.89041 289.311403 310.176 273.317362 310.176 257.040006
+C 310.176 240.76265 305.89041 224.768608 297.751736 210.672003
+C 289.613061 196.575397 277.904603 184.866939 263.807997 176.728264
+C 249.711392 168.58959 233.717352 164.304 217.439996 164.304
 L 217.439997 190.27008
-C 228.704166 190.27008 239.787277 193.120498 249.653769 198.554999
-C 259.52026 203.9895 267.852957 211.83339 273.873272 221.353754
-C 279.893587 230.874118 283.407991 241.764915 284.088102 253.008533
-C 284.768214 264.252151 282.59218 275.487153 277.763313 285.663771
+C 229.159693 190.27008 240.675402 193.355704 250.824958 199.21555
+C 260.974514 205.075396 269.404604 213.505486 275.26445 223.655042
+C 281.124296 233.804598 284.20992 245.320308 284.20992 257.040004
+C 284.20992 268.7597 281.124296 280.27541 275.264446 290.424964
 z
 " style="fill: #2679a6; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 217.440001 164.304
-C 200.846008 164.304 184.552231 168.757946 170.265682 177.199223
-C 155.979133 185.640501 144.216759 197.763671 136.210832 212.298654
-C 128.204906 226.833636 124.245118 243.254478 124.746307 259.840901
-C 125.247497 276.427324 130.191533 292.579148 139.060456 306.604225
-C 147.929379 320.629302 160.402274 332.020156 175.172427 339.583429
-C 189.942582 347.146703 206.475528 350.608728 223.039247 349.606809
-C 239.602966 348.604889 255.598087 343.175274 269.348901 333.886803
-C 283.099714 324.598332 294.108657 311.787087 301.222379 296.795238
-L 277.763313 285.663771
-C 272.641433 296.457903 264.714994 305.681999 254.814408 312.369698
-C 244.913823 319.057397 233.397336 322.96672 221.471458 323.688102
-C 209.54558 324.409484 197.641859 321.916826 187.007347 316.471269
-C 176.372837 311.025712 167.392353 302.824297 161.006728 292.726242
-C 154.621103 282.628187 151.061398 270.998874 150.700541 259.056649
-C 150.339685 247.114424 153.190732 235.291418 158.954999 224.826231
-C 164.719266 214.361043 173.188175 205.63236 183.474491 199.554641
-C 193.760807 193.476921 205.492326 190.27008 217.440001 190.27008
+C 201.162645 164.304 185.168614 168.58959 171.072008 176.728264
+C 156.975403 184.866939 145.266939 196.575397 137.128264 210.672003
+C 128.98959 224.768608 124.704 240.762658 124.704 257.040014
+C 124.704 273.31737 128.98959 289.311403 137.12827 303.408006
+C 145.26695 317.504608 156.975392 329.21305 171.071994 337.35173
+C 185.168597 345.49041 201.162651 349.776 217.440007 349.776
+C 233.717363 349.776 249.711414 345.490405 263.808017 337.351725
+C 277.904619 329.213045 289.61305 317.504608 297.75173 303.408006
+L 275.264446 290.424964
+C 269.404596 300.574518 260.974526 309.004592 250.824972 314.864442
+C 240.675418 320.724292 229.159701 323.80992 217.440005 323.80992
+C 205.720309 323.80992 194.20459 320.724296 184.055036 314.864446
+C 173.905482 309.004596 165.475404 300.574518 159.615554 290.424964
+C 153.755704 280.27541 150.67008 268.759706 150.67008 257.04001
+C 150.67008 245.320314 153.755704 233.804598 159.61555 223.655042
+C 165.475396 213.505486 173.90549 205.075396 184.055046 199.21555
+C 194.204602 193.355704 205.720305 190.27008 217.440001 190.27008
 z
 " style="fill: #dce3ec; stroke: #f7f9fc; stroke-width: 3; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1"/>
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="217.44" y="249.62112" transform="rotate(-0 217.44 249.62112)">25/78</text>
+    <text style="font-weight: 700; font-size: 32px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2679a6" x="217.44" y="249.62112" transform="rotate(-0 217.44 249.62112)">26/78</text>
    </g>
    <g id="text_2">
-    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="217.44" y="275.5872" transform="rotate(-0 217.44 275.5872)">32.1% have linked fixes</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #43556c" x="217.44" y="275.5872" transform="rotate(-0 217.44 275.5872)">33.3% have linked fixes</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(117.731016 399.865481)">33 distinct implementation commits</text>
-    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(95.987109 416.362216)">53 primary entries without linked follow-ups</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(117.731016 399.865481)">34 distinct implementation commits</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(95.987109 416.362216)">52 primary entries without linked follow-ups</text>
     <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #43556c" transform="translate(105.821797 432.85895)">1/3 optional entries also have follow-ups</text>
    </g>
    <g id="text_4">
@@ -236,7 +236,7 @@ z
    <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="51.84" y="35.28" transform="rotate(-0 51.84 35.28)">AFTA manager summary — latest recorded work</text>
   </g>
   <g id="text_16">
-   <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #2679a6" x="51.84" y="70.56" transform="rotate(-0 51.84 70.56)">33 implementation commits | 25/78 primary entries with linked fixes | updated 21 November 2026</text>
+   <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #2679a6" x="51.84" y="70.56" transform="rotate(-0 51.84 70.56)">34 implementation commits | 26/78 primary entries with linked fixes | updated 21 November 2026</text>
   </g>
   <g id="text_17">
    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #52637a" x="51.84" y="95.76" transform="rotate(-0 51.84 95.76)">Implementation activity and requirement acceptance are separate measures. Optional entries reported separately.</text>

@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source row 48 FPT_TDC.1.1: reject duplicate JSON fields and trailing tokens at the audit consumer boundary, use a local strict reader, propagate delivery failure without parser payload details; complete trusted-peer/schema/conflict policy remains Gap",
+  "baseline_core_commit": "9c2cdb3518ffb92b9a3a4c4350f0b9d6588b2b3a",
+  "implementation_commit": "76ed5687b5994391342a56df6668dd0da814ee1c",
+  "selected_source_rows": [
+    {
+      "row": 48,
+      "requirement": "FPT_TDC.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "303df63d8c7130b9cd18f6cc714bb92870e86f7d6a7a45724a094547ceb4dd1d",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java": "54df5c0fae0ef694379653f838a304612876751d15fe466375baffcb66664cd1",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java": "e8b426692b8ba36365394645337c6e29de512f566a439bf27e0430e0db78e780",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AuditMessageValidationTest.java": "e13708a087c4034c5138fe48c2e8e12f6a45404b7bbda2b14ef6ee3f1d36b004",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/DefaultAuditServiceFailureTest.java": "c5f45d403f42bbf4d85175881532f4993f62c9d572947771702655b844e7e12c",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.audit.AuditMessageValidationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditMessageValidationTest.xml": "523296e1e160881b31df53323f5f7c329acee1211e70c79e6c087ef8845a915b",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AbstractAuditConsumerFailureTest.xml": "1557a447a9819cfcd9f719205caa4f9396128c5ed058db9e819b7c7abc548007",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.DefaultAuditServiceFailureTest.xml": "52c46549188b52be74e137d7c872f2f98f013b8cab025d82193f0f508be51fd2",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest.xml": "f3d831652c7e0374baff1d1863ea9c1057736b6a83cf74ce26e732124fa5175c"
+  },
+  "baseline": {
+    "tests": 11,
+    "failures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Corrected new harness with old production code; eight validation and two consumer-failure cases plus one service-failure case in a separate reactor module. Five ambiguous/trailing message checks failed; valid-message and shared-mapper controls passed.",
+    "log_sha256": "2264c4e74a019084490822428a5a7ad9857082c40f6fbbd4327e3c999899563c"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-message-unit-final.log": "e1db956c10a5f27e149af212e28d58331c561835786e2c40eda9156a0d615afb",
+    "/tmp/afta-audit-message-postgres-final.log": "3aeee8e0aad74315d7646fbe0519d9381b593ded0fae0ffdd7f954fc07fc22b4"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-audit-consumer -am -Punit-test -Dtest=AuditMessageValidationTest,AbstractAuditConsumerFailureTest,DefaultAuditServiceFailureTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=AuditStorageDeliveryRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Real Jackson parsing with capturing service proxies; local Docker PostgreSQL/Artemis storage recovery tests; no production or hosted CI success claim",
+    "dependency_mode": "Offline cached dependencies, unchanged source-built sms-compression workaround documented in earlier evidence"
+  },
+  "not_established": [
+    "complete trusted-peer identity and authorization inventory",
+    "full attribute schemas, required fields and cross-system precedence rules",
+    "validation of opaque serialized data strings as an independent schema",
+    "broker poison-message deployment policy and external alert delivery",
+    "complete AFTA clauses and evaluator acceptance"
+  ]
+}
