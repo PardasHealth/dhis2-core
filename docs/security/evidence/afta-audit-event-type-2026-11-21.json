@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source rows 2 FAU_GEN.1.2 and 48 FPT_TDC.1.1: require audit event type and reject numeric enum coercion before audit sinks; statuses unchanged, no full closure",
+  "baseline_core_commit": "d8b4e938d8190c14582d7876a6baf2d90551f476",
+  "implementation_commit": "b80da28532223c385729f1886f802cf5e9bc3365",
+  "selected_source_rows": [
+    {
+      "row": 2,
+      "requirement": "FAU_GEN.1.2",
+      "status": "Partial evidence"
+    },
+    {
+      "row": 48,
+      "requirement": "FPT_TDC.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "73d005911cb752df251d1ad38ff00febca51f9ebeb68cd5db41b4a72a3abf8f2",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java": "f3a765eb3f696571c97dc3ee1e6a0c6c6491c87c322075ddd23acdcb8522fec3",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java": "c0d20df3de7e1df1345c77c51b9ef805535e21240ec0eab6c9c6ad0a1e83bfcd",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AuditDestinationScopeTest.java": "ce3b8d156e686b5fcf92cbe1603ff420bfba8a979ffd06459047250b2fcf2b64",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AuditMessageValidationTest.java": "b90d41590720b0c4c59b2d2b04264052df5787d528e89baaf33e0bc95e800beb",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/DefaultAuditServiceFailureTest.java": "c5f45d403f42bbf4d85175881532f4993f62c9d572947771702655b844e7e12c",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.audit.AuditDestinationScopeTest",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditMessageValidationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditDestinationScopeTest.xml": "1c2a563d78a6267bf00fc8b2fd0db47f3d1055eaf3a96a73897ca777253866ad",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditMessageValidationTest.xml": "0b0b9ef9edd7e13c8dfca55503a4506ea4ae835f499d6c4f55aa70f7b8e3444a",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AbstractAuditConsumerFailureTest.xml": "2d952be14a2bac475d0fd2f46124e1d67945bd9eff1cf2f798ff87fa1de7b31b",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.DefaultAuditServiceFailureTest.xml": "46dc8c3390322535489438eee2f87b097982085d265115a077453c939762deca",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest.xml": "c7d0252b1e7eb41c76cd60ab39ea78d6aa7e618f89fabb827e2bd3778caca0d3"
+  },
+  "baseline": {
+    "tests": 51,
+    "failures": 16,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Same new numeric/missing-type checks with old production code: four cases per consumer failed; existing 35 checks passed. Module test summaries are 50 consumer cases plus one service case.",
+    "log_sha256": "2af2482c6dd6ab77a6b606376d0771491950cc42c0fb2577be93fd07f5b96b96"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-enum-unit-final.log": "07d6ac2eafd16130e8c3bc1625581f20fd12519cc38d69403af5c5cd585a27c3",
+    "/tmp/afta-audit-enum-postgres-final.log": "f593631e48cda4c44eff6f0d518004bae2cb0b863d5969d1d75cfca82f1e0bc2"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-audit-consumer -am -Punit-test -Dtest=AuditDestinationScopeTest,AuditMessageValidationTest,AbstractAuditConsumerFailureTest,DefaultAuditServiceFailureTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=AuditStorageDeliveryRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local concrete-consumer unit checks and Docker PostgreSQL/JMS recovery regression; no hosted CI or deployment claim"
+  },
+  "not_established": [
+    "full audit field schema and event inventory",
+    "publisher identity and authorization or cross-peer precedence",
+    "production poison-message and availability policy",
+    "external alert delivery or full AFTA acceptance"
+  ]
+}

@@ -173,7 +173,7 @@
       "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
       "line": 43,
       "symbol": "class AbstractAuditConsumer",
-      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
+      "source_sha256": "f3a765eb3f696571c97dc3ee1e6a0c6c6491c87c322075ddd23acdcb8522fec3"
     },
     "auditbuffer": {
       "repository": "core",
@@ -537,14 +537,14 @@
       "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
       "symbol": "protected void _consume(",
       "line": 52,
-      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
+      "source_sha256": "f3a765eb3f696571c97dc3ee1e6a0c6c6491c87c322075ddd23acdcb8522fec3"
     },
     "auditdestinationscope": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
       "symbol": "protected void _consume(",
       "line": 52,
-      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
+      "source_sha256": "f3a765eb3f696571c97dc3ee1e6a0c6c6491c87c322075ddd23acdcb8522fec3"
     }
   },
   "rows": [
@@ -615,7 +615,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit record fields",
-      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. HTTP-request authentication details for password/MFA and Basic now retain the servlet-resolved address rather than raw forwarding headers; explicit session/detail values still depend on a trusted source. The replacement password/MFA success token now retains request address/session context in copied factor details with the submitted OTP cleared.",
+      "observation": "Audit repository and authentication listener expose event/identity/time information on selected paths. Failure records retain available addresses; identity/exception/address values preserve Unicode and escape line/field controls. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. HTTP-request authentication details for password/MFA and Basic now retain the servlet-resolved address rather than raw forwarding headers; explicit session/detail values still depend on a trusted source. The replacement password/MFA success token now retains request address/session context in copied factor details with the submitted OTP cleared. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open.",
       "gap_and_acceptance": "Map each required date/time, type, subject and outcome field; test success/failure, background and administrative events.",
       "references": [
         "auditquery",
@@ -623,7 +623,8 @@
         "tokenfailure",
         "tokenfailureevents",
         "authaddress",
-        "loginsuccesscontext"
+        "loginsuccesscontext",
+        "auditmessagevalidation"
       ],
       "source_key": "FAU_GEN.1.2",
       "counted": true,
@@ -665,6 +666,13 @@
           "trace": "afta-login-success-context.md",
           "full_requirement_closed": false,
           "implementation_commit": "1114c5c925156520e83acad1b0697a4d445cddf0"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Require event type and reject numeric type/scope enum values in a local reader before audit sinks; valid named values and shared mapper unchanged; no full requirement closure",
+          "trace": "afta-audit-event-type.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "b80da28532223c385729f1886f802cf5e9bc3365"
         }
       ]
     },
@@ -2000,7 +2008,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Consistent security-data interpretation",
-      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open.",
+      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open.",
       "gap_and_acceptance": "Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange.",
       "references": [
         "import",
@@ -2026,6 +2034,13 @@
           "trace": "afta-audit-destination-scope.md",
           "full_requirement_closed": false,
           "implementation_commit": "29a53061e83a51c53d7573d407ea92dbd304ab7d"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Require event type and reject numeric type/scope enum values in a local reader before audit sinks; valid named values and shared mapper unchanged; no full requirement closure",
+          "trace": "afta-audit-event-type.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "b80da28532223c385729f1886f802cf5e9bc3365"
         }
       ]
     },

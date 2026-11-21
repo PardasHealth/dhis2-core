@@ -4,9 +4,13 @@ Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 21 November gap follow-up: audit event type and enums
+
+**Selected source rows: 2 (`FAU_GEN.1.2`) and 48 (`FPT_TDC.1.1`).** Reject numeric type/scope enums and require event type before audit sinks. [Code, 51 unit checks and four PostgreSQL/JMS checks](afta-audit-event-type.md) are recorded. Statuses remain Partial and Gap. Activity now records **36 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 21 November gap follow-up: audit destination/scope binding
 
-**Selected source row: 48 (`FPT_TDC.1.1`).** All four receiving audit consumers now reject mismatched/missing scopes and null root records before sinks run. [Code, 35 unit checks and four PostgreSQL/JMS checks](afta-audit-destination-scope.md) are recorded. Full publisher trust/schema policy remains Gap. Activity now records **35 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 48 (`FPT_TDC.1.1`).** All four receiving audit consumers now reject mismatched/missing scopes and null root records before sinks run. [Code, 35 unit checks and four PostgreSQL/JMS checks](afta-audit-destination-scope.md) are recorded. Full publisher trust/schema policy remains Gap. At this follow-up, activity reached **35 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 21 November gap follow-up: audit message ambiguity
 
