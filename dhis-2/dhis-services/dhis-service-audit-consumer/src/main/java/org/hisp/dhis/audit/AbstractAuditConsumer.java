@@ -29,6 +29,8 @@
  */
 package org.hisp.dhis.audit;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.TextMessage;
 import java.io.IOException;
@@ -50,7 +52,11 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
   protected void _consume(TextMessage message) {
     try {
       org.hisp.dhis.artemis.audit.Audit auditMessage =
-          objectMapper.readValue(message.getText(), org.hisp.dhis.artemis.audit.Audit.class);
+          objectMapper
+              .readerFor(org.hisp.dhis.artemis.audit.Audit.class)
+              .with(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
+              .with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
+              .readValue(message.getText());
 
       if (auditMessage.getData() != null && !(auditMessage.getData() instanceof String)) {
         auditMessage.setData(objectMapper.writeValueAsString(auditMessage.getData()));
@@ -66,10 +72,10 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
         auditService.addAudit(audit);
       }
     } catch (IOException e) {
-      log.error(
-          "An error occurred de-serializing the message payload. The message can not be de-serialized to an Audit object.",
-          e);
-      throw new IllegalArgumentException("Invalid audit message payload", e);
+      // Parser diagnostics may contain audited values. Keep them out of logs and
+      // the exception handed to JMS retry/dead-letter handling.
+      log.error("AUDIT_MESSAGE_REJECTED reason=INVALID_PAYLOAD action=FAIL_DELIVERY");
+      throw new IllegalArgumentException("Invalid audit message payload");
     } catch (Exception e) {
       log.error("An error occurred persisting an audit message", e);
       throw new IllegalStateException("Audit message processing failed", e);
