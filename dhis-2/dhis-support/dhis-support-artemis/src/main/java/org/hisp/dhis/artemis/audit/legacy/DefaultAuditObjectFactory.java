@@ -35,7 +35,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hisp.dhis.audit.AuditScope;
 import org.hisp.dhis.audit.AuditType;
-import org.hisp.dhis.commons.util.DebugUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -82,8 +81,10 @@ public class DefaultAuditObjectFactory implements AuditObjectFactory {
     try {
       return objectMapper.writeValueAsString(object);
     } catch (JsonProcessingException e) {
-      log.error(DebugUtils.getStackTrace(e));
+      // Serializer exceptions can embed audited values. Report the failure without
+      // copying their text or cause into application logs or upstream exceptions.
+      log.error("AUDIT_SERIALIZATION_FAILURE action=ABORT_PUBLICATION");
+      throw new IllegalStateException("Unable to serialize audit payload");
     }
-    return null;
   }
 }

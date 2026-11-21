@@ -81,7 +81,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-support/dhis-support-artemis -am -Punit-test \
-            -Dtest=ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest,AuditProducerSupplierTest,QueuedAuditTest,AuditSchedulerTest,ExternalArtemisConnectionFactoryTest,ArtemisExternalTlsIntegrationTest \
+            -Dtest=ArtemisAuditBrokerIntegrationTest,ArtemisAuditRedeliveryTest,AuditPayloadSerializationTest,AuditManagerTest,AuditProducerSupplierTest,QueuedAuditTest,AuditSchedulerTest,ExternalArtemisConnectionFactoryTest,ArtemisExternalTlsIntegrationTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Execute PostgreSQL audit regression tests
@@ -123,6 +123,8 @@ jobs:
               "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
               "org.hisp.dhis.artemis.audit.QueuedAuditTest",
               "org.hisp.dhis.artemis.audit.AuditProducerSupplierTest",
+              "org.hisp.dhis.artemis.audit.AuditPayloadSerializationTest",
+              "org.hisp.dhis.artemis.audit.AuditManagerTest",
               "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
           }
           seen = {}
