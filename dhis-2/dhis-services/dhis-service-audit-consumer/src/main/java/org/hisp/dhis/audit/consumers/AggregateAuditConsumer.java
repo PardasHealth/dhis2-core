@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.TextMessage;
 import org.hisp.dhis.artemis.Topics;
 import org.hisp.dhis.audit.AbstractAuditConsumer;
+import org.hisp.dhis.audit.AuditScope;
 import org.hisp.dhis.audit.AuditService;
 import org.hisp.dhis.external.conf.ConfigurationKey;
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
@@ -53,6 +54,6 @@ public class AggregateAuditConsumer extends AbstractAuditConsumer {
 
   @JmsListener(destination = Topics.AGGREGATE_TOPIC_NAME)
   public void consume(TextMessage message) {
-    _consume(message);
+    _consume(message, AuditScope.AGGREGATE);
   }
 }

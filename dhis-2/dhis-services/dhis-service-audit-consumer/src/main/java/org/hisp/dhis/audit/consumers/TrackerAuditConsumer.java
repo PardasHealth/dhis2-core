@@ -34,6 +34,7 @@ import jakarta.jms.TextMessage;
 import java.util.Objects;
 import org.hisp.dhis.artemis.Topics;
 import org.hisp.dhis.audit.AbstractAuditConsumer;
+import org.hisp.dhis.audit.AuditScope;
 import org.hisp.dhis.audit.AuditService;
 import org.hisp.dhis.external.conf.ConfigurationKey;
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
@@ -61,6 +62,6 @@ public class TrackerAuditConsumer extends AbstractAuditConsumer {
 
   @JmsListener(destination = Topics.TRACKER_TOPIC_NAME)
   public void consume(TextMessage message) {
-    _consume(message);
+    _consume(message, AuditScope.TRACKER);
   }
 }

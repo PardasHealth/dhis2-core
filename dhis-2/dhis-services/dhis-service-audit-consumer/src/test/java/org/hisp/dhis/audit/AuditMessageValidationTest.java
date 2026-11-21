@@ -75,7 +75,8 @@ class AuditMessageValidationTest {
   @Test
   void serializedStringPayloadIsRetainedAsOpaqueData() throws Exception {
     var consumer = new TestConsumer();
-    consumer.accept("{\"auditType\":\"CREATE\",\"data\":\"opaque payload\"}");
+    consumer.accept(
+        "{\"auditType\":\"CREATE\",\"auditScope\":\"METADATA\",\"data\":\"opaque payload\"}");
     assertEquals(1, consumer.stored.size());
     assertEquals("opaque payload", consumer.stored.get(0).getData());
   }
@@ -83,7 +84,7 @@ class AuditMessageValidationTest {
   @Test
   void strictConsumerDoesNotMutateSharedMapperPolicy() throws Exception {
     var consumer = new TestConsumer();
-    consumer.accept("{\"auditType\":\"CREATE\"}");
+    consumer.accept("{\"auditType\":\"CREATE\",\"auditScope\":\"METADATA\"}");
     assertFalse(consumer.objectMapper.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
     assertFalse(consumer.objectMapper.isEnabled(JsonParser.Feature.STRICT_DUPLICATE_DETECTION));
     assertEquals(
@@ -120,7 +121,7 @@ class AuditMessageValidationTest {
                     if (method.getName().equals("getText")) return json;
                     throw new UnsupportedOperationException(method.getName());
                   });
-      _consume(message);
+      _consume(message, AuditScope.METADATA);
     }
   }
 }

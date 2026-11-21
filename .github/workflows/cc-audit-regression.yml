@@ -74,7 +74,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-services/dhis-service-core -am -Punit-test \
-            -Dtest=AuditIntegrityConfigTest,AuditMessageValidationTest,DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
+            -Dtest=AuditIntegrityConfigTest,AuditDestinationScopeTest,AuditMessageValidationTest,DefaultAuditServiceFailureTest,AbstractAuditConsumerFailureTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Execute Artemis audit broker and external TLS tests
@@ -117,6 +117,7 @@ jobs:
               "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
               "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
               "org.hisp.dhis.audit.AuditMessageValidationTest",
+              "org.hisp.dhis.audit.AuditDestinationScopeTest",
               "org.hisp.dhis.artemis.config.ArtemisAuditBrokerIntegrationTest",
               "org.hisp.dhis.artemis.config.ArtemisAuditRedeliveryTest",
               "org.hisp.dhis.artemis.config.ExternalArtemisConnectionFactoryTest",

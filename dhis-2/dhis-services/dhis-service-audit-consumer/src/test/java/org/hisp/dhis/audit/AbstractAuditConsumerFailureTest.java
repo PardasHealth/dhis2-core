@@ -60,7 +60,7 @@ class AbstractAuditConsumerFailureTest {
                 new Class<?>[] {TextMessage.class},
                 (proxy, method, args) -> {
                   if (method.getName().equals("getText")) {
-                    return "{\"auditType\":\"CREATE\"}";
+                    return "{\"auditType\":\"CREATE\",\"auditScope\":\"METADATA\"}";
                   }
                   throw new UnsupportedOperationException(method.getName());
                 });
@@ -70,7 +70,8 @@ class AbstractAuditConsumerFailureTest {
     consumer.isAuditDatabaseEnabled = true;
 
     IllegalStateException thrown =
-        assertThrows(IllegalStateException.class, () -> consumer._consume(message));
+        assertThrows(
+            IllegalStateException.class, () -> consumer._consume(message, AuditScope.METADATA));
     assertSame(databaseFailure, thrown.getCause());
   }
 
@@ -90,7 +91,8 @@ class AbstractAuditConsumerFailureTest {
     TestConsumer consumer = new TestConsumer();
     consumer.objectMapper = new ObjectMapper();
 
-    assertThrows(IllegalArgumentException.class, () -> consumer._consume(message));
+    assertThrows(
+        IllegalArgumentException.class, () -> consumer._consume(message, AuditScope.METADATA));
   }
 
   private static final class TestConsumer extends AbstractAuditConsumer {}

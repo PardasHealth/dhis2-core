@@ -49,7 +49,7 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
 
   protected boolean isAuditDatabaseEnabled;
 
-  protected void _consume(TextMessage message) {
+  protected void _consume(TextMessage message, AuditScope expectedScope) {
     try {
       org.hisp.dhis.artemis.audit.Audit auditMessage =
           objectMapper
@@ -57,6 +57,13 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
               .with(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
               .with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
               .readValue(message.getText());
+
+      // The listener destination, not an untrusted message claim, selects the scope.
+      if (auditMessage == null
+          || expectedScope == null
+          || auditMessage.getAuditScope() != expectedScope) {
+        throw new IOException("Audit scope does not match destination");
+      }
 
       if (auditMessage.getData() != null && !(auditMessage.getData() instanceof String)) {
         auditMessage.setData(objectMapper.writeValueAsString(auditMessage.getData()));
