@@ -29,9 +29,9 @@
  */
 package org.hisp.dhis.artemis.audit;
 
-import com.google.common.base.Strings;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.hisp.dhis.artemis.MessageManager;
 import org.hisp.dhis.audit.AuditScope;
 import org.springframework.stereotype.Component;
@@ -55,7 +55,7 @@ public class AuditProducerSupplier {
   public void publish(Audit audit) {
     String topic = getTopicName(audit);
 
-    if (!Strings.isNullOrEmpty(topic)) {
+    if (StringUtils.isNotBlank(topic)) {
       if (log.isDebugEnabled()) {
         log.debug(
             "sending auditing message to topic: [" + topic + "] with content: " + audit.toLog());
@@ -66,6 +66,10 @@ public class AuditProducerSupplier {
           String.format(
               "Unable to map AuditScope [%s] to a topic name. Sending aborted",
               audit.getAuditScope()));
+      // Returning normally would acknowledge a failed publication to the scheduler
+      // and discard its pending event. Preserve the existing retry/failure boundary.
+      throw new IllegalStateException(
+          "Audit destination is missing for scope " + audit.getAuditScope());
     }
   }
 
