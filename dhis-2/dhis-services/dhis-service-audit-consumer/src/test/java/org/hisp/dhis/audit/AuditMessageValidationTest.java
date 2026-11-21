@@ -86,6 +86,7 @@ class AuditMessageValidationTest {
     var consumer = new TestConsumer();
     consumer.accept("{\"auditType\":\"CREATE\",\"auditScope\":\"METADATA\"}");
     assertFalse(consumer.objectMapper.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
+    assertFalse(consumer.objectMapper.isEnabled(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS));
     assertFalse(consumer.objectMapper.isEnabled(JsonParser.Feature.STRICT_DUPLICATE_DETECTION));
     assertEquals(
         2, consumer.objectMapper.readTree("{\"value\":1,\"value\":2}").get("value").asInt());

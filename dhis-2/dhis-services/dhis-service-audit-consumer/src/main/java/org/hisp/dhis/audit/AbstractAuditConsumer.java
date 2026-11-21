@@ -56,13 +56,15 @@ public abstract class AbstractAuditConsumer implements AuditConsumer {
               .readerFor(org.hisp.dhis.artemis.audit.Audit.class)
               .with(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
               .with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
+              .with(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS)
               .readValue(message.getText());
 
       // The listener destination, not an untrusted message claim, selects the scope.
       if (auditMessage == null
           || expectedScope == null
-          || auditMessage.getAuditScope() != expectedScope) {
-        throw new IOException("Audit scope does not match destination");
+          || auditMessage.getAuditScope() != expectedScope
+          || auditMessage.getAuditType() == null) {
+        throw new IOException("Audit type is missing or scope does not match destination");
       }
 
       if (auditMessage.getData() != null && !(auditMessage.getData() instanceof String)) {

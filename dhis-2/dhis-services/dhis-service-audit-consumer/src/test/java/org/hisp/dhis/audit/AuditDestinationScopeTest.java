@@ -92,6 +92,42 @@ class AuditDestinationScopeTest {
     assertEquals("payload", harness.stored.get(0).getData());
   }
 
+  @ParameterizedTest
+  @EnumSource(AuditScope.class)
+  void numericAuditTypeNeverReachesStorage(AuditScope destination) throws Exception {
+    var harness = new Harness(destination);
+    String json = "{\"auditType\":0,\"auditScope\":\"" + destination.name() + "\"}";
+    assertThrows(IllegalArgumentException.class, () -> harness.consume(json));
+    assertTrue(harness.stored.isEmpty());
+  }
+
+  @ParameterizedTest
+  @EnumSource(AuditScope.class)
+  void numericAuditScopeNeverReachesStorage(AuditScope destination) throws Exception {
+    var harness = new Harness(destination);
+    String json = "{\"auditType\":\"CREATE\",\"auditScope\":" + destination.ordinal() + "}";
+    assertThrows(IllegalArgumentException.class, () -> harness.consume(json));
+    assertTrue(harness.stored.isEmpty());
+  }
+
+  @ParameterizedTest
+  @EnumSource(AuditScope.class)
+  void missingAuditTypeNeverReachesStorage(AuditScope destination) throws Exception {
+    var harness = new Harness(destination);
+    String json = "{\"auditScope\":\"" + destination.name() + "\"}";
+    assertThrows(IllegalArgumentException.class, () -> harness.consume(json));
+    assertTrue(harness.stored.isEmpty());
+  }
+
+  @ParameterizedTest
+  @EnumSource(AuditScope.class)
+  void nullAuditTypeNeverReachesStorage(AuditScope destination) throws Exception {
+    var harness = new Harness(destination);
+    String json = "{\"auditType\":null,\"auditScope\":\"" + destination.name() + "\"}";
+    assertThrows(IllegalArgumentException.class, () -> harness.consume(json));
+    assertTrue(harness.stored.isEmpty());
+  }
+
   private static String payload(AuditScope scope) {
     return "{\"auditType\":\"CREATE\",\"auditScope\":\""
         + scope.name()
