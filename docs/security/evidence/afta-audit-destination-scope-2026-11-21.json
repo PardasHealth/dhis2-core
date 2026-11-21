@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source row 48 FPT_TDC.1.1: bind audit claims to the receiving consumer scope before logging/storage; reject mismatched/missing scope and null root; complete peer/schema/conflict policy remains Gap",
+  "baseline_core_commit": "113f271f582602a8c456994010f21a6eb4c9ef06",
+  "implementation_commit": "29a53061e83a51c53d7573d407ea92dbd304ab7d",
+  "selected_source_rows": [
+    {
+      "row": 48,
+      "requirement": "FPT_TDC.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "73d005911cb752df251d1ad38ff00febca51f9ebeb68cd5db41b4a72a3abf8f2",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/consumers/AggregateAuditConsumer.java": "b9797af35271f2e1588be8944b25d3b0d18dedcec907ec96ce761e021d73eaf2",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/consumers/ApiAuditConsumer.java": "89b80b030fa7a76227ae5dfe6cdbdaf586eceb0d3d33f4075f7fb1cc47482fc3",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/consumers/MetadataAuditConsumer.java": "88f9a67cd6b01be1e671a6f91f414d45e20daeb7cadd2ace8bdd3d3d102f7497",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/consumers/TrackerAuditConsumer.java": "38e7bbb0b28a062aeafbb168bb7629cb6539e9d6eecea5eb700eff62ab4cf084",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AbstractAuditConsumerFailureTest.java": "c0d20df3de7e1df1345c77c51b9ef805535e21240ec0eab6c9c6ad0a1e83bfcd",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AuditDestinationScopeTest.java": "c698315e05e2cd1bf19f17f566aec940eced66e2cf1f7c0a1b5a42e5acd16210",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/src/test/java/org/hisp/dhis/audit/AuditMessageValidationTest.java": "b2b7daf07a30791863c30ffc365ac6b33fd4eaaf1ab95795f4d317836e856c44",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/DefaultAuditServiceFailureTest.java": "c5f45d403f42bbf4d85175881532f4993f62c9d572947771702655b844e7e12c",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.audit.AuditDestinationScopeTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditMessageValidationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AbstractAuditConsumerFailureTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.DefaultAuditServiceFailureTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditDestinationScopeTest.xml": "a6a0b768df764fe6e87b9d40c339c77439dff35098f23e0ac3f5541ace3dcdf3",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditMessageValidationTest.xml": "fa93a35673fe5b47ba09ebd1820c2056f3f58a43b32efe2274d705089c69a091",
+    "dhis-2/dhis-services/dhis-service-audit-consumer/target/surefire-reports/TEST-org.hisp.dhis.audit.AbstractAuditConsumerFailureTest.xml": "399701944f29864e642d41a3bd5fa9038054566864c1dda4adf3df7623e411f7",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.DefaultAuditServiceFailureTest.xml": "350d2756d4118ad7a7fc3a273fcbdd55edf24950ef10eb10b1ac74a78ae8ce12",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest.xml": "aec2eaeb4999ada95bcabffd8b4467193183521bf0c41d7d7b63670060b56aff"
+  },
+  "baseline": {
+    "tests": 35,
+    "failures": 20,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Corrected new destination test harness with old production code plus existing unit suites. Twelve mismatches, four absent scopes and four null roots failed; four matching scopes and eleven existing checks passed. Existing successful-message fixtures were updated after the baseline to carry the now-required matching scope.",
+    "log_sha256": "1330b87bc42fa0d1c00b4a72c0b1e138113fb7db5d7aba3ab7d5dc2877a46a95"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-scope-unit-final.log": "09cdda53c08ba7ca36f32a8f36c007e894bfb4023e10f9b46ab56726b595ef36",
+    "/tmp/afta-audit-scope-postgres-final.log": "c9262c5750bbbaed39fa7de9c667f73bc80f58c41510c5305495040583f6d1e9"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-audit-consumer -am -Punit-test -Dtest=AuditDestinationScopeTest,AuditMessageValidationTest,AbstractAuditConsumerFailureTest,DefaultAuditServiceFailureTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=AuditStorageDeliveryRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Four real concrete consumers with capturing service/configuration proxies; local Docker PostgreSQL/JMS recovery regression; no hosted CI/deployment claim"
+  },
+  "not_established": [
+    "trusted publisher identity or broker authorization",
+    "complete attribute schemas and cross-peer precedence rules",
+    "production retry/dead-letter availability policy",
+    "external alert delivery and complete AFTA acceptance"
+  ]
+}

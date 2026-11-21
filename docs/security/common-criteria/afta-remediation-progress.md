@@ -4,9 +4,13 @@ Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 21 November gap follow-up: audit destination/scope binding
+
+**Selected source row: 48 (`FPT_TDC.1.1`).** All four receiving audit consumers now reject mismatched/missing scopes and null root records before sinks run. [Code, 35 unit checks and four PostgreSQL/JMS checks](afta-audit-destination-scope.md) are recorded. Full publisher trust/schema policy remains Gap. Activity now records **35 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 21 November gap follow-up: audit message ambiguity
 
-**Selected source row: 48 (`FPT_TDC.1.1`).** Reject duplicate fields and trailing JSON before audit sinks, without changing the shared mapper. [Code, 11 unit checks and four PostgreSQL/JMS checks](afta-audit-message-validation.md) are recorded. Full peer/schema/conflict policy remains Gap. Activity now records **34 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 48 (`FPT_TDC.1.1`).** Reject duplicate fields and trailing JSON before audit sinks, without changing the shared mapper. [Code, 11 unit checks and four PostgreSQL/JMS checks](afta-audit-message-validation.md) are recorded. Full peer/schema/conflict policy remains Gap. At this follow-up, activity reached **34 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 21 November gap follow-up: audit payload failures
 

@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **21 November 2026**. Branch: `work`. Reviewed code snapshot:
-`76ed5687b5`. Subsequent documentation-only commits do not change that code.
+`29a53061e8`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twenty-three recent implementation fixes to selected checklist
+This guide traces the twenty-four recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -73,6 +73,8 @@ does not close every acceptance condition in those rows.
 | 1: `FAU_GEN.1.1`; 52: `FRU_FLT.1.1` | Applied 21 November: stop direct/buffered publication after audit payload serialization failure; safe failure marker; statuses unchanged | [532ef82f92](https://github.com/PardasHealth/dhis2-core/commit/532ef82f92eae405f042099435ef7102095e2269) | [Payload failure trace](afta-audit-payload-failure.md), [execution record](../evidence/afta-audit-payload-failure-2026-11-21.json) |
 
 | 48: `FPT_TDC.1.1` | Applied 21 November: reject duplicate/trailing audit JSON before logging/storage; isolate strict reader and generic failure diagnostics; status remains Gap | [76ed5687b5](https://github.com/PardasHealth/dhis2-core/commit/76ed5687b5994391342a56df6668dd0da814ee1c) | [Message validation trace](afta-audit-message-validation.md), [execution record](../evidence/afta-audit-message-validation-2026-11-21.json) |
+
+| 48: `FPT_TDC.1.1` | Applied 21 November: require message scope to match each receiving audit consumer before sinks; reject missing scope and null roots; status remains Gap | [29a53061e8](https://github.com/PardasHealth/dhis2-core/commit/29a53061e83a51c53d7573d407ea92dbd304ab7d) | [Destination scope trace](afta-audit-destination-scope.md), [execution record](../evidence/afta-audit-destination-scope-2026-11-21.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -408,3 +410,7 @@ AFTA row without its remaining acceptance work.
 ## 23. Audit message ambiguity rejection
 
 **Selected source row: 48 (`FPT_TDC.1.1`).** Local strict parsing rejects duplicate fields and trailing content before the audit sinks. [Code, 15 passing checks and remaining acceptance](afta-audit-message-validation.md) are recorded. Full peer/schema/conflict policy is unestablished; row 48 remains Gap.
+
+## 24. Audit destination and scope binding
+
+**Selected source row: 48 (`FPT_TDC.1.1`).** Each concrete audit consumer binds the message claim to its receiving scope before sinks run. [Code, 39 passing checks and remaining acceptance](afta-audit-destination-scope.md) are recorded. Row 48 remains Gap.

@@ -173,7 +173,7 @@
       "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
       "line": 43,
       "symbol": "class AbstractAuditConsumer",
-      "source_sha256": "54df5c0fae0ef694379653f838a304612876751d15fe466375baffcb66664cd1"
+      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
     },
     "auditbuffer": {
       "repository": "core",
@@ -537,7 +537,14 @@
       "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
       "symbol": "protected void _consume(",
       "line": 52,
-      "source_sha256": "54df5c0fae0ef694379653f838a304612876751d15fe466375baffcb66664cd1"
+      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
+    },
+    "auditdestinationscope": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-audit-consumer/src/main/java/org/hisp/dhis/audit/AbstractAuditConsumer.java",
+      "symbol": "protected void _consume(",
+      "line": 52,
+      "source_sha256": "80a5af67e96684b5f168e29460e64781c9b9461c3690d222c530d57007893d3c"
     }
   },
   "rows": [
@@ -1993,11 +2000,12 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Consistent security-data interpretation",
-      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished.",
+      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open.",
       "gap_and_acceptance": "Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange.",
       "references": [
         "import",
-        "auditmessagevalidation"
+        "auditmessagevalidation",
+        "auditdestinationscope"
       ],
       "source_key": "FPT_TDC.1.1",
       "counted": true,
@@ -2011,6 +2019,13 @@
           "trace": "afta-audit-message-validation.md",
           "full_requirement_closed": false,
           "implementation_commit": "76ed5687b5994391342a56df6668dd0da814ee1c"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Bind all four audit consumers to fixed receiving scope; reject mismatched/missing scope and null records before sinks, preserving valid delivery and existing failure handling; complete trusted-peer policy remains Gap",
+          "trace": "afta-audit-destination-scope.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "29a53061e83a51c53d7573d407ea92dbd304ab7d"
         }
       ]
     },
