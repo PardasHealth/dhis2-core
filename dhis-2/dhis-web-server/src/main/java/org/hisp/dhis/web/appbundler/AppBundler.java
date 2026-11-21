@@ -32,20 +32,20 @@ package org.hisp.dhis.web.appbundler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.regex.Matcher;
@@ -211,7 +211,7 @@ public class AppBundler {
   }
 
   private List<BundledAppInfo> downloadApps(
-      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath) {
+      List<AppGithubRepo> appRepoInfos, Path artifactDirPath, Path etagDirPath) throws IOException {
     ForkJoinPool customThreadPool = new ForkJoinPool(DOWNLOAD_POOL_SIZE);
     try {
       return customThreadPool
@@ -223,22 +223,30 @@ public class AppBundler {
                             try {
                               return downloadApp(repoInfo, artifactDirPath, etagDirPath);
                             } catch (IOException e) {
-                              // error is logged in downloadApp()
-                              return null;
+                              throw new UncheckedIOException(
+                                  "Failed to bundle required app: " + repoInfo.originalUrl(), e);
                             }
                           })
-                      .filter(Objects::nonNull)
                       .toList())
           .get();
-
-    } catch (InterruptedException | ExecutionException e) {
-      error("Error during parallel app download", e);
-      // Restore interrupt status
+    } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
+      throw new IOException("Interrupted while downloading app bundles", e);
+    } catch (ExecutionException e) {
+      Throwable cause = e.getCause();
+      while (cause != null) {
+        if (cause instanceof UncheckedIOException unchecked) {
+          throw unchecked.getCause();
+        }
+        if (cause.getCause() == null || cause.getCause() == cause) {
+          break;
+        }
+        cause = cause.getCause();
+      }
+      throw new IOException("Failed to download required app bundles", e);
     } finally {
       customThreadPool.shutdown();
     }
-    throw new IllegalStateException("Failed to download apps");
   }
 
   /**
@@ -264,6 +272,13 @@ public class AppBundler {
 
     int responseCode = connection.getResponseCode();
     if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+      try {
+        validateZip(outputPath);
+      } catch (IOException e) {
+        throw new IOException(
+            "Server returned 304 but cached app ZIP is invalid: " + outputPath, e);
+      }
+      connection.disconnect();
       return null;
     }
     if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -276,21 +291,65 @@ public class AppBundler {
       etag = etag.replace("\"", ""); // Remove quotes from ETag
     }
 
-    // Download the file
-    try (InputStream in = connection.getInputStream();
-        FileOutputStream out = new FileOutputStream(outputPath.toFile())) {
-      byte[] buffer = new byte[8192];
-      int bytesRead;
-      while ((bytesRead = in.read(buffer)) != -1) {
-        out.write(buffer, 0, bytesRead);
+    // Never overwrite a working cached bundle until the replacement is complete and valid.
+    Path temporaryZip = Files.createTempFile(outputPath.getParent(), "app-download-", ".zip");
+    try {
+      try (InputStream in = connection.getInputStream()) {
+        Files.copy(in, temporaryZip, StandardCopyOption.REPLACE_EXISTING);
+      }
+      validateZip(temporaryZip);
+      Files.move(temporaryZip, outputPath, StandardCopyOption.REPLACE_EXISTING);
+      if (etag != null) {
+        Files.writeString(etagPath, etag);
+      } else {
+        Files.deleteIfExists(etagPath);
+      }
+      return etag;
+    } finally {
+      Files.deleteIfExists(temporaryZip);
+      connection.disconnect();
+    }
+  }
+
+  private static void validateZip(Path zipPath) throws IOException {
+    if (!Files.isRegularFile(zipPath) || Files.size(zipPath) == 0) {
+      throw new IOException("Downloaded app ZIP is missing or empty: " + zipPath);
+    }
+    try (ZipFile zip = new ZipFile(zipPath.toFile())) {
+      if (!zip.entries().hasMoreElements()) {
+        throw new IOException("Downloaded app ZIP has no entries: " + zipPath);
       }
     }
+  }
 
-    // Save the ETag for future comparisons
-    if (etag != null) {
-      Files.writeString(etagPath, etag);
+  private static void validateDeployableAppZip(Path zipPath) throws IOException {
+    validateZip(zipPath);
+    try (ZipFile zip = new ZipFile(zipPath.toFile())) {
+      ZipEntry manifest = zip.getEntry("manifest.webapp");
+      if (manifest == null || manifest.isDirectory()) {
+        throw new IOException("Built app ZIP lacks root-level manifest.webapp: " + zipPath);
+      }
+      JsonNode metadata;
+      try (InputStream input = zip.getInputStream(manifest)) {
+        metadata = OBJECT_MAPPER.readTree(input);
+      }
+      if (metadata == null
+          || !metadata.isObject()
+          || !metadata.hasNonNull("name")
+          || !metadata.hasNonNull("version")) {
+        throw new IOException("Invalid app manifest.webapp in " + zipPath);
+      }
+      boolean hasAssets =
+          zip.stream()
+              .anyMatch(
+                  entry ->
+                      !entry.isDirectory()
+                          && (entry.getName().endsWith(".js")
+                              || entry.getName().endsWith(".html")));
+      if (!hasAssets) {
+        throw new IOException("Built app ZIP has no JavaScript or HTML assets: " + zipPath);
+      }
     }
-    return etag;
   }
 
   private void writeBundleFile(Path targetArtifactDir) throws IOException {
@@ -308,14 +367,8 @@ public class AppBundler {
         Path sourceZipPath = downloadDirPath.resolve(artifactId).resolve(app.getName() + ".zip");
         Path destZipPath = targetArtifactDir.resolve(app.getName() + ".zip");
 
-        if (Files.exists(sourceZipPath)) {
-          Files.copy(sourceZipPath, destZipPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-        } else {
-          error(
-              "Source zip file not found, skipping copy for app {}: {}",
-              app.getName(),
-              sourceZipPath);
-        }
+        validateZip(sourceZipPath);
+        Files.copy(sourceZipPath, destZipPath, StandardCopyOption.REPLACE_EXISTING);
       }
       info("Finished copying app bundles to build directory.");
 
@@ -354,11 +407,14 @@ public class AppBundler {
         if (codeloadUrl != null) {
           appInfos.add(new AppGithubRepo(owner, repo, ref, rawUrl, codeloadUrl));
         } else {
-          error("Skipping app due to failed conversion from URL: {}", rawUrl);
+          throw new IOException("Cannot convert required app URL: " + rawUrl);
         }
       } else {
-        error("Skipping app due to invalid GitHub URL format: {}", rawUrl);
+        throw new IOException("Invalid required app URL: " + rawUrl);
       }
+    }
+    if (appInfos.isEmpty()) {
+      throw new IOException("No application URLs configured in " + appListPath);
     }
     info("Successfully parsed {} app URLs out of {}", appInfos.size(), rawUrls.size());
     return appInfos;
@@ -387,8 +443,26 @@ public class AppBundler {
       Path zipFilePath = targetDir.resolve(zipName);
       Path etagFile = etagsDir.resolve(repoInfo.repo() + ".etag");
 
+      if ("PardasHealth".equals(repoInfo.owner())) {
+        String builtBundleDir = System.getProperty("PARDAS_APP_BUNDLE_DIR");
+        if (builtBundleDir == null || builtBundleDir.isBlank()) {
+          throw new IOException(
+              "Cannot bundle PardasHealth source archive as a deployable DHIS2 app: "
+                  + repoInfo.originalUrl()
+                  + ". Set PARDAS_APP_BUNDLE_DIR to a directory containing built app ZIPs.");
+        }
+        Path source = Paths.get(builtBundleDir).resolve(zipName);
+        validateDeployableAppZip(source);
+        Files.copy(source, zipFilePath, StandardCopyOption.REPLACE_EXISTING);
+        Files.deleteIfExists(etagFile);
+        return appBundleResultInfo;
+      }
+
       String etag = downloadIfChanged(repoInfo.codeloadUrl(), zipFilePath, etagFile);
-      if (etag == null) { // Not modified or download failed ETag retrieval
+      if (!Files.isRegularFile(zipFilePath) || Files.size(zipFilePath) == 0) {
+        throw new IOException("Required app ZIP is missing or empty: " + zipFilePath);
+      }
+      if (etag == null) { // Not modified or no ETag returned
         if (Files.exists(etagFile)) {
           appBundleResultInfo.setEtag(Files.readString(etagFile, StandardCharsets.UTF_8));
           info("App {} is already up to date (ETag: {})", zipName, appBundleResultInfo.getEtag());
