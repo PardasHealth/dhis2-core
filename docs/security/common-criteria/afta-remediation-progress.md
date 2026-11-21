@@ -4,9 +4,13 @@ Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 21 November gap follow-up: audit payload failures
+
+**Selected source rows: 1 (`FAU_GEN.1.1`) and 52 (`FRU_FLT.1.1`).** Serialization errors now stop publication instead of producing a null payload, with a fixed failure marker that excludes serializer exception details. [Code and 30 passing tests](afta-audit-payload-failure.md) cover all scopes and both direct/buffered paths. Statuses remain Partial and Gap. Activity now records **33 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 21 November gap follow-up: audit destination failures
 
-**Selected source row: 52 (`FRU_FLT.1.1`).** Missing or blank destinations now propagate publication failure, allowing the optional scheduler to retain the pending event. [Code and 19 passing tests](afta-audit-destination-failure.md) include retry after in-process mapping repair. Row 52 remains Gap. Activity now records **32 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 52 (`FRU_FLT.1.1`).** Missing or blank destinations now propagate publication failure, allowing the optional scheduler to retain the pending event. [Code and 19 passing tests](afta-audit-destination-failure.md) include retry after in-process mapping repair. Row 52 remains Gap. At this follow-up, activity reached **32 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 18 November gap follow-up: concurrent audit-buffer capacity
 

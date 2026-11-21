@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **21 November 2026**. Branch: `work`. Reviewed code snapshot:
-`376bd531a2`. Subsequent documentation-only commits do not change that code.
+`532ef82f92`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twenty-one recent implementation fixes to selected checklist
+This guide traces the twenty-two recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -69,6 +69,8 @@ does not close every acceptance condition in those rows.
 | 52: `FRU_FLT.1.1` | Applied 18 November: atomic optional audit-buffer capacity/deduplication and coordination with retry requeue; full fault tolerance remains Gap | [7318e85b9d](https://github.com/PardasHealth/dhis2-core/commit/7318e85b9d628c29d25705c96d0414e5264b948c) | [Buffer capacity trace](afta-audit-buffer-capacity.md), [execution record](../evidence/afta-audit-buffer-capacity-2026-11-18.json) |
 
 | 52: `FRU_FLT.1.1` | Applied 21 November: reject missing/blank audit destinations so the scheduler retains failed events for retry; full fault tolerance remains Gap | [376bd531a2](https://github.com/PardasHealth/dhis2-core/commit/376bd531a2103e6ed0da6a98e1b74c36b11d130b) | [Destination failure trace](afta-audit-destination-failure.md), [execution record](../evidence/afta-audit-destination-failure-2026-11-21.json) |
+
+| 1: `FAU_GEN.1.1`; 52: `FRU_FLT.1.1` | Applied 21 November: stop direct/buffered publication after audit payload serialization failure; safe failure marker; statuses unchanged | [532ef82f92](https://github.com/PardasHealth/dhis2-core/commit/532ef82f92eae405f042099435ef7102095e2269) | [Payload failure trace](afta-audit-payload-failure.md), [execution record](../evidence/afta-audit-payload-failure-2026-11-21.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -396,3 +398,7 @@ AFTA row without its remaining acceptance work.
 ## 21. Audit destination failure propagation
 
 **Selected source row: 52 (`FRU_FLT.1.1`).** Invalid destination mapping raises a publication failure, allowing the existing scheduler recovery path to retain the event. [Code, 19 passing cases and remaining acceptance](afta-audit-destination-failure.md) are recorded. Row 52 stays Gap.
+
+## 22. Audit payload serialization failure
+
+**Selected source rows: 1 (`FAU_GEN.1.1`) and 52 (`FRU_FLT.1.1`).** Payload construction errors propagate before direct publication or buffering; serializer exception content is excluded from the fixed failure marker and generic exception. [Code, 30 passing cases and remaining acceptance](afta-audit-payload-failure.md) are recorded. Statuses remain Partial and Gap respectively.

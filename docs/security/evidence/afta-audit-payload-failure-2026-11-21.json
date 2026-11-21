@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source rows 1 FAU_GEN.1.1 and 52 FRU_FLT.1.1: abort direct/buffered audit publication when object serialization fails rather than emit a null payload; safe failure marker, no full closure",
+  "baseline_core_commit": "93ffea86dde73e6b6012abd1c8b036a9e5b64966",
+  "implementation_commit": "532ef82f92eae405f042099435ef7102095e2269",
+  "selected_source_rows": [
+    {
+      "row": 1,
+      "requirement": "FAU_GEN.1.1",
+      "status": "Partial evidence"
+    },
+    {
+      "row": 52,
+      "requirement": "FRU_FLT.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "91c4ffbb0d5324edd0ad1c0de3f8472adb613425b70c2e8ef0599bee86f4e618",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditManager.java": "3f8c0c225971d39cffe0daa36ac20206cff11ccc3974ff94ee056ecec1bba67b",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditProducerSupplier.java": "0e3885c3ec0bb6d4fb65bcf596643780a32ecb9262a0354d6c83d58f3798449b",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "54ba99851063ed697237b631a7565570e5d3d959d8ab572ca5076f18c1c6f3d8",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/QueuedAudit.java": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/legacy/DefaultAuditObjectFactory.java": "f219e8544381f05579c256dccf9c0db6112d3a41b7c7bcc98a67653fc2ff3702",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditManagerTest.java": "f48e6b5927a58bc68add24f14e9baf754589c4554e517f8c49e0039a93d73a88",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditPayloadSerializationTest.java": "b5029b8ede4cea4f7f5f82afcd84208e4e4602d0468455cd36c83a698953f731",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditProducerSupplierTest.java": "c9110a00d349d92b8d5ac009fa58de835728b79a74a7cab00e3656388ef6bd72",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "0c2a693f7340995a53b01471cc81a1e6102daafd0d9b00fd37ab258dbc645b6c",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/QueuedAuditTest.java": "ecd4932a95a6cd6deab1df32d40a0b4c6283e4e4a3df523167d43377f63633c4"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditPayloadSerializationTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditManagerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditProducerSupplierTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.QueuedAuditTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditPayloadSerializationTest.xml": "e1506826ca27330f3114e59de9b91fcb6e4d8c92f9f256ccdc4b034790720406",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditManagerTest.xml": "e997d5316ad4c77a647eb27df9fa558f7f8097840da9efc7d318158b53966ad1",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditProducerSupplierTest.xml": "2cd96f1d5865db4217f44bfe9f7f32b17aff489378e18e4c0db3e662bfc7c183",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditSchedulerTest.xml": "b4f1b9633354496efb68f5367f784b207abaff969f2b284df02760d66c85e8d8",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.QueuedAuditTest.xml": "fcfa4f4755eb3abdffeabe39925fca289a5322377f31058de6a56076dbcdd568"
+  },
+  "baseline": {
+    "tests": 30,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New tests with unchanged old production code; four per-scope failure cases and two direct/buffered manager-boundary cases failed; valid payload cases passed",
+    "log_sha256": "d8a985cc7a63b1a08cf17aaee36e5dee17a592fe3c0b949d090673e193ae17b6"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-payload-final.log": "865014f5ffdc6ec8caf3f15dbd5dd548567e5c75888dbac7c4f4dd269846baa4"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-support/dhis-support-artemis -am -Punit-test -Dtest=AuditPayloadSerializationTest,AuditManagerTest,AuditProducerSupplierTest,AuditSchedulerTest,QueuedAuditTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local real ObjectMapper/factory/manager checks with mocked producer and scheduler; no hosted CI or live broker/deployment claim"
+  },
+  "not_established": [
+    "complete audit event inventory or end-to-end durable delivery",
+    "automatic retry/dead-letter handling before serialization succeeds",
+    "caller transaction/business operation rollback policy",
+    "log transport, retention or external alert delivery",
+    "all fault classes, selected degraded functions and full AFTA acceptance"
+  ]
+}

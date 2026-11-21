@@ -524,6 +524,13 @@
       "symbol": "public void publish(",
       "line": 55,
       "source_sha256": "0e3885c3ec0bb6d4fb65bcf596643780a32ecb9262a0354d6c83d58f3798449b"
+    },
+    "auditpayloadfailure": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/legacy/DefaultAuditObjectFactory.java",
+      "symbol": "private String toJson(",
+      "line": 80,
+      "source_sha256": "f219e8544381f05579c256dccf9c0db6112d3a41b7c7bcc98a67653fc2ff3702"
     }
   },
   "rows": [
@@ -534,14 +541,15 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Audit events",
-      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. Rejected MFA proofs now have an explicit failure-event mapping; configured account lockout counts these failures. Successful email challenge issuance remains excluded from credential-failure events.",
+      "observation": "AuditManager.send and authentication event listeners generate selected audit/log events. Authentication log generation now tolerates missing/non-HTTP details and retains available fields independently of outcome. API-token invalid/expired/constraint failures now emit mapped application events with servlet connection details and an already resolved owner name when available; resolver failures clear prior context. Failure events exclude token secrets and do not increment password counters. Rejected MFA proofs now have an explicit failure-event mapping; configured account lockout counts these failures. Successful email challenge issuance remains excluded from credential-failure events. Audit object serialization failure now aborts direct/buffered publication rather than returning a null payload. A fixed error marker excludes serializer exception details; actual audit coverage and whole-application fault policy remain open.",
       "gap_and_acceptance": "Select the AFTA event list, including audit start/stop and security actions; exercise every required event.",
       "references": [
         "auditgen",
         "authlog",
         "tokenfailure",
         "tokenfailureevents",
-        "tokenfailureboundary"
+        "tokenfailureboundary",
+        "auditpayloadfailure"
       ],
       "source_key": "FAU_GEN.1.1",
       "counted": true,
@@ -576,6 +584,13 @@
           "trace": "afta-token-failure-boundary.md",
           "full_requirement_closed": false,
           "implementation_commit": "38ffff2be6e2768a8d6730c68a5b5d0a5f88ab26"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Propagate object serialization failure before direct/buffered audit publication; fixed payload-free log marker; valid JSON unchanged; no full requirement closure",
+          "trace": "afta-audit-payload-failure.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "532ef82f92eae405f042099435ef7102095e2269"
         }
       ]
     },
@@ -2054,12 +2069,13 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Fault tolerance",
-      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee. A concurrent-admission follow-up makes the optional audit buffer capacity and duplicate checks atomic with processing/requeue; overflow still publishes directly and failures propagate without evicting buffered records. Local concurrency/recovery tests do not establish full fault tolerance. Missing or blank audit destinations now fail publication instead of returning success; the optional scheduler retains the event and a local test delivers it after mapping repair. No live reload or durable delivery guarantee is established.",
+      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee. A concurrent-admission follow-up makes the optional audit buffer capacity and duplicate checks atomic with processing/requeue; overflow still publishes directly and failures propagate without evicting buffered records. Local concurrency/recovery tests do not establish full fault tolerance. Missing or blank audit destinations now fail publication instead of returning success; the optional scheduler retains the event and a local test delivers it after mapping repair. No live reload or durable delivery guarantee is established. Audit object serialization failure now aborts direct/buffered publication rather than returning a null payload. A fixed error marker excludes serializer exception details; actual audit coverage and whole-application fault policy remain open.",
       "gap_and_acceptance": "Define required degraded functions/fault classes; demonstrate service/data behavior under the chosen database, broker, disk and node failures.",
       "references": [
         "auditfailure",
         "auditbuffer",
-        "auditdestinationfailure"
+        "auditdestinationfailure",
+        "auditpayloadfailure"
       ],
       "source_key": "FRU_FLT.1.1",
       "counted": true,
@@ -2080,6 +2096,13 @@
           "trace": "afta-audit-destination-failure.md",
           "full_requirement_closed": false,
           "implementation_commit": "376bd531a2103e6ed0da6a98e1b74c36b11d130b"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Propagate object serialization failure before direct/buffered audit publication; fixed payload-free log marker; valid JSON unchanged; no full requirement closure",
+          "trace": "afta-audit-payload-failure.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "532ef82f92eae405f042099435ef7102095e2269"
         }
       ]
     },
