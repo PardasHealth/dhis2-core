@@ -40,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
@@ -183,8 +184,9 @@ public class TwoFactorAuthUtils {
       return false;
     }
 
+    byte[] decodedSecretBytes = null;
     try {
-      byte[] decodedSecretBytes = Base32.decode(secret);
+      decodedSecretBytes = Base32.decode(secret);
       if (decodedSecretBytes == null
           || (decodedSecretBytes.length != 20 && decodedSecretBytes.length != 10)) {
         log.warn("TOTP secret decoding failed, is null or invalid length");
@@ -193,6 +195,9 @@ public class TwoFactorAuthUtils {
     } catch (DecodingException e) {
       log.warn("TOTP secret decoding failed", e);
       return false;
+    } finally {
+      // This precheck owns its decoded copy; the OTP library decodes independently.
+      if (decodedSecretBytes != null) Arrays.fill(decodedSecretBytes, (byte) 0);
     }
 
     try {
