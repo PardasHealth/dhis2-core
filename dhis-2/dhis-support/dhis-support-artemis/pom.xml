@@ -51,6 +51,10 @@
     </dependency>
     <dependency>
       <groupId>org.apache.artemis</groupId>
+      <artifactId>artemis-core-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.artemis</groupId>
       <artifactId>artemis-jakarta-client</artifactId>
     </dependency>
     <dependency>
