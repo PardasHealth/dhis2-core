@@ -4,9 +4,13 @@ Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 21 November gap follow-up: TOTP validation secret bytes
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear the helper-owned decoded TOTP precheck array on accepted/rejected input, preserving independent OTP-library verification. [Code and 44 passing checks](afta-totp-validation-buffer.md) are recorded. Row 20 remains Gap. Activity now records **37 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 21 November gap follow-up: audit event type and enums
 
-**Selected source rows: 2 (`FAU_GEN.1.2`) and 48 (`FPT_TDC.1.1`).** Reject numeric type/scope enums and require event type before audit sinks. [Code, 51 unit checks and four PostgreSQL/JMS checks](afta-audit-event-type.md) are recorded. Statuses remain Partial and Gap. Activity now records **36 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source rows: 2 (`FAU_GEN.1.2`) and 48 (`FPT_TDC.1.1`).** Reject numeric type/scope enums and require event type before audit sinks. [Code, 51 unit checks and four PostgreSQL/JMS checks](afta-audit-event-type.md) are recorded. Statuses remain Partial and Gap. At this follow-up, activity reached **36 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 21 November gap follow-up: audit destination/scope binding
 

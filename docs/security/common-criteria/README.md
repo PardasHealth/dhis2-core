@@ -128,3 +128,5 @@ Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt
 - [Row 48: audit destination/scope binding](afta-audit-destination-scope.md). Full publisher trust and schema policy remain open.
 
 - [Rows 2/48: audit event type and enum validation](afta-audit-event-type.md). Full audit schema and peer-policy acceptance remain open.
+
+- [Row 20: TOTP validation-owned secret buffer cleanup](afta-totp-validation-buffer.md). Full residual-protection acceptance remains open.

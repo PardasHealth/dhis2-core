@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source row 20 FDP_RIP.2.1: best-effort overwrite of the TOTP validation precheck-owned decoded secret bytes before proof verification or early rejection; complete residual protection remains Gap",
+  "baseline_core_commit": "d8d1a662fff779cc7a762229a12837b135075035",
+  "implementation_commit": "8c36aaa0c58db153945a8d513567e169d9c5ab8f",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "a0fa3ef12b8da3aa976188996f03f16e21c9e5961eaeaad1c6a848f753c33a0e",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "a1e5ac51059ec4a577659511baadacebc1b3aa8947ee99779d49db81de840773",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "ace1bf7cdfe5f96b51c8dc6a99caf1b63c6b16f6f2089cf36b050f6fd22cd5b8",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpValidationSecretBufferTest.java": "b88e75156a7c5fba11c0166c48c9f2496588c626c70e4ea80b2cdef5471892a4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest.xml": "dbefdf013ddb24446bc8aabd8c2d2d53da41c1754683536f309b2cad52e980c5",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "b1bdae5dc2c7c8d65d74d6fa8ec26718221bed51479b5522ea6df4aa625006d7",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "02314ae3ac5daab64f4e8a0caf7c42d41b7d63b43f7c08554ea64333309a319d",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "92b57c2a6e962b34ffaf39f32eeca3cd5a0e1bdea02714a23c20532a7102358b",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "cb649b62a50f53000298392012caebeddfcf6f6c2f98a060b1ad9de70adfc1b4"
+  },
+  "baseline": {
+    "tests": 8,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New owned-buffer tests on old utility. Non-empty valid/rejected precheck arrays remained populated. Empty rejected-array control passed.",
+    "log_sha256": "467001bb98a7641de0bf51e9e29147e44c3f8a53d0659eb8d19993f713c5c5f6"
+  },
+  "log_sha256": {
+    "/tmp/afta-totp-buffer-final.log": "e89abdf28aacc6d7396494815c2f89d0f35e40ab4a4dbd95bc90fb467c173c81"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TotpValidationSecretBufferTest,TwoFactorProvisioningUriTest,TwoFactorAuthenticationPolicyTest,TwoFactorIdentityMutationTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local unit checks. Static decoder interception retains the exact owned array and independently supplies the OTP library copy; real generated TOTP proofs are checked for both supported lengths. No deployment/hosted CI claim."
+  },
+  "not_established": [
+    "immutable Base32 secret strings and caller storage",
+    "OTP library, cryptographic provider, JIT/GC and other runtime copies",
+    "physical JVM memory erasure or crash-dump protection",
+    "full memory, media, replica and backup boundary",
+    "full AFTA residual-protection acceptance"
+  ]
+}
