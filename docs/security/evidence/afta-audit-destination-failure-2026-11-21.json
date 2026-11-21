@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-21",
+  "scope": "Selected source row 52 FRU_FLT.1.1: propagate missing/blank audit destination failures so the optional scheduler retains the event for recovery; full fault tolerance remains Gap",
+  "baseline_core_commit": "f4c39ca376bc59dcde7b8434006bccdefff88d5e",
+  "implementation_commit": "376bd531a2103e6ed0da6a98e1b74c36b11d130b",
+  "selected_source_rows": [
+    {
+      "row": 52,
+      "requirement": "FRU_FLT.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "10a6be9d2fda53f7e1221258e6f9c5bc3321da263359095e0d7d36c2a9ffd2bc",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditProducerSupplier.java": "0e3885c3ec0bb6d4fb65bcf596643780a32ecb9262a0354d6c83d58f3798449b",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditScheduler.java": "54ba99851063ed697237b631a7565570e5d3d959d8ab572ca5076f18c1c6f3d8",
+    "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/QueuedAudit.java": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditProducerSupplierTest.java": "c9110a00d349d92b8d5ac009fa58de835728b79a74a7cab00e3656388ef6bd72",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/AuditSchedulerTest.java": "0c2a693f7340995a53b01471cc81a1e6102daafd0d9b00fd37ab258dbc645b6c",
+    "dhis-2/dhis-support/dhis-support-artemis/src/test/java/org/hisp/dhis/artemis/audit/QueuedAuditTest.java": "ecd4932a95a6cd6deab1df32d40a0b4c6283e4e4a3df523167d43377f63633c4"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditProducerSupplierTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.AuditSchedulerTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.artemis.audit.QueuedAuditTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditProducerSupplierTest.xml": "baf142de5248e6a3e73d04992d40d6cb3ea4acf631f02e0d1e729056cbea466e",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.AuditSchedulerTest.xml": "44030fc058c324709567b2373ee7b8dfa7b2e18c65e5004056e3465c3a6d2977",
+    "dhis-2/dhis-support/dhis-support-artemis/target/surefire-reports/TEST-org.hisp.dhis.artemis.audit.QueuedAuditTest.xml": "2ca8e3dfb27f5b24f3fe7d499cf77e9f761409a2488fdd7190edc197ce9d3664"
+  },
+  "baseline": {
+    "tests": 19,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New producer tests on unchanged old production code; invalid destinations returned normally, so scheduler retention expectation failed",
+    "log_sha256": "9c10e81435e32d52c42aeb53b2239a809f56f3fa0e83c70bb6b33f98f24ab0e9"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-destination-final.log": "a6cadf0ed0a460cc2b6a4839d128d3537654014823e2c00d27c7158c3bd4dc16"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-support/dhis-support-artemis -am -Punit-test -Dtest=AuditProducerSupplierTest,AuditSchedulerTest,QueuedAuditTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local unit tests with real producer and scheduler, mocked MessageManager; no live broker/outage or hosted CI claim"
+  },
+  "not_established": [
+    "durability across crash/restart",
+    "live configuration reload or automated destination repair",
+    "exactly-once broker delivery",
+    "automatic retry of direct publication failures",
+    "all database/broker/disk/node fault classes and selected degraded functions",
+    "full AFTA acceptance"
+  ]
+}

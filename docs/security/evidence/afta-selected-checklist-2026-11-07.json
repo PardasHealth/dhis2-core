@@ -517,6 +517,13 @@
       "line": 64,
       "symbol": "public long getDelay(",
       "source_sha256": "890d1392e8abf64f23e6064bb1894d5849c8bb1d200ea3e979a0e1be4768173a"
+    },
+    "auditdestinationfailure": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-artemis/src/main/java/org/hisp/dhis/artemis/audit/AuditProducerSupplier.java",
+      "symbol": "public void publish(",
+      "line": 55,
+      "source_sha256": "0e3885c3ec0bb6d4fb65bcf596643780a32ecb9262a0354d6c83d58f3798449b"
     }
   },
   "rows": [
@@ -2047,11 +2054,12 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Fault tolerance",
-      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee. A concurrent-admission follow-up makes the optional audit buffer capacity and duplicate checks atomic with processing/requeue; overflow still publishes directly and failures propagate without evicting buffered records. Local concurrency/recovery tests do not establish full fault tolerance.",
+      "observation": "Audit retry/dead-letter recovery provides limited subsystem evidence, not a selected whole-application fault-tolerance guarantee. A concurrent-admission follow-up makes the optional audit buffer capacity and duplicate checks atomic with processing/requeue; overflow still publishes directly and failures propagate without evicting buffered records. Local concurrency/recovery tests do not establish full fault tolerance. Missing or blank audit destinations now fail publication instead of returning success; the optional scheduler retains the event and a local test delivers it after mapping repair. No live reload or durable delivery guarantee is established.",
       "gap_and_acceptance": "Define required degraded functions/fault classes; demonstrate service/data behavior under the chosen database, broker, disk and node failures.",
       "references": [
         "auditfailure",
-        "auditbuffer"
+        "auditbuffer",
+        "auditdestinationfailure"
       ],
       "source_key": "FRU_FLT.1.1",
       "counted": true,
@@ -2065,6 +2073,13 @@
           "trace": "afta-audit-buffer-capacity.md",
           "full_requirement_closed": false,
           "implementation_commit": "7318e85b9d628c29d25705c96d0414e5264b948c"
+        },
+        {
+          "date": "2026-11-21",
+          "scope": "Propagate missing/blank audit destination failure; retain scheduler event for later repair/retry and preserve valid send failure propagation; whole-application fault tolerance remains Gap",
+          "trace": "afta-audit-destination-failure.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "376bd531a2103e6ed0da6a98e1b74c36b11d130b"
         }
       ]
     },
@@ -2650,5 +2665,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-18"
+  "last_update_date": "2026-11-21"
 }

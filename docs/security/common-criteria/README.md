@@ -118,3 +118,5 @@ Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt
 - [Row 49: monotonic audit-buffer timing, code and tests](afta-audit-monotonic-delay.md). Trusted-time acceptance remains open.
 
 - [Row 52: concurrent audit-buffer capacity and recovery](afta-audit-buffer-capacity.md). Whole-application fault-tolerance acceptance remains open.
+
+- [Row 52: audit destination failures and retained-event recovery](afta-audit-destination-failure.md). Full fault-tolerance acceptance remains open.

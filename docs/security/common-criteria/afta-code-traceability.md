@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
-Updated: **18 November 2026**. Branch: `work`. Reviewed code snapshot:
-`7318e85b9d`. Subsequent documentation-only commits do not change that code.
+Updated: **21 November 2026**. Branch: `work`. Reviewed code snapshot:
+`376bd531a2`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twenty recent implementation fixes to selected checklist
+This guide traces the twenty-one recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -67,6 +67,8 @@ does not close every acceptance condition in those rows.
 | 49: `FPT_STM.1.1` | Applied 18 November: measure optional audit-buffer delays monotonically and order by actual expiry; trusted-time status remains Gap | [b8898fc224](https://github.com/PardasHealth/dhis2-core/commit/b8898fc224ef730cbf45329812e3e96c96633e54) | [Monotonic delay trace](afta-audit-monotonic-delay.md), [execution record](../evidence/afta-audit-monotonic-delay-2026-11-18.json) |
 
 | 52: `FRU_FLT.1.1` | Applied 18 November: atomic optional audit-buffer capacity/deduplication and coordination with retry requeue; full fault tolerance remains Gap | [7318e85b9d](https://github.com/PardasHealth/dhis2-core/commit/7318e85b9d628c29d25705c96d0414e5264b948c) | [Buffer capacity trace](afta-audit-buffer-capacity.md), [execution record](../evidence/afta-audit-buffer-capacity-2026-11-18.json) |
+
+| 52: `FRU_FLT.1.1` | Applied 21 November: reject missing/blank audit destinations so the scheduler retains failed events for retry; full fault tolerance remains Gap | [376bd531a2](https://github.com/PardasHealth/dhis2-core/commit/376bd531a2103e6ed0da6a98e1b74c36b11d130b) | [Destination failure trace](afta-audit-destination-failure.md), [execution record](../evidence/afta-audit-destination-failure-2026-11-21.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -390,3 +392,7 @@ AFTA row without its remaining acceptance work.
 ## 20. Concurrent audit-buffer admission
 
 **Selected source row: 52 (`FRU_FLT.1.1`).** Atomic admission preserves the 200-entry buffer bound under concurrent writers and shares the retry-processing monitor. [Code, 12 passing cases and remaining acceptance](afta-audit-buffer-capacity.md) are recorded. Row 52 stays Gap.
+
+## 21. Audit destination failure propagation
+
+**Selected source row: 52 (`FRU_FLT.1.1`).** Invalid destination mapping raises a publication failure, allowing the existing scheduler recovery path to retain the event. [Code, 19 passing cases and remaining acceptance](afta-audit-destination-failure.md) are recorded. Row 52 stays Gap.

@@ -1,12 +1,16 @@
 # AFTA remediation implementation progress
 
-Updated: **18 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 21 November gap follow-up: audit destination failures
+
+**Selected source row: 52 (`FRU_FLT.1.1`).** Missing or blank destinations now propagate publication failure, allowing the optional scheduler to retain the pending event. [Code and 19 passing tests](afta-audit-destination-failure.md) include retry after in-process mapping repair. Row 52 remains Gap. Activity now records **32 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 18 November gap follow-up: concurrent audit-buffer capacity
 
-**Selected source row: 52 (`FRU_FLT.1.1`).** Made optional audit-buffer capacity and duplicate admission atomic with processing/requeue. A pre-fix concurrent run reached 202 entries against the 200 limit; all 12 queue/scheduler cases pass after the fix. See the [code trace and evidence](afta-audit-buffer-capacity.md). Row 52 remains Gap. Activity now records **31 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 52 (`FRU_FLT.1.1`).** Made optional audit-buffer capacity and duplicate admission atomic with processing/requeue. A pre-fix concurrent run reached 202 entries against the 200 limit; all 12 queue/scheduler cases pass after the fix. See the [code trace and evidence](afta-audit-buffer-capacity.md). Row 52 remains Gap. At this follow-up, activity reached **31 implementation commits across 25/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 18 November gap follow-up: monotonic audit-buffer delays
 
