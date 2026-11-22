@@ -152,10 +152,22 @@ public class HibernateConfig {
       Resource[] resources = resolver.getResources("classpath*:org/hisp/dhis/**/*.hbm.xml");
 
       List<String> list = new ArrayList<>();
+      java.util.Set<String> seenUrls = new java.util.HashSet<>();
+      java.util.Map<String, String> mappingOrigins = new java.util.HashMap<>();
       for (Resource resource : resources) {
         String url = resource.getURL().toString();
+        if (!seenUrls.add(url)) {
+          log.warn("Duplicate Hibernate mapping resource URL: {}", url);
+          continue;
+        }
+        String mappingPath = url.contains("!/") ? url.substring(url.indexOf("!/") + 2) : url;
+        String previous = mappingOrigins.putIfAbsent(mappingPath, url);
+        if (previous != null && !previous.equals(url)) {
+          log.warn("Hibernate mapping path {} found in multiple locations: {} and {}", mappingPath, previous, url);
+        }
         list.add(url);
       }
+      log.info("Discovered {} Hibernate mapping resources", list.size());
       return list.toArray(new String[0]);
     } catch (IOException e) {
       log.error(e.getMessage(), e);
