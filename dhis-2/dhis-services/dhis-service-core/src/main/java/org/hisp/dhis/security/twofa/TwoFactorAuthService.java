@@ -33,6 +33,7 @@ import static org.hisp.dhis.common.CodeGenerator.generateSecureRandomBytes;
 
 import com.google.common.base.Strings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,14 @@ public class TwoFactorAuthService {
     if (!configurationProvider.isEnabled(ConfigurationKey.TOTP_2FA_ENABLED)) {
       throw new ConflictException(ErrorCode.E3046);
     }
-    String totpSeed = Base32.encode(generateSecureRandomBytes(20));
+    byte[] rawSeed = generateSecureRandomBytes(20);
+    String totpSeed;
+    try {
+      totpSeed = Base32.encode(rawSeed);
+    } finally {
+      // Enrollment owns these random bytes; retain only the encoded user secret.
+      Arrays.fill(rawSeed, (byte) 0);
+    }
     user.setSecret(totpSeed);
     user.setTwoFactorType(TwoFactorType.ENROLLING_TOTP);
     userService.updateUser(user);
