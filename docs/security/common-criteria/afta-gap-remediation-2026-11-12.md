@@ -1,5 +1,9 @@
 # Selected AFTA gaps: 12 November 2026 follow-up
 
+**Historical follow-up: 12 November 2026.** The counts below describe that earlier assessment.
+For the latest implementation, requirement totals and charts, use the
+[current progress snapshot](afta-remediation-progress.md#current-progress-snapshot).
+
 Scope: `afta-selected-requirements-review.csv` and its authoritative JSON source
 only. Preserve all 82 source rows, the row 80/81 duplicate and optional rows
 63/64/66. No additional Common Criteria components are added to the work list.
@@ -9,7 +13,7 @@ only. Preserve all 82 source rows, the row 80/81 duplicate and optional rows
 The [requirement traceability register](afta-requirement-traceability.md) and
 [CSV](afta-requirement-traceability.csv) connect each original row to its existing
 code or boundary references, remaining acceptance work and explicitly linked
-implementation follow-ups. Nine rows have follow-up execution records linked in
+implementation follow-ups. At that point, nine rows had follow-up execution records linked in
 the checklist: 13, 14, 36–39, 47, 65 and 66. The crypto iteration references remain
 boundary context; their definitions remain unresolved. Other rows explicitly
 show that item-specific execution evidence is not linked in this register;
@@ -58,9 +62,9 @@ pull-request/manual-only triggers meant that publishing directly to `work`
 did not automatically collect regression evidence. Enabling this trigger does
 not itself establish a successful hosted run.
 
-## Remaining requirements and blockers
+## Remaining requirements and blockers — historical snapshot
 
-The primary work list remains 78 unique entries not explicitly optional:
+At this follow-up, the primary work list had 78 unique entries not explicitly optional:
 43 partial, ten gaps and 25 definition/edition questions; none fully closed.
 Use each row's `remaining_acceptance` in the register as its closure criterion.
 
@@ -72,8 +76,9 @@ numbering conflict; row 22 has a provisional identifier normalization and rows
 80/81 repeat an identifier. Do not substitute ISO edition numbering or guess
 cryptographic operations to close these items.
 
-All ten gap rows need decisions or deployment evidence before implementation
-can establish the selected guarantee:
+The ten gap rows at that time needed decisions or deployment evidence before
+implementation could establish the selected guarantee. Later evidence moves rows
+27–28 to Partial evidence; see the [current gap list](afta-remediation-progress.md#remaining-gaps-and-acceptance).
 
 | Source rows | Required input before closure |
 | --- | --- |

@@ -56,6 +56,86 @@ def implementation_progress(data):
     return ordered, timeline, primary, optional
 
 
+def progress_page(data, counts):
+    """Keep the current snapshot generated while preserving dated implementation history."""
+    changes, timeline, touched, optional_touched = implementation_progress(data)
+    latest = timeline[-1][0]
+    updated = date.fromisoformat(latest).strftime('%-d %B %Y')
+    primary = [row for row in data['rows'] if row['counted'] and not row['optional']]
+    lines = [
+        '## Current progress snapshot\n\n',
+        f'Latest recorded implementation: **{updated}**. Branch: `work`.\n\n',
+        f'**{len(changes)} distinct implementation commits** are linked to '
+        f'**{len(touched)}/78 primary entries ({percent(len(touched), 78)})**, '
+        f'plus **{len(optional_touched)}/3 optional entries**. '
+        'A linked fix records bounded implementation work; every primary entry retains acceptance work.\n\n',
+        '| Requirement evidence status | Primary entries | Percentage |\n',
+        '| --- | ---: | ---: |\n',
+    ]
+    for status in STATUSES:
+        lines.append(f'| {status} | {counts[status]} | {percent(counts[status], 78)} |\n')
+    lines += [
+        '| Fully closed | 0 | 0.0% |\n\n',
+        f'![Current AFTA manager summary](charts/afta-selected-dashboard.png?v=progress-{latest}-{len(changes)})\n\n',
+        f'![Recorded implementation activity](charts/afta-implementation-progress.png?v=progress-{latest}-{len(changes)})\n\n',
+        'Implementation activity increases when another distinct code commit is linked with dated evidence. '
+        'The linked-entry count increases when a previously unlinked primary entry receives a follow-up. '
+        'Repeated fixes to one entry increase activity without closing its remaining requirements. '
+        'Evidence status changes only when the assessment supports that change; partial evidence is not a compliance or effort percentage.\n\n',
+        f'### Work recorded on {updated}\n\n',
+        'Test totals belong to each linked execution record and overlap across fixes; do not sum them as unique tests.\n\n',
+        '| **Selected source rows** | Implementation | Detailed trace and execution record |\n',
+        '| --- | --- | --- |\n',
+    ]
+    latest_changes = []
+    for commit, change in changes:
+        if change['date'] != latest:
+            continue
+        links = []
+        for trace in sorted(change['traces']):
+            path = (FOLDER / trace).resolve()
+            assert path.is_relative_to(FOLDER.resolve()) and path.is_file(), trace
+            title = path.read_text().splitlines()[0].removeprefix('# ').replace('|', '\\|')
+            links.append(f'[{title}]({trace})')
+        affected = ', '.join(f'{row["row"]} (`{row["key"]}`)' for row in
+                             sorted(change['rows'].values(), key=lambda row: row['row']))
+        latest_changes.append((' '.join(links),
+            f'| {affected} | [{commit[:10]}](https://github.com/PardasHealth/dhis2-core/commit/{commit}) '
+            f'| {"<br>".join(links)} |\n'))
+    lines += [line for _, line in sorted(latest_changes)]
+    lines += [
+        '\n### Remaining gaps and acceptance\n\n',
+        f'**{counts[G]} primary entries remain Gap.** Existing bounded fixes remain linked; '
+        'the following acceptance work is still open.\n\n',
+        '| **Selected source row** | Requirement | Remaining acceptance |\n',
+        '| --- | --- | --- |\n',
+    ]
+    for row in primary:
+        if row['status'] == G:
+            acceptance = row['gap_and_acceptance'].replace('|', '\\|').replace('\n', ' ')
+            lines.append(f'| {row["row"]} | `{row["key"]}` | {acceptance} |\n')
+    lines += [
+        f'\nThe **{counts[D]} unresolved primary entries** need the exact AFTA clauses, edition or selections. '
+        f'The **{counts[P]} partial entries** still need their remaining coverage, deployment and acceptance proof. '
+        'Rows 27–28 have partial evidence for the consolidated audit-table control; their complete acceptance remains open.\n\n',
+        'Use the [selected assessment](afta-selected-requirements-review.md), '
+        '[row-by-row code/test register](afta-requirement-traceability.md) and '
+        '[authoritative checklist data](../evidence/afta-selected-checklist-2026-11-07.json) '
+        'for every entry and its exact evidence boundary. The dated sections below preserve the implementation history.\n',
+    ]
+    start, end = '<!-- AFTA_CURRENT_PROGRESS_START -->', '<!-- AFTA_CURRENT_PROGRESS_END -->'
+    block = start + '\n\n' + ''.join(lines) + '\n' + end
+    path = FOLDER / 'afta-remediation-progress.md'
+    previous = path.read_text()
+    assert previous.count(start) == previous.count(end) <= 1, 'Malformed current-progress markers'
+    if start in previous:
+        before, remainder = previous.split(start)
+        _, after = remainder.split(end)
+        return before + block + after
+    before, after = previous.split('\n## ', 1)
+    return before.rstrip() + '\n\n' + block + '\n\n## ' + after
+
+
 def render(data):
     rows = data['rows']
     refs = data['references']
@@ -215,7 +295,8 @@ def render(data):
     for r in rows:
         writer.writerow({k: '; '.join(r[k]) if isinstance(r[k], list) else r[k] for k in fields})
     return {FOLDER / 'afta-selected-requirements-review.md': ''.join(md),
-            FOLDER / 'afta-selected-requirements-review.csv': stream.getvalue()}, counts
+            FOLDER / 'afta-selected-requirements-review.csv': stream.getvalue(),
+            FOLDER / 'afta-remediation-progress.md': progress_page(data, counts)}, counts
 
 
 def charts(counts, data):

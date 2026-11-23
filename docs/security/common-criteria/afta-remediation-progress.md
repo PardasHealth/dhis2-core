@@ -4,6 +4,63 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+<!-- AFTA_CURRENT_PROGRESS_START -->
+
+## Current progress snapshot
+
+Latest recorded implementation: **23 November 2026**. Branch: `work`.
+
+**45 distinct implementation commits** are linked to **27/78 primary entries (34.6%)**, plus **1/3 optional entries**. A linked fix records bounded implementation work; every primary entry retains acceptance work.
+
+| Requirement evidence status | Primary entries | Percentage |
+| --- | ---: | ---: |
+| Partial evidence | 45 | 57.7% |
+| Gap / evidence not established | 8 | 10.3% |
+| Definition or edition unresolved | 25 | 32.1% |
+| Fully closed | 0 | 0.0% |
+
+![Current AFTA manager summary](charts/afta-selected-dashboard.png?v=progress-2026-11-23-45)
+
+![Recorded implementation activity](charts/afta-implementation-progress.png?v=progress-2026-11-23-45)
+
+Implementation activity increases when another distinct code commit is linked with dated evidence. The linked-entry count increases when a previously unlinked primary entry receives a follow-up. Repeated fixes to one entry increase activity without closing its remaining requirements. Evidence status changes only when the assessment supports that change; partial evidence is not a compliance or effort percentage.
+
+### Work recorded on 23 November 2026
+
+Test totals belong to each linked execution record and overlap across fixes; do not sum them as unique tests.
+
+| **Selected source rows** | Implementation | Detailed trace and execution record |
+| --- | --- | --- |
+| 20 (`FDP_RIP.2.1`) | [fdf52396c2](https://github.com/PardasHealth/dhis2-core/commit/fdf52396c23f065c8ef542c28799415cc54701e1) | [Audit payload codec-owned buffer cleanup](afta-audit-codec-buffers.md) |
+| 20 (`FDP_RIP.2.1`) | [e98b283c8b](https://github.com/PardasHealth/dhis2-core/commit/e98b283c8be740d62e39bad3b87152b3532da930) | [Generated secret character ownership](afta-generated-secret-characters.md) |
+| 20 (`FDP_RIP.2.1`), 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`) | [e3d4f49dd2](https://github.com/PardasHealth/dhis2-core/commit/e3d4f49dd2158875c8caae9add912d30326e2c7a) | [PKCE S256 failure policy and derived parameter protection](afta-pkce-failure-policy.md) |
+| 20 (`FDP_RIP.2.1`) | [bfbb87408c](https://github.com/PardasHealth/dhis2-core/commit/bfbb87408c6c92835cd90654815f511a9d7e8615) | [Replay fingerprint-owned challenge buffer cleanup](afta-replay-fingerprint-buffer.md) |
+| 20 (`FDP_RIP.2.1`) | [b5313faa57](https://github.com/PardasHealth/dhis2-core/commit/b5313faa57d714e6721404f3f59d926a5928ca88) | [TOTP QR-owned buffer cleanup](afta-qr-owned-buffers.md) |
+| 20 (`FDP_RIP.2.1`) | [46af98846e](https://github.com/PardasHealth/dhis2-core/commit/46af98846e7b30daf77de51e85baaa8f4f3bbae1) | [TOTP enrollment-owned raw seed cleanup](afta-totp-enrollment-buffer.md) |
+| 46 (`FPT_FLS.1.1`) | [635df509a8](https://github.com/PardasHealth/dhis2-core/commit/635df509a80c9615d341828dd3c13a5f0bfbd949) | [TOTP failure diagnostics without secret-bearing exceptions](afta-totp-failure-diagnostics.md) |
+| 46 (`FPT_FLS.1.1`) | [b96f3a2d52](https://github.com/PardasHealth/dhis2-core/commit/b96f3a2d52c4f720f06796ae380fce2ab3485181) | [TOTP provisioning QR failure diagnostics](afta-totp-qr-failure.md) |
+
+### Remaining gaps and acceptance
+
+**8 primary entries remain Gap.** Existing bounded fixes remain linked; the following acceptance work is still open.
+
+| **Selected source row** | Requirement | Remaining acceptance |
+| --- | --- | --- |
+| 20 | `FDP_RIP.2.1` | Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage. |
+| 48 | `FPT_TDC.1.1` | Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange. |
+| 49 | `FPT_STM.1.1` | Document clock authority, synchronization, access control and allowed drift; test rollback, skew and failure for audit/session/token behavior. |
+| 52 | `FRU_FLT.1.1` | Define required degraded functions/fault classes; demonstrate service/data behavior under the chosen database, broker, disk and node failures. |
+| 56 | `FTA_TAH.1.1` | Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient. |
+| 57 | `FTA_TAH.1.2` | Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient. |
+| 58 | `FTA_TAH.1.3` | Confirm this AFTA element definition and demonstrate its required user-visible history, timing and preservation/acknowledgement rules. Existing last-login storage alone is insufficient. |
+| 59 | `FTA_TSE.1.1` | Select the required user/time/location/provider conditions and prove every allowed/denied session-establishment path. |
+
+The **25 unresolved primary entries** need the exact AFTA clauses, edition or selections. The **45 partial entries** still need their remaining coverage, deployment and acceptance proof. Rows 27–28 have partial evidence for the consolidated audit-table control; their complete acceptance remains open.
+
+Use the [selected assessment](afta-selected-requirements-review.md), [row-by-row code/test register](afta-requirement-traceability.md) and [authoritative checklist data](../evidence/afta-selected-checklist-2026-11-07.json) for every entry and its exact evidence boundary. The dated sections below preserve the implementation history.
+
+<!-- AFTA_CURRENT_PROGRESS_END -->
+
 ## 23 November follow-up: PKCE failure and parameter policy
 
 **Selected source rows: 20 (`FDP_RIP.2.1`), 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`).** Generated PKCE fails closed on S256 downgrade, rejects reserved extra overrides and clears custom verifier bytes. [Code, 22 passing checks and operator compatibility requirements](afta-pkce-failure-policy.md) are recorded. Statuses remain Gap/Partial/Gap. Activity now records **45 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
@@ -374,7 +431,7 @@ mvn -B -ntp -pl dhis-test-web-api -am -Pintegration-h2-test \
 | Integrity/residual protection, reliable time, fault tolerance and access history | Audit-record integrity now has the bounded implementation above; the remaining selected guarantees need designs, deployment and acceptance evidence per checklist row. |
 | Extensions, iterations and edition mismatches | Exact AFTA document/version and clause definitions remain missing. No behavior or algorithm is assigned to an unknown extension/crypto iteration by guesswork. |
 
-The current checklist has **45/78 primary entries with partial evidence; 8 gaps;
-25 needing definitions; none fully closed**. The external broker transport tests
+For current checklist totals and implementation activity, see the
+[current progress snapshot](#current-progress-snapshot). The external broker transport tests
 add partial evidence for one previously untraced item. They do not close the whole
 item. Earlier MFA fixes corrected subgaps within an already partial requirement.

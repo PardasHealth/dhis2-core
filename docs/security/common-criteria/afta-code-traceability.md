@@ -16,6 +16,9 @@ requirements/edition definitions; none fully closed**. Three explicitly optional
 entries and the original duplicated identifier retain their separate treatment.
 These code fixes do not select missing AFTA policies or establish certification.
 
+For current activity, charts and remaining acceptance work, see the
+[progress snapshot](afta-remediation-progress.md#current-progress-snapshot).
+
 ## How to read the row references
 
 **29 (`FIA_AFL.1.1`)** means **original checklist entry 29**, whose requirement ID

@@ -1,12 +1,23 @@
 # DHIS2 web-application Common Criteria review guide
 
 Review baseline: `07d4f3f7ea`, DHIS2 `2.44-SNAPSHOT`, plus the recorded security
-patches. Original documentation date: 2026-11-04; implementation follow-up: 2026-11-18.
+patches. Original documentation date: 2026-11-04. Current implementation follow-ups
+are summarized in the [progress snapshot](afta-remediation-progress.md#current-progress-snapshot).
 
 The engineering package documents web scope, component dispositions, code/test
 traces, known findings and proposed solutions. **It is not a claim that the full
 source, all app workflows or all selected normative elements passed evaluation.**
 Formal approval and the open web-security/compatibility gaps remain unresolved.
+
+## Current AFTA progress
+
+Start with the [current progress snapshot and charts](afta-remediation-progress.md#current-progress-snapshot),
+[remaining gap acceptance](afta-remediation-progress.md#remaining-gaps-and-acceptance),
+and [complete selected assessment](afta-selected-requirements-review.md).
+The snapshot is generated from the authoritative checklist and linked implementation records.
+Dated follow-ups preserve their historical counts; they are not the current status summary.
+
+## Document guide
 
 | Review question | Document |
 | --- | --- |
@@ -29,7 +40,7 @@ Formal approval and the open web-security/compatibility gaps remain unresolved.
 | How do token IP constraints handle forwarding headers? | [Servlet-address enforcement, proxy compatibility and evidence](afta-token-ip-constraints.md) |
 | How does tracked-entity audit review apply paging and filters? | [Audit-review fixes, seven regressions and evidence](afta-audit-review-paging.md) |
 | What is the result for the user-selected AFTA list? | [Selected AFTA requirements, gaps and percentages](afta-selected-requirements-review.md) |
-| How does each selected AFTA row trace to code, tests and dated evidence? | [AFTA-only traceability register](afta-requirement-traceability.md), [CSV](afta-requirement-traceability.csv), [current work and blockers](afta-gap-remediation-2026-11-12.md) |
+| How does each selected AFTA row trace to code, tests and dated evidence? | [AFTA-only traceability register](afta-requirement-traceability.md), [CSV](afta-requirement-traceability.csv), [current work and acceptance](afta-remediation-progress.md#current-progress-snapshot) |
 | What source excerpt identifies the selected list? | [AFTA source provenance and transcription limits](afta-source-provenance.md) |
 | What should management know? | [Plain-language gap report](management-gap-report.md) |
 | What is in scope, and why are features excluded? | [Web scope and exclusions](web-application-scope.md) |
