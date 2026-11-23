@@ -138,3 +138,5 @@ Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt
 - [Row 46: TOTP provisioning QR failure diagnostics](afta-totp-qr-failure.md). Full failure-model acceptance remains open.
 
 - [Row 20: replay fingerprint-owned challenge buffer cleanup](afta-replay-fingerprint-buffer.md). Full residual-protection acceptance remains open.
+
+- [Row 20: TOTP QR-owned buffer cleanup](afta-qr-owned-buffers.md). Full residual-protection acceptance remains open.

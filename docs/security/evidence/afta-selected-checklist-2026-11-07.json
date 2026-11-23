@@ -403,8 +403,8 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "public static String generateTOTP2FAURL(",
-      "line": 109,
-      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+      "line": 124,
+      "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
     },
     "emailchallengetarget": {
       "repository": "core",
@@ -550,8 +550,8 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
-      "line": 183,
-      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+      "line": 198,
+      "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
     },
     "totpenrollmentbuffer": {
       "repository": "core",
@@ -564,15 +564,15 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
-      "line": 183,
-      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+      "line": 198,
+      "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
     },
     "totpqrfailure": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "public static byte[] generateQRCode(",
       "line": 78,
-      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+      "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
     },
     "replayfingerprintbuffer": {
       "repository": "core",
@@ -580,6 +580,13 @@
       "symbol": "private static String fingerprint(",
       "line": 140,
       "source_sha256": "52c0ccca95c5edc90cb682aa875adf653ce93d474d9ff1c846098a249d4230e2"
+    },
+    "qrownedbuffers": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
+      "symbol": "public static byte[] generateQRCode(",
+      "line": 78,
+      "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
     }
   },
   "rows": [
@@ -1144,7 +1151,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
@@ -1156,7 +1163,8 @@
         "tokengenerationownership",
         "totpvalidationbuffer",
         "totpenrollmentbuffer",
-        "replayfingerprintbuffer"
+        "replayfingerprintbuffer",
+        "qrownedbuffers"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1212,6 +1220,13 @@
           "trace": "afta-replay-fingerprint-buffer.md",
           "full_requirement_closed": false,
           "implementation_commit": "bfbb87408c6c92835cd90654815f511a9d7e8615"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Best-effort clearing of QR helper-owned temporary UTF-8 input, current PNG backing allocation and bit matrix; retain returned image, E3026 behavior and normalization; full residual protection remains Gap",
+          "trace": "afta-qr-owned-buffers.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "b5313faa57d714e6721404f3f59d926a5928ca88"
         }
       ]
     },

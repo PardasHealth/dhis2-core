@@ -1,0 +1,138 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source row 20 FDP_RIP.2.1: best-effort clearing of temporary UTF-8 QR input, current owned PNG backing buffer and helper-owned QR matrix; preserve caller-returned PNG and error/normalization behavior; full residual protection remains Gap",
+  "baseline_core_commit": "f1ff235285afde88f6201bf60b16c1ad43957ba6",
+  "implementation_commit": "b5313faa57d714e6721404f3f59d926a5928ca88",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "a80d1b77b8e9c71b797adab7642c15f378b101c8d4b77432f3b15065153d92c5",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "bde21521d31a2abdad42989b4a030d0db3058649c22f5a0008320b0484408bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpEnrollmentSecretBufferTest.java": "dcc95def3759ab0f7008c2218304c663bb5f4f8906df8f88b61c39e669803049",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpFailureDiagnosticsTest.java": "5a8dcd246a568ec4d2357d1e470e60e34b7f97bdfde81413dce98f7af1b02b13",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpQrFailureDiagnosticsTest.java": "3efcbdfbf4011514380e9d67cb2bec0da7abb77781c166e6ad34a9489bdfc8d3",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpQrOwnedBufferTest.java": "ab45378591a18d99f25718fa1e4b90caf0b2dd057afedc754529bdadd3f100d2",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpValidationSecretBufferTest.java": "b88e75156a7c5fba11c0166c48c9f2496588c626c70e4ea80b2cdef5471892a4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayFingerprintBufferTest.java": "9e8697bb7cbf42065eff856e19c8624ac0d409bc006600a5def547d39dcf9645"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpQrOwnedBufferTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayFingerprintBufferTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpQrOwnedBufferTest.xml": "62d11da6c75b878d48b4d8aa6fe7b1b2b36f7e4e708907edcf227c33331f32dd",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorReplayFingerprintBufferTest.xml": "41f7dd9bc86f973ac977a2eede5c5789e9ac7437dc90f8742d24c4875e0c913e",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest.xml": "4a0a42f358bb926f4b2fb58e577d0655df41ff6bf85b9260d87f7de4e92fbf5a",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest.xml": "27707dcdb8d04d8e8d3fae3c68e35072cf767a237b8d013c2e7ef23c765dc833",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest.xml": "cfe3dab9d660ce446f2b7c07873eb5ee0439d92e24d7903e9eb7f3a433dc91a8",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest.xml": "ec64fcd1604de09bb97caedd7e0eab9169d00582a4046468dbe201a8e7997656",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "648a6211616ff030058a85d58b2c173ddd509e4612f91002fcee94d08cbc98f4",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "327c389b6e6cc0166c9c665cbafc91a754561a6ff692c4c47d3e202d7ef3efa8",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "a22aefbf8787832c3b42898474ae13877d4116178965f5d068732f720ccdc82f",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "f3fac0eb73ceee04891a8caefd81d65ae185f5ea8015ec48830508c8fcaf44ab"
+  },
+  "baseline": {
+    "tests": 7,
+    "failures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New lifecycle tests on old utility: three retained stream-buffer cases and two retained matrix cases failed; two input-normalization controls passed.",
+    "log_sha256": "30bd4e0f87a065355e0bd9980e525ea213194d4ab2aef767877bdb05d5ffd09e"
+  },
+  "log_sha256": {
+    "/tmp/afta-qr-buffer-final.log": "7d49c24efd0181771b6cd41db1dfaf9241d990a5d3a14d1f59e7bd5655b1fdc0"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TotpQrOwnedBufferTest,TwoFactorReplayFingerprintBufferTest,TotpQrFailureDiagnosticsTest,TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,TwoFactorProvisioningUriTest,TwoFactorAuthenticationPolicyTest,TwoFactorIdentityMutationTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "verification_scope": "Retained stream/matrix assertions directly check output-buffer and matrix cleanup. UTF-8 copy cleanup is source-inspected; tests check its unchanged normalization contract without instrumenting String encoding internals.",
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local lifecycle interception plus real QR/PNG round trip and MFA compatibility tests; no deployment/hosted CI claim."
+  },
+  "integration_note": "A newer remote frontend bundle revision was merged after the tests; it changes only apps-to-bundle.json, leaving tested backend sources unchanged.",
+  "not_established": [
+    "old PNG growth allocations and ImageIO/provider copies",
+    "immutable URI/normalized strings, JIT/GC and other runtime copies",
+    "physical JVM erasure, dumps and complete memory/media/replica/backup boundary",
+    "full AFTA residual-protection acceptance"
+  ]
+}

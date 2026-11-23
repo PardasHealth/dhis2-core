@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **23 November 2026**. Branch: `work`. Reviewed code snapshot:
-`bfbb87408c`. Subsequent documentation-only commits do not change that code.
+`b5313faa57`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the thirty recent implementation fixes to selected checklist
+This guide traces the thirty-one recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -61,32 +61,20 @@ does not close every acceptance condition in those rows.
 | 20: `FDP_RIP.2.1` | Applied 16 November: both checksum validators clear their extracted arrays while retaining caller input; full residual-data guarantee remains Gap | [f9ab1c6c86](https://github.com/PardasHealth/dhis2-core/commit/f9ab1c6c86eb6cb22f866a479e42bb37b347e1bf) | [Checksum-copy trace](afta-token-checksum-buffers.md), [execution record](../evidence/afta-token-checksum-buffers-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 16 November: hash/CRC helpers clear owned UTF-8 storage, preserve caller inputs and retain digest/token formats; full residual-data guarantee remains Gap | [469ad5a9d0](https://github.com/PardasHealth/dhis2-core/commit/469ad5a9d024e9a6f7cd6002b51101274e7cb30f) | [Hash/CRC buffer trace](afta-hash-crc-buffer-hygiene.md), [execution record](../evidence/afta-hash-crc-buffer-hygiene-2026-11-16.json) |
 | 20: `FDP_RIP.2.1` | Applied 18 November: clear generation-owned components and unreturned plaintext on wrapper failure; retain successful caller output; full residual-data guarantee remains Gap | [2493199a48](https://github.com/PardasHealth/dhis2-core/commit/2493199a48ff5e85a5688177eccc33c8643edbd9) | [Generation ownership trace](afta-token-generation-buffer-hygiene.md), [execution record](../evidence/afta-token-generation-buffer-hygiene-2026-11-18.json) |
-
 | 27: `FDP_SDI.2.1`; 28: `FDP_SDI.2.2` | Applied 18 November: opt-in signed audit records; verify before decoding, ERROR alert and blocked query/count on tampering; both rows now Partial evidence | [399eaa924a](https://github.com/PardasHealth/dhis2-core/commit/399eaa924a9f7bd24963cc225db07b651738b96d) | [Audit integrity trace](afta-audit-record-integrity.md), [execution record](../evidence/afta-audit-record-integrity-2026-11-18.json) |
-
 | 49: `FPT_STM.1.1` | Applied 18 November: measure optional audit-buffer delays monotonically and order by actual expiry; trusted-time status remains Gap | [b8898fc224](https://github.com/PardasHealth/dhis2-core/commit/b8898fc224ef730cbf45329812e3e96c96633e54) | [Monotonic delay trace](afta-audit-monotonic-delay.md), [execution record](../evidence/afta-audit-monotonic-delay-2026-11-18.json) |
-
 | 52: `FRU_FLT.1.1` | Applied 18 November: atomic optional audit-buffer capacity/deduplication and coordination with retry requeue; full fault tolerance remains Gap | [7318e85b9d](https://github.com/PardasHealth/dhis2-core/commit/7318e85b9d628c29d25705c96d0414e5264b948c) | [Buffer capacity trace](afta-audit-buffer-capacity.md), [execution record](../evidence/afta-audit-buffer-capacity-2026-11-18.json) |
-
 | 52: `FRU_FLT.1.1` | Applied 21 November: reject missing/blank audit destinations so the scheduler retains failed events for retry; full fault tolerance remains Gap | [376bd531a2](https://github.com/PardasHealth/dhis2-core/commit/376bd531a2103e6ed0da6a98e1b74c36b11d130b) | [Destination failure trace](afta-audit-destination-failure.md), [execution record](../evidence/afta-audit-destination-failure-2026-11-21.json) |
-
 | 1: `FAU_GEN.1.1`; 52: `FRU_FLT.1.1` | Applied 21 November: stop direct/buffered publication after audit payload serialization failure; safe failure marker; statuses unchanged | [532ef82f92](https://github.com/PardasHealth/dhis2-core/commit/532ef82f92eae405f042099435ef7102095e2269) | [Payload failure trace](afta-audit-payload-failure.md), [execution record](../evidence/afta-audit-payload-failure-2026-11-21.json) |
-
 | 48: `FPT_TDC.1.1` | Applied 21 November: reject duplicate/trailing audit JSON before logging/storage; isolate strict reader and generic failure diagnostics; status remains Gap | [76ed5687b5](https://github.com/PardasHealth/dhis2-core/commit/76ed5687b5994391342a56df6668dd0da814ee1c) | [Message validation trace](afta-audit-message-validation.md), [execution record](../evidence/afta-audit-message-validation-2026-11-21.json) |
-
 | 48: `FPT_TDC.1.1` | Applied 21 November: require message scope to match each receiving audit consumer before sinks; reject missing scope and null roots; status remains Gap | [29a53061e8](https://github.com/PardasHealth/dhis2-core/commit/29a53061e83a51c53d7573d407ea92dbd304ab7d) | [Destination scope trace](afta-audit-destination-scope.md), [execution record](../evidence/afta-audit-destination-scope-2026-11-21.json) |
-
 | 2: `FAU_GEN.1.2`; 48: `FPT_TDC.1.1` | Applied 21 November: require audit type and reject numeric type/scope enums before sinks; statuses unchanged | [b80da28532](https://github.com/PardasHealth/dhis2-core/commit/b80da28532223c385729f1886f802cf5e9bc3365) | [Event type trace](afta-audit-event-type.md), [execution record](../evidence/afta-audit-event-type-2026-11-21.json) |
-
 | 20: `FDP_RIP.2.1` | Applied 21 November: clear TOTP precheck-owned decoded secret bytes on valid/rejected input; full residual protection remains Gap | [8c36aaa0c5](https://github.com/PardasHealth/dhis2-core/commit/8c36aaa0c58db153945a8d513567e169d9c5ab8f) | [TOTP buffer trace](afta-totp-validation-buffer.md), [execution record](../evidence/afta-totp-validation-buffer-2026-11-21.json) |
-
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear enrollment-owned raw TOTP seed after encoding or encoder failure, before user mutation/persistence; full residual protection remains Gap | [46af98846e](https://github.com/PardasHealth/dhis2-core/commit/46af98846e7b30daf77de51e85baaa8f4f3bbae1) | [Enrollment buffer trace](afta-totp-enrollment-buffer.md), [execution record](../evidence/afta-totp-enrollment-buffer-2026-11-23.json) |
-
 | 46: `FPT_FLS.1.1` | Applied 23 November: preserve TOTP failure rejection with fixed diagnostics and no attached decoder/verifier exceptions; full failure model remains open | [635df509a8](https://github.com/PardasHealth/dhis2-core/commit/635df509a80c9615d341828dd3c13a5f0bfbd949) | [Failure diagnostic trace](afta-totp-failure-diagnostics.md), [execution record](../evidence/afta-totp-failure-diagnostics-2026-11-23.json) |
-
 | 46: `FPT_FLS.1.1` | Applied 23 November: retain QR failure E3026/empty response with fixed diagnostics and no attached provisioning exceptions; full failure model remains open | [b96f3a2d52](https://github.com/PardasHealth/dhis2-core/commit/b96f3a2d52c4f720f06796ae380fce2ab3485181) | [QR failure trace](afta-totp-qr-failure.md), [execution record](../evidence/afta-totp-qr-failure-2026-11-23.json) |
-
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear fingerprint-owned UTF-8 replay challenge bytes on hashing success/failure; retain fingerprint/replay behavior; full residual protection remains Gap | [bfbb87408c](https://github.com/PardasHealth/dhis2-core/commit/bfbb87408c6c92835cd90654815f511a9d7e8615) | [Replay buffer trace](afta-replay-fingerprint-buffer.md), [execution record](../evidence/afta-replay-fingerprint-buffer-2026-11-23.json) |
+| 20: `FDP_RIP.2.1` | Applied 23 November: clear current QR-owned input/output/matrix buffers while retaining returned image and error/normalization behavior; full residual protection remains Gap | [b5313faa57](https://github.com/PardasHealth/dhis2-core/commit/b5313faa57d714e6721404f3f59d926a5928ca88) | [QR buffer trace](afta-qr-owned-buffers.md), [execution record](../evidence/afta-qr-owned-buffers-2026-11-23.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -450,3 +438,7 @@ AFTA row without its remaining acceptance work.
 ## 30. Replay fingerprint-owned challenge cleanup
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** Clear the helper-owned UTF-8 challenge array after digest processing or failure. [Code, 72 passing checks and remaining acceptance](afta-replay-fingerprint-buffer.md) are recorded. Row 20 remains Gap.
+
+## 31. TOTP QR-owned buffer cleanup
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear the temporary UTF-8 input, current PNG buffer and bit matrix after their owned use. [Code, 66 passing checks and remaining acceptance](afta-qr-owned-buffers.md) are recorded. Row 20 remains Gap.
