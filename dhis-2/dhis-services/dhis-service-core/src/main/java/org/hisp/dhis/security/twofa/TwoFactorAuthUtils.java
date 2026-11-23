@@ -78,22 +78,37 @@ public class TwoFactorAuthUtils {
   public static byte[] generateQRCode(
       @Nonnull String qrContent, int width, int height, @Nonnull Consumer<ErrorCode> errorCode) {
     try {
+      byte[] encoded = qrContent.getBytes(StandardCharsets.UTF_8);
+      String normalized;
+      try {
+        normalized = new String(encoded, StandardCharsets.UTF_8);
+      } finally {
+        Arrays.fill(encoded, (byte) 0);
+      }
       BitMatrix bitMatrix =
-          new MultiFormatWriter()
-              .encode(
-                  new String(qrContent.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8),
-                  BarcodeFormat.QR_CODE,
-                  width,
-                  height);
-
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
-      return byteArrayOutputStream.toByteArray();
+          new MultiFormatWriter().encode(normalized, BarcodeFormat.QR_CODE, width, height);
+      try {
+        ClearingQrOutputStream output = new ClearingQrOutputStream();
+        try {
+          MatrixToImageWriter.writeToStream(bitMatrix, "PNG", output);
+          return output.toByteArray();
+        } finally {
+          output.clearOwnedBuffer();
+        }
+      } finally {
+        bitMatrix.clear();
+      }
     } catch (WriterException | IOException e) {
       // QR exception diagnostics may embed the provisioning URI and its secret.
       log.warn("TOTP_QR_FAILURE errorCode=E3026 action=RETURN_ERROR");
       errorCode.accept(E3026);
       return ArrayUtils.EMPTY_BYTE_ARRAY;
+    }
+  }
+
+  private static final class ClearingQrOutputStream extends ByteArrayOutputStream {
+    private void clearOwnedBuffer() {
+      Arrays.fill(buf, (byte) 0);
     }
   }
 
