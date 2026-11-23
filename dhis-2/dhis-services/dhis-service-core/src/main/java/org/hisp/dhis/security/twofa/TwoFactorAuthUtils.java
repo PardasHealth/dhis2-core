@@ -90,7 +90,8 @@ public class TwoFactorAuthUtils {
       MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
       return byteArrayOutputStream.toByteArray();
     } catch (WriterException | IOException e) {
-      log.warn("Failed to create QR PNG", e);
+      // QR exception diagnostics may embed the provisioning URI and its secret.
+      log.warn("TOTP_QR_FAILURE errorCode=E3026 action=RETURN_ERROR");
       errorCode.accept(E3026);
       return ArrayUtils.EMPTY_BYTE_ARRAY;
     }

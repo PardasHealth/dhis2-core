@@ -175,7 +175,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-web-api -am -Punit-test \
-            -Dtest=TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,ApiTokenGenerationBufferTest,HashSecretBufferTest,CrcSecretBufferTest,ApiTokenChecksumBufferTest,ApiTokenSecretBufferTest,OidcEventIdentityTest,TwoFactorFailureEventTest,TwoFactorEmailChallengeIdentityTest,TwoFactorProvisioningUriTest,CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
+            -Dtest=TotpQrFailureDiagnosticsTest,TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,ApiTokenGenerationBufferTest,HashSecretBufferTest,CrcSecretBufferTest,ApiTokenChecksumBufferTest,ApiTokenSecretBufferTest,OidcEventIdentityTest,TwoFactorFailureEventTest,TwoFactorEmailChallengeIdentityTest,TwoFactorProvisioningUriTest,CurrentUserIdentityResolverTest,TwoFactorIdentityMutationTest,AtomicCacheUpdateTest,UserFailureCounterConcurrencyTest,AuditControllerPagingTest,UserSessionInvalidationTest,TwoFactorAuthenticationPolicyTest,AuthenticationAuditRecordTest,AuthenticationListenerTest,ApiTokenAuthManagerTest,ApiTokenResolverTest,ApiTokenIpConstraintTest,CspFilterTest,LoginConfigCorsFilterTest \
             -Dsurefire.failIfNoSpecifiedTests=false test
       - name: Verify atomic cache updates against disposable Redis
         working-directory: dhis-2
@@ -206,6 +206,7 @@ jobs:
               "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
               "org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest",
               "org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest",
+              "org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest",
               "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
               "org.hisp.dhis.webapi.security.config.TwoFactorFailureEventTest",
               "org.hisp.dhis.webapi.security.config.OidcEventIdentityTest",
