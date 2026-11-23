@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **23 November 2026**. Branch: `work`. Reviewed code snapshot:
-`635df509a8`. Subsequent documentation-only commits do not change that code.
+`b96f3a2d52`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twenty-eight recent implementation fixes to selected checklist
+This guide traces the twenty-nine recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -83,6 +83,8 @@ does not close every acceptance condition in those rows.
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear enrollment-owned raw TOTP seed after encoding or encoder failure, before user mutation/persistence; full residual protection remains Gap | [46af98846e](https://github.com/PardasHealth/dhis2-core/commit/46af98846e7b30daf77de51e85baaa8f4f3bbae1) | [Enrollment buffer trace](afta-totp-enrollment-buffer.md), [execution record](../evidence/afta-totp-enrollment-buffer-2026-11-23.json) |
 
 | 46: `FPT_FLS.1.1` | Applied 23 November: preserve TOTP failure rejection with fixed diagnostics and no attached decoder/verifier exceptions; full failure model remains open | [635df509a8](https://github.com/PardasHealth/dhis2-core/commit/635df509a80c9615d341828dd3c13a5f0bfbd949) | [Failure diagnostic trace](afta-totp-failure-diagnostics.md), [execution record](../evidence/afta-totp-failure-diagnostics-2026-11-23.json) |
+
+| 46: `FPT_FLS.1.1` | Applied 23 November: retain QR failure E3026/empty response with fixed diagnostics and no attached provisioning exceptions; full failure model remains open | [b96f3a2d52](https://github.com/PardasHealth/dhis2-core/commit/b96f3a2d52c4f720f06796ae380fce2ab3485181) | [QR failure trace](afta-totp-qr-failure.md), [execution record](../evidence/afta-totp-qr-failure-2026-11-23.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -438,3 +440,7 @@ AFTA row without its remaining acceptance work.
 ## 28. TOTP failure diagnostics
 
 **Selected source row: 46 (`FPT_FLS.1.1`).** Decoder/verifier errors still reject proofs; fixed diagnostics omit exception objects that may carry secrets. [Code, 50 passing checks and remaining acceptance](afta-totp-failure-diagnostics.md) are recorded. Row 46 remains Partial evidence.
+
+## 29. TOTP QR failure diagnostics
+
+**Selected source row: 46 (`FPT_FLS.1.1`).** Checked QR writer/I/O failures retain the existing error response with fixed, exception-free diagnostics. [Code, 53 passing checks and remaining acceptance](afta-totp-qr-failure.md) are recorded. Row 46 remains Partial evidence.

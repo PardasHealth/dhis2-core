@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source row 46 FPT_FLS.1.1: preserve QR generation error response while excluding exception objects that may contain the TOTP provisioning URI; full failure model remains unclosed",
+  "baseline_core_commit": "0d82cd87161d87a0470ca81fc4dfa936c2efcade",
+  "implementation_commit": "b96f3a2d52c4f720f06796ae380fce2ab3485181",
+  "selected_source_rows": [
+    {
+      "row": 46,
+      "requirement": "FPT_FLS.1.1",
+      "status": "Partial evidence"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "31a448d3737ed81856ec28c9add73617a22989ef6659bb8546e36a31e8bb333e",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "bde21521d31a2abdad42989b4a030d0db3058649c22f5a0008320b0484408bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpEnrollmentSecretBufferTest.java": "dcc95def3759ab0f7008c2218304c663bb5f4f8906df8f88b61c39e669803049",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpFailureDiagnosticsTest.java": "5a8dcd246a568ec4d2357d1e470e60e34b7f97bdfde81413dce98f7af1b02b13",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpQrFailureDiagnosticsTest.java": "3efcbdfbf4011514380e9d67cb2bec0da7abb77781c166e6ad34a9489bdfc8d3",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpValidationSecretBufferTest.java": "b88e75156a7c5fba11c0166c48c9f2496588c626c70e4ea80b2cdef5471892a4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest.xml": "1a627d9e4a85930317b26825c1e47a5d0e2e16a472c07bfe6401f587f0c9dee6",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest.xml": "551868c0774fb96a54614da5720297846d3db683f083699af3763d5e009f0ce0",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest.xml": "37864c7504fcc6814229caa29339f8e08cbd1d5faec53a5dcae1dc7ccbf2d30a",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest.xml": "0438ae63806aa40e8b8db4d7452eb5211f8e6ed13c5773a411039d9f0116066e",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "f16878eab7a87f6f13653f37a6d408dbddcb8c2d45c1764fcff88ec23097d4e6",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "7c752a1dbdbc0493367dd010f2d33e4490c75de7b6dbd84f559b4c071f2ee0af",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "a9f6fb727b8d73c4a5ec0aa8cfd66ca85886b2d4324c0ecf2cad7efee1f3199e",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "04b1c0bfbc334efbd964c132c9b6ee2ece12ff51d74b9ccfb5e8635970575df0"
+  },
+  "baseline": {
+    "tests": 3,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New QR tests with old utility: synthetic writer/PNG I/O exceptions remained attached to WARN events. Existing empty-result/E3026 behavior and real successful QR round trip were controls.",
+    "log_sha256": "7f9f8a5cab75a6c2e515de612ac9c6e2a1ecc53d53ad35f8f65f200cec782e13"
+  },
+  "log_sha256": {
+    "/tmp/afta-totp-qr-final.log": "afa3a414fc4739b9b2588fbbfc7a615330f73eb22904573e98c5b04349edeaac"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TotpQrFailureDiagnosticsTest,TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,TwoFactorProvisioningUriTest,TwoFactorAuthenticationPolicyTest,TwoFactorIdentityMutationTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local controlled writer/I/O exception injection with real captured Log4j events; real PNG generation and ZXing decode control plus MFA regressions. No live leak, deployment or hosted CI claim."
+  },
+  "not_established": [
+    "whole-application fault classes and secure-state policy",
+    "all unchecked QR-generation faults or every component log path",
+    "deployed log permissions/transport/retention and external alert delivery",
+    "complete AFTA acceptance"
+  ]
+}

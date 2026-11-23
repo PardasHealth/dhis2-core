@@ -403,8 +403,8 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "public static String generateTOTP2FAURL(",
-      "line": 108,
-      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
+      "line": 109,
+      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
     },
     "emailchallengetarget": {
       "repository": "core",
@@ -550,8 +550,8 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
-      "line": 182,
-      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
+      "line": 183,
+      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
     },
     "totpenrollmentbuffer": {
       "repository": "core",
@@ -564,8 +564,15 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
-      "line": 182,
-      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
+      "line": 183,
+      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+    },
+    "totpqrfailure": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
+      "symbol": "public static byte[] generateQRCode(",
+      "line": 78,
+      "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
     }
   },
   "rows": [
@@ -1997,13 +2004,14 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Keep a secure state after failure",
-      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model.",
+      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model. QR encoder/PNG I/O failures also preserve the empty-image/E3026 response while excluding potentially secret-bearing provisioning exception objects from diagnostics.",
       "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
       "references": [
         "auditfailure",
         "auditbuffer",
         "replay",
-        "totpfailurediagnostics"
+        "totpfailurediagnostics",
+        "totpqrfailure"
       ],
       "source_key": "FPT_FLS.1.1",
       "counted": true,
@@ -2017,6 +2025,13 @@
           "trace": "afta-totp-failure-diagnostics.md",
           "full_requirement_closed": false,
           "implementation_commit": "635df509a80c9615d341828dd3c13a5f0bfbd949"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Keep QR encoder/I/O failure response (empty image and E3026) while emitting a fixed diagnostic without provisioning-URI-bearing exceptions; real QR round-trip and MFA compatibility checked; complete failure model remains open",
+          "trace": "afta-totp-qr-failure.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "b96f3a2d52c4f720f06796ae380fce2ab3485181"
         }
       ]
     },
