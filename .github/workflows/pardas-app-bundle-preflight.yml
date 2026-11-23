@@ -1,0 +1,32 @@
+name: Pardas app bundle preflight
+
+on:
+  pull_request:
+    paths:
+      - 'dhis-2/dhis-web-server/scripts/**'
+      - 'dhis-2/dhis-web-server/BUNDLED_FRONTEND_FORKS.md'
+      - '.github/workflows/pardas-app-bundle-preflight.yml'
+  push:
+    branches:
+      - feature/bundle-pardas-frontend-forks
+    paths:
+      - 'dhis-2/dhis-web-server/scripts/**'
+      - '.github/workflows/pardas-app-bundle-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline ZIP preflight regression suite
+        working-directory: dhis-2/dhis-web-server
+        run: python3 -m unittest discover -v -s scripts -p 'test_verify_pardas_app_bundles.py'
