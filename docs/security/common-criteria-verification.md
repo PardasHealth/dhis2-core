@@ -646,3 +646,7 @@ protected-resource acceptance remain unproven.
 ## Audit-record integrity follow-up — 18 November 2026
 
 Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt-in audit integrity implementation and evidence](common-criteria/afta-audit-record-integrity.md). Preserve the fork repeatable migration, confidential independent signing-key configuration and pre-decode verification when integrating upstream changes. Defaults remain off; do not sign historical records without trusted provenance. Both rows have partial evidence, with rollout and full acceptance open.
+
+## PKCE request safety — 23 November 2026
+
+Preserve the generated-PKCE S256 requirement and reserved-field guard across framework upgrades, including Spring-generated requests when custom `enable_pkce` is off. Remove `code_challenge`, `code_challenge_method` and `code_verifier` from affected provider `extra_request_parameters`. [Selected rows 20/46/48, code, checks and remaining acceptance](common-criteria/afta-pkce-failure-policy.md) document the scope.

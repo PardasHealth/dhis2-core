@@ -4,9 +4,13 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November follow-up: PKCE failure and parameter policy
+
+**Selected source rows: 20 (`FDP_RIP.2.1`), 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`).** Generated PKCE fails closed on S256 downgrade, rejects reserved extra overrides and clears custom verifier bytes. [Code, 22 passing checks and operator compatibility requirements](afta-pkce-failure-policy.md) are recorded. Statuses remain Gap/Partial/Gap. Activity now records **45 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 23 November gap follow-up: generated secret characters
 
-**Selected source row: 20 (`FDP_RIP.2.1`).** Clear email-code and shared secure-token wrapper-owned random characters after conversion; retain output strings, expiry and caller character ownership. [Code and 76 passing checks](afta-generated-secret-characters.md) are recorded. Row 20 remains Gap. Activity now records **44 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear email-code and shared secure-token wrapper-owned random characters after conversion; retain output strings, expiry and caller character ownership. [Code and 76 passing checks](afta-generated-secret-characters.md) are recorded. Row 20 remains Gap. At this follow-up, activity reached **44 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 23 November gap follow-up: audit codec buffers
 

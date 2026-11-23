@@ -615,6 +615,27 @@
       "symbol": "public static Email2FACode generateEmail2FACode(",
       "line": 317,
       "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
+    },
+    "pkcepolicy": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
+      "symbol": "private OAuth2AuthorizationRequest customizeAuthorizationRequest(",
+      "line": 114,
+      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
+    },
+    "pkcegeneration": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
+      "symbol": "private void addPkceParameters(",
+      "line": 171,
+      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
+    },
+    "pkceverifierbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
+      "symbol": "private static String createHash(",
+      "line": 186,
+      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
     }
   },
   "rows": [
@@ -1179,7 +1200,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven. Audit payload compression/decompression now clears its owned UTF-8, current compressed-output backing allocation and decoded byte arrays after use/failure, retaining caller payloads and codec semantics. Earlier growth/library/runtime copies remain unproven. Email challenge and shared secure-token string wrappers now clear their owned random character arrays after conversion, preserving returned strings and the public character generator ownership contract. Immutable/runtime/provider copies remain unproven.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven. Audit payload compression/decompression now clears its owned UTF-8, current compressed-output backing allocation and decoded byte arrays after use/failure, retaining caller payloads and codec semantics. Earlier growth/library/runtime copies remain unproven. Email challenge and shared secure-token string wrappers now clear their owned random character arrays after conversion, preserving returned strings and the public character generator ownership contract. Immutable/runtime/provider copies remain unproven. The custom PKCE hash now clears its owned ASCII verifier array after digest success/failure; immutable/framework copies remain unproven.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
@@ -1196,7 +1217,8 @@
         "auditcodeccompress",
         "auditcodecdecompress",
         "securetokencharacters",
-        "emailcodecharacters"
+        "emailcodecharacters",
+        "pkceverifierbuffer"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1273,6 +1295,13 @@
           "trace": "afta-generated-secret-characters.md",
           "full_requirement_closed": false,
           "implementation_commit": "e98b283c8be740d62e39bad3b87152b3532da930"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "The custom PKCE hash now clears its owned ASCII verifier array after digest success/failure; immutable/framework copies remain unproven. Normal RFC S256, URL query, nonce, provider hints and config compatibility checked.",
+          "trace": "afta-pkce-failure-policy.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a"
         }
       ]
     },
@@ -2080,14 +2109,16 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Keep a secure state after failure",
-      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model. QR encoder/PNG I/O failures also preserve the empty-image/E3026 response while excluding potentially secret-bearing provisioning exception objects from diagnostics.",
+      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model. QR encoder/PNG I/O failures also preserve the empty-image/E3026 response while excluding potentially secret-bearing provisioning exception objects from diagnostics. Generated PKCE authorization requests now stop on S256 unavailability instead of returning a plain fallback, including Spring-generated requests; complete failure policy remains open.",
       "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
       "references": [
         "auditfailure",
         "auditbuffer",
         "replay",
         "totpfailurediagnostics",
-        "totpqrfailure"
+        "totpqrfailure",
+        "pkcepolicy",
+        "pkcegeneration"
       ],
       "source_key": "FPT_FLS.1.1",
       "counted": true,
@@ -2108,6 +2139,13 @@
           "trace": "afta-totp-qr-failure.md",
           "full_requirement_closed": false,
           "implementation_commit": "b96f3a2d52c4f720f06796ae380fce2ab3485181"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Generated PKCE authorization requests now stop on S256 unavailability instead of returning a plain fallback, including Spring-generated requests; complete failure policy remains open. Normal RFC S256, URL query, nonce, provider hints and config compatibility checked.",
+          "trace": "afta-pkce-failure-policy.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a"
         }
       ]
     },
@@ -2146,12 +2184,13 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Consistent security-data interpretation",
-      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open.",
+      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open. Reserved PKCE fields cannot be overridden by generic extra parameters for generated requests; this is one client-side consistency rule, not a complete peer/schema policy.",
       "gap_and_acceptance": "Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange.",
       "references": [
         "import",
         "auditmessagevalidation",
-        "auditdestinationscope"
+        "auditdestinationscope",
+        "pkcepolicy"
       ],
       "source_key": "FPT_TDC.1.1",
       "counted": true,
@@ -2179,6 +2218,13 @@
           "trace": "afta-audit-event-type.md",
           "full_requirement_closed": false,
           "implementation_commit": "b80da28532223c385729f1886f802cf5e9bc3365"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Reserved PKCE fields cannot be overridden by generic extra parameters for generated requests; this is one client-side consistency rule, not a complete peer/schema policy. Normal RFC S256, URL query, nonce, provider hints and config compatibility checked.",
+          "trace": "afta-pkce-failure-policy.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a"
         }
       ]
     },

@@ -144,3 +144,5 @@ Selected source rows **27 (`FDP_SDI.2.1`) and 28 (`FDP_SDI.2.2`)** now have [opt
 - [Row 20: audit payload codec-owned buffer cleanup](afta-audit-codec-buffers.md). Full residual-protection acceptance remains open.
 
 - [Row 20: generated secret character ownership](afta-generated-secret-characters.md). Full residual-protection acceptance remains open.
+
+- [Rows 20/46/48: PKCE S256 failure and derived parameter policy](afta-pkce-failure-policy.md). Remove reserved PKCE extras for generated requests; full acceptance remains open.

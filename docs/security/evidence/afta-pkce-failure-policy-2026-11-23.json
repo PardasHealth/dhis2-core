@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source rows 20 FDP_RIP.2.1, 46 FPT_FLS.1.1 and 48 FPT_TDC.1.1: clear custom verifier encoding, reject generated PKCE downgrade and reserved extra-field overrides; full requirements remain open",
+  "baseline_core_commit": "8bbb2d25e10a00617f78b034c429200347b1a516",
+  "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    },
+    {
+      "row": 46,
+      "requirement": "FPT_FLS.1.1",
+      "status": "Partial evidence"
+    },
+    {
+      "row": 48,
+      "requirement": "FPT_TDC.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "3f352cad16b72b5747bc1e2531f7025e96d1c39fb9fe9a5ae97d1bb5e197acbd",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/GenericOidcProviderBuilderConfigParserTest.java": "370f947330bf315dd380acd65867ba25542c520eff189f18feba35dccabfd6e8",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/OidcPkceFailurePolicyTest.java": "05c764e581115a6fd7bc40c6f11120462587610709d14c5d80302af41da3b069",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/provider/GenericOidcProviderBuilderTest.java": "929967147562197da067d6d97d7c3c7263088a1b9d8238818a5c292dbf800997"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.oidc.OidcPkceFailurePolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.oidc.GenericOidcProviderBuilderConfigParserTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.oidc.provider.GenericOidcProviderBuilderTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.OidcPkceFailurePolicyTest.xml": "1823757edde1715d121c83d5a31bd2685f2f3cea4bb5554d2b39adade688e36d",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.GenericOidcProviderBuilderConfigParserTest.xml": "f5c2ffc00d0b62a53c7dea998c1d594e2b1ab2c8f76cae74e5ab830bca66e0de",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.provider.GenericOidcProviderBuilderTest.xml": "9c2d3e89307a359465aee41cc67e2a37eae94c879230dea061e421451c49a98c"
+  },
+  "baseline": {
+    "tests": 9,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Old resolver with nine policy checks: DHIS2 and Spring generated plain fallbacks, reserved extra overrides and failed-hash map mutation were not rejected. Normal S256 controls passed. Later nonce, owned-buffer and URL consistency assertions were not included in this baseline.",
+    "log_sha256": "f7e72c527cc0adc31b79f8c942d91671b13dd4ae0527c52416287d2069941cbc"
+  },
+  "log_sha256": {
+    "/tmp/afta-pkce-final.log": "3a49b419ea1414d2f728d5bc94db0cb6ee56690caec734d3f6c5a2cd3ddca868"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=OidcPkceFailurePolicyTest,GenericOidcProviderBuilderTest,GenericOidcProviderBuilderConfigParserTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local public resolver request construction and controlled digest failure; read-scope fixtures isolate PKCE injection from OIDC nonce hashing, plus a separate normal OpenID nonce case. Real RFC7636 vector and URL query checked. No network IdP, deployment or hosted CI claim."
+  },
+  "compatibility": "For generated PKCE requests remove code_challenge, code_challenge_method and code_verifier from extra_request_parameters. The guard also applies to Spring-generated PKCE when custom enable_pkce is off. Missing S256 stops resolution.",
+  "not_established": [
+    "live IdP authorization/token exchange and deployed filter/session handling",
+    "application-wide required PKCE/provider policy and all extra-parameter schemas",
+    "framework/immutable verifier/runtime copies or physical erasure",
+    "full AFTA fault/peer/resource definitions and acceptance"
+  ]
+}
