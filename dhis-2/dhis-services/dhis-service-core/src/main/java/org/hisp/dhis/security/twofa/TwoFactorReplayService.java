@@ -32,6 +32,7 @@ package org.hisp.dhis.security.twofa;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HexFormat;
 import java.util.function.LongSupplier;
 import org.apache.commons.lang3.StringUtils;
@@ -137,12 +138,17 @@ public class TwoFactorReplayService {
   private record CurrentLoginState(boolean matches, java.sql.Timestamp accountExpiry) {}
 
   private static String fingerprint(String value) {
+    byte[] encoded = null;
     try {
-      return HexFormat.of()
-          .formatHex(
-              MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      encoded = value.getBytes(StandardCharsets.UTF_8);
+      return HexFormat.of().formatHex(digest.digest(encoded));
     } catch (NoSuchAlgorithmException e) {
       throw new IllegalStateException("SHA-256 is unavailable", e);
+    } finally {
+      // The replay challenge includes factor secret material. Clear only this
+      // helper-owned UTF-8 copy, retaining the persisted fingerprint format.
+      if (encoded != null) Arrays.fill(encoded, (byte) 0);
     }
   }
 }

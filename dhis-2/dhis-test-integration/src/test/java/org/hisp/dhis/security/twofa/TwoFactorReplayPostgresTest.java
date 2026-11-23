@@ -53,10 +53,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.AnnotationTransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -85,6 +87,12 @@ class TwoFactorReplayPostgresTest {
     var data =
         new DriverManagerDataSource(
             DATABASE.getJdbcUrl(), DATABASE.getUsername(), DATABASE.getPassword());
+    // Fork migrations extend the upstream audit table as well as replay storage.
+    // Reproduce that real prerequisite in this otherwise minimal isolated schema.
+    new ResourceDatabasePopulator(
+            new ClassPathResource(
+                "org/hisp/dhis/db/migration/2.34/V2_34_8__Create_Audit_Table.sql"))
+        .execute(data);
     var flyway =
         Flyway.configure()
             .dataSource(data)
@@ -92,7 +100,7 @@ class TwoFactorReplayPostgresTest {
             .table("replay_test_schema_history")
             .baselineOnMigrate(true)
             .load();
-    assertEquals(1, flyway.migrate().migrationsExecuted);
+    assertEquals(2, flyway.migrate().migrationsExecuted);
     assertEquals(0, flyway.migrate().migrationsExecuted);
     var mapping = new org.hibernate.cfg.Configuration().addAnnotatedClass(UsedTwoFactorCode.class);
     mapping.getProperties().put("hibernate.connection.datasource", data);
