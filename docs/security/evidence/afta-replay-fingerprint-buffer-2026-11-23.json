@@ -1,0 +1,142 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source row 20 FDP_RIP.2.1: best-effort clearing of replay fingerprint helper-owned UTF-8 challenge bytes on hashing success/failure; preserve SHA-256 fingerprint format and replay reservations; full residual protection remains Gap",
+  "baseline_core_commit": "777a74dbb11ff7ed121ef01c31afd12086364044",
+  "implementation_commit": "bfbb87408c6c92835cd90654815f511a9d7e8615",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "4ba19fc42cc1fa89cd75139f42232560fab0208a77a7834b0fb909539f6d6964",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java": "52c0ccca95c5edc90cb682aa875adf653ce93d474d9ff1c846098a249d4230e2",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "bde21521d31a2abdad42989b4a030d0db3058649c22f5a0008320b0484408bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpEnrollmentSecretBufferTest.java": "dcc95def3759ab0f7008c2218304c663bb5f4f8906df8f88b61c39e669803049",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpFailureDiagnosticsTest.java": "5a8dcd246a568ec4d2357d1e470e60e34b7f97bdfde81413dce98f7af1b02b13",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpQrFailureDiagnosticsTest.java": "3efcbdfbf4011514380e9d67cb2bec0da7abb77781c166e6ad34a9489bdfc8d3",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpValidationSecretBufferTest.java": "b88e75156a7c5fba11c0166c48c9f2496588c626c70e4ea80b2cdef5471892a4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayFingerprintBufferTest.java": "9e8697bb7cbf42065eff856e19c8624ac0d409bc006600a5def547d39dcf9645",
+    "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/2.34/V2_34_8__Create_Audit_Table.sql": "cd7f9f10c9fb628880839ae839f341de7720a639db77295f8751069b9f807b4e",
+    "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_audit_integrity.sql": "8cd0010dc49afce4ecdd21ab09f330feb7ab6cfce958bd238ddd6c5e926f5f1a",
+    "dhis-2/dhis-support/dhis-support-db-migration/src/main/resources/org/hisp/dhis/db/migration/pardas/R__PardasHealth_two_factor_login_replay.sql": "5a1c75c0aacb0e47d2e3244c3d40b0442d4455a5f706ad48d77115d6a4766c20",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/security/twofa/TwoFactorReplayPostgresTest.java": "4064a9c0f1320919f0548d2098ddf280dac37abb1f5fa3937958f571b1253705"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayFingerprintBufferTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorReplayFingerprintBufferTest.xml": "28d9631ae8aa8b666284ed499ae4f6595bafb88d12ae39254794792ab6c13c58",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpQrFailureDiagnosticsTest.xml": "46ca55aeb215e4ce09d720830d23e7a627d12fd9b0ba8b5e812471a7df40da0e",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest.xml": "0d535c9929cbb2e88e56b5fe32a6bbb575d5be07df8ea1438b3f8485a9b52cbe",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest.xml": "d663876c12151713b2e6cda2acd1fcf45a3ef621a8c7195214c69234e3d051af",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest.xml": "0456921b23e9e64e767e46edf759687a2eb1edd4b7940e50a98fd309a6992d79",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "1a32ecdd12d25e73e742ad2119f2ff01b74164f0c82c83eecd94c842667641f8",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "3685a5cb6c2ce1f00dc2c6f653f58cf9d92f1d2b0b10ea50238bc49696172ca3",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "a7904b5977eb28035d3174f5e471408409b7f873bfacc8424d78a9fc7e0f638b",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorReplayPostgresTest.xml": "ef90e2a15b3b15cd00b868bd97b98a0ee46fe4fb60549405d6ce2802d6b7d1b2",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "8565c80e94260db4dab3e08afba70e21efaa9a24700db6851d3b209c4887c6d2"
+  },
+  "baseline": {
+    "tests": 6,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New fingerprint tests on old service: success and digest-error paths left retained UTF-8 array populated; SHA-256 vector and unavailable-provider controls passed.",
+    "log_sha256": "8ec78b0372e31771b9d9e9e951eb2d506a753bbccfbb54bd389e1af385d94856"
+  },
+  "log_sha256": {
+    "/tmp/afta-replay-buffer-unit-final.log": "ae888ad25f960ace0afe71b502907b8abab571ed1fe83ec045592c8ce9a7ebc4",
+    "/tmp/afta-replay-buffer-postgres-final.log": "ad4128584c108a84bc1cac4bf8f16976c64d732258c7dacf3a9c150aa3156b2a"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TwoFactorReplayFingerprintBufferTest,TotpQrFailureDiagnosticsTest,TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,TwoFactorProvisioningUriTest,TwoFactorAuthenticationPolicyTest,TwoFactorIdentityMutationTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=TwoFactorReplayPostgresTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local retained-buffer unit checks with real digest vectors; local Docker PostgreSQL replay reservation regressions. No deployment/hosted CI claim.",
+    "postgres_image": "imresamu/postgis:16-3.5-alpine"
+  },
+  "postgres_fixture_adjustment": "The initial replay fixture loaded all fork migrations without their upstream audit-table prerequisite. It now loads the real upstream audit table definition and requires both fork repeatables on first migrate, then zero on repeat. Production migration definitions were retained.",
+  "not_established": [
+    "immutable challenge/secret strings and provider/JIT/GC copies",
+    "physical JVM erasure, dumps or protected storage",
+    "complete memory/media/replica/backup boundary and AFTA acceptance"
+  ]
+}

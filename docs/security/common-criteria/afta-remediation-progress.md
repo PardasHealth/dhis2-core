@@ -4,9 +4,13 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November gap follow-up: replay fingerprint challenge bytes
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear the fingerprint-owned UTF-8 challenge array after digest success/failure, retaining digest and replay behavior. [Code, 59 unit checks and 13 PostgreSQL replay checks](afta-replay-fingerprint-buffer.md) are recorded. Row 20 remains Gap. Activity now records **41 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 23 November follow-up: TOTP QR failure diagnostics
 
-**Selected source row: 46 (`FPT_FLS.1.1`).** Preserve checked QR-generation failure response (E3026 and empty image) while omitting exception diagnostics that could carry the provisioning URI. [Code and 53 passing checks](afta-totp-qr-failure.md) include real PNG decode compatibility. Row 46 remains Partial evidence. Activity now records **40 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 46 (`FPT_FLS.1.1`).** Preserve checked QR-generation failure response (E3026 and empty image) while omitting exception diagnostics that could carry the provisioning URI. [Code and 53 passing checks](afta-totp-qr-failure.md) include real PNG decode compatibility. Row 46 remains Partial evidence. At this follow-up, activity reached **40 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 23 November follow-up: TOTP failure diagnostics
 

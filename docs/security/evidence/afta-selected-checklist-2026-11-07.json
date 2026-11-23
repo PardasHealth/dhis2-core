@@ -262,9 +262,9 @@
     "replay": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
-      "line": 69,
+      "line": 70,
       "symbol": "public boolean consume(",
-      "source_sha256": "7c7abaefde90ff109021fd884930389ce595e704d5fa18a4db5caadaa7f4682f"
+      "source_sha256": "52c0ccca95c5edc90cb682aa875adf653ce93d474d9ff1c846098a249d4230e2"
     },
     "broker_tls": {
       "repository": "core",
@@ -573,6 +573,13 @@
       "symbol": "public static byte[] generateQRCode(",
       "line": 78,
       "source_sha256": "acb98aa865474abdd8ac0a5e8845862a7a3b00ce6e8326b11e48c1eade581d14"
+    },
+    "replayfingerprintbuffer": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorReplayService.java",
+      "symbol": "private static String fingerprint(",
+      "line": 140,
+      "source_sha256": "52c0ccca95c5edc90cb682aa875adf653ce93d474d9ff1c846098a249d4230e2"
     }
   },
   "rows": [
@@ -1137,7 +1144,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
@@ -1148,7 +1155,8 @@
         "tokengenerationcomponents",
         "tokengenerationownership",
         "totpvalidationbuffer",
-        "totpenrollmentbuffer"
+        "totpenrollmentbuffer",
+        "replayfingerprintbuffer"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1197,6 +1205,13 @@
           "trace": "afta-totp-enrollment-buffer.md",
           "full_requirement_closed": false,
           "implementation_commit": "46af98846e7b30daf77de51e85baaa8f4f3bbae1"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Best-effort clearing of replay fingerprint helper-owned UTF-8 challenge bytes on success/failure; preserve digest output/provider failure boundary and replay reservations; full residual protection remains Gap",
+          "trace": "afta-replay-fingerprint-buffer.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "bfbb87408c6c92835cd90654815f511a9d7e8615"
         }
       ]
     },
