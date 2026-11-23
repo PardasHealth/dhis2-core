@@ -38,6 +38,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -131,13 +132,28 @@ public class DhisCustomAuthorizationRequestResolver implements OAuth2Authorizati
 
     boolean enablePkce =
         DhisConfigurationProvider.isOn((String) configurationMetadata.get(ENABLE_PKCE));
-    if (enablePkce) {
-      addPkceParameters(attributes, additionalParameters);
-    }
-
     @SuppressWarnings("unchecked")
     Map<String, Object> extraRequestParameters =
         (Map<String, Object>) configurationMetadata.get(EXTRA_REQUEST_PARAMETERS);
+
+    boolean generatedPkce = enablePkce || attributes.containsKey(PkceParameterNames.CODE_VERIFIER);
+    if (generatedPkce
+        && extraRequestParameters != null
+        && (extraRequestParameters.containsKey(PkceParameterNames.CODE_CHALLENGE)
+            || extraRequestParameters.containsKey(PkceParameterNames.CODE_CHALLENGE_METHOD)
+            || extraRequestParameters.containsKey(PkceParameterNames.CODE_VERIFIER))) {
+      throw new IllegalArgumentException("PKCE parameters cannot be overridden");
+    }
+    if (enablePkce) {
+      addPkceParameters(attributes, additionalParameters);
+    }
+    // Spring may generate PKCE even when the DHIS2-specific customization is off.
+    // Neither path may silently downgrade to a plain challenge.
+    if (generatedPkce
+        && !PKCE_CHALLENGE_METHOD.equals(
+            additionalParameters.get(PkceParameterNames.CODE_CHALLENGE_METHOD))) {
+      throw new IllegalStateException("PKCE S256 is required");
+    }
 
     if (extraRequestParameters != null && !extraRequestParameters.isEmpty()) {
       for (String key : extraRequestParameters.keySet()) {
@@ -156,22 +172,24 @@ public class DhisCustomAuthorizationRequestResolver implements OAuth2Authorizati
       Map<String, Object> attributes, Map<String, Object> additionalParameters) {
     String codeVerifier = this.secureKeyGenerator.generateKey();
 
-    attributes.put(PkceParameterNames.CODE_VERIFIER, codeVerifier);
-
+    final String codeChallenge;
     try {
-      String codeChallenge = createHash(codeVerifier);
-      additionalParameters.put(PkceParameterNames.CODE_CHALLENGE, codeChallenge);
-      additionalParameters.put(PkceParameterNames.CODE_CHALLENGE_METHOD, PKCE_CHALLENGE_METHOD);
+      codeChallenge = createHash(codeVerifier);
     } catch (NoSuchAlgorithmException e) {
-      additionalParameters.put(PkceParameterNames.CODE_CHALLENGE, codeVerifier);
+      throw new IllegalStateException("PKCE S256 is unavailable");
     }
+    attributes.put(PkceParameterNames.CODE_VERIFIER, codeVerifier);
+    additionalParameters.put(PkceParameterNames.CODE_CHALLENGE, codeChallenge);
+    additionalParameters.put(PkceParameterNames.CODE_CHALLENGE_METHOD, PKCE_CHALLENGE_METHOD);
   }
 
   private static String createHash(String value) throws NoSuchAlgorithmException {
-    byte[] digest =
-        MessageDigest.getInstance(HASH_DIGEST_ALGORITHM)
-            .digest(value.getBytes(StandardCharsets.US_ASCII));
-
-    return Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
+    MessageDigest hash = MessageDigest.getInstance(HASH_DIGEST_ALGORITHM);
+    byte[] encoded = value.getBytes(StandardCharsets.US_ASCII);
+    try {
+      return Base64.getUrlEncoder().withoutPadding().encodeToString(hash.digest(encoded));
+    } finally {
+      Arrays.fill(encoded, (byte) 0);
+    }
   }
 }
