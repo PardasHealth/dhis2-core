@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source row 46 FPT_FLS.1.1: TOTP decode/verification exceptions continue to reject proofs while emitting fixed diagnostics without secret-bearing exception objects; full failure model remains unclosed",
+  "baseline_core_commit": "ef71416c899f61c0d5cd9e1a4c1bed1a33d635e6",
+  "implementation_commit": "635df509a80c9615d341828dd3c13a5f0bfbd949",
+  "selected_source_rows": [
+    {
+      "row": 46,
+      "requirement": "FPT_FLS.1.1",
+      "status": "Partial evidence"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "66100d64d256e1e5cc86fe518b36d968c6415a52edf341dc05db54f49cbba828",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/spring2fa/TwoFactorAuthenticationPolicyTest.java": "bde21521d31a2abdad42989b4a030d0db3058649c22f5a0008320b0484408bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpEnrollmentSecretBufferTest.java": "dcc95def3759ab0f7008c2218304c663bb5f4f8906df8f88b61c39e669803049",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpFailureDiagnosticsTest.java": "5a8dcd246a568ec4d2357d1e470e60e34b7f97bdfde81413dce98f7af1b02b13",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TotpValidationSecretBufferTest.java": "b88e75156a7c5fba11c0166c48c9f2496588c626c70e4ea80b2cdef5471892a4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorEmailChallengeIdentityTest.java": "b6852209537278fcfd20eaeb487d3c18d13c37dcfd50121084e6ebfe85ed8bb9",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorIdentityMutationTest.java": "f3690e5baba0de1fd50dbc83f025d2895b75af3b5cea2323800e692a22089b3b",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/twofa/TwoFactorProvisioningUriTest.java": "37241e32a2f90e3e14c21e2ca8b37a87a88da47e681733969c9996c72c4ae6ea"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpFailureDiagnosticsTest.xml": "3ccbad216485567846c78d2f475e654986836b8f79dfe39d3995ccb42f5c22d0",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpEnrollmentSecretBufferTest.xml": "b8d466f4e82fc221921ee075a5e560984c9b484e05cfc0412c393fa00b140cc0",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TotpValidationSecretBufferTest.xml": "37d49d212ca89590dfbf4fcf843d860ee0b58c6b2ded5d0daf0f1620227987f6",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorProvisioningUriTest.xml": "e637519db8d4a6f72eb9b0250070b51f3add07dcb3cd97b0de4dd3c724c36947",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorIdentityMutationTest.xml": "c969c9c799fc74121b9e4af76f6f40f2134ed3a7e4c26d347fbb328b5dcd8bff",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.twofa.TwoFactorEmailChallengeIdentityTest.xml": "8e3bfda63a6f979ffe7463e31b659fba4e591c8082da6de78c866c0730535b6c",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.spring2fa.TwoFactorAuthenticationPolicyTest.xml": "c0a3f588401e498232fa6d0d7a4f816c710aa45852c06e5f35dd4ef38f829653"
+  },
+  "baseline": {
+    "tests": 2,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New logging tests with old utility. Injected decoder/verifier exceptions were retained in WARN events; proof rejection itself already returned false.",
+    "log_sha256": "4db5b35c2ba0b9810a96b81a3c1a134c9ac3a214d81eb42fffdd6a96b2a877f4"
+  },
+  "log_sha256": {
+    "/tmp/afta-totp-diagnostics-final.log": "f1e18357218899c8137874bcbf13ccd75f6d32c7d4c28985081c9fd06cb98154"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=TotpFailureDiagnosticsTest,TotpEnrollmentSecretBufferTest,TotpValidationSecretBufferTest,TwoFactorProvisioningUriTest,TwoFactorAuthenticationPolicyTest,TwoFactorIdentityMutationTest,TwoFactorEmailChallengeIdentityTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Local controlled exception injection with real captured Log4j events and existing MFA compatibility suites; no live secret leak, deployment or hosted CI claim"
+  },
+  "not_established": [
+    "whole-application failure model and selected secure states",
+    "secret-free diagnostics in every other component",
+    "deployed log permissions, transport/retention or external alert delivery",
+    "complete AFTA failure-class acceptance"
+  ]
+}

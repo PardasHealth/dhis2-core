@@ -4,9 +4,13 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November follow-up: TOTP failure diagnostics
+
+**Selected source row: 46 (`FPT_FLS.1.1`).** Preserve proof rejection while emitting fixed decoder/verifier failure diagnostics without attached exceptions. [Code and 50 passing checks](afta-totp-failure-diagnostics.md) are recorded. Row 46 remains Partial evidence. Activity now records **39 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 23 November gap follow-up: TOTP enrollment raw seed
 
-**Selected source row: 20 (`FDP_RIP.2.1`).** Clear enrollment-owned random seed bytes after encoding or encoder failure, before user mutation/persistence. [Code and 48 passing checks](afta-totp-enrollment-buffer.md) are recorded. Row 20 remains Gap. Activity now records **38 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear enrollment-owned random seed bytes after encoding or encoder failure, before user mutation/persistence. [Code and 48 passing checks](afta-totp-enrollment-buffer.md) are recorded. Row 20 remains Gap. At this follow-up, activity reached **38 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 21 November gap follow-up: TOTP validation secret bytes
 

@@ -404,7 +404,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "public static String generateTOTP2FAURL(",
       "line": 108,
-      "source_sha256": "a1e5ac51059ec4a577659511baadacebc1b3aa8947ee99779d49db81de840773"
+      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
     },
     "emailchallengetarget": {
       "repository": "core",
@@ -551,7 +551,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
       "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
       "line": 182,
-      "source_sha256": "a1e5ac51059ec4a577659511baadacebc1b3aa8947ee99779d49db81de840773"
+      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
     },
     "totpenrollmentbuffer": {
       "repository": "core",
@@ -559,6 +559,13 @@
       "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
       "line": 101,
       "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+    },
+    "totpfailurediagnostics": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthUtils.java",
+      "symbol": "static boolean verifyTOTP2FACode(String code, String secret, long now)",
+      "line": 182,
+      "source_sha256": "91730ebf4f4f1221bde8caca35a783da6465f28c20a4377acc012ecc82f53fa5"
     }
   },
   "rows": [
@@ -1990,18 +1997,28 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Keep a secure state after failure",
-      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model.",
+      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model.",
       "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
       "references": [
         "auditfailure",
         "auditbuffer",
-        "replay"
+        "replay",
+        "totpfailurediagnostics"
       ],
       "source_key": "FPT_FLS.1.1",
       "counted": true,
       "duplicate_of_row": null,
       "normalization_note": "",
-      "reference_role": "Partial implementation candidate only"
+      "reference_role": "Partial implementation candidate only",
+      "implementation_followups": [
+        {
+          "date": "2026-11-23",
+          "scope": "Keep TOTP proof rejection on decoder/verifier failure while logging only fixed stage/reject markers, excluding exception details and secret material; complete failure model remains open",
+          "trace": "afta-totp-failure-diagnostics.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "635df509a80c9615d341828dd3c13a5f0bfbd949"
+        }
+      ]
     },
     {
       "row": 47,
