@@ -193,7 +193,8 @@ public class TwoFactorAuthUtils {
         return false;
       }
     } catch (DecodingException e) {
-      log.warn("TOTP secret decoding failed", e);
+      // Decoder diagnostics may contain secret material; retain only a fixed reason.
+      log.warn("TOTP_VALIDATION_FAILURE reason=DECODE_ERROR action=REJECT_PROOF");
       return false;
     } finally {
       // This precheck owns its decoded copy; the OTP library decodes independently.
@@ -203,7 +204,8 @@ public class TwoFactorAuthUtils {
     try {
       return totpAtInterval(secret, now / 30_000).verify(code);
     } catch (Exception e) {
-      log.warn("TOTP secret decoding or verification failed", e);
+      // Provider exception messages/causes are not safe authentication log fields.
+      log.warn("TOTP_VALIDATION_FAILURE reason=VERIFY_ERROR action=REJECT_PROOF");
       return false;
     }
   }
