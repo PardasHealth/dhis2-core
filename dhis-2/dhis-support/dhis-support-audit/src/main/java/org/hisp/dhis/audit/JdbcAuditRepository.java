@@ -41,6 +41,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -335,13 +336,30 @@ public class JdbcAuditRepository implements AuditRepository {
       return new byte[] {};
     }
 
-    try (ByteArrayOutputStream output = new ByteArrayOutputStream(data.length());
-        GZIPOutputStream gzip = new GZIPOutputStream(output)) {
-      gzip.write(data.getBytes(StandardCharsets.UTF_8));
-      gzip.finish();
+    byte[] encoded = data.getBytes(StandardCharsets.UTF_8);
+    ClearingAuditOutputStream output = null;
+    try {
+      output = new ClearingAuditOutputStream(data.length());
+      try (GZIPOutputStream gzip = new GZIPOutputStream(output)) {
+        gzip.write(encoded);
+        gzip.finish();
+      }
       return output.toByteArray();
     } catch (IOException e) {
       throw new IllegalStateException("Unable to compress audit data", e);
+    } finally {
+      Arrays.fill(encoded, (byte) 0);
+      if (output != null) output.clearOwnedBuffer();
+    }
+  }
+
+  private static final class ClearingAuditOutputStream extends ByteArrayOutputStream {
+    private ClearingAuditOutputStream(int size) {
+      super(size);
+    }
+
+    private void clearOwnedBuffer() {
+      Arrays.fill(buf, (byte) 0);
     }
   }
 
@@ -352,7 +370,12 @@ public class JdbcAuditRepository implements AuditRepository {
 
     try (ByteArrayInputStream input = new ByteArrayInputStream(data);
         GZIPInputStream gzip = new GZIPInputStream(input)) {
-      return new String(IOUtils.toByteArray(gzip), StandardCharsets.UTF_8);
+      byte[] decoded = IOUtils.toByteArray(gzip);
+      try {
+        return new String(decoded, StandardCharsets.UTF_8);
+      } finally {
+        Arrays.fill(decoded, (byte) 0);
+      }
     } catch (IOException e) {
       throw new IllegalStateException("Unable to decompress audit data", e);
     }

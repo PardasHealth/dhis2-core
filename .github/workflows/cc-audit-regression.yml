@@ -61,7 +61,7 @@ jobs:
         working-directory: dhis-2
         run: |
           mvn -B -ntp -pl dhis-support/dhis-support-audit -am -Punit-test \
-            -Dtest=AuditIntegrityGuardTest,JdbcAuditRepositoryCompressionTest \
+            -Dtest=JdbcAuditPayloadBufferTest,AuditIntegrityGuardTest,JdbcAuditRepositoryCompressionTest \
             -Dsurefire.failIfNoSpecifiedTests=false \
             test
       - name: Verify explicit encryption-key startup policy
@@ -107,6 +107,7 @@ jobs:
 
           expected = {
               "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+              "org.hisp.dhis.audit.JdbcAuditPayloadBufferTest",
               "org.hisp.dhis.audit.AuditIntegrityGuardTest",
               "org.hisp.dhis.config.AuditIntegrityConfigTest",
               "org.hisp.dhis.audit.AuditIntegrityPostgresTest",
