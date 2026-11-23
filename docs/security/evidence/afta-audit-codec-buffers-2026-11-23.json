@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-23",
+  "scope": "Selected source row 20 FDP_RIP.2.1: best-effort clearing of audit codec-owned UTF-8, current compressed-output backing allocation and decompressed byte arrays; caller-owned compressed inputs/outputs and returned strings retained; full residual protection remains Gap",
+  "baseline_core_commit": "2dcc34f436b190f4f8c32b78edba2d5247a1dd6d",
+  "implementation_commit": "fdf52396c23f065c8ef542c28799415cc54701e1",
+  "selected_source_rows": [
+    {
+      "row": 20,
+      "requirement": "FDP_RIP.2.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "bb3e5827e5bfb38a8fff6d79bfc442cb2222d0a4f3f999bb09db827014bf3e97",
+    "dhis-2/dhis-support/dhis-support-audit/pom.xml": "a7c0f74ac4b6134b0c6054861c370ef68caf7003bbeb49bf28ff79698aedeec9",
+    "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/AuditIntegrityGuardTest.java": "bbd06c3815dc539c6d12656b3df23f4227b9c867fd31e4a0a4330ab4ba562b12",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/JdbcAuditPayloadBufferTest.java": "8d864c3594dc7fc4b19fec9ee34ec8d9bef3f956dfde4939a3003b8f3b212589",
+    "dhis-2/dhis-support/dhis-support-audit/src/test/java/org/hisp/dhis/audit/JdbcAuditRepositoryCompressionTest.java": "555eab11c188f5648fd148a44f31f83d866d6b60c2fbe4828f4610934713265a",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditIntegrityPostgresTest.java": "539a5a284c5494796bafab17ede0b801d03a0823079f96155c06ac9f074c6b2a",
+    "dhis-2/dhis-test-integration/src/test/java/org/hisp/dhis/audit/AuditStorageDeliveryRecoveryTest.java": "502d2684448ffcc021bee6d37bb0ba6c488232763890806816018b5db9ea6750"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.audit.JdbcAuditPayloadBufferTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditIntegrityGuardTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditIntegrityPostgresTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.JdbcAuditPayloadBufferTest.xml": "92045743c08d8bfd5913f0f2df358125c7ff9b8af25f8775ddb078b4e100e3b8",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditIntegrityGuardTest.xml": "5944c5ae3f7706d92d3fab0b45d31df172a0ab0dac38635497ff716f8175b9d3",
+    "dhis-2/dhis-support/dhis-support-audit/target/surefire-reports/TEST-org.hisp.dhis.audit.JdbcAuditRepositoryCompressionTest.xml": "689bb48dbbc4af4fba0945090e6c625f5cb1d7539aeed50ad471eeb912e5a022",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditIntegrityPostgresTest.xml": "2e884522d9b6404d7db46c8312c1774e3b40c9646308c712c924d496093b8de5",
+    "dhis-2/dhis-test-integration/target/surefire-reports/TEST-org.hisp.dhis.audit.AuditStorageDeliveryRecoveryTest.xml": "2c98a85e7d3f8f07f69aad550e8b7f512f1d14fbc28bb48516fc558af7d52afc"
+  },
+  "baseline": {
+    "tests": 7,
+    "failures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "New tests and test-only Mockito dependency with old production codec. Three compression paths and two nonempty decoded-array cases failed cleanup checks; empty decoded data and read-error controls passed.",
+    "log_sha256": "13c837fcdfd814ceb670180a3cf2501f635d9da7945cf908ab2c5b4ffb3f3d79"
+  },
+  "log_sha256": {
+    "/tmp/afta-audit-payload-buffer-unit-final.log": "f1c8e1e6dd471a9dcc075e8efe4ff274268741b5368871d777b75f1ea6b9d940",
+    "/tmp/afta-audit-payload-buffer-postgres-final.log": "ad245702ca2ca1550bc384c674f47e24f6e93641bcd07ca71999e0f45001a0cd"
+  },
+  "commands": [
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-support/dhis-support-audit -am -Punit-test -Dtest=JdbcAuditPayloadBufferTest,AuditIntegrityGuardTest,JdbcAuditRepositoryCompressionTest -Dsurefire.failIfNoSpecifiedTests=false test",
+    "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -o -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -B -ntp -f dhis-2/pom.xml -pl dhis-test-integration -am -Pintegration-test -Dtest=AuditIntegrityPostgresTest,AuditStorageDeliveryRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test"
+  ],
+  "environment": {
+    "java": "OpenJDK 17.0.19",
+    "maven": "3.9.11",
+    "execution": "Retained-buffer interception plus real gzip round trips and local PostgreSQL/JMS audit integrity/recovery regressions. Mockito added in test scope only; no deployment or hosted CI claim."
+  },
+  "not_established": [
+    "earlier compressed-buffer growth allocations and codec/provider copies",
+    "immutable input/returned strings and retained caller payloads",
+    "physical JVM erasure, dumps and full memory/media/replica/backup boundary",
+    "full AFTA residual-protection acceptance"
+  ]
+}

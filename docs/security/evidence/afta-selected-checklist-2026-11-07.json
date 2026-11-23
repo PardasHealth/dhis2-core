@@ -38,16 +38,16 @@
     "auditquery": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 179,
+      "line": 180,
       "symbol": "public List<Audit> query(",
-      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
     },
     "auditdelete": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 143,
+      "line": 144,
       "symbol": "public void delete(AuditQuery",
-      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
     },
     "auditselection": {
       "repository": "core",
@@ -500,16 +500,16 @@
     "auditintegritywrite": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 237,
+      "line": 238,
       "symbol": "private MapSqlParameterSource buildParameterSource(",
-      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
     },
     "auditintegrityread": {
       "repository": "core",
       "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
-      "line": 293,
+      "line": 294,
       "symbol": "private StoredRecord verifyStoredRecord(",
-      "source_sha256": "8c85af8c75d76c314bffc810388bfeeb467966ee69a481a3505e9a0802e0f9aa"
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
     },
     "auditmonotonic": {
       "repository": "core",
@@ -587,6 +587,20 @@
       "symbol": "public static byte[] generateQRCode(",
       "line": 78,
       "source_sha256": "ddeb27c9f407ebc3565d4377899304f0e0e5b720635f8d323fc540bef719ccb4"
+    },
+    "auditcodeccompress": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "symbol": "private static byte[] compress(",
+      "line": 334,
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
+    },
+    "auditcodecdecompress": {
+      "repository": "core",
+      "path": "dhis-2/dhis-support/dhis-support-audit/src/main/java/org/hisp/dhis/audit/JdbcAuditRepository.java",
+      "symbol": "private static String decompress(",
+      "line": 366,
+      "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
     }
   },
   "rows": [
@@ -1151,7 +1165,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven. Audit payload compression/decompression now clears its owned UTF-8, current compressed-output backing allocation and decoded byte arrays after use/failure, retaining caller payloads and codec semantics. Earlier growth/library/runtime copies remain unproven.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
@@ -1164,7 +1178,9 @@
         "totpvalidationbuffer",
         "totpenrollmentbuffer",
         "replayfingerprintbuffer",
-        "qrownedbuffers"
+        "qrownedbuffers",
+        "auditcodeccompress",
+        "auditcodecdecompress"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1227,6 +1243,13 @@
           "trace": "afta-qr-owned-buffers.md",
           "full_requirement_closed": false,
           "implementation_commit": "b5313faa57d714e6721404f3f59d926a5928ca88"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Best-effort clearing of audit codec-owned plaintext arrays and current compressed output allocation on success/failure; preserve caller input/output, legacy conversion and integrity/recovery behavior; full residual protection remains Gap",
+          "trace": "afta-audit-codec-buffers.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "fdf52396c23f065c8ef542c28799415cc54701e1"
         }
       ]
     },

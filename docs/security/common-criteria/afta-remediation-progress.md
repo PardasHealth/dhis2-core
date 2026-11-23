@@ -4,9 +4,13 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November gap follow-up: audit codec buffers
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear codec-owned plaintext and current compressed output allocations, preserving caller payloads and legacy error/conversion behavior. [Code, 40 unit checks and 25 PostgreSQL/JMS checks](afta-audit-codec-buffers.md) are recorded. Row 20 remains Gap. Activity now records **43 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 23 November gap follow-up: QR-owned buffers
 
-**Selected source row: 20 (`FDP_RIP.2.1`).** Clear temporary QR UTF-8 input, current PNG backing allocation and owned bit matrix, preserving returned PNG and existing error/normalization behavior. [Code and 66 passing checks](afta-qr-owned-buffers.md) are recorded. Row 20 remains Gap. Activity now records **42 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear temporary QR UTF-8 input, current PNG backing allocation and owned bit matrix, preserving returned PNG and existing error/normalization behavior. [Code and 66 passing checks](afta-qr-owned-buffers.md) are recorded. Row 20 remains Gap. At this follow-up, activity reached **42 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 23 November gap follow-up: replay fingerprint challenge bytes
 
