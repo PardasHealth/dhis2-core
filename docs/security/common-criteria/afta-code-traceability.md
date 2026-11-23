@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
-Updated: **21 November 2026**. Branch: `work`. Reviewed code snapshot:
-`8c36aaa0c5`. Subsequent documentation-only commits do not change that code.
+Updated: **23 November 2026**. Branch: `work`. Reviewed code snapshot:
+`42497a7972`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the twenty-six recent implementation fixes to selected checklist
+This guide traces the twenty-seven recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -79,6 +79,8 @@ does not close every acceptance condition in those rows.
 | 2: `FAU_GEN.1.2`; 48: `FPT_TDC.1.1` | Applied 21 November: require audit type and reject numeric type/scope enums before sinks; statuses unchanged | [b80da28532](https://github.com/PardasHealth/dhis2-core/commit/b80da28532223c385729f1886f802cf5e9bc3365) | [Event type trace](afta-audit-event-type.md), [execution record](../evidence/afta-audit-event-type-2026-11-21.json) |
 
 | 20: `FDP_RIP.2.1` | Applied 21 November: clear TOTP precheck-owned decoded secret bytes on valid/rejected input; full residual protection remains Gap | [8c36aaa0c5](https://github.com/PardasHealth/dhis2-core/commit/8c36aaa0c58db153945a8d513567e169d9c5ab8f) | [TOTP buffer trace](afta-totp-validation-buffer.md), [execution record](../evidence/afta-totp-validation-buffer-2026-11-21.json) |
+
+| 20: `FDP_RIP.2.1` | Applied 23 November: clear enrollment-owned raw TOTP seed after encoding or encoder failure, before user mutation/persistence; full residual protection remains Gap | [46af98846e](https://github.com/PardasHealth/dhis2-core/commit/46af98846e7b30daf77de51e85baaa8f4f3bbae1) | [Enrollment buffer trace](afta-totp-enrollment-buffer.md), [execution record](../evidence/afta-totp-enrollment-buffer-2026-11-23.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -426,3 +428,7 @@ AFTA row without its remaining acceptance work.
 ## 26. TOTP validation-owned secret cleanup
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** Clear the helper-owned length-validation array before proof verification or rejection. [Code, 44 passing checks and remaining acceptance](afta-totp-validation-buffer.md) are recorded. Full residual protection remains Gap.
+
+## 27. TOTP enrollment-owned raw seed cleanup
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear raw random bytes after Base32 encoding or failure before mutation/persistence. [Code, 48 passing checks and remaining acceptance](afta-totp-enrollment-buffer.md) are recorded. Row 20 remains Gap.

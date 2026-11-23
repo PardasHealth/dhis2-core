@@ -1,12 +1,16 @@
 # AFTA remediation implementation progress
 
-Updated: **21 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November gap follow-up: TOTP enrollment raw seed
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear enrollment-owned random seed bytes after encoding or encoder failure, before user mutation/persistence. [Code and 48 passing checks](afta-totp-enrollment-buffer.md) are recorded. Row 20 remains Gap. Activity now records **38 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 21 November gap follow-up: TOTP validation secret bytes
 
-**Selected source row: 20 (`FDP_RIP.2.1`).** Clear the helper-owned decoded TOTP precheck array on accepted/rejected input, preserving independent OTP-library verification. [Code and 44 passing checks](afta-totp-validation-buffer.md) are recorded. Row 20 remains Gap. Activity now records **37 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear the helper-owned decoded TOTP precheck array on accepted/rejected input, preserving independent OTP-library verification. [Code and 44 passing checks](afta-totp-validation-buffer.md) are recorded. Row 20 remains Gap. At this follow-up, activity reached **37 implementation commits across 26/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 21 November gap follow-up: audit event type and enums
 
