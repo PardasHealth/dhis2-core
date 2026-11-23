@@ -1,9 +1,9 @@
 # AFTA requirements-to-code traceability: recent remediation
 
 Updated: **23 November 2026**. Branch: `work`. Reviewed code snapshot:
-`fdf52396c2`. Subsequent documentation-only commits do not change that code.
+`e98b283c8b`. Subsequent documentation-only commits do not change that code.
 
-This guide traces the thirty-two recent implementation fixes to selected checklist
+This guide traces the thirty-three recent implementation fixes to selected checklist
 rows, methods, regression tests and recorded execution evidence. For the complete
 82-row source list, use the [row-by-row register](afta-requirement-traceability.md)
 and [CSV](afta-requirement-traceability.csv). The authoritative assessment is
@@ -76,6 +76,7 @@ does not close every acceptance condition in those rows.
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear fingerprint-owned UTF-8 replay challenge bytes on hashing success/failure; retain fingerprint/replay behavior; full residual protection remains Gap | [bfbb87408c](https://github.com/PardasHealth/dhis2-core/commit/bfbb87408c6c92835cd90654815f511a9d7e8615) | [Replay buffer trace](afta-replay-fingerprint-buffer.md), [execution record](../evidence/afta-replay-fingerprint-buffer-2026-11-23.json) |
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear current QR-owned input/output/matrix buffers while retaining returned image and error/normalization behavior; full residual protection remains Gap | [b5313faa57](https://github.com/PardasHealth/dhis2-core/commit/b5313faa57d714e6721404f3f59d926a5928ca88) | [QR buffer trace](afta-qr-owned-buffers.md), [execution record](../evidence/afta-qr-owned-buffers-2026-11-23.json) |
 | 20: `FDP_RIP.2.1` | Applied 23 November: clear audit codec-owned plaintext/current output buffers while retaining caller data and error/codec semantics; full residual protection remains Gap | [fdf52396c2](https://github.com/PardasHealth/dhis2-core/commit/fdf52396c23f065c8ef542c28799415cc54701e1) | [Audit codec trace](afta-audit-codec-buffers.md), [execution record](../evidence/afta-audit-codec-buffers-2026-11-23.json) |
+| 20: `FDP_RIP.2.1` | Applied 23 November: clear email-code/secure-token wrapper-owned random characters, retaining returned strings and caller character ownership; full residual protection remains Gap | [e98b283c8b](https://github.com/PardasHealth/dhis2-core/commit/e98b283c8be740d62e39bad3b87152b3532da930) | [Generated character trace](afta-generated-secret-characters.md), [execution record](../evidence/afta-generated-secret-characters-2026-11-23.json) |
 
 The counts above belong to separate, overlapping executions. **Do not add them**
 to obtain a unique pass total. The email-challenge batch has 30 unit checks and 32 H2 API checks. The provisioning batch has 28 unit checks and 32 H2 API checks. The UID-binding batch has 42 unit checks and 103 H2 API checks; the preceding
@@ -447,3 +448,7 @@ AFTA row without its remaining acceptance work.
 ## 32. Audit payload codec-owned cleanup
 
 **Selected source row: 20 (`FDP_RIP.2.1`).** Clear temporary UTF-8, current compressed output and decoded payload arrays after their owned use. [Code, 65 passing checks and remaining acceptance](afta-audit-codec-buffers.md) are recorded. Row 20 remains Gap.
+
+## 33. Generated secret character ownership
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear email-code and shared secure-token wrapper-owned characters after conversion, preserving returned data and caller ownership. [Code, 76 passing checks and remaining acceptance](afta-generated-secret-characters.md) are recorded. Row 20 remains Gap.

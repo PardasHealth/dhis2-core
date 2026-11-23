@@ -376,21 +376,21 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 101,
       "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "mfaresetuid": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 240,
       "symbol": "private void reset2FA(@Nonnull User user,",
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "mfafailureowner": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "line": 210,
       "symbol": "public void disable2FA(@Nonnull User user,",
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "mfaownerdisable": {
       "repository": "core",
@@ -411,14 +411,14 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "symbol": "private void sendEmail2FACode(User user)",
       "line": 291,
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "loginemailuid": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "symbol": "public void sendEmail2FACodeByUid(",
       "line": 283,
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "loginemailprovider": {
       "repository": "core",
@@ -558,7 +558,7 @@
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
       "symbol": "public void enrollTOTP2FA(@Nonnull User user)",
       "line": 101,
-      "source_sha256": "3533a0d5f288a4195f745c0b3f4dd4101a3ecd80a55c937927436cd139aaa07e"
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     },
     "totpfailurediagnostics": {
       "repository": "core",
@@ -601,6 +601,20 @@
       "symbol": "private static String decompress(",
       "line": 366,
       "source_sha256": "598688e975e537961f4ab5d33b4d6f75ce7bfdb65c8047b9906d39e81ff5956b"
+    },
+    "securetokencharacters": {
+      "repository": "core",
+      "path": "dhis-2/dhis-api/src/main/java/org/hisp/dhis/common/CodeGenerator.java",
+      "symbol": "public static String getRandomSecureToken(",
+      "line": 220,
+      "source_sha256": "f558df9ac1b30ac6aa5134fc36f5f793661d9825c9c28cf597fe93975323f66a"
+    },
+    "emailcodecharacters": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/twofa/TwoFactorAuthService.java",
+      "symbol": "public static Email2FACode generateEmail2FACode(",
+      "line": 317,
+      "source_sha256": "0d4898d06e35f8db2e22a5d09353f28d52087f05e31098ba7c1a7f926af90dd3"
     }
   },
   "rows": [
@@ -1165,7 +1179,7 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Residual information after reuse",
-      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven. Audit payload compression/decompression now clears its owned UTF-8, current compressed-output backing allocation and decoded byte arrays after use/failure, retaining caller payloads and codec semantics. Earlier growth/library/runtime copies remain unproven.",
+      "observation": "File retention, garbage collection or ordinary deletion do not demonstrate complete residual-data protection. Bounded best-effort follow-ups clear resolver-owned token characters, private checksum-validation copies, SHA/CRC encoding storage, generation components and plaintext not transferred to a successful wrapper. Caller-owned successful outputs remain available; immutable/runtime copies, physical JVM erasure and the full memory/storage/replica/backup boundary remain unproven. The TOTP validation precheck now clears its owned decoded secret array in a finally block, including invalid-length rejection. OTP-library/caller/runtime copies and full physical residual protection remain unproven. TOTP enrollment now clears its owned raw random seed after encoding or encoding failure, before user mutation/persistence. The intended encoded secret and full runtime/storage residual guarantee remain outside that array cleanup. The MFA replay fingerprint helper now clears its owned UTF-8 challenge array after hashing or failure, preserving SHA-256 output and replay reservation behavior. Immutable strings, provider/runtime copies and full residual-resource protection remain unproven. QR generation now clears its temporary UTF-8 input, current PNG backing buffer and owned bit matrix after processing/failure, retaining the returned PNG copy and prior normalization/error behavior. Earlier growth allocations and library/runtime copies remain unproven. Audit payload compression/decompression now clears its owned UTF-8, current compressed-output backing allocation and decoded byte arrays after use/failure, retaining caller payloads and codec semantics. Earlier growth/library/runtime copies remain unproven. Email challenge and shared secure-token string wrappers now clear their owned random character arrays after conversion, preserving returned strings and the public character generator ownership contract. Immutable/runtime/provider copies remain unproven.",
       "gap_and_acceptance": "Define the protected resources and platform boundary; demonstrate allocation/deallocation protection for memory, files, media, replicas and backups. The linked buffer-hygiene changes do not establish complete protected-resource coverage.",
       "references": [
         "crypto",
@@ -1180,7 +1194,9 @@
         "replayfingerprintbuffer",
         "qrownedbuffers",
         "auditcodeccompress",
-        "auditcodecdecompress"
+        "auditcodecdecompress",
+        "securetokencharacters",
+        "emailcodecharacters"
       ],
       "source_key": "FDP_RIP.2.1",
       "counted": true,
@@ -1250,6 +1266,13 @@
           "trace": "afta-audit-codec-buffers.md",
           "full_requirement_closed": false,
           "implementation_commit": "fdf52396c23f065c8ef542c28799415cc54701e1"
+        },
+        {
+          "date": "2026-11-23",
+          "scope": "Clear email-code and shared secure-token wrapper-owned random characters after string construction; preserve output formats, TTL, RNG source and caller-owned character-generator output; full residual protection remains Gap",
+          "trace": "afta-generated-secret-characters.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "e98b283c8be740d62e39bad3b87152b3532da930"
         }
       ]
     },

@@ -4,9 +4,13 @@ Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-se
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
+## 23 November gap follow-up: generated secret characters
+
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear email-code and shared secure-token wrapper-owned random characters after conversion; retain output strings, expiry and caller character ownership. [Code and 76 passing checks](afta-generated-secret-characters.md) are recorded. Row 20 remains Gap. Activity now records **44 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+
 ## 23 November gap follow-up: audit codec buffers
 
-**Selected source row: 20 (`FDP_RIP.2.1`).** Clear codec-owned plaintext and current compressed output allocations, preserving caller payloads and legacy error/conversion behavior. [Code, 40 unit checks and 25 PostgreSQL/JMS checks](afta-audit-codec-buffers.md) are recorded. Row 20 remains Gap. Activity now records **43 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
+**Selected source row: 20 (`FDP_RIP.2.1`).** Clear codec-owned plaintext and current compressed output allocations, preserving caller payloads and legacy error/conversion behavior. [Code, 40 unit checks and 25 PostgreSQL/JMS checks](afta-audit-codec-buffers.md) are recorded. Row 20 remains Gap. At this follow-up, activity reached **43 implementation commits across 27/78 primary entries**, plus one optional entry; status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 23 November gap follow-up: QR-owned buffers
 
