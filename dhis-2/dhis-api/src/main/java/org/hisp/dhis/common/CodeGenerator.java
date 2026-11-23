@@ -30,6 +30,7 @@
 package org.hisp.dhis.common;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -217,8 +218,12 @@ public class CodeGenerator {
    * @return a token.
    */
   public static String getRandomSecureToken() {
-    SecureRandom sr = SecureRandomHolder.GENERATOR;
-    return new String(generateRandomAlphanumericCode(SECURE_RANDOM_TOKEN_MIN_SIZE, sr));
+    char[] owned = generateSecureRandomCode(SECURE_RANDOM_TOKEN_MIN_SIZE);
+    try {
+      return new String(owned);
+    } finally {
+      Arrays.fill(owned, '\0');
+    }
   }
 
   /**

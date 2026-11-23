@@ -315,7 +315,13 @@ public class TwoFactorAuthService {
   @Nonnull
   @NonTransactional
   public static Email2FACode generateEmail2FACode() {
-    String code = new String(CodeGenerator.generateSecureRandomNumber(6));
+    char[] owned = CodeGenerator.generateSecureRandomNumber(6);
+    String code;
+    try {
+      code = new String(owned);
+    } finally {
+      Arrays.fill(owned, '\0');
+    }
     String encodedCode = code + "|" + (System.currentTimeMillis() + TWOFA_EMAIL_CODE_EXPIRY_MILLIS);
     return new Email2FACode(code, encodedCode);
   }
