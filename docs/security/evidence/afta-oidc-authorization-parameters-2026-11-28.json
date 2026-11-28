@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-28",
+  "scope": "Selected source rows 46 FPT_FLS.1.1 and 48 FPT_TDC.1.1: reject conflicting provider extras for state, nonce, client_id, redirect_uri, response_type and scope before returning an authorization request; full requirements remain open",
+  "baseline_core_commit": "2e5f777f9936685ecb125b8677fd8e6ff1902a7e",
+  "implementation_commit": "be2624881835aff359ded8877c1e29326f00cf46",
+  "selected_source_rows": [
+    {
+      "row": 46,
+      "requirement": "FPT_FLS.1.1",
+      "status": "Partial evidence"
+    },
+    {
+      "row": 48,
+      "requirement": "FPT_TDC.1.1",
+      "status": "Gap / evidence not established"
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/cc-audit-regression.yml": "9c0bdf13fd322b1c08c7de6b69b5ba54ea5c577c6a5e44cded9c3cb09c8048f6",
+    "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java": "ac43852d4998c3a85e0f574e3dd1a39f496386fd58b43d25b5722421c1abc3a6",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/OidcAuthorizationParameterPolicyTest.java": "52c30136dbb729b9ca8e97ce4d128c3104cb78ec883507ce9549be85527e4cb4",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/OidcPkceFailurePolicyTest.java": "05c764e581115a6fd7bc40c6f11120462587610709d14c5d80302af41da3b069",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/provider/GenericOidcProviderBuilderTest.java": "929967147562197da067d6d97d7c3c7263088a1b9d8238818a5c292dbf800997",
+    "dhis-2/dhis-services/dhis-service-core/src/test/java/org/hisp/dhis/security/oidc/GenericOidcProviderBuilderConfigParserTest.java": "370f947330bf315dd380acd65867ba25542c520eff189f18feba35dccabfd6e8"
+  },
+  "suites": [
+    {
+      "class": "org.hisp.dhis.security.oidc.OidcAuthorizationParameterPolicyTest",
+      "tests": 56,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.oidc.OidcPkceFailurePolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.oidc.provider.GenericOidcProviderBuilderTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "org.hisp.dhis.security.oidc.GenericOidcProviderBuilderConfigParserTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "report_sha256": {
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.OidcAuthorizationParameterPolicyTest.xml": "f207bf551ac498c3e14996f732f8de199171c30586bc4ba450a19fc35adaba3a",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.OidcPkceFailurePolicyTest.xml": "ebb1745a1bf80ff19c43790d5906716bcc4a071582a0b29133f1158558c8a319",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.provider.GenericOidcProviderBuilderTest.xml": "34eaa2565752e1ad9eaf9b328f9a929067290b73500c31552a3c0e86fbedb1ef",
+    "dhis-2/dhis-services/dhis-service-core/target/surefire-reports/TEST-org.hisp.dhis.security.oidc.GenericOidcProviderBuilderConfigParserTest.xml": "b187e84985d77cc09f6b3f620ba8c0cc90f354b4c57ec26f545e1d4284409ee0"
+  },
+  "baseline": {
+    "tests": 56,
+    "failures": 48,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "All 48 security-field override cases were accepted by the unchanged resolver. Eight normal request/URI/provider-hint controls passed. Matrix: six reserved fields, custom PKCE on/off, OAuth/OpenID scope, both resolver entry points.",
+    "log_sha256": "4fc49c378231fef9941b70b705879d8abe3b714a2aecc6b1e1a9f906cd2ff1d3",
+    "report_sha256": "1001df52efaca268355ff79cec1d9d43a181919014f3ab79a79d6e24e2368197"
+  },
+  "command": "JAVA_HOME=/workspace/.dhis2-tools/jdk17/usr/lib/jvm/java-17-openjdk-amd64 /workspace/.dhis2-tools/apache-maven-3.9.11/bin/mvn -B -ntp -o -f dhis-2/pom.xml -s /workspace/.dhis2-tools/settings.xml -Dmaven.repo.local=/workspace/.dhis2-tools/m2 -pl dhis-services/dhis-service-core -am -Punit-test -Dtest=OidcAuthorizationParameterPolicyTest,OidcPkceFailurePolicyTest,GenericOidcProviderBuilderTest,GenericOidcProviderBuilderConfigParserTest -Dsurefire.failIfNoSpecifiedTests=false test",
+  "execution_log_sha256": "a8a2e2e06ecbb7837c4f51f05e5b58e5fbf31f334cfa19e20bf88006048ebca0",
+  "limitations": [
+    "Local request construction only; no live IdP, callback/token exchange or complete deployed filter/session proof.",
+    "Generic extra parameter keys are case-sensitive. Unknown provider-specific schemas and authorization endpoint URL query configuration are outside this bounded guard.",
+    "Existing deployments supplying the six reserved fields as generic extras must remove them and use client registration settings where applicable.",
+    "No selected requirement is fully closed; rows 46 and 48 retain Partial evidence and Gap respectively."
+  ]
+}

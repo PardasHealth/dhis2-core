@@ -1,6 +1,6 @@
 # AFTA remediation implementation progress
 
-Updated: **23 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
+Updated: **28 November 2026**. Scope: the [user-selected AFTA checklist](afta-selected-requirements-review.md).
 This records implemented changes separately from the remaining requirements.
 It is not AFTA/Common Criteria approval or a statement that all listed gaps are closed.
 
@@ -8,9 +8,9 @@ It is not AFTA/Common Criteria approval or a statement that all listed gaps are 
 
 ## Current progress snapshot
 
-Latest recorded implementation: **23 November 2026**. Branch: `work`.
+Latest recorded implementation: **28 November 2026**. Branch: `work`.
 
-**45 distinct implementation commits** are linked to **27/78 primary entries (34.6%)**, plus **1/3 optional entries**. A linked fix records bounded implementation work; every primary entry retains acceptance work.
+**46 distinct implementation commits** are linked to **27/78 primary entries (34.6%)**, plus **1/3 optional entries**. A linked fix records bounded implementation work; every primary entry retains acceptance work.
 
 | Requirement evidence status | Primary entries | Percentage |
 | --- | ---: | ---: |
@@ -19,26 +19,19 @@ Latest recorded implementation: **23 November 2026**. Branch: `work`.
 | Definition or edition unresolved | 25 | 32.1% |
 | Fully closed | 0 | 0.0% |
 
-![Current AFTA manager summary](charts/afta-selected-dashboard.png?v=progress-2026-11-23-45)
+![Current AFTA manager summary](charts/afta-selected-dashboard.png?v=progress-2026-11-28-46)
 
-![Recorded implementation activity](charts/afta-implementation-progress.png?v=progress-2026-11-23-45)
+![Recorded implementation activity](charts/afta-implementation-progress.png?v=progress-2026-11-28-46)
 
 Implementation activity increases when another distinct code commit is linked with dated evidence. The linked-entry count increases when a previously unlinked primary entry receives a follow-up. Repeated fixes to one entry increase activity without closing its remaining requirements. Evidence status changes only when the assessment supports that change; partial evidence is not a compliance or effort percentage.
 
-### Work recorded on 23 November 2026
+### Work recorded on 28 November 2026
 
 Test totals belong to each linked execution record and overlap across fixes; do not sum them as unique tests.
 
 | **Selected source rows** | Implementation | Detailed trace and execution record |
 | --- | --- | --- |
-| 20 (`FDP_RIP.2.1`) | [fdf52396c2](https://github.com/PardasHealth/dhis2-core/commit/fdf52396c23f065c8ef542c28799415cc54701e1) | [Audit payload codec-owned buffer cleanup](afta-audit-codec-buffers.md) |
-| 20 (`FDP_RIP.2.1`) | [e98b283c8b](https://github.com/PardasHealth/dhis2-core/commit/e98b283c8be740d62e39bad3b87152b3532da930) | [Generated secret character ownership](afta-generated-secret-characters.md) |
-| 20 (`FDP_RIP.2.1`), 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`) | [e3d4f49dd2](https://github.com/PardasHealth/dhis2-core/commit/e3d4f49dd2158875c8caae9add912d30326e2c7a) | [PKCE S256 failure policy and derived parameter protection](afta-pkce-failure-policy.md) |
-| 20 (`FDP_RIP.2.1`) | [bfbb87408c](https://github.com/PardasHealth/dhis2-core/commit/bfbb87408c6c92835cd90654815f511a9d7e8615) | [Replay fingerprint-owned challenge buffer cleanup](afta-replay-fingerprint-buffer.md) |
-| 20 (`FDP_RIP.2.1`) | [b5313faa57](https://github.com/PardasHealth/dhis2-core/commit/b5313faa57d714e6721404f3f59d926a5928ca88) | [TOTP QR-owned buffer cleanup](afta-qr-owned-buffers.md) |
-| 20 (`FDP_RIP.2.1`) | [46af98846e](https://github.com/PardasHealth/dhis2-core/commit/46af98846e7b30daf77de51e85baaa8f4f3bbae1) | [TOTP enrollment-owned raw seed cleanup](afta-totp-enrollment-buffer.md) |
-| 46 (`FPT_FLS.1.1`) | [635df509a8](https://github.com/PardasHealth/dhis2-core/commit/635df509a80c9615d341828dd3c13a5f0bfbd949) | [TOTP failure diagnostics without secret-bearing exceptions](afta-totp-failure-diagnostics.md) |
-| 46 (`FPT_FLS.1.1`) | [b96f3a2d52](https://github.com/PardasHealth/dhis2-core/commit/b96f3a2d52c4f720f06796ae380fce2ab3485181) | [TOTP provisioning QR failure diagnostics](afta-totp-qr-failure.md) |
+| 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`) | [be26248818](https://github.com/PardasHealth/dhis2-core/commit/be2624881835aff359ded8877c1e29326f00cf46) | [OIDC authorization security parameter protection](afta-oidc-authorization-parameters.md) |
 
 ### Remaining gaps and acceptance
 
@@ -60,6 +53,10 @@ The **25 unresolved primary entries** need the exact AFTA clauses, edition or se
 Use the [selected assessment](afta-selected-requirements-review.md), [row-by-row code/test register](afta-requirement-traceability.md) and [authoritative checklist data](../evidence/afta-selected-checklist-2026-11-07.json) for every entry and its exact evidence boundary. The dated sections below preserve the implementation history.
 
 <!-- AFTA_CURRENT_PROGRESS_END -->
+
+## 28 November follow-up: OIDC authorization security parameters
+
+**Selected source rows: 46 (`FPT_FLS.1.1`), 48 (`FPT_TDC.1.1`).** Reject generic extras for state, nonce, client identity, redirect, response type and scope before returning a request. [Code, 48 failing baseline cases, 78 passing final checks and deployment compatibility](afta-oidc-authorization-parameters.md) are recorded. Activity reaches **46 implementation commits across 27/78 primary entries**, plus one optional entry. Status stays **45 partial, 8 gaps, 25 unresolved; 0 closed**.
 
 ## 23 November follow-up: PKCE failure and parameter policy
 

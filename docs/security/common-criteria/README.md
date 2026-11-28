@@ -21,6 +21,7 @@ Dated follow-ups preserve their historical counts; they are not the current stat
 
 | Review question | Document |
 | --- | --- |
+| Can provider hints override authorization correlation or client fields? | [Rows 46/48: authorization parameter protection and upgrade compatibility](afta-oidc-authorization-parameters.md) |
 | Are token-generation buffers cleared without erasing returned tokens? | [Row 20: generation ownership and failed-wrapper cleanup](afta-token-generation-buffer-hygiene.md) |
 | Are hash/CRC encoding buffers cleared? | [Row 20: owned UTF-8 buffers and compatibility checks](afta-hash-crc-buffer-hygiene.md) |
 | Are token-validator copies cleared too? | [Row 20: checksum-buffer cleanup and caller ownership](afta-token-checksum-buffers.md) |

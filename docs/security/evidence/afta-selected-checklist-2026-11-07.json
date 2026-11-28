@@ -620,22 +620,29 @@
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
       "symbol": "private OAuth2AuthorizationRequest customizeAuthorizationRequest(",
-      "line": 114,
-      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
+      "line": 127,
+      "source_sha256": "ac43852d4998c3a85e0f574e3dd1a39f496386fd58b43d25b5722421c1abc3a6"
     },
     "pkcegeneration": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
       "symbol": "private void addPkceParameters(",
-      "line": 171,
-      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
+      "line": 190,
+      "source_sha256": "ac43852d4998c3a85e0f574e3dd1a39f496386fd58b43d25b5722421c1abc3a6"
     },
     "pkceverifierbuffer": {
       "repository": "core",
       "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
       "symbol": "private static String createHash(",
-      "line": 186,
-      "source_sha256": "99e667a4628e1836ed0cdbd533e4a897cab90ead194811d7694a9afcb7010474"
+      "line": 205,
+      "source_sha256": "ac43852d4998c3a85e0f574e3dd1a39f496386fd58b43d25b5722421c1abc3a6"
+    },
+    "oidcauthorizationparameters": {
+      "repository": "core",
+      "path": "dhis-2/dhis-services/dhis-service-core/src/main/java/org/hisp/dhis/security/oidc/DhisCustomAuthorizationRequestResolver.java",
+      "symbol": "private static final Set<String> SECURITY_PARAMETERS =",
+      "line": 82,
+      "source_sha256": "ac43852d4998c3a85e0f574e3dd1a39f496386fd58b43d25b5722421c1abc3a6"
     }
   },
   "rows": [
@@ -2109,7 +2116,7 @@
       "optional": false,
       "status": "Partial evidence",
       "topic": "Keep a secure state after failure",
-      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model. QR encoder/PNG I/O failures also preserve the empty-image/E3026 response while excluding potentially secret-bearing provisioning exception objects from diagnostics. Generated PKCE authorization requests now stop on S256 unavailability instead of returning a plain fallback, including Spring-generated requests; complete failure policy remains open.",
+      "observation": "Audit failure propagation/retry is tested. The MFA login guard also refuses acceptance when replay reservation storage is unavailable or rejects a write; this is another bounded failure example, not a complete failure model. TOTP decoder/verifier exceptions now preserve proof rejection while emitting fixed failure diagnostics without attached exception objects, preventing those controlled failure paths from logging secret-bearing diagnostics. This is another bounded failure example, not a complete secure-state/fault model. QR encoder/PNG I/O failures also preserve the empty-image/E3026 response while excluding potentially secret-bearing provisioning exception objects from diagnostics. Generated PKCE authorization requests now stop on S256 unavailability instead of returning a plain fallback, including Spring-generated requests; complete failure policy remains open. Conflicting provider extra parameters for state, nonce, client identity, redirect, response type and scope now reject authorization request construction before returning a redirect. Normal hints, OAuth/OpenID, custom PKCE modes and both resolver entry points are checked; complete failure and peer/schema policies remain open.",
       "gap_and_acceptance": "Define the complete AFTA failure set and security invariants; test authentication, storage, broker, session and multi-node failures. Audit retry is only one path.",
       "references": [
         "auditfailure",
@@ -2118,7 +2125,8 @@
         "totpfailurediagnostics",
         "totpqrfailure",
         "pkcepolicy",
-        "pkcegeneration"
+        "pkcegeneration",
+        "oidcauthorizationparameters"
       ],
       "source_key": "FPT_FLS.1.1",
       "counted": true,
@@ -2146,6 +2154,13 @@
           "trace": "afta-pkce-failure-policy.md",
           "full_requirement_closed": false,
           "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a"
+        },
+        {
+          "date": "2026-11-28",
+          "scope": "Conflicting provider extra parameters for state, nonce, client identity, redirect, response type and scope now reject authorization request construction before returning a redirect. Normal hints, OAuth/OpenID, custom PKCE modes and both resolver entry points are checked; complete failure and peer/schema policies remain open.",
+          "trace": "afta-oidc-authorization-parameters.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "be2624881835aff359ded8877c1e29326f00cf46"
         }
       ]
     },
@@ -2184,13 +2199,14 @@
       "optional": false,
       "status": "Gap / evidence not established",
       "topic": "Consistent security-data interpretation",
-      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open. Reserved PKCE fields cannot be overridden by generic extra parameters for generated requests; this is one client-side consistency rule, not a complete peer/schema policy.",
+      "observation": "Import validation is related context; no complete cross-system interpretation contract is established. The audit consumer now rejects duplicate JSON fields and trailing tokens with a local strict reader, preventing silent selection of conflicting actor/scope values. Parser errors fail delivery without copying payload-bearing diagnostics; full trusted-peer/schema/conflict policy remains unestablished. Each of the four receiving consumers now requires the message scope to match its fixed destination scope before logging/storage. Missing scope and null records fail delivery; full publisher identity, authorization and conflict policy remain open. Audit consumers now require a non-null event type and reject numeric enum inputs, preventing ordinal-to-event/scope coercion before audit sinks. Valid named enum values remain compatible; full event schema and peer policy remain open. Reserved PKCE fields cannot be overridden by generic extra parameters for generated requests; this is one client-side consistency rule, not a complete peer/schema policy. Conflicting provider extra parameters for state, nonce, client identity, redirect, response type and scope now reject authorization request construction before returning a redirect. Normal hints, OAuth/OpenID, custom PKCE modes and both resolver entry points are checked; complete failure and peer/schema policies remain open.",
       "gap_and_acceptance": "Define trusted peers, attribute schemas and conflict/precedence rules; verify contradictory and malformed security-data exchange.",
       "references": [
         "import",
         "auditmessagevalidation",
         "auditdestinationscope",
-        "pkcepolicy"
+        "pkcepolicy",
+        "oidcauthorizationparameters"
       ],
       "source_key": "FPT_TDC.1.1",
       "counted": true,
@@ -2225,6 +2241,13 @@
           "trace": "afta-pkce-failure-policy.md",
           "full_requirement_closed": false,
           "implementation_commit": "e3d4f49dd2158875c8caae9add912d30326e2c7a"
+        },
+        {
+          "date": "2026-11-28",
+          "scope": "Conflicting provider extra parameters for state, nonce, client identity, redirect, response type and scope now reject authorization request construction before returning a redirect. Normal hints, OAuth/OpenID, custom PKCE modes and both resolver entry points are checked; complete failure and peer/schema policies remain open.",
+          "trace": "afta-oidc-authorization-parameters.md",
+          "full_requirement_closed": false,
+          "implementation_commit": "be2624881835aff359ded8877c1e29326f00cf46"
         }
       ]
     },
@@ -2919,5 +2942,5 @@
       "reference_role": "Related boundary/reference only; not implementation coverage"
     }
   ],
-  "last_update_date": "2026-11-23"
+  "last_update_date": "2026-11-28"
 }
