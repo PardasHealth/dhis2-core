@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import org.hisp.dhis.external.conf.DhisConfigurationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
@@ -50,7 +51,9 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.endpoint.PkceParameterNames;
+import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.stereotype.Component;
 
 /**
@@ -60,7 +63,8 @@ import org.springframework.stereotype.Component;
  * <p>First, it appends per-provider extra query parameters to the authorization request, sourced
  * from the provider's {@code extra_request_parameters} map (configured via {@code
  * oidc.provider.<id>.extra_request_parameters}). Typical uses are IdP-specific hints such as {@code
- * prompt}, {@code hd}, or {@code login_hint}.
+ * prompt}, {@code hd}, or {@code login_hint}. Security parameters derived from the client
+ * registration or generated for request correlation cannot be supplied as extra parameters.
  *
  * <p>Second, it enables PKCE ({@link #PKCE_CHALLENGE_METHOD S256}) when the provider opts in with
  * {@code enable_pkce=on}: a random 96-byte URL-safe {@code code_verifier} is generated, stored as a
@@ -74,6 +78,15 @@ public class DhisCustomAuthorizationRequestResolver implements OAuth2Authorizati
   public static final String PKCE_CHALLENGE_METHOD = "S256";
 
   public static final String HASH_DIGEST_ALGORITHM = "SHA-256";
+
+  private static final Set<String> SECURITY_PARAMETERS =
+      Set.of(
+          OAuth2ParameterNames.STATE,
+          OAuth2ParameterNames.CLIENT_ID,
+          OAuth2ParameterNames.REDIRECT_URI,
+          OAuth2ParameterNames.RESPONSE_TYPE,
+          OAuth2ParameterNames.SCOPE,
+          OidcParameterNames.NONCE);
 
   @Autowired private DhisOidcProviderRepository clientRegistrationRepository;
 
@@ -135,6 +148,12 @@ public class DhisCustomAuthorizationRequestResolver implements OAuth2Authorizati
     @SuppressWarnings("unchecked")
     Map<String, Object> extraRequestParameters =
         (Map<String, Object>) configurationMetadata.get(EXTRA_REQUEST_PARAMETERS);
+
+    // Provider hints must not replace the request's correlation, identity or grant fields.
+    if (extraRequestParameters != null
+        && extraRequestParameters.keySet().stream().anyMatch(SECURITY_PARAMETERS::contains)) {
+      throw new IllegalArgumentException("Authorization security parameters cannot be overridden");
+    }
 
     boolean generatedPkce = enablePkce || attributes.containsKey(PkceParameterNames.CODE_VERIFIER);
     if (generatedPkce
